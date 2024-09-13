@@ -1,0 +1,89 @@
+.main{
+    display: flex;
+    width: 100vw;
+    height: 100%;
+    place-content: center;
+    place-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 25vh;
+    
+
+    & .misc{
+        display: flex;
+        gap: 1em;
+        position: absolute;
+        top: 50px;
+        right: 50px;
+    }
+
+    & .logo{
+        width: 35em;
+        height: auto;
+    }
+
+
+    & .user{
+        display: flex;
+        place-items: center;
+        gap: 10px;
+    
+        & .username{
+            font-weight: bold;
+            font-size: 18px;
+        }
+    
+        & .person{
+            background-color: #D9D9D9;
+            width: 2.3em;
+    
+            height: auto;
+            padding: 7px;
+            border-radius: 50%;
+            border: 1px solid #03579B;
+        }
+    
+    }
+    
+    
+    & .searchBar{
+        display: flex;
+        place-items: center;
+        gap: 10px;
+    
+        & .inputText{
+            width: 32em;
+    
+            box-shadow: 0 2px 5px 1px #00000049 !important;
+            height: 2em !important;
+    
+            border: none !important;
+    
+            &:hover{
+                cursor: text;
+            }
+        }
+    
+        .lupa{
+            width: 30px;
+            height: auto;
+
+            &:hover{
+                cursor: pointer;
+            }
+        }
+        
+    }
+}
+
+@media (max-width: 640px) {
+
+    .logo{
+        width: 80vw !important;
+    }
+
+    .inputText{
+        width: 80vw !important;
+    }
+  }
