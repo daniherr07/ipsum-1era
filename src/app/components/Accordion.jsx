@@ -1,13 +1,15 @@
 'use client'
 
 import Image from 'next/image';
-import style from '../navbar.module.css'
-import SelectPicker from './SelectPicker';
+import style from './navbar/navbar.module.css'
+import SelectPicker from './navbar/components/SelectPicker';
 import { useState } from 'react';
 
 
 
-export default function Accordion(){
+export default function Accordion({searchBar = true}){
+
+    console.log("Search bar es:" + searchBar)
     const [opened, setOpened] = useState(false)
 
     const handleOpened = () => {
@@ -17,7 +19,13 @@ export default function Accordion(){
 
     return(
     <div className={style.accordion} style={ opened ?{top: "0"} : {top: "-13.1em"}}>
-        <form action="/api/search" method='POST' className={style.searchBarAccordion}>
+        <form 
+        action="/api/search" 
+        method='POST' 
+        className={style.searchBarAccordion} 
+        style={
+                     searchBar == false ? {display: "none !important" } : null
+                }>
             <SelectPicker></SelectPicker>
             
             <button type="submit" style={{background: "none", border: "none"}} className={style.lupaContainer}>

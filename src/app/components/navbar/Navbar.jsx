@@ -1,25 +1,31 @@
 import Image from 'next/image';
 import style from './navbar.module.css'
 import SelectPicker from './components/SelectPicker';
-import Accordion from './components/Accordion';
+import Accordion from '../Accordion';
 
 
 
-export default function NavBar(){
-
+export default function NavBar({logo = true, searchBar = true}){
     return(
         <>
-        <Accordion></Accordion>
+        <Accordion searchBar={searchBar}></Accordion>
 
         <nav className={style.nav}>
 
             <div className={style.col1}>
-                <Image src={'logo.svg'} width={90} height={40} className={style.logo} />
+                <Image 
+                src={'logo.svg'} 
+                width={90} 
+                height={40} 
+                className={style.logo} 
+                style={logo == true ? null : {display: "none"}}/>
 
-                <form action="/api/search" method='POST' className={style.searchBar}>
+                <form action="/api/search" method='POST' className={style.searchBar} style={
+                    searchBar == true ? null : {display: "none"}
+                }>
                     <SelectPicker></SelectPicker>
                     
-                    <button type="submit" style={{background: "none", border: "none"}}>
+                    <button type="submit" style={{background: "none", border: "none"}} className={style.lupaContainer}>
                         <Image src={'lupa.svg'} width={20} height={20}  className={style.lupa}/>
                     </button>
                 </form>

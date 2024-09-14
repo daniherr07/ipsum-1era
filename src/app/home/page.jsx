@@ -2,6 +2,8 @@ import style from './page.module.css'
 import Image from 'next/image';
 import { TagPicker } from 'rsuite';
 import 'rsuite/dist/rsuite-no-reset.min.css';
+import NavBar from '../components/navbar/Navbar';
+
 
 
 export default function Home() {
@@ -12,6 +14,8 @@ export default function Home() {
 
 
     return(
+        <>
+        <NavBar logo={false} searchBar={false}/>
         <main className={style.main}>
            
             
@@ -25,16 +29,10 @@ export default function Home() {
                     <Image src={'lupa.svg'} width={20} height={20}  className={style.lupa}/>
                 </button>
             </form>
-
-            <div className={style.misc}>
-                <div className={style.user}>
-                    <p className={style.username}>Steven</p>
-                    <Image src={'person.svg'} width={20} height={20} className={style.person} />
-                </div>
-                <Image src={'hamburger.svg'} width={45} height={45} className={style.ham}></Image>
-            </div>
             
         </main>
+        </>
+        
     );
     
 }

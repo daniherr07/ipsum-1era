@@ -45,13 +45,15 @@
                 }
             }
 
+            .lupaContainer{
+                position: relative;
+                right: 40px;
+                top: 2px;
+                z-index: 20;
+            }
+        
             .lupa{
-                width: 30px;
-                height: auto;
-
-                &:hover{
-                    cursor: pointer;
-                }
+                background-color: #fff;
             }
             
         }
@@ -121,13 +123,15 @@
             }
         }
 
+        .lupaContainer{
+            position: relative;
+            right: 40px;
+            top: 2px;
+            z-index: 20;
+        }
+    
         .lupa{
-            width: 30px;
-            height: auto;
-
-            &:hover{
-                cursor: pointer;
-            }
+            background-color: #fff;
         }
             
     }
@@ -168,16 +172,6 @@
         display: none;
     }
 
-    .lupaContainer{
-        position: relative;
-        right: 50px;
-        top: 2px;
-        z-index: 20;
-    }
-
-    .lupa{
-        background-color: #fff;
-    }
 
     .person{
         display: none;
