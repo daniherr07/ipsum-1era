@@ -103,7 +103,7 @@
 
     & .searchBarAccordion{
         place-self: center;
-        display: flex;
+        display: none;
         place-items: center;
         gap: 10px;
         margin-right: -30px;
@@ -158,6 +158,10 @@
 
 
 @media (max-width: 1185px) {
+
+    .searchBarAccordion{
+        display: flex !important;
+    }
 
 
     .username{
