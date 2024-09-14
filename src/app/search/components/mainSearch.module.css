@@ -1,0 +1,46 @@
+.cardsContainer{
+
+    display: flex;
+    width: 30%;
+    flex-direction: column;
+    gap: 1em;
+    height: auto;
+    max-height: 50em;
+    overflow-y: scroll hidden;
+
+    & .card{
+        background-color: #03579B;
+        width: 90%;
+        padding: 11px 0;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 0 2px 3px 1px #00000049;
+        transition: all 0.1s ease-in-out;
+
+        &:hover{
+            cursor: pointer;
+        }
+
+        & .cardName{
+            color: #FAFAFA;
+            transition: all 0.1s ease-in-out;
+        }
+    }
+
+    & .focused{
+        background-color: #FBFBFB !important;
+        box-shadow: inset 0 3px 1px #00000049;
+        transition: all 0.1s ease-in-out;
+
+        & .cardName{
+            color: #03579B !important;
+            transition: all 0.1s ease-in-out;
+        }
+    }
+}
+
+.info{
+    width: 70%;
+    height: 50em;
+    border: 1px solid #000;
+}

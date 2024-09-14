@@ -1,0 +1,9 @@
+.main{
+    width: 80vw;
+    height: calc(100% - 4em);
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+    display: flex;
+    place-items: center;
+}

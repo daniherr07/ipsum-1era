@@ -16,7 +16,7 @@
 
     & .col1{
         display: flex;
-        
+    
         place-items: center;
         place-content: center;
         gap: 2vw;
@@ -47,6 +47,10 @@
             .lupa{
                 width: 30px;
                 height: auto;
+
+                &:hover{
+                    cursor: pointer;
+                }
             }
             
         }
