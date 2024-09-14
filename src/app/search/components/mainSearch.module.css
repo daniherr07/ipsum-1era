@@ -41,14 +41,27 @@
 
 .info{
     width: 70%;
-    height: 50em;
+    height: 80%;
     border: 1px solid #000;
 }
 
 
-@media (max-width: 1085px) {
+@media (max-width: 1185px) {
 
     .info{
         margin-bottom: 2em;
+    }
+
+    .cardsContainer{
+        width: 100%;
+        place-items: center;
+    }
+
+    .card{
+        width: 100%;
+    }
+
+    .info{
+        width: 100%;
     }
 }

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import style from './navbar.module.css'
 import SelectPicker from './components/SelectPicker';
+import Accordion from './components/Accordion';
 
 
 
@@ -8,6 +9,8 @@ export default function NavBar(){
 
     return(
         <>
+        <Accordion></Accordion>
+
         <nav className={style.nav}>
 
             <div className={style.col1}>
@@ -25,8 +28,10 @@ export default function NavBar(){
             <div className={style.col2}>
                 <p className={style.username}>Steven Corrales</p>
                 <Image src={'person.svg'} width={20} height={20} className={style.person} />
-                <Image src={'hamburger.svg'} width={20} height={20} className={style.ham} />
+                
             </div>
+
+
 
 
 
