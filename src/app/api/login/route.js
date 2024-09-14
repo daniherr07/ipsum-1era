@@ -2,5 +2,7 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
-  return NextResponse.redirect(new URL('/home', request.url));
+  return NextResponse.redirect(new URL('/home', request.url), {
+    status: 303,
+});
 }

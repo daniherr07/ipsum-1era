@@ -12,7 +12,9 @@ export async function POST(request) {
   
 
   if (tagsArray[0] == '') {
-    return NextResponse.redirect(new URL('/search', request.url));
+    return NextResponse.redirect(new URL('/search', request.url), {
+      status: 303,
+  });
   } else{
 
     tagsArray.forEach(item => {
@@ -42,7 +44,9 @@ export async function POST(request) {
     const newURL = '/search?' + 
       `${ bonoString != null ? "bono=" + bonoString : ''}` + 
       `${ entidadString != null ? "&entidad=" + entidadString : ''}`
-    return NextResponse.redirect(new URL(newURL, request.url));
+    return NextResponse.redirect(new URL(newURL, request.url), {
+      status: 303,
+  });
   }
 
   
