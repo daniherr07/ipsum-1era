@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import style from './mainSearch.module.css'
 import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 
 export default function MainSearch(){
     const searchParams = useSearchParams()
@@ -61,99 +62,101 @@ export default function MainSearch(){
     return(
         <>
 
-        {
-            searchParams.size == 0 
-            
-            ?
-            <>
-                <section className={style.cardsContainer}>
-                    {
-                    data.map((item) => (
-                        <div className={`${style.card} ${item.id == id ? style.focused : null}`} key={item.id} onClick={() => handleId(item.id)}>
-                            <h1 className={style.cardName}>{item.name}</h1>
-                        </div>
-                    ))
-                    
-                    }
-                </section>
+        <Suspense>
+            {
+                searchParams.size == 0 
                 
-                {
-                    id == null 
-                    
-                    ?
-                    <section className={style.info}>
-
-                    </section>
-
-                    :
-                    <section className={style.info}>
-                        <ul style={{listStyle: "none"}}>
-                            <li>{data[id].bono}</li>
-                            <li>{data[id].entidad}</li>
-                        </ul>
-                    </section>
-
-
-                }
-            </>
-            :
-            <>
-                <section className={style.cardsContainer}>
-                    {
-                    data.map((item) => {
-                        var bonoBool = false
-                        var entiBool = false
-
-                        if (bonos != null) {
-                            if (bonos.includes(item.bono)) {
-                                bonoBool = true;
-                            }   
-                        } else bonoBool = true;
-
-                        if (entidades != null) {
-                            if (entidades.includes(item.entidad)) {
-                                entiBool = true
-                            }
-                        } else entiBool = true
-
-                        if (bonoBool && entiBool) {
-                            return(
-                                <div className={`${style.card} ${item.id == id ? style.focused : null}`} key={item.id} onClick={() => handleId(item.id)}>
-                                    <h1 className={style.cardName}>{item.name}</h1>
-                                </div>
-                            )
-                        } else{
-                            return
+                ?
+                <>
+                    <section className={style.cardsContainer}>
+                        {
+                        data.map((item) => (
+                            <div className={`${style.card} ${item.id == id ? style.focused : null}`} key={item.id} onClick={() => handleId(item.id)}>
+                                <h1 className={style.cardName}>{item.name}</h1>
+                            </div>
+                        ))
+                        
                         }
-
-                    })
+                    </section>
                     
+                    {
+                        id == null 
+                        
+                        ?
+                        <section className={style.info}>
+
+                        </section>
+
+                        :
+                        <section className={style.info}>
+                            <ul style={{listStyle: "none"}}>
+                                <li>{data[id].bono}</li>
+                                <li>{data[id].entidad}</li>
+                            </ul>
+                        </section>
+
+
                     }
-                </section>
+                </>
+                :
+                <>
+                    <section className={style.cardsContainer}>
+                        {
+                        data.map((item) => {
+                            var bonoBool = false
+                            var entiBool = false
 
-                {
-                    id == null 
+                            if (bonos != null) {
+                                if (bonos.includes(item.bono)) {
+                                    bonoBool = true;
+                                }   
+                            } else bonoBool = true;
+
+                            if (entidades != null) {
+                                if (entidades.includes(item.entidad)) {
+                                    entiBool = true
+                                }
+                            } else entiBool = true
+
+                            if (bonoBool && entiBool) {
+                                return(
+                                    <div className={`${style.card} ${item.id == id ? style.focused : null}`} key={item.id} onClick={() => handleId(item.id)}>
+                                        <h1 className={style.cardName}>{item.name}</h1>
+                                    </div>
+                                )
+                            } else{
+                                return
+                            }
+
+                        })
+                        
+                        }
+                    </section>
+
+                    {
+                        id == null 
+                        
+                        ?
+                        <section className={style.info}>
+
+                        </section>
+
+                        :
+                        <section className={style.info}>
+                            <ul style={{listStyle: "none"}}>
+                                <li>{data[id].bono}</li>
+                                <li>{data[id].entidad}</li>
+                            </ul>
+                        </section>
+
+
+                    }
                     
-                    ?
-                    <section className={style.info}>
 
-                    </section>
-
-                    :
-                    <section className={style.info}>
-                        <ul style={{listStyle: "none"}}>
-                            <li>{data[id].bono}</li>
-                            <li>{data[id].entidad}</li>
-                        </ul>
-                    </section>
-
-
-                }
+                </>
                 
-
-            </>
-            
-        }
+            }
+        </Suspense>
         
 
         </>

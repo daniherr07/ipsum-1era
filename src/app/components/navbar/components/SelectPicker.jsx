@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { TagPicker } from "rsuite"
 import 'rsuite/dist/rsuite-no-reset.min.css';
 import style from '../navbar.module.css'
+import { Suspense } from 'react'
 
 
 export default function SelectPicker() {
@@ -47,7 +48,7 @@ export default function SelectPicker() {
 
     return(
         <>
-        
+        <Suspense>
             {
                 searchParams.size == 0 
                 ?
@@ -69,6 +70,8 @@ export default function SelectPicker() {
                 defaultValue={allTags}
                 /> 
             }
+        </Suspense>
+            
             
         </>
 
