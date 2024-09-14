@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { TagPicker } from 'rsuite';
 import 'rsuite/dist/rsuite-no-reset.min.css';
 import NavBar from '../components/navbar/Navbar';
+import { Suspense } from 'react';
+
 
 
 
@@ -15,7 +17,10 @@ export default function Home() {
 
     return(
         <>
-        <NavBar logo={false} searchBar={false}/>
+        <Suspense>
+            <NavBar logo={false} searchBar={false}/>
+        </Suspense>
+        
         <main className={style.main}>
            
             
