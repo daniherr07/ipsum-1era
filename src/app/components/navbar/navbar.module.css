@@ -28,6 +28,7 @@
         }
 
         & .searchBar{
+            overflow-y: scroll hidden;
             display: flex;
             place-items: center;
             gap: 10px;
@@ -37,6 +38,8 @@
 
                 box-shadow: 0 2px 5px 1px #00000049 !important;
                 height: 2em !important;
+                max-height: 2em;
+                overflow-y: hidden;
 
                 border: none !important;
 
@@ -104,6 +107,7 @@
 
 
     & .searchBarAccordion{
+        
         place-self: center;
         display: none;
         place-items: center;
@@ -115,6 +119,8 @@
 
             box-shadow: 0 2px 5px 1px #00000049 !important;
             height: 2em !important;
+            max-height: 2em;
+            overflow-y: hidden;
 
             border: none !important;
 
