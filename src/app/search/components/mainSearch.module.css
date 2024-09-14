@@ -44,3 +44,11 @@
     height: 50em;
     border: 1px solid #000;
 }
+
+
+@media (max-width: 1085px) {
+
+    .info{
+        margin-bottom: 2em;
+    }
+}
