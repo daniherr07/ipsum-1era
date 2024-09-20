@@ -8,14 +8,11 @@ export default function Search(){
 
     return(
         <>
-            <Suspense>
-                <NavBar></NavBar>
-                <main className={style.main}>
-                    <MainSearch></MainSearch>
+            <NavBar></NavBar>
+            <main className={style.main}>
+                <MainSearch></MainSearch>
 
-                </main>
-            </Suspense>
+            </main>
         </>
-
     );
 }

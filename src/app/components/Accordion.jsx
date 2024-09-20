@@ -9,7 +9,6 @@ import { useState } from 'react';
 
 export default function Accordion({searchBar = true}){
 
-    console.log("Search bar es:" + searchBar)
     const [opened, setOpened] = useState(false)
 
     const handleOpened = () => {

@@ -37,14 +37,11 @@ export default function SelectPicker() {
 
     }
 
-    console.log(bonos)
-    console.log(entidades)
 
 
     var allTags = []
     var allTags = allTags.concat(bonos).concat(entidades)
 
-    console.log(allTags)
 
     return(
         <>

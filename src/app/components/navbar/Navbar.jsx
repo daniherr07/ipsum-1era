@@ -2,6 +2,7 @@ import Image from 'next/image';
 import style from './navbar.module.css'
 import SelectPicker from './components/SelectPicker';
 import Accordion from '../Accordion';
+import { Suspense } from 'react';
 
 
 
@@ -23,7 +24,10 @@ export default function NavBar({logo = true, searchBar = true}){
                 <form action="/api/search" method='POST' className={style.searchBar} style={
                     searchBar == true ? null : {display: "none"}
                 }>
-                    <SelectPicker></SelectPicker>
+                    <Suspense>
+                        <SelectPicker></SelectPicker>
+                    </Suspense>
+
                     
                     <button type="submit" style={{background: "none", border: "none"}} className={style.lupaContainer}>
                         <Image src={'lupa.svg'} width={20} height={20}  className={style.lupa}/>
