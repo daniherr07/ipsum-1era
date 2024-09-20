@@ -27,16 +27,38 @@
     display: flex;
     width: 100%;
     place-content: space-around;
+    gap: 1em;
 }
 
 .no, .yes{
     width: 6vw;
     height: 4vh;
     border: none;
+    border-radius: 5px;
 }
 
 .yes{
     background-color: #03579B;
     color: #fff;
-    border-radius: 5px;
+    
+}
+
+@media screen and (max-width: 800px) {
+    .deletePopupContainer{
+        width: 70vw;
+        height: 20em;
+        text-align: center;
+        padding: 1em;
+    }
+
+    .deletePopupButtons{
+        width: 100%;
+        place-content: center;
+        place-items: center;
+        flex-direction: column-reverse;
+    }
+
+    .no, .yes{
+        width: 10em;
+    }
 }

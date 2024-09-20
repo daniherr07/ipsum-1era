@@ -8,6 +8,8 @@ import style from '../userList.module.css'
 
 export default function Users({setDeletePopup, setUpdatePopup, setSelectedItem }){
     const [active, setActive] = useState();
+    const [show, setShow] = useState(false)
+    console.log(show)
 
     const names = [
         {
@@ -209,10 +211,14 @@ export default function Users({setDeletePopup, setUpdatePopup, setSelectedItem }
                 <td className={style.tbodyText}>{item.secondLastName}</td>
                 <td className={style.tbodyText}>{item.name}</td>
                 <td className={style.tbodyEdit} >
-                    <Image className={style.tbodyImage} src={"arrowRight.svg"} width={10} height={10} onClick={() => setActive(index)}/>
+                    <Image className={style.tbodyImage} src={"arrowRight.svg"} width={10} height={10} onClick={() => {setActive(index); setShow(!show)}}/>
 
 
-                    <div className={style.rolePopup} style={index == active ? {display: "flex"} : {display: "none"}} >
+                    <div className={style.rolePopup} style={
+                        show == true && index == active ? 
+                        {display: "flex"}
+                        : 
+                        {display: "none"}} >
 
                         <h3 >Roles</h3>
 
