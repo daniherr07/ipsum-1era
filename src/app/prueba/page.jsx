@@ -33,6 +33,7 @@ export default function App () {
   };
 
   return (
+    <div style={{display:"flex"}}>
     <TagPicker
       data={storedData}
       cacheData={cacheData}
@@ -54,5 +55,8 @@ export default function App () {
         return menu;
       }}
     />
+
+    <p>Esto esta hecho con una base de datos real!</p>
+    </div>
   );
 };

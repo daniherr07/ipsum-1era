@@ -33,9 +33,24 @@ export default function Accordion({searchBar = true}){
         </form>
 
         <ul className={style.options}>
-            <li className={style.option}>Usuario</li>
-            <li className={style.option}>Crear nuevo caso</li>
-            <li className={style.option}>Mantenimiento</li>
+            <li className={style.option}>
+                <form action="/api/users" method='POST' >
+                
+                    <button type="submit" style={{background: "none", border: "none"}}>
+                        <p className={style.option}>Usuarios</p>
+                    </button>
+                </form>
+            </li>
+            <li className={style.option}>Crear nuevo caso (Sin link)</li>
+            <li className={style.option}>Mantenimiento (Sin link)</li>
+            <li className={style.option}>
+                <form action="/api/prueba" method='POST' >
+                
+                    <button type="submit" style={{background: "none", border: "none"}}>
+                        <p className={style.option}>BASE DE DATOS PRUEBA</p>
+                    </button>
+                </form>
+            </li>
         </ul>
 
         <Image 

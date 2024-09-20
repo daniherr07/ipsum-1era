@@ -14,12 +14,13 @@ export default function NavBar({logo = true, searchBar = true}){
         <nav className={style.nav}>
 
             <div className={style.col1}>
-                <Image 
-                src={'logo.svg'} 
-                width={90} 
-                height={40} 
-                className={style.logo} 
-                style={logo == true ? null : {display: "none"}}/>
+
+                <form action="/api/search" method='POST' className={style.searchBar} style={logo == true ? null : {display: "none"}}>  
+                    <button type="submit" style={{background: "none", border: "none"}} className={style.lupaContainer}>
+                            <Image src={'logo.svg'} width={90} height={40} className={style.logo} />
+                    </button>
+                </form>
+                
 
                 <form action="/api/search" method='POST' className={style.searchBar} style={
                     searchBar == true ? null : {display: "none"}
