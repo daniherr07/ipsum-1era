@@ -3,7 +3,7 @@
 import { Suspense, useState } from "react";
 import NavBar from "../components/navbar/Navbar";
 import Delete from "./components/Delete/Delete";
-import Users from "./components/users";
+import Users from "./components/Users";
 import style from "./userList.module.css"
 import UpdatePop from "./components/Update/UpdatePop";
 
