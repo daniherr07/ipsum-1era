@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import NavBar from "../components/navbar/Navbar";
 import Delete from "./components/Delete/Delete";
 import Users from "./components/users";
@@ -18,7 +18,10 @@ export default function UserList(){
 
     return(
         <>
-        <NavBar />
+        <Suspense>
+            <NavBar />
+        </Suspense>
+
         <main className={style.main}>
 
                 {deletePopup && (
