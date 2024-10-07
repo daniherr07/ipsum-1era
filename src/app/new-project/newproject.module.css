@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
+.main{
+    display: flex;
+    flex-direction: row;
+    height: 90vh;
+
+}
+.accordioncontainer{
+    height: 100vh;
+    position: relative;
+    bottom: 4em;
+    width: 10vw;
+    background-color: #d9d9d9;
+    align-content: center;
+    
+    z-index: 1 !important;
+    & ul{
+        display: flex;
+        flex-direction: column;
+        gap: 3em;
+        & .itemleft{
+            display: flex;
+            flex-direction: row;
+            place-items: center;
+            justify-content: center;
+            
+            & :hover{
+                cursor: pointer;
+                
+            }
+            & .optionleft{
+                font-family: Inter;
+                color: #03579B;
+                font-size: 1em;
+                border: none;
+            }
+        }
+
+    }
+    
+}
+.datoscontainer1{
+    border: 1px solid #03579B;
+    height: 50vh;
+    position: relative;
+    left: 10em;
+    top: 4em;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    & .titulocontainer1{
+        background-color: #03579B;
+        color: #ffff;
+        padding: 0.5em 10em;
+        display: flex;
+        flex-direction: row !important;
+        gap: 10em;
+    }
+    & .input1{
+        color: #0000009d;
+        margin-bottom: 1em;
+    }
+    & .textoinput1{
+        color: #02233ed0;
+        font-size: 1em;
+        margin-bottom: 1em;
+        
+    }
+    & .selecttipo1{
+        padding: 0.4em;
+        border: 1px solid #00000042;
+        font-family: Inter;
+        font-size: 1em;
+        text-align: left;
+        margin-bottom: 1em;
+        box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+        & :focus-visible{
+                outline: none;
+        }
+    }
+    & .textogrupo{
+        color: #9c9c9c;
+        font-size: 1em;
+        margin-bottom: 1em;
+
+    }
+    & .inputgrupo1{
+        padding: 0.4em 0em 0.4em 0.5em;
+        width: 17em;
+        margin-bottom: 1em;
+        
+        border: 1px solid #00000042;
+        font-family: Inter;
+        font-size: 1em;
+        box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+        & ::placeholder{
+            text-align: left;
+        }
+        & :focus{
+            outline: none;
+        }
+    }
+    & .maincontainer1{
+        display: flex;
+        flex-direction: row !important;
+        justify-content: space-around;
+        position: relative;
+        top: 5em;
+        & .containerderecha1{
+            display: flex;
+            flex-direction: column;
+            justify-self: center;
+            & .subtipo{
+                border: 1px solid rgb(255, 255, 255);
+                padding: 1em 2em;
+                font-size: 0.8em;
+                text-align: center;
+                color: #ffffff;
+                background-color: #03579B;
+                cursor: pointer;
+
+                & h1{
+                    font-weight: 200 !important;
+                }
+            }
+        }
+        & .containerizquierda1{
+            display: flex;
+            flex-direction: column;
+        }
+    } 
+}
+.datoscontainer{
+    background-color: lightblue;
+    display: flex;
+    flex-direction: column;
+    & .maininfocontainer{
+        background-color: lightcoral;
+    }
+}
+& .seleccionado{
+    background-color: white !important;
+    color: #03579B !important;
+    font-weight: 500 !important;
+    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
+.textospeques{
+    padding: 0.4em 0em;
+    width: 7em !important;
+} 
+.flexizquierda1{
+    display: flex;
+    gap: 10px;
+}
