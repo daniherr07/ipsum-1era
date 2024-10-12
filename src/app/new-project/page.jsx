@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Miembrosdelafamilia from './components/Miembrosdelafamilia';
 import Direcciondelproyecto from './components/Direcciondelproyecto';
 import Datosadministrativos from './components/Datosadministrativos';
+import { Suspense } from 'react';
 export default function newproject(){
     const [page, setPage] = useState(0);
 
@@ -51,7 +52,10 @@ export default function newproject(){
 
     return(
         <>
-        <NavBar></NavBar>
+        <Suspense>
+            <NavBar></NavBar>
+        </Suspense>
+        
         <main className={style.main}>
         <>
             <aside className={style.accordioncontainer}>
