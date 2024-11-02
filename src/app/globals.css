@@ -6,11 +6,20 @@
   box-sizing: border-box;
 }
 
+html{
+  overflow-y: scroll hidden;
+}
 
-html,
-body {
+body,html {
   font-family: "Inter", sans-serif;
   max-width: 100vw;
   height: 100%;
+}
+
+body {
+  flex: 1;
+  display: flex; /* Enables flexible box layout to stretch content */
+  flex-direction: column; /* Ensures content stacks vertically */
+  min-height: 100vh; /* Sets the minimum height to the viewport height */
 }
 

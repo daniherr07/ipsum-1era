@@ -1,78 +1,61 @@
 'use client'
 
-import { useSearchParams } from "next/navigation";
-import { TagPicker } from "rsuite"
+import { TagPicker } from 'rsuite';
+import SpinnerIcon from '@rsuite/icons/legacy/Spinner';
 import 'rsuite/dist/rsuite-no-reset.min.css';
+import { useState } from 'react';
 import style from '../navbar.module.css'
-import { Suspense } from 'react'
 
+const useData = () => {
+  const [storedData, setStoredData] = useState();
+  const [loading, setLoading] = useState(false);
+  const featUsers = word => {
+    setLoading(true);
+    fetch(`https://ipsum-backend.vercel.app/test/${word}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        setStoredData(data);
+        setLoading(false);
+      })
+      .catch(e => console.log('Oops, error', e));
+  };
 
-export default function SelectPicker() {
-    const searchParams = useSearchParams()
+  return [storedData, loading, featUsers];
+};
 
-    const data = ['Bono: Articulo 59', 'Bono: CLP', 'Entidad: Mutual', 'Entidad: Mucap'].map(
-        item => ({ label: item, value: item })
-    );
+export default function App () {
+  const [storedData, loading, featUsers] = useData();
+  const [value, setValue] = useState([]);
+  const [cacheData, setCacheData] = useState([]);
 
-    var bonos
-    var entidades
+  const handleSelect = (value, item, event) => {
+    setCacheData([...cacheData, item]);
+  };
 
-    if (searchParams.size != 0) {
-        bonos = searchParams?.get('bono')?.split(',')
-        entidades = searchParams?.get('entidad')?.split(',')
-
-        if (bonos != null) {
-            bonos.forEach((bono, index) => {
-                bonos[index] = bono.replace('_',' ')
-                bonos[index] = "Bono: " + bonos[index]
-            })
+  return (
+    <div style={{display:"flex"}}>
+    <TagPicker
+      data={storedData}
+      cacheData={cacheData}
+      value={value}
+      labelKey="formatted_value"
+      valueKey="id"
+      className={style.inputText}
+      onChange={setValue}
+      onSearch={featUsers}
+      onSelect={handleSelect}
+      renderMenu={menu => {
+        if (loading) {
+          return (
+            <p style={{ padding: 4, color: '#999', textAlign: 'center' }}>
+              <SpinnerIcon spin /> Loading...
+            </p>
+          );
         }
-
-        if (entidades != null) {
-            entidades.forEach((entidad, index) => {
-                entidades[index] = entidad.replace('_',' ')
-                entidades[index] = "Entidad: " + entidades[index]
-            })
-        }
-
-    }
-
-
-
-    var allTags = []
-    var allTags = allTags.concat(bonos).concat(entidades)
-
-
-    return(
-        <>
-        <Suspense>
-            {
-                searchParams.size == 0 
-                ?
-
-                <TagPicker 
-                data={data} 
-                name='tags' 
-                className={style.inputText} 
-                placeholder='Buscar...'
-                /> 
-
-                :
-
-                <TagPicker 
-                data={data} 
-                name='tags' 
-                className={style.inputText} 
-                placeholder='Buscar...'
-                defaultValue={allTags}
-                /> 
-            }
-        </Suspense>
-            
-            
-        </>
-
-
-    )
-    
-}
+        return menu;
+      }}
+    />
+    </div>
+  );
+};

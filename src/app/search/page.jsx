@@ -13,11 +13,7 @@ export default function Search(){
             </Suspense>
 
             <main className={style.main}>
-                <Suspense>
-                    <MainSearch></MainSearch>
-                </Suspense>
-                
-
+                <MainSearch></MainSearch>
             </main>
         </>
     );

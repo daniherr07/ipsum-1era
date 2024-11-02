@@ -1,138 +1,77 @@
 'use client'
+
 import { useState } from 'react'
 import style from './mainSearch.module.css'
 import { useSearchParams } from 'next/navigation'
-import { Suspense } from 'react'
+import Card from './Card'
+import { useEffect } from 'react'
+import Filter from './Filter'
+
+
 
 export default function MainSearch(){
+    const [pName, setPName] = useState()
+    const [isLoading, setLoading] = useState(true)
+    const [data, setData] = useState()
     const searchParams = useSearchParams()
     const [id, setId] = useState(null)
 
-    var bonos
-    var entidades
+    function ordenarData() {
 
-    const handleId = (cardId) => {
-        setId(cardId)
+        const sortedData = pName.sort((a, b) => a.nombre.localeCompare(b.nombre));
+        setData(sortedData)
+    }
+    
+
+    const handleClick = (item) =>{
+        fetch(`https://ipsum-backend.vercel.app/getData/${item.nombre}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setData(data[0])
+                setId(item.id)
+            })            
     }
 
-    const data = [{
-        "id": 0,
-        "name": "Felipe Vásquez M.",
-        "bono": "Articulo 59",
-        "entidad": "Mutual"
-    }, 
-    {
-        "id": 1,
-        "name": "Steven Salazar",
-        "bono": "CLP",
-        "entidad": "Mucap"
-    },
-    {
-        "id": 2,
-        "name": "Max Corrales",
-        "bono": "CLP",
-        "entidad": "Mutual"
-    },
-    {
-        "id": 3,
-        "name": "Daniel Jiménez",
-        "bono": "Articulo 59",
-        "entidad": "Mucap"
-    }]
 
-
-    if (searchParams.size != 0) {
-        bonos = searchParams?.get('bono')?.split(',')
-        entidades = searchParams?.get('entidad')?.split(',')
-
-        if (bonos != null) {
-            bonos.forEach((bono, index) => {
-                bonos[index] = bono.replace('_',' ')
+    useEffect(() => {
+        fetch('https://ipsum-backend.vercel.app/projectNames')
+            .then((res) => res.json())
+            .then((data) => {
+                setPName(data)
+                setLoading(false)
+                console.log(data)
+                
             })
-        }
+    }, [])
 
-        if (entidades != null) {
-            entidades.forEach((entidad, index) => {
-                entidades[index] = entidad.replace('_',' ')
-            })
-        }
 
-    }
-
+    
     return(
         <>
-
-        <Suspense>
-            {
-                searchParams.size == 0 
-                
-                ?
+            { 
                 <>
-                    <section className={style.cardsContainer}>
+                    <div className={style.cardsContainerAll}>
+                        <Filter ordenarData={ordenarData}></Filter>
                         {
-                        data.map((item) => (
-                            <div className={`${style.card} ${item.id == id ? style.focused : null}`} key={item.id} onClick={() => handleId(item.id)}>
-                                <h1 className={style.cardName}>{item.name}</h1>
-                            </div>
-                        ))
-                        
+                            isLoading ? <p>Loading...</p> :
+                            <p>Cantidad: {Object.keys(pName).length}</p>
                         }
-                    </section>
-                    
-                    {
-                        id == null 
                         
-                        ?
-                        <section className={style.info}>
-
-                        </section>
-
-                        :
-                        <section className={style.info}>
-                            <ul style={{listStyle: "none"}}>
-                                <li>{data[id].bono}</li>
-                                <li>{data[id].entidad}</li>
-                            </ul>
-                        </section>
-
-
-                    }
-                </>
-                :
-                <>
-                    <section className={style.cardsContainer}>
-                        {
-                        data.map((item) => {
-                            var bonoBool = false
-                            var entiBool = false
-
-                            if (bonos != null) {
-                                if (bonos.includes(item.bono)) {
-                                    bonoBool = true;
-                                }   
-                            } else bonoBool = true;
-
-                            if (entidades != null) {
-                                if (entidades.includes(item.entidad)) {
-                                    entiBool = true
-                                }
-                            } else entiBool = true
-
-                            if (bonoBool && entiBool) {
-                                return(
-                                    <div className={`${style.card} ${item.id == id ? style.focused : null}`} key={item.id} onClick={() => handleId(item.id)}>
-                                        <h1 className={style.cardName}>{item.name}</h1>
+                        <section className={style.cardsContainer}>
+                            
+                            {
+                                isLoading ? <p>Loading...</p> :
+                                pName.map((item) => (
+                                    <div className={`${style.card} ${item.id == id ? style.focused : null}`} key={item.id} onClick={() => {handleClick(item)}}>
+                                        <h1 className={style.cardName}>{item.nombre}</h1>
                                     </div>
-                                )
-                            } else{
-                                return
+                                ))
                             }
+                        </section>
+                    </div>
 
-                        })
-                        
-                        }
-                    </section>
 
+                    
                     {
                         id == null 
                         
@@ -143,20 +82,13 @@ export default function MainSearch(){
 
                         :
                         <section className={style.info}>
-                            <ul style={{listStyle: "none"}}>
-                                <li>{data[id].bono}</li>
-                                <li>{data[id].entidad}</li>
-                            </ul>
+                            <Card item={data} />
                         </section>
 
-
                     }
-                    
-
                 </>
                 
             }
-        </Suspense>
         
 
         </>

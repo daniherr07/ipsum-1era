@@ -5,26 +5,26 @@ import SpinnerIcon from '@rsuite/icons/legacy/Spinner';
 import 'rsuite/dist/rsuite-no-reset.min.css';
 import { useState } from 'react';
 
-const useData = () => {
-  const [storedData, setStoredData] = useState();
+function useUsers(defaultUsers = []){
+  const [users, setUsers] = useState(defaultUsers);
   const [loading, setLoading] = useState(false);
   const featUsers = word => {
     setLoading(true);
     fetch(`https://ipsum-backend.vercel.app/test/${word}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data)
-        setStoredData(data);
+        setUsers(data);
         setLoading(false);
+        console.log(data)
       })
       .catch(e => console.log('Oops, error', e));
   };
 
-  return [storedData, loading, featUsers];
+  return [users, loading, featUsers];
 };
 
-export default function App () {
-  const [storedData, loading, featUsers] = useData();
+export default function App() {
+  const [users, loading, featUsers] = useUsers();
   const [value, setValue] = useState([]);
   const [cacheData, setCacheData] = useState([]);
 
@@ -33,9 +33,8 @@ export default function App () {
   };
 
   return (
-    <div style={{display:"flex"}}>
     <TagPicker
-      data={storedData}
+      data={users}
       cacheData={cacheData}
       value={value}
       style={{ width: 300 }}
@@ -55,8 +54,5 @@ export default function App () {
         return menu;
       }}
     />
-
-    <p>Esto esta hecho con una base de datos real!</p>
-    </div>
   );
 };
