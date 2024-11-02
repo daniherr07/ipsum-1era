@@ -45,6 +45,7 @@ export default function IpsumConstruction() {
                     alt="Logo"
                     width={36}
                     height={36}
+                    
                   />
                 </button>
             </form>
@@ -52,8 +53,7 @@ export default function IpsumConstruction() {
             </div>
             <div className={styles.navLinks}>
               <Link href="#inicio" className={styles.navLink}>Inicio</Link>
-              <Link href="#mision" className={styles.navLink}>Misión</Link>
-              <Link href="#vision" className={styles.navLink}>Visión</Link>
+              <Link href="#mision" className={styles.navLink}>Misión y Visión</Link>
               <Link href="#proyectos" className={styles.navLink}>Proyectos</Link>
               <Link href="#contactos" className={styles.navLink}>Contactos</Link>
             </div>
@@ -61,7 +61,7 @@ export default function IpsumConstruction() {
         </div>
       </nav>
 
-      <section className={styles.heroSection}>
+      <section className={styles.heroSection} id='inicio'>
         <div className={styles.container}>
           <div className={styles.heroContent}>
             <Image
@@ -81,7 +81,7 @@ export default function IpsumConstruction() {
         </div>
       </section>
 
-      <section className={styles.missionVisionSection}>
+      <section className={styles.missionVisionSection} id='mision'>
         <div className={styles.container}>
           <div className={styles.missionVisionGrid}>
             <div style={{display:"flex", flexDirection: "column", placeContent: "center", placeItems: "center", gap: "1em"}}>
@@ -114,7 +114,7 @@ export default function IpsumConstruction() {
         </div>
       </section>
 
-      <section className={styles.projectsSection}>
+      <section className={styles.projectsSection} id='proyectos'>
         <div className={styles.container}>
           <h2 className={styles.projectsTitle}>Proyectos</h2>
           <div className={styles.projectsCarousel}>
@@ -147,7 +147,7 @@ export default function IpsumConstruction() {
         </div>
       </section>
 
-      <section className={styles.contactSection}>
+      <section className={styles.contactSection} id='contactos'>
         <div className={styles.container}>
           <h2 className={styles.contactTitle}>Contáctanos</h2>
           <div className={styles.contactGrid}>
