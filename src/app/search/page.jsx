@@ -12,9 +12,12 @@ export default function Search(){
                 <NavBar></NavBar>
             </Suspense>
 
+            <Suspense>
             <main className={style.main}>
+
                 <MainSearch></MainSearch>
             </main>
+            </Suspense>
         </>
     );
 }
