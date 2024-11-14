@@ -29,6 +29,7 @@ export default function MainSearch(){
             .then((data) => {
                 setData(data[0])
                 setId(item.id)
+                console.log(data[0])
             })            
     }
 

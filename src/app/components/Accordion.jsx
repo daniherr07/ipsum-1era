@@ -28,7 +28,7 @@ export default function Accordion({searchBar = true}){
             <SelectPicker></SelectPicker>
             
             <button type="submit" style={{background: "none", border: "none"}} className={style.lupaContainer}>
-                <Image src={'lupa.svg'} width={20} height={20}  className={style.lupa}/>
+                <Image src={'lupa.svg'} width={20} height={20}  className={style.lupa} alt='lupa'/>
             </button>
         </form>
 
@@ -72,6 +72,7 @@ export default function Accordion({searchBar = true}){
                 {top: "14.2em", right: "5vw"}
             }
             onClick={handleOpened} 
+            alt='hamburger'
             />
     </div>
     )

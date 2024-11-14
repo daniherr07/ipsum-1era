@@ -27,14 +27,14 @@ export default function Home() {
         <main className={style.main}>
            
             
-           <Image src={'logo.svg'} width={90} height={40} className={style.logo} priority={true}/>
+           <Image src={'logo.svg'} width={90} height={40} className={style.logo} priority={true} alt='logo'/>
             
 
             <form action="/api/search" method='POST' className={style.searchBar}>
                 <TagPicker data={data} name='tags' className={style.inputText} placeholder='Buscar...'/>    
                 
                 <button type="submit" style={{background: "none", border: "none"}}>
-                    <Image src={'lupa.svg'} width={20} height={20}  className={style.lupa}/>
+                    <Image src={'lupa.svg'} width={20} height={20}  className={style.lupa} alt='lupa'/>
                 </button>
             </form>
             

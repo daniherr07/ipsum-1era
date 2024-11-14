@@ -43,7 +43,9 @@ export default function Card({item}) {
             </div>
             <div>
               <span className={styles.label}>Etapa</span>
-              <span className={styles.value}>Pre-análisis</span>
+              <span className={styles.value}>
+                {item.etapa}. {item.subetapa}
+                </span>
             </div>
           </div>
 
@@ -75,7 +77,7 @@ export default function Card({item}) {
         {/* Right Column */}
         <div className={styles.rightColumn}>
           {/* RAMT Badge */}
-          <div className={styles.ramtBadge}>
+          <div className={styles.ramtBadge} style={{backgroundColor: `${item.colorEtapa}`}}>
             <p className={styles.ramtBadgeTxt}>{item.tipoBono}</p>
           </div>
 
@@ -87,7 +89,7 @@ export default function Card({item}) {
 
           {/* Edit Button */}
           <button className={styles.editButton}>
-            <Image src={"pen.svg"} className={styles.editIcon} width={20} height={20} />
+            <Image src={"pen.svg"} className={styles.editIcon} width={20} height={20} alt='icono'/>
             Editar
           </button>
 
@@ -100,21 +102,21 @@ export default function Card({item}) {
           {/* Communication Buttons */}
           <div className={styles.communicationButtons}>
             <button className={styles.callButton}>
-              <Image src={"call.svg"}  width={20} height={20}/>
+              <Image src={"call.svg"}  width={20} height={20} alt='llamada'/>
             </button>
             <button className={styles.emailButton}>
-              <Image src={"mail.svg"}  width={20} height={20}/>
+              <Image src={"mail.svg"}  width={20} height={20} alt='correo' />
             </button>
             <button className={styles.whatsappButton}>
-              <Image src={"whatsapp.svg"}  width={20} height={20}/>
+              <Image src={"whatsapp.svg"}  width={20} height={20} alt='wasap'/>
             </button>
           </div>
 
           {/* Referral Information */}
           <div>
             <span className={styles.label}>Referido por</span>
-            <span className={styles.value}>Bernardita Hernández</span>
-            <span className={styles.currentStage}>Etapa Actual : 22/06/2024</span>
+            <span className={styles.value}>{item.promotorInterno} (Interno) y {item.promotorExterno} (Externo)</span>
+            <span className={styles.currentStage}>Etapa Actual : (WIP)</span>
           </div>
         </div>
       </div>
@@ -132,7 +134,7 @@ export default function Card({item}) {
           </div>
           <div>
             <span className={styles.label}>Analista</span>
-            <span className={styles.value}>{item.analista}</span>
+            <span className={styles.value}>{item.analistaEntidad}</span>
           </div>
           <div>
             <span className={styles.label}>Fiscal Asignado:</span>
@@ -144,7 +146,7 @@ export default function Card({item}) {
           </div>
           <div>
             <span className={styles.label}>Analista IPSUM:</span>
-            <span className={styles.value}>Magdalena Hernández</span>
+            <span className={styles.value}>{item.analistaIpsum}</span>
           </div>
         </div>
       </footer>

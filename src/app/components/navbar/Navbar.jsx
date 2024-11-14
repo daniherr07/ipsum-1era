@@ -17,7 +17,7 @@ export default function NavBar({logo = true, searchBar = true}){
 
                 <form action="/api/search" method='POST' className={style.searchBar} style={logo == true ? null : {display: "none"}}>  
                     <button type="submit" style={{background: "none", border: "none"}} className={style.lupaContainer}>
-                            <Image src={'logo.svg'} width={90} height={40} className={style.logo} />
+                            <Image src={'logo.svg'} width={90} height={40} className={style.logo} alt='logo' />
                     </button>
                 </form>
                 
@@ -31,14 +31,14 @@ export default function NavBar({logo = true, searchBar = true}){
 
                     
                     <button type="submit" style={{background: "none", border: "none"}} className={style.lupaContainer}>
-                        <Image src={'lupa.svg'} width={20} height={20}  className={style.lupa}/>
+                        <Image src={'lupa.svg'} width={20} height={20}  className={style.lupa} alt='lupa'/>
                     </button>
                 </form>
             </div>
 
             <div className={style.col2}>
                 <p className={style.username}>Steven Corrales</p>
-                <Image src={'person.svg'} width={20} height={20} className={style.person} />
+                <Image src={'person.svg'} width={20} height={20} className={style.person} alt='person'/>
                 
             </div>
 

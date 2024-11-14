@@ -63,11 +63,23 @@
     line-height: 1.75rem;
     margin-bottom: 2rem;
   }
+
   
   .missionVisionSection {
     background-color: #f9fafb;
-    padding-top: 4rem;
+    padding-top: 2rem;
     padding-bottom: 4rem;
+  }
+
+  .aboutUs{
+    margin-bottom: 1em;
+
+    & .aboutUsTitulo{
+      color: #03579B;
+      text-align: center;
+      margin-bottom: 1em;
+      font-size: 3rem;
+    }
   }
   
   .missionVisionGrid {
@@ -199,7 +211,7 @@
     width: 100%;
     padding: 0.5rem;
     border-radius: 0.25rem;
-    color: #ffffff;
+    color: #000;
     background-color: none;
     border: 1px solid #fff;
   }

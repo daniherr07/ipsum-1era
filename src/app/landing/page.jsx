@@ -5,9 +5,35 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { ChevronLeft, ChevronRight, Phone, Mail, MapPin } from 'lucide-react'
 import styles from './page.module.css'
+import axios from 'axios'
 
 export default function IpsumConstruction() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [formData, setFormData] = useState({
+    nombre: '',
+    apellido: '',
+    email: '',
+    tel: '',
+    mensaje: '',
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { nombre, apellido, email, tel, mensaje } = formData;
+
+// Construir el enlace mailto
+    const mailtoLink = `mailto:info@ipsumcr.com?subject=${encodeURIComponent("Consulta: " + nombre + " " + apellido)}&body=${encodeURIComponent(mensaje + "\n\nContacto: " + email + " Telefono: " + tel)}`;
+
+    // Abrir el enlace mailto
+    window.location.href = mailtoLink;
+
+  };
+
   
   const projects = [
     {
@@ -53,7 +79,7 @@ export default function IpsumConstruction() {
             </div>
             <div className={styles.navLinks}>
               <Link href="#inicio" className={styles.navLink}>Inicio</Link>
-              <Link href="#mision" className={styles.navLink}>Misión y Visión</Link>
+              <Link href="#mision" className={styles.navLink}>Sobre Nosotros</Link>
               <Link href="#proyectos" className={styles.navLink}>Proyectos</Link>
               <Link href="#contactos" className={styles.navLink}>Contactos</Link>
             </div>
@@ -71,18 +97,40 @@ export default function IpsumConstruction() {
               height={300}
               className={styles.heroLogo}
             />
-            <p className={styles.heroText}>
-              En Ipsum, nos dedicamos a construir un mejor futuro para las familias costarricenses a través de soluciones habitacionales de alta calidad. Con años de experiencia en la construcción de viviendas de interés social y proyectos de bonos de vivienda, nuestro compromiso es ofrecer hogares seguros, cómodos y accesibles que eleven la calidad de vida de cada uno de nuestros beneficiarios.
-            </p>
-            <p className={styles.heroText}>
-              Nuestro equipo está conformado por profesionales apasionados por el bienestar social y la sostenibilidad, lo que nos permite ejecutar proyectos con los más altos estándares de calidad, cumpliendo rigurosamente con las normativas nacionales e internacionales. En Ipsum, entendemos que una vivienda no es solo un lugar donde vivir, sino un espacio donde las familias pueden crecer, soñar y construir su futuro.
-            </p>
           </div>
         </div>
       </section>
 
       <section className={styles.missionVisionSection} id='mision'>
         <div className={styles.container}>
+          <div className={styles.aboutUs}>
+            <h1 className={styles.aboutUsTitulo}>Sobre Nosotros</h1>
+            <p>
+            Ofrecemos un servicio de consultoría y dirección técnica en la tramitología para bonos de vivienda, autorizados por Grupo Mutual, entidad bancaria autorizada en la gestión de bonos de vivienda.
+            </p>
+            <br />
+            <p>Nuestra constructora trabaja llave en mano, modalidad en donde la empresa se encarga de todo el proceso de construcción, como es el manejo de la cuadrilla que realizará la obra, la compra de materiales, así también como el trámite de los permisos de construcción. Así mismo se realizará la parte técnica que es requisito para la constitución del expediente para el trámite del bono de vivienda. El sistema constructivo para la construcción de las casas es en mampostería integral (block).
+            </p>
+            <br />
+            
+            <p>Un bono de vivienda es un subsidio que equivale a una donación o ayuda por parte del estado. Se otorga a familias de bajos recursos económicos, clase media, adultos mayores y personas con alguna discapacidad física que cumplan con las condiciones que la ley estipula para la obtención de este beneficio.</p>
+            <br />
+            <p>El BANHVI, dentro de sus requisitos generales, establece que para obtener bono de vivienda se necesita:</p>
+            <br />
+            <ol>
+              <li>Tener constituida una familia (con excepción a los adultos mayores).</li>
+              <li>No haber recibido bono con anterioridad.</li>
+              <li>Contar con máximo un lote propio. De contar con lote, puede solicitar el Bono para construir la vivienda en el lote propio</li>
+              <li>No poseer casa propia, a no ser que requiera remodelación, ampliación, mejoras o terminación (RAMT)</li>
+            </ol>
+            <br />
+            <p>Para IPSUM es necesario llevar a cabo un análisis exhaustivo acerca de las condiciones del núcleo familiar, con el objetivo de ofrecer una asesoría para la conformación del expediente y el tipo de bono al que puedan optar.</p>
+            
+
+            
+          </div>
+
+
           <div className={styles.missionVisionGrid}>
             <div style={{display:"flex", flexDirection: "column", placeContent: "center", placeItems: "center", gap: "1em"}}>
               <h2 className={styles.missionVisionTitle}>Misión</h2>
@@ -102,8 +150,8 @@ export default function IpsumConstruction() {
               <Image
                 src="/landing/vision.png"
                 alt="Vision illustration"
-                width={300}
-                height={300}
+                width={280}
+                height={280}
                 className={styles.missionVisionImage}
               />
               <p className={styles.missionVisionText}>
@@ -111,6 +159,8 @@ export default function IpsumConstruction() {
               </p>
             </div>
           </div>
+
+
         </div>
       </section>
 
@@ -153,36 +203,46 @@ export default function IpsumConstruction() {
           <div className={styles.contactGrid}>
             <div style={{width: "100%"}}>
               <h3 className={styles.contactFormTitle}>Escribenos</h3>
-              <form className={styles.contactForm}>
+              <form className={styles.contactForm} onSubmit={handleSubmit}>
                 <input
                   type="text"
                   placeholder="Nombre"
+                  name='nombre'
                   className={styles.formInput}
                   required
+                  onChange={handleChange}
                 />
                 <input
                   type="text"
                   placeholder="Apellido"
+                  name='apellido'
                   className={styles.formInput}
                   required
+                  onChange={handleChange}
                 />
                 <input
                   type="email"
+                  name='email'
                   placeholder="Correo electrónico"
                   className={styles.formInput}
                   required
+                  onChange={handleChange}
                 />
                 <input
                   type="tel"
+                  name='tel'
                   placeholder="Teléfono"
                   className={styles.formInput}
                   required
+                  onChange={handleChange}
                 />
                 <textarea
                   placeholder="Mensaje"
+                  name='mensaje'
                   rows={5}
                   className={styles.formTextarea}
                   required
+                  onChange={handleChange}
                 />
                 <button
                   type="submit"
@@ -203,7 +263,7 @@ export default function IpsumConstruction() {
                 </div>
                 <div className={styles.contactInfoItem}>
                   <Mail />
-                  <span>info@ipsum.com</span>
+                  <span>info@ipsumcr.com</span>
                 </div>
                 <div className={styles.contactInfoItem}>
                   <MapPin />
