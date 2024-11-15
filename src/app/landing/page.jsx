@@ -21,28 +21,28 @@ export default function IpsumConstruction() {
       img: "/landing/art59/img1.jpg",
       icon: "/landing/art59/icono.gif",
       description: "El Bono Artículo 59 responde a la directriz 27 del Banhvi y es una modalidad de subsidio que se otorga a las familias con necesidades especiales, facilitando el acceso a una vivienda adecuada bajo condiciones específicas y flexibles. El subsidio no incluye Gastos Administrativos y permisos de construcción",
-      linkTo: "http://localhost:3000/landing/art59"
+      linkTo: "https://www.ipsumcr.com/landing/art59"
     },
     {
       nombre: "CLP",
       img: "/landing/clp/img1.jpg",
       icon: "/landing/clp/icono.gif",
       description: "Para poder construir una casa, es necesario que la familia tenga un lote propio inscrito en el registro nacional a nombre de la persona que realiza el trámite, con plano de catastro visado por la municipalidad, acceso a servicios públicos (agua y luz) y estar al día en la municipalidad.",
-      linkTo: "http://localhost:3000/landing/clp"
+      linkTo: "https://www.ipsumcr.com/landing/clp"
     },
     {
       nombre: "RAMT",
       img: "/landing/ramt/img1.jpg",
       icon: "/landing/ramt/icono.gif",
       description: "Permite a las familias realizar mejoras significativas en sus hogares mediante un bono de vivienda, facilitando el financiamiento para proyectos de remodelación, ampliación, mejora o terminación de su vivienda. Este programa está diseñado para apoyar a aquellas familias que ya poseen una vivienda",
-      linkTo: "http://localhost:3000/landing/ramt"
+      linkTo: "https://www.ipsumcr.com/landing/ramt"
     },
     {
       nombre: "Credito",
       img: "/landing/credito/img1.jpg",
       icon: "/landing/credito/icono.gif",
       description: "Modalidad de financiamiento diseñada para que las familias puedan acceder a una vivienda digna mediante la combinación de un bono de vivienda y un crédito complementario. Permite cubrir una parte del costo de la vivienda con el bono, que la familia puede pagar de manera gradual, adaptándose a sus ingresos",
-      linkTo: "http://localhost:3000/landing/credito"
+      linkTo: "https://www.ipsumcr.com/landing/credito"
     }
   ]
 
