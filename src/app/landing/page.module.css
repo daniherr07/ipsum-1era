@@ -2,11 +2,13 @@
 
 
   .container {
-    max-width: 1350px;
+    max-width: 1280px;
     margin-left: auto;
     margin-right: auto;
     padding-left: 1rem;
     padding-right: 1rem;
+    display: flex;
+    flex-direction: column;
   }
   
   .nav {
@@ -73,6 +75,8 @@
 
   .aboutUs{
     margin-bottom: 1em;
+    width: 80%;
+    place-self: center;
 
     & .aboutUsTitulo{
       color: #03579B;
@@ -83,7 +87,9 @@
   }
   
   .missionVisionGrid {
-    display: grid;
+   display: flex;
+   flex-direction: row;
+   margin-top: 3em;
     gap: 3rem;
   }
   
@@ -124,7 +130,7 @@
     flex-direction: row;
     place-content: center;
     place-items: center;
-    gap: 1em;
+    gap: 0.5em;
     position: relative;
     width: 100%;
     height: 100%;
@@ -137,13 +143,19 @@
       flex-direction: column;
       border-radius: 10px;
       width: 100%;
-      min-height: 650px;
+      min-height: 700px;
       height: max-content;
 
       & .cardTitle{
+        position: relative;
         color: #03579B;
         text-align: center;
         padding: 10px;
+        height: 4.3em;
+        font-size: 93%;
+        display: flex;
+        place-content: center;
+        place-items: center;
       }
 
       & .cardImage{
@@ -211,6 +223,7 @@
     place-items: center;
     place-content: center;
     gap: 3rem;
+    grid-template-columns: repeat(2, 1fr);
   }
   
   .contactFormTitle {
@@ -291,12 +304,46 @@
   }
   
   /* Responsive adjustments */
-  @media (min-width: 768px) {
+  @media (max-width: 800px) {
     .missionVisionGrid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
     }
   
     .contactGrid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    .projectsCards {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap; /* Allows items to wrap within the column */
+      height: 1300px; /* Adjust this to control the height and trigger wrapping */
+
+      & .cardBono{
+        width: 45vw;
+        min-height: 80px;
+        height: 600px;
+      }
+    }
+
+    .navLink{
+      display: none;
+    }
+    .missionVisionGrid{
+      flex-direction: column;
+    }
+
+    .missionVisionImage {
+      width: 70vw;
+      height: auto;
+      
+    }
+
+    & .cardDesc{
+      font-size: 0.8rem;
+    }
+
+    .contactSection{
+      height: fit-content;
     }
   }

@@ -8,11 +8,13 @@
 }
 
 .seccion{
+  width: 90vw;
   width: inherit;
   display: flex;
   flex-direction: column;
   place-content: center;
   place-items: center;
+  
 }
 
 .columnas{
@@ -20,7 +22,7 @@
   display: flex;
   flex-direction: row;
   place-content: center;
-  gap: 5em;
+  gap: 3em;
   place-items: center;
 }
 
@@ -38,12 +40,12 @@
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
   gap: 10px;
-  width: 45vw;
+  width: 40vw;
   margin: 1em;
-  aspect-ratio: 1/1;
 }
 
 .imagen{
+  position: relative;
   width: 100%;
 }
 
@@ -52,27 +54,37 @@
   flex-direction: column;
   place-content: center;
   place-items: center;
-  width:45vw;
+  width:40vw;
+  font-size: calc(11px + 0.5vw);
 }
 
 .title{
   width: 100%;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: calc(17px + 0.5vw);
   margin: 20px;
 }
 
 .warning{
   margin: 10px;
-  width: 55ch;
   color: rgb(161, 0, 0);
+  font-size: calc(10px + 0.5vw);
 
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 900px) {
   .columnas{
-
     flex-direction: column;
 
   }
+
+  .imagenes{
+    width: 70vw;
+  }
+
+  .descripcion{
+    width:70vw;
+  }
+
+
 }

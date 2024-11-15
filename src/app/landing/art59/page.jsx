@@ -53,10 +53,10 @@ export default function Articulo59() {
 
       <div className={styles.columnas}>
           <div className={styles.imagenes}>
-              <Image src={informacion[0].croquis} width={300} height={300} alt="imagen"></Image>
-              <Image src={informacion[0].img1} width={300} height={300} alt="imagen"></Image>
-              <Image src={informacion[0].img2} width={300} height={300} alt="imagen"></Image>
-              <Image src={informacion[0].img3} width={300} height={300} alt="imagen"></Image>
+              <Image src={informacion[0].croquis} width={300} height={300} alt="imagen" className={styles.imagen}></Image>
+              <Image src={informacion[0].img1} width={300} height={300} alt="imagen" className={styles.imagen}></Image>
+              <Image src={informacion[0].img2} width={300} height={300} alt="imagen" className={styles.imagen}></Image>
+              <Image src={informacion[0].img3} width={300} height={300} alt="imagen" className={styles.imagen}></Image>
           </div>
 
           <article className={styles.descripcion}>
@@ -150,10 +150,10 @@ export default function Articulo59() {
 
 
           <div className={styles.imagenes}>
-            <Image src={informacion[1].croquis} width={300} height={300} alt='imagen'></Image>
-            <Image src={informacion[1].img1} width={300} height={300} alt='imagen'></Image>
-            <Image src={informacion[1].img2} width={300} height={300} alt='imagen'></Image>
-            <Image src={informacion[1].img3} width={300} height={300} alt='imagen'></Image>
+            <Image src={informacion[1].croquis} width={300} height={300} alt='imagen' className={styles.imagen}></Image>
+            <Image src={informacion[1].img1} width={300} height={300} alt='imagen' className={styles.imagen}></Image>
+            <Image src={informacion[1].img2} width={300} height={300} alt='imagen' className={styles.imagen}></Image>
+            <Image src={informacion[1].img3} width={300} height={300} alt='imagen' className={styles.imagen}></Image>
           </div>
 
           
@@ -179,10 +179,10 @@ export default function Articulo59() {
 
         <div className={styles.columnas}>
           <div className={styles.imagenes}>
-            <Image src={informacion[2].croquis} width={300} height={300} alt='imagen'></Image>
-            <Image src={informacion[2].img1} width={300} height={300} alt='imagen'></Image>
-            <Image src={informacion[2].img2} width={300} height={300} alt='imagen'></Image>
-            <Image src={informacion[2].img3} width={300} height={300} alt='imagen'></Image>
+            <Image src={informacion[2].croquis} width={300} height={300} alt='imagen' className={styles.imagen}></Image>
+            <Image src={informacion[2].img1} width={300} height={300} alt='imagen' className={styles.imagen}></Image>
+            <Image src={informacion[2].img2} width={300} height={300} alt='imagen' className={styles.imagen}></Image>
+            <Image src={informacion[2].img3} width={300} height={300} alt='imagen' className={styles.imagen}></Image>
           </div>
 
           <article className={styles.descripcion}>
@@ -275,7 +275,7 @@ export default function Articulo59() {
 
 
           <div className={styles.imagenes}>
-            <Image src={informacion[3].croquis} width={300} height={300} alt='imagen' className={styles.imagen}></Image>
+            <Image src={informacion[3].croquis} width={300} height={300} alt='imagen' className={styles.imagen} style={{objectFit: "fill"}}></Image>
             <Image src={informacion[3].img1} width={300} height={300} alt='imagen' className={styles.imagen}></Image>
             <Image src={informacion[3].img2} width={300} height={300} alt='imagen' className={styles.imagen}></Image>
             <Image src={informacion[3].img3} width={300} height={300} alt='imagen' className={styles.imagen}></Image>
