@@ -15,7 +15,7 @@ export default function Footer(){
           <div className={styles.contactGrid}>
             <div style={{width: "100%"}}>
               <h3 className={styles.contactFormTitle}>Escribenos</h3>
-              <form action="https://formsubmit.co/45f6bb2607cbf2827937f6b45dc49749" method="POST" className={styles.contactForm}>
+              <form action="https://formsubmit.co/mhernandez@ipsumcr.com.com" method="POST" className={styles.contactForm}>
               <input
                   type="text"
                   placeholder="Nombre"
@@ -60,7 +60,7 @@ export default function Footer(){
                 
                 <input type="hidden" name="_subject" value="Nuevo solicitud de información" />
                 <input type="hidden" name="_autoresponse" value="Gracias por contactarnos, IPSUM se podrá en contacto contigo pronto." />
-                <input type="hidden" name="_next" value="http://localhost:3000/landing/sent"></input>
+                <input type="hidden" name="_next" value="https://www.ipsumcr.com/landing/sent"></input>
                 <input type="hidden" name="_template" value="table"></input>
 
                 <button

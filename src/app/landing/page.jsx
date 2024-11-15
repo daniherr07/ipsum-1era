@@ -19,7 +19,7 @@ export default function IpsumConstruction() {
       nombre: "Bono Artículo 59",
       img: "/landing/art59/img1.jpg",
       icon: "/landing/art59/icono.gif",
-      description: "El Bono Artículo 59 responde a la directriz 27 del Banhvi y es una modalidad de subsidio que se otorga a las familias con necesidades especiales, facilitando el acceso a una vivienda adecuada bajo condiciones específicas y flexibles. El subsidio no incluye Gastos Administrativos y permisos de construcción",
+      description: "El Bono Artículo 59 responde a la directriz 27 del Banhvi y es una modalidad de subsidio que se otorga a las familias con necesidades especiales, facilitando el acceso a una vivienda adecuada bajo condiciones específicas y flexibles. El subsidio no incluye Gastos Administrativos",
       linkTo: "https://www.ipsumcr.com/landing/art59"
     },
     {
@@ -112,7 +112,7 @@ export default function IpsumConstruction() {
                 className={styles.missionVisionImage}
               />
               <p className={styles.missionVisionText}>
-                Brindar soluciones habitacionales accesibles y de calidad que mejoren la calidad de vida de las familias costarricenses, mediante la construcción de viviendas de bien social y bonos de vivienda, comprometidos con la sostenibilidad, el respeto al entorno y la dignidad de cada hogar.
+                Somos una empresa dedicada a la construcción, gestión y diseño obras civiles integrales, promoviendo edificaciones sostenibles y de alta calidad. Con un enfoque que va dirigido hacia la vivienda unifamiliar de bien social, brindando a las familias costarricenses espacios dignos y seguros. A través de nuestra experiencia y compromiso contribuimos al desarrollo de las comunidades y al crecimiento del sector de la construcción
               </p>
             </div>
             <div style={{display:"flex", flexDirection: "column", placeContent: "center", placeItems: "center", gap: "1em"}}>
@@ -125,7 +125,7 @@ export default function IpsumConstruction() {
                 className={styles.missionVisionImage}
               />
               <p className={styles.missionVisionText}>
-                Ser la empresa líder en construcción de viviendas sociales en Costa Rica, reconocida por nuestra excelencia en el diseño, calidad y accesibilidad de nuestras soluciones habitacionales, y por contribuir al desarrollo de comunidades inclusivas y sostenibles, donde cada familia tenga la oportunidad de un hogar seguro y digno.
+              Ser una de las empresas lideres en construcción integral en Costa Rica, enfocada por ofrecer soluciones innovadoras, accesibles y de alta calidad en obras civiles, con un enfoque especial en la construcción de viviendas unifamiliares de bien social, mejorando así la calidad de las comunidades y transformando positivamente la vida de las familias costarricenses.  
               </p>
             </div>
           </div>

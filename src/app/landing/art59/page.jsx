@@ -49,51 +49,57 @@ export default function Articulo59() {
 
     <main className={styles.main}>
       <section className={styles.seccion}>
-      <h1 className={styles.nombre}>{informacion[0].nombre}</h1>
+        <h1 className={styles.nombre}>Vivienda de 42 m<sup>2</sup> Totalmente habitable</h1>
 
-      <div className={styles.columnas}>
+        <div className={styles.columnas}>
           <div className={styles.imagenes}>
-              <Image src={informacion[0].croquis} width={300} height={300} alt="imagen" className={styles.imagen}></Image>
-              <Image src={informacion[0].img1} width={300} height={300} alt="imagen" className={styles.imagen}></Image>
-              <Image src={informacion[0].img2} width={300} height={300} alt="imagen" className={styles.imagen}></Image>
-              <Image src={informacion[0].img3} width={300} height={300} alt="imagen" className={styles.imagen}></Image>
+            <Image src={informacion[0].croquis} width={300} height={300} alt="imagen" className={styles.imagen}></Image>
+            <Image src={informacion[0].img1} width={300} height={300} alt="imagen" className={styles.imagen}></Image>
+            <Image src={informacion[0].img2} width={300} height={300} alt="imagen" className={styles.imagen}></Image>
+            <Image src={informacion[0].img3} width={300} height={300} alt="imagen" className={styles.imagen}></Image>
           </div>
 
           <article className={styles.descripcion}>
-              <h2 className={styles.title}>Vivienda de 50m<sup>2</sup>. <br />Totalmente habitable con todos los sistemas básicos en funcionamiento para familias de 5 miembros o más</h2>
+            <h2 className={styles.title}>
+              Vivienda de 42 m<sup>2</sup>. <br /> Totalmente habitable con todos los sistemas básicos en funcionamiento para familias de 4 miembros o menos
+            </h2>
 
-              <h3 className={styles.subtitle}>Acabados de Vivienda</h3>
-              <ul>
-                  <li>Construcción en bloques de concreto.</li>
-                  <li>Repello y pintura exterior (pintura existente en muestrario).</li>
-                  <li>Cielo raso tablilla plástica blanca económica en toda la casa.</li>
-                  <li>Ventanas en marco de aluminio natural, vidrio fijo transparente y celosías.</li>
-                  <li>Fregadero en acero inoxidable de un tanque y una batea con mueble chorreado en concreto.</li>
-                  <li>Pila de lavar roja de un tanque y una batea.</li>
-                  <li>Sanitario y lavamanos tipo económico.</li>
-                  <li>Puertas principales en pino y liviana en baño.</li>
-                  <li>Sistema eléctrico completo en el interior de la vivienda.</li>
-                  <li>Canoas y bajantes en PVC.</li>
-                  <li>Tanque séptico y drenaje.</li>
-                  <li>Grifería y accesorios en general tipo económicos.</li>
-                  <li>Acabado de piso lijado gris.</li>
-                  <li>Aceras de acceso a la vivienda.</li>
-              </ul>
+            <h3 className={styles.subtitle}>Acabados de Vivienda</h3>
+            <ul>
+              <li>Construcción en bloques de concreto.</li>
+              <li>Repello y pintura exterior (pintura existente en muestrario).</li>
+              <li>Cielo raso tablilla plástica blanca económica en toda la casa.</li>
+              <li>Ventanas en marco de aluminio natural, vidrio fijo transparente y celosías.</li>
+              <li>Fregadero en acero inoxidable de un tanque y una batea con mueble chorreado en concreto.</li>
+              <li>Pila de lavar roja de un tanque y una batea.</li>
+              <li>Sanitario y lavamanos tipo económico.</li>
+              <li>Puertas principales en pino y liviana en baño.</li>
+              <li>Sistema eléctrico completo en el interior de la vivienda.</li>
+              <li>Canoas y bajantes en PVC.</li>
+              <li>Tanque séptico y drenaje.</li>
+              <li>Grifería y accesorios en general tipo económicos.</li>
+              <li>Acabado de piso lijado gris.</li>
+              <li>Acera de acceso a la vivienda.</li>
+            </ul>
 
-              <h3 className={styles.subtitle}>No incluye:</h3>
-              <ul>
-                  <li>Enchapes (cerámica y azulejos).</li>
-                  <li>Acometida eléctrica del límite de la propiedad a casa (poste con caja de medidor y accesorios).</li>
-                  <li>Repello y pintura internas.</li>
-                  <li>Puertas y marcos en dormitorios.</li>
-              </ul>
+            <h3 className={styles.subtitle}>No incluye:</h3>
+            <ul>
+              <li>Enchapes (cerámica y azulejos).</li>
+              <li>Acometida eléctrica del límite de la propiedad a casa (poste con caja de medidor y accesorios).</li>
+              <li>Repello y pintura internas.</li>
+              <li>Puertas y marcos en dormitorios.</li>
+            </ul>
 
-              <p className={styles.warning}>
-                  <em>El art.59 responde a la directriz 27 del Banhvi, por lo tanto, no permite cambios en área, especificaciones y acabados. <span>El subsidio no incluye Gastos Administrativos y permisos de construcción.</span></em>
-              </p>
+            <p className={styles.warning}>
+              <em>
+                El art.59 responde a la directriz 27 del Banhvi, por lo tanto, no permite cambios en área, especificaciones y acabados.{" "}
+                <span>El subsidio no incluye Gastos Administrativos y permisos de construcción.</span>
+              </em>
+            </p>
           </article>
-      </div>
+        </div>
       </section>
+
 
       <br />
       <hr />
