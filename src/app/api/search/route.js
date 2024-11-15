@@ -15,7 +15,7 @@ export async function POST(request) {
   
 
   if (tagsArray[0] == '') {
-    return NextResponse.redirect(new URL('/search', request.url), {
+    return NextResponse.redirect(new URL('/protected/search', request.url), {
       status: 303,
   });
   } else{

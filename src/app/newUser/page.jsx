@@ -9,11 +9,12 @@ export default function Login(){
     const router = useRouter()
     const searchParams = useSearchParams()
     const error = searchParams.get('error')
-    const newUserModal = searchParams.get('newUser')
 
     const [formData, setFormData] = useState({
         user: '',
+        email: '',
         psw: '',
+        psw2: ''
       });
     
       const handleChange = (e) => {
@@ -27,7 +28,7 @@ export default function Login(){
       const handleSubmit = async (e) => {
         e.preventDefault();
     
-          const response = await fetch('/api/login', {
+          const response = await fetch('/api/changePassword', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -38,16 +39,21 @@ export default function Login(){
           const result = await response.json();
           console.log(result);
 
-          if (result.toChange) {
-            router.push('/newUser');
+          
+          if (result.pswError) {
+            router.push('/newUser?error=Las_contraseñas_no_coinciden');
           }
 
-          if (result.toHome) {
-            router.push(`/protected/home?user=${result.user}`);
+          if (result.userError) {
+            router.push('/newUser?error=Usuario_incorrecto');
           }
 
-          if (result.toError){
-            router.push('/login?error=authentication_failed')
+          if (result.emailError) {
+            router.push('/newUser?error=Email_incorrecto');
+          }
+
+          if (result.toLogin){
+            router.push('/login?newUser=true')
           }
       };
 
@@ -56,16 +62,20 @@ export default function Login(){
         <div className={style.body}>
             <main className={style.main}>
                 <Image src={'logo.svg'} width={20} height={20}  className={style.logo} alt='logo'/>
+                <h1>Por favor cambie su contraseña</h1>
                 {error && <p style={{ color: 'red' }}>Hubo un error: {error}</p>}
-                {newUserModal && <p style={{ color: 'green' }}>Contraseña cambiada exitosamente</p>}
                 <form className={style.form} onSubmit={handleSubmit} >
                     <label htmlFor="user" className={style.label}>ID</label>
                     <input type="text" name="user" className={style.idForm} id="idForm" onChange={handleChange} required/>
 
+                    <label htmlFor="email" className={style.label}>Email</label>
+                    <input type="text" name="email" className={style.idForm} id="idForm" onChange={handleChange} required/>
+
                     <label htmlFor="psw" className={style.label}>Contraseña</label>
                     <input type="password" name="psw" id="pswForm" className={style.pswForm} onChange={handleChange} required/>
 
-                    <p className={style.forget}>¿Olvidó la contraseña?</p>
+                    <label htmlFor="psw2" className={style.label}> Confirmar Contraseña</label>
+                    <input type="password" name="psw2" id="pswForm" className={style.pswForm} onChange={handleChange} required/>
                     <button className={style.submit} type='submit' >Iniciar Sesion</button>
                 </form>
                 

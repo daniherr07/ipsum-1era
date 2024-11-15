@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
-  return NextResponse.redirect(new URL('/userList', request.url), {
+  return NextResponse.redirect(new URL('/protected/userList', request.url), {
     status: 303,
 });
 }

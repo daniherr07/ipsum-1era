@@ -1,5 +1,4 @@
 import style from "../newproject.module.css"
-import Image from "next/image"
 export default function Miembrosdelafamilia(){
     return(
         <>

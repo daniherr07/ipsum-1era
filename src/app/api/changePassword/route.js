@@ -1,7 +1,6 @@
 // src/app/api/login/route.js
 
 import { NextResponse } from 'next/server';
-import { serialize } from 'cookie';
 
 export async function POST(request) {
     // Obtener los datos del formulario en JSON
@@ -9,7 +8,7 @@ export async function POST(request) {
     console.log('Datos del formulario:', formData);
 
     // Hacer un POST a tu backend
-    const backendResponse = await fetch('https://ipsum-backend.vercel.app/login', {
+    const backendResponse = await fetch('https://ipsum-backend.vercel.app/changePassword', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -20,17 +19,20 @@ export async function POST(request) {
     // Manejar la respuesta del backend si es necesario
     const backendData = await backendResponse.json();
 
-    if (backendData.authorized) {
-      if (backendData.newUser) {
-        return NextResponse.json({toChange: true});
-      } else{
-        const response = NextResponse.json({ toHome: true, user: backendData.user });
-        response.cookies.set('auth', 'true', { httpOnly: true, secure: false, maxAge: 60 * 60 * 24 });
-        return response;
-      }
-    } else{
-      return NextResponse.json({toError: true});
+    if (backendData.pswError) {
+      return NextResponse.json({pswError: true});
     }
+
+    if (backendData.userError) {
+      return NextResponse.json({userError: true});
+    }
+
+    if (backendData.emailError) {
+      return NextResponse.json({emailError: true});
+    }
+    
+    return NextResponse.json({toLogin: true});
+
 
     
 }

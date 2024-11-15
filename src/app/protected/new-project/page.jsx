@@ -1,7 +1,7 @@
 'use client'
 import NavBar from '../components/navbar/Navbar';
 import { useState } from 'react';
-import Datosdelproyecto from '../new-project/components/Datosdelproyecto';
+import Datosdelproyecto from './components/Datosdelproyecto';
 import style from "../new-project/newproject.module.css"
 import Image from 'next/image';
 import Miembrosdelafamilia from './components/Miembrosdelafamilia';
@@ -62,19 +62,19 @@ export default function newproject(){
                 <ul>
                     <li className={style.itemleft}>
                         <div className={style.optionleft} onClick={showDatosDelProyecto}>Datos del proyecto</div>
-                        <Image src={'arrow.svg'} width={20} height={10} className={style.arrow} />
+                        <Image src={'/arrow.svg'} width={20} height={10} className={style.arrow} />
                     </li>
                     <li className={style.itemleft}>
                         <div className={style.optionleft} onClick={showMiembrosDeLaFamilia}>Miembros de la familia</div>
-                        <Image src={'arrow.svg'} width={20} height={10} className={style.arrow} />
+                        <Image src={'/arrow.svg'} width={20} height={10} className={style.arrow} />
                     </li>
                     <li className={style.itemleft}>
                         <div className={style.optionleft} onClick={showDireccionDelProyecto}>Direccion del proyecto</div>
-                        <Image src={'arrow.svg'} width={20} height={10} className={style.arrow} />
+                        <Image src={'/arrow.svg'} width={20} height={10} className={style.arrow} />
                     </li>
                     <li className={style.itemleft}>
                         <div className={style.optionleft} onClick={showDatosAdministrativos}>Datos administrativos</div>
-                        <Image src={'arrow.svg'} width={20} height={10} className={style.arrow} />
+                        <Image src={'/arrow.svg'} width={20} height={10} className={style.arrow} />
                     </li>
                 </ul>
             </aside>

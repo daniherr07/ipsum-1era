@@ -89,7 +89,7 @@ export default function Card({item}) {
 
           {/* Edit Button */}
           <button className={styles.editButton}>
-            <Image src={"pen.svg"} className={styles.editIcon} width={20} height={20} alt='icono'/>
+            <Image src={"/pen.svg"} className={styles.editIcon} width={20} height={20} alt='icono'/>
             Editar
           </button>
 
@@ -102,13 +102,13 @@ export default function Card({item}) {
           {/* Communication Buttons */}
           <div className={styles.communicationButtons}>
             <button className={styles.callButton}>
-              <Image src={"call.svg"}  width={20} height={20} alt='llamada'/>
+              <Image src={"/call.svg"}  width={20} height={20} alt='llamada'/>
             </button>
             <button className={styles.emailButton}>
-              <Image src={"mail.svg"}  width={20} height={20} alt='correo' />
+              <Image src={"/mail.svg"}  width={20} height={20} alt='correo' />
             </button>
             <button className={styles.whatsappButton}>
-              <Image src={"whatsapp.svg"}  width={20} height={20} alt='wasap'/>
+              <Image src={"/whatsapp.svg"}  width={20} height={20} alt='wasap'/>
             </button>
           </div>
 
