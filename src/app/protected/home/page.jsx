@@ -8,12 +8,16 @@ import NavBar from '../components/navbar/Navbar';
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation'
 
-
+function Search() {
+    const searchParams = useSearchParams()
+    const user = searchParams.get('user')
+   
+    return <NavBar logo={false} searchBar={false} user={user}/>
+  }
 
 
 export default function Home() {
-    const searchParams = useSearchParams()
-    const user = searchParams.get('user')
+
 
     const data = ['Bono: Articulo 59', 'Bono: CLP', 'Entidad: Mutual', 'Entidad: Mucap'].map(
         item => ({ label: item, value: item })
@@ -23,7 +27,7 @@ export default function Home() {
     return(
         <>
         <Suspense>
-            <NavBar logo={false} searchBar={false} user={user}/>
+            <Search></Search>
         </Suspense>
         
 

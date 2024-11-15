@@ -4,12 +4,24 @@ import Image from 'next/image'
 import style from './login.module.css'
 import { useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
+import { Suspense } from 'react'
 
-export default function Login(){
-    const router = useRouter()
+function Search() {
     const searchParams = useSearchParams()
     const error = searchParams.get('error')
     const newUserModal = searchParams.get('newUser')
+   
+    return (
+        <>
+        {error && <p style={{ color: 'red' }}>Hubo un error: {error}</p>}
+        {newUserModal && <p style={{ color: 'green' }}>Contraseña cambiada exitosamente</p>}
+        </>
+    )
+}
+
+export default function Login(){
+    const router = useRouter()
+
 
     const [formData, setFormData] = useState({
         user: '',
@@ -53,24 +65,26 @@ export default function Login(){
 
     return(
         <>
-        <div className={style.body}>
-            <main className={style.main}>
-                <Image src={'logo.svg'} width={20} height={20}  className={style.logo} alt='logo'/>
-                {error && <p style={{ color: 'red' }}>Hubo un error: {error}</p>}
-                {newUserModal && <p style={{ color: 'green' }}>Contraseña cambiada exitosamente</p>}
-                <form className={style.form} onSubmit={handleSubmit} >
-                    <label htmlFor="user" className={style.label}>ID</label>
-                    <input type="text" name="user" className={style.idForm} id="idForm" onChange={handleChange} required/>
+        
+            <div className={style.body}>
+                <main className={style.main}>
+                    <Image src={'logo.svg'} width={20} height={20}  className={style.logo} alt='logo'/>\
+                    <Suspense>
+                        <Search></Search>
+                    </Suspense>
+                    <form className={style.form} onSubmit={handleSubmit} >
+                        <label htmlFor="user" className={style.label}>ID</label>
+                        <input type="text" name="user" className={style.idForm} id="idForm" onChange={handleChange} required/>
 
-                    <label htmlFor="psw" className={style.label}>Contraseña</label>
-                    <input type="password" name="psw" id="pswForm" className={style.pswForm} onChange={handleChange} required/>
+                        <label htmlFor="psw" className={style.label}>Contraseña</label>
+                        <input type="password" name="psw" id="pswForm" className={style.pswForm} onChange={handleChange} required/>
 
-                    <p className={style.forget}>¿Olvidó la contraseña?</p>
-                    <button className={style.submit} type='submit' >Iniciar Sesion</button>
-                </form>
-                
-            </main>
-        </div>
+                        <p className={style.forget}>¿Olvidó la contraseña?</p>
+                        <button className={style.submit} type='submit' >Iniciar Sesion</button>
+                    </form>
+                    
+                </main>
+            </div>
         </>
     )
 }
