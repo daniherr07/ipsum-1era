@@ -3,46 +3,32 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-import Footer from './Footer'
-import NavBar from './NavBar'
-
+import {Phone, Mail, MapPin } from 'lucide-react'
 import styles from './page.module.css'
-
-
+import { CircularProgress } from '@mui/material'
+import { useEffect } from 'react'
 
 export default function IpsumConstruction() {
   const [currentSlide, setCurrentSlide] = useState(0)
-  
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    alert("Correo enviado correctamente!")
+  }, [])
 
   
   const projects = [
     {
-      nombre: "Artículo 59",
-      img: "/landing/art59/img1.jpg",
-      icon: "/landing/art59/icono.gif",
-      description: "El Bono Artículo 59 responde a la directriz 27 del Banhvi y es una modalidad de subsidio que se otorga a las familias con necesidades especiales, facilitando el acceso a una vivienda adecuada bajo condiciones específicas y flexibles. El subsidio no incluye Gastos Administrativos y permisos de construcción",
-      linkTo: "http://localhost:3000/landing/art59"
+      image: '/landing/img2.jpg?height=600&width=800',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sagittis ultrices nisi et convallis. Phasellus iaculis vehicula eros.'
     },
     {
-      nombre: "CLP",
-      img: "/landing/clp/img1.jpg",
-      icon: "/landing/clp/icono.gif",
-      description: "Para poder construir una casa, es necesario que la familia tenga un lote propio inscrito en el registro nacional a nombre de la persona que realiza el trámite, con plano de catastro visado por la municipalidad, acceso a servicios públicos (agua y luz) y estar al día en la municipalidad.",
-      linkTo: "http://localhost:3000/landing/clp"
+      image: '/landing/img1.jpg?height=600&width=800',
+      description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
     },
     {
-      nombre: "RAMT",
-      img: "/landing/ramt/img1.jpg",
-      icon: "/landing/ramt/icono.gif",
-      description: "Permite a las familias realizar mejoras significativas en sus hogares mediante un bono de vivienda, facilitando el financiamiento para proyectos de remodelación, ampliación, mejora o terminación de su vivienda. Este programa está diseñado para apoyar a aquellas familias que ya poseen una vivienda",
-      linkTo: "http://localhost:3000/landing/ramt"
-    },
-    {
-      nombre: "Credito",
-      img: "/landing/credito/img1.jpg",
-      icon: "/landing/credito/icono.gif",
-      description: "Modalidad de financiamiento diseñada para que las familias puedan acceder a una vivienda digna mediante la combinación de un bono de vivienda y un crédito complementario. Permite cubrir una parte del costo de la vivienda con el bono, que la familia puede pagar de manera gradual, adaptándose a sus ingresos",
-      linkTo: "http://localhost:3000/landing/credito"
+      image: '/landing/img3.jpg?height=600&width=800',
+      description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
     }
   ]
 
@@ -56,7 +42,7 @@ export default function IpsumConstruction() {
 
   return (
     <div>
-      <NavBar></NavBar>
+      
 
       <section className={styles.heroSection} id='inicio'>
         <div className={styles.container}>
@@ -138,27 +124,109 @@ export default function IpsumConstruction() {
       <section className={styles.projectsSection} id='proyectos'>
         <div className={styles.container}>
           <h2 className={styles.projectsTitle}>Proyectos</h2>
-          <div className={styles.projectsCards}>
-          {
-            projects.map((item, key) =>(
-              <div className={styles.cardBono} key={key}>
-                <h1 className={styles.cardTitle}>{item.nombre}</h1>
-                <Image src={item.img} width={300} height={300} className={styles.cardImage}alt='Imagen'></Image>
-                <hr />
-                <div className={styles.cardInfo}>
-                  <Image src={item.icon} width={300} height={300} className={styles.cardIcon} alt='Icono'></Image>
-                  <p className={styles.cardDesc}>{item.description}</p>
-                </div>
-                
-                <Link href={item.linkTo} className={styles.cardLinkTo}>Ver detalles</Link>
-              </div>
-            ))
-          }
+          <div className={styles.projectsCarousel}>
+            
           </div>
         </div>
       </section>
 
-      <Footer></Footer>
+      <section className={styles.contactSection} id='contactos'>
+        <div className={styles.container}>
+          <h2 className={styles.contactTitle}>Contáctanos</h2>
+          <div className={styles.contactGrid}>
+            <div style={{width: "100%"}}>
+              <h3 className={styles.contactFormTitle}>Escribenos</h3>
+              <form action="https://formsubmit.co/45f6bb2607cbf2827937f6b45dc49749" method="POST" className={styles.contactForm}>
+              <input
+                  type="text"
+                  placeholder="Nombre"
+                  name='nombre'
+                  className={styles.formInput}
+                  required
+                />
+
+                <input
+                  type="text"
+                  placeholder="Apellido"
+                  name='apellido'
+                  className={styles.formInput}
+                  required
+                />
+
+                <input
+                  type="email"
+                  name='email'
+                  placeholder="Correo electrónico"
+                  className={styles.formInput}
+                  required
+                />
+
+                <input
+                  type="number"
+                  name='tel'
+                  placeholder="Teléfono"
+                  className={styles.formInput}
+                  required
+                />
+
+
+                <textarea
+                  placeholder="Mensaje"
+                  name='mensaje'
+                  rows={5}
+                  className={styles.formTextarea}
+                  required
+                  defaultValue={"Hola, estoy interesado en obtener información sobre IPSUM y los bonos de vivienda. ¿Podrían brindarme detalles sobre los requisitos y beneficios? ¡Gracias!"}
+                />
+                
+                <input type="hidden" name="_subject" value="Nuevo solicitud de información" />
+                <input type="hidden" name="_autoresponse" value="Gracias por contactarnos, IPSUM se podrá en contacto contigo pronto." />
+                <input type="hidden" name="_next" value="http://localhost:3000/landing/sent"></input>
+                <input type="hidden" name="_template" value="table"></input>
+
+                <button
+                  type="submit"
+                  className={styles.formSubmitButton}
+                  style={{display:"flex", flexDirection: "row", placeContent: "center", placeItems: "center", gap: "1em"}}
+                  onClick={() => setLoading(!loading)}
+                >
+                  {
+                    loading ?
+                    <p style={{display: "flex", placeItems: "center", placeContent: "center", gap: "1em"}}> Enviando consulta... <CircularProgress /> </p> 
+                    :
+                    <p style={{display: "flex", placeItems: "center", placeContent: "center", gap: "1em"}}>Enviar consulta <Mail /></p>
+                  }     
+                </button>
+              </form>
+            </div>
+            <div>
+              <h3 className={styles.contactInfoTitle}>Información de contacto</h3>
+              <div>
+                <div className={styles.contactInfoItem}>
+                  <Phone />
+                  <span>+506 4035-7370</span>
+                </div>
+                <div className={styles.contactInfoItem}>
+                  <Mail />
+                  <span>info@ipsumcr.com</span>
+                </div>
+                <div className={styles.contactInfoItem}>
+                  <MapPin />
+                  <span>Moravia, San José</span>
+                </div>
+                <Link
+                  href="https://wa.me/+50688082269/?text=Hola,%20estoy%20interesado%20en%20obtener%20información%20sobre%20IPSUM%20y%20los%20bonos%20de%20vivienda.%20¿Podrían%20brindarme%20detalles%20sobre%20los%20requisitos?%20¡Gracias!"
+                  className={styles.whatsappButton}
+                  style={{display:"flex", flexDirection: "row", placeContent: "center", placeItems: "center", gap: "1em"}}
+                >
+                  <span>¡Escribenos al Whatsapp!</span>
+                  <Image src="/landing/wasap.svg" width={40} height={40} alt='logo wasap'/>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }

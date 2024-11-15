@@ -2,7 +2,7 @@
 
 
   .container {
-    max-width: 1350px;
+    max-width: 1280px;
     margin-left: auto;
     margin-right: auto;
     padding-left: 1rem;
@@ -118,79 +118,47 @@
     margin-bottom: 3rem;
   }
   
-  .projectsCards {
-
-    display: flex;
-    flex-direction: row;
-    place-content: center;
-    place-items: center;
-    gap: 1em;
+  .projectsCarousel {
     position: relative;
-    width: 100%;
-    height: 100%;
-    
-
-    & .cardBono{
-      position: relative;
-      background-color: white;
-      display: flex;
-      flex-direction: column;
-      border-radius: 10px;
-      width: 100%;
-      min-height: 650px;
-      height: max-content;
-
-      & .cardTitle{
-        color: #03579B;
-        text-align: center;
-        padding: 10px;
-      }
-
-      & .cardImage{
-        width: 100%;
-        height: auto;
-      }
-
-      & .cardInfo{
-        display: flex;
-        flex-direction: column;
-        place-content: baseline;
-        padding: 10px;
-        gap: 10px;
-        place-items: center;
-        text-align: center;
-        height: fit-content;
-        flex: 1;
-
-        & .cardIcon{
-          width: 25%;
-          height: auto;
-        }
-  
-        & .cardDesc{
-          color: #000;
-        }
-      }
-
-
-
-      & .cardLinkTo{
-        flex-basis: 40px;
-        border-radius: 0 0 10px 10px;
-        position: relative;
-        bottom: 0;
-        width: 100%;
-        height: 20%;
-        background-color: #03579B;
-        color: #fff;
-        text-align: center;
-        display: flex;
-        place-items: center;
-        place-content: center;
-      }
-    }
   }
-
+  
+  .carouselButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0.5rem;
+    border-radius: 9999px;
+  }
+  
+  .carouselButtonLeft {
+    left: 1em;
+  }
+  
+  .carouselButtonRight {
+    right: 1em;
+  }
+  
+  .carouselImage {
+    position: relative;
+    height: 700px;
+    overflow: hidden;
+    border-radius: 0.5rem;
+  }
+  
+  .carouselCaption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+  }
+  
+  .carouselCaptionText {
+    font-size: 0.875rem;
+  }
   
   .contactSection {
     padding-top: 4rem;
