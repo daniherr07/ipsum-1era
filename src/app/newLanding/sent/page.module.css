@@ -1,0 +1,270 @@
+
+
+
+  .container {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .nav {
+    background-color: #03579B;
+    color: #fff;
+  }
+  
+  .navInner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4rem;
+  }
+  
+  .navLinks {
+    display: flex;
+  }
+  
+  .navLink {
+    margin-left: 2rem;
+    transition: color 0.2s;
+    color: white;
+    text-decoration: none;
+    
+  }
+  
+  .navLink:hover {
+    color: #60a5fa;
+  }
+  
+  .heroSection {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  
+  .heroContent {
+    text-align: center;
+    max-width: 56rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .heroLogo {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .heroText {
+    color: #4b5563;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    margin-bottom: 2rem;
+  }
+
+  
+  .missionVisionSection {
+    background-color: #f9fafb;
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+  }
+
+  .aboutUs{
+    margin-bottom: 1em;
+
+    & .aboutUsTitulo{
+      color: #03579B;
+      text-align: center;
+      margin-bottom: 1em;
+      font-size: 3rem;
+    }
+  }
+  
+  .missionVisionGrid {
+    display: grid;
+    gap: 3rem;
+  }
+  
+  .missionVisionTitle {
+    font-size: 2.25rem;
+    font-weight: bold;
+    color: #03579B;
+    margin-bottom: 2rem;
+  }
+  
+  .missionVisionImage {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem;
+  }
+  
+  .missionVisionText {
+    color: #4b5563;
+  }
+  
+  .projectsSection {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    background-color: #1f2937;
+    color: #fff;
+  }
+  
+  .projectsTitle {
+    font-size: 2.25rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .projectsCarousel {
+    position: relative;
+  }
+  
+  .carouselButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0.5rem;
+    border-radius: 9999px;
+  }
+  
+  .carouselButtonLeft {
+    left: 1em;
+  }
+  
+  .carouselButtonRight {
+    right: 1em;
+  }
+  
+  .carouselImage {
+    position: relative;
+    height: 700px;
+    overflow: hidden;
+    border-radius: 0.5rem;
+  }
+  
+  .carouselCaption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+  }
+  
+  .carouselCaptionText {
+    font-size: 0.875rem;
+  }
+  
+  .contactSection {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    background-color: #03579B;
+    color: #fff;
+  }
+  
+  .contactTitle {
+    font-size: 2.25rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .contactGrid {
+    display: grid;
+    place-items: center;
+    place-content: center;
+    gap: 3rem;
+  }
+  
+  .contactFormTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+  }
+  
+  .contactForm {
+    display: grid;
+    width: 100%;
+    gap: 1rem;
+  }
+  
+  .formInput {
+    padding: 0.5rem 0;
+    color: #ffffff;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+
+  }
+
+  .formInput::placeholder{
+    color: #fff;
+  }
+  
+  .formTextarea {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    color: #000;
+    background-color: none;
+    border: 1px solid #fff;
+  }
+  
+  .formSubmitButton {
+    background-color: #a0a0a0;
+    color: #ffffff;
+    font-size: 1.7rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    border: none;
+  }
+  
+  .contactInfoTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+  }
+  
+  .contactInfoItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .contactInfoItem > *:not(:first-child) {
+    margin-left: 0.75rem;
+  }
+  
+  .whatsappButton {
+    display: inline-flex;
+    align-items: center;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s;
+  }
+  
+  
+  .whatsappButton > *:not(:first-child) {
+    margin-left: 0.5rem;
+  }
+  
+  /* Responsive adjustments */
+  @media (min-width: 768px) {
+    .missionVisionGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .contactGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }

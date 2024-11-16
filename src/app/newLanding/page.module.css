@@ -1,0 +1,388 @@
+
+
+
+  .container {
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  /* #region NAVBAR*/
+  .nav {
+    background-color: transparent;
+    color: #fff;
+    position: fixed;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 550;
+    padding: 1em 2em 1em 2em;
+    background-color: #00000042;
+    
+  }
+
+  .navContainer{
+    display: flex;
+    flex-direction: row;
+    place-items: center;
+    place-content: space-between;
+  }
+  
+  .navInner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4rem;
+  }
+  
+  .navLinks {
+    display: flex;
+  }
+  
+  .navLink {
+    margin-left: 2rem;
+    transition: color 0.2s;
+    color: white;
+    text-decoration: none;
+    mix-blend-mode: difference;;
+    
+  }
+  
+  .navLink:hover {
+    color: #60a5fa;
+  }
+
+    /* #endregion*/
+  
+
+  /* #region HERO*/ 
+  .videoBack{
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    position: relative;
+    
+  }
+  .bgVideo{
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+    object-fit: fill;
+  }
+  
+  .heroContent {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    place-items: flex-start;
+    place-content: center;
+  }
+  
+  .heroLogo {
+    width: 60%;
+    height: auto;
+  }
+  
+  .heroText {
+    color: #ffffff;
+    font-size: clamp(16px, 2vw, 30px);
+    line-height: 1.75rem;
+    width: 70%;
+  }
+
+  /* #endregion */
+
+
+  /* #region Nosotros, Mision y Vision*/
+    .aboutUs{
+      display: flex;
+      flex-direction: column;
+      place-items: center;
+      place-content: space-around;
+    }
+
+    .buttons{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      gap: 1em;
+      place-content: center;
+      padding: 1em;
+    }
+
+    .button{
+      font-family: "Inter", sans-serif;
+      border: none;
+      box-shadow: 5px 7px #02244165;
+      width: 10em;
+      padding: 1em;
+      background-color: #03579B;
+      border-radius: 1px;
+      color: #f1f9ff;
+      font-weight: bold;
+      transition: all 0.2s ease-in-out;
+
+    }
+
+    .aboutInfo{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1em;
+      margin-right: 2em;
+      margin-left: 2em;
+    }
+
+    .aboutText{
+      display: flex;
+      place-content: center;
+      place-items: center;
+    }
+
+    .aboutUsImage{
+      width: 45vw !important;
+      height: auto;
+      box-shadow: 5px 7px #02244165;
+    }
+  /* #endregion */
+  
+
+  /* #region Bonos (Projects) */
+  .projectsSection {
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    color: #ffffff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    place-content: space-around;
+    
+  }
+  
+  .projectsTitle {
+    font-size: 2.25rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .projectsFondo{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 0.3;
+    transition: all 0.2s ease-in-out;
+    object-fit: cover;
+  }
+  
+  .keys{
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 19vw;
+    min-width: 19vw;
+    place-items: flex-start;
+    background-color: #000;
+  }
+
+  .key{
+    display: flex;
+    place-content: center;
+    place-items: center;
+    position: relative;
+    left: -8vw;
+
+    transition: all 0.2s ease-in-out;
+  }
+
+  .keyText, .keyImage{
+    background-color: #ffffff;
+  }
+
+  .keyText{
+    color: #03579B;
+    display: flex;
+    place-content: flex-end;
+    place-items: center;
+    width: 10vw;
+    padding-right: 2em;
+    height: 2.5em;
+
+  }
+
+  .keyImage{
+    padding: 0.9em;
+    border-radius: 50%;
+    width: 5em;
+    height: 5em;
+    position: relative;
+    right: 1.5em;
+  }
+
+  .projectsInfo{
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: repeat(2,1fr);
+    background-color: #000;
+    width: 50vw;
+    height: 50vh;
+  }
+
+  /* #endregion */
+
+  
+  /* #region Contacto*/
+
+  .contactSection {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    background-color: #03579B;
+    color: #fff;
+  }
+  
+  .contactTitle {
+    font-size: 2.25rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .contactGrid {
+    display: grid;
+    place-items: center;
+    place-content: center;
+    gap: 3rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .contactFormTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+  }
+  
+  .contactForm {
+    display: grid;
+    width: 100%;
+    gap: 1rem;
+  }
+  
+  .formInput {
+    padding: 0.5rem 0;
+    color: #ffffff;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+
+  }
+
+  .formInput::placeholder{
+    color: #fff;
+  }
+  
+  .formTextarea {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    color: #000;
+    background-color: none;
+    border: 1px solid #fff;
+  }
+  
+  .formSubmitButton {
+    background-color: #a0a0a0;
+    color: #ffffff;
+    font-size: 1.7rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    border: none;
+  }
+  
+  .contactInfoTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+  }
+  
+  .contactInfoItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .contactInfoItem > *:not(:first-child) {
+    margin-left: 0.75rem;
+  }
+  
+  .whatsappButton {
+    display: inline-flex;
+    align-items: center;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s;
+  }
+  
+  
+  .whatsappButton > *:not(:first-child) {
+    margin-left: 0.5rem;
+  }
+
+  /* #endregion */
+  
+  /* Responsive adjustments */
+  @media (max-width: 800px) {
+    .missionVisionGrid {
+      grid-template-rows: repeat(2, 1fr);
+    }
+  
+    .contactGrid {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    .projectsCards {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap; /* Allows items to wrap within the column */
+      height: 1300px; /* Adjust this to control the height and trigger wrapping */
+
+      & .cardBono{
+        width: 45vw;
+        min-height: 80px;
+        height: 600px;
+      }
+    }
+
+    .navLink{
+      display: none;
+    }
+    .missionVisionGrid{
+      flex-direction: column;
+    }
+
+    .missionVisionImage {
+      width: 70vw;
+      height: auto;
+      
+    }
+
+    & .cardDesc{
+      font-size: 0.8rem;
+    }
+
+    .contactSection{
+      height: fit-content;
+    }
+  }
