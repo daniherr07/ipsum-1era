@@ -97,9 +97,9 @@ export default function AccordionMenu() {
   return (  
     <>
     <h1 className={style.sectionTitle}>Nuevo Proyecto</h1>
-    <Suspsense>
+    <Suspense>
       <Search />
-    </Suspsense>
+    </Suspense>
 
     <aside className={style.accordioncontainer}>
       
