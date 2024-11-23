@@ -4,7 +4,7 @@ import styles from './page.module.css';
 const WhatsAppButton = () => {
   return (
     <a
-      href="https://wa.me/+50688082269/?text=Hola,%20estoy%20interesado%20en%20obtener%20información%20sobre%20IPSUM%20y%20los%20bonos%20de%20vivienda.%20¿Podrían%20brindarme%20detalles%20sobre%20los%20requisitos?%20¡Gracias!" // Replace with your WhatsApp number
+      href="https://wa.me/+50688082269/?text=Hola,%20estoy%20interesado%20en%20obtener%20información%20sobre%20IPSUM%20y%20sus%20servicios%20¿Podrían%20brindarme%20detalles%20sobre%20estos?%20¡Gracias!" // Replace with your WhatsApp number
       className={styles.whatsappButton}
       target="_blank"
       rel="noopener noreferrer"
