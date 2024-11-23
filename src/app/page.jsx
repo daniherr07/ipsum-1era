@@ -1,5 +1,5 @@
 
-import Landing from "./landing/page";
+import Landing from "./newLanding/page";
 
 
 export default function Home() {

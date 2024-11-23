@@ -27,8 +27,8 @@ export default function Nav() {
 
         {/* Desktop Menu */}
         <div className={styles.navLinks}>
-          <Link href="/landing" className={styles.navLink}>Inicio</Link>
-          <Link href="#mision" className={styles.navLink}>Sobre Nosotros</Link>
+          <Link href="#inicio" className={styles.navLink}>Inicio</Link>
+          <Link href="#filosofia" className={styles.navLink}>Sobre Nosotros</Link>
           <Link href="#proyectos" className={styles.navLink}>Proyectos</Link>
           <Link href="#contactos" className={styles.navLink}>Contactos</Link>
         </div>
@@ -45,8 +45,8 @@ export default function Nav() {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className={styles.mobileMenu}>
-          <Link href="/landing" className={styles.mobileNavLink}>Inicio</Link>
-          <Link href="#mision" className={styles.mobileNavLink}>Sobre Nosotros</Link>
+          <Link href="#inicio" className={styles.mobileNavLink}>Inicio</Link>
+          <Link href="#filosofia" className={styles.mobileNavLink}>Sobre Nosotros</Link>
           <Link href="#proyectos" className={styles.mobileNavLink}>Proyectos</Link>
           <Link href="#contactos" className={styles.mobileNavLink}>Contactos</Link>
         </div>
