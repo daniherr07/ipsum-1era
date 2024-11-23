@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation'
 import Card from './Card'
 import { useEffect } from 'react'
 import Filter from './Filter'
+import { address } from '@/app/const'
 
 
 
@@ -24,23 +25,24 @@ export default function MainSearch(){
     
 
     const handleClick = (item) =>{
-        fetch(`https://ipsum-backend.vercel.app/getData/${item.nombre}`)
+        fetch(`${address}/getData/${item.nombre}`)
             .then((res) => res.json())
             .then((data) => {
+                console.log(data)
                 setData(data[0])
                 setId(item.id)
-                console.log(data[0])
+                
             })            
     }
 
 
     useEffect(() => {
-        fetch('https://ipsum-backend.vercel.app/projectNames')
+        fetch(`${address}/projectNames`)
             .then((res) => res.json())
             .then((data) => {
+                console.log(data)
                 setPName(data)
                 setLoading(false)
-                console.log(data)
                 
             })
     }, [])
@@ -91,7 +93,6 @@ export default function MainSearch(){
                 
             }
         
-
         </>
     )
 }

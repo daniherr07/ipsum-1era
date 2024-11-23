@@ -1,5 +1,7 @@
 // src/app/api/login/route.js
 
+
+import { address } from '@/app/const';
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
@@ -8,7 +10,7 @@ export async function POST(request) {
     console.log('Datos del formulario:', formData);
 
     // Hacer un POST a tu backend
-    const backendResponse = await fetch('https://ipsum-backend.vercel.app/changePassword', {
+    const backendResponse = await fetch(`${address}/changePassword`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

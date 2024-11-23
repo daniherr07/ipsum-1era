@@ -3,7 +3,7 @@
 .nav{
     font-family: "Inter", sans-serif;
     width: 80vw;
-    position: relative;
+    position: absolute;
     z-index: 2;
     height: 4em;
     left: 50%;
@@ -183,10 +183,31 @@
         display: none;
     }
 
-    .searchBar{
-        display: none !important;
+}
+
+@media (max-width: 1185px) {
+
+    .searchBarAccordion{
+        display: flex !important;
+    }
+
+    .logo{
+        display: none;
+    }
+
+    .col1{
+        gap: 0;
     }
 
 
-  }
+    .username{
+        display: none;
+    }
+
+
+    .person{
+        display: none;
+    }
+
+}
 

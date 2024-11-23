@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request) {
 
-
+  /*
   const data = await request.formData();
   const tags = data.get('tags');
   const tagsArray = tags.split(',');
@@ -50,11 +50,11 @@ export async function POST(request) {
     return NextResponse.redirect(new URL(newURL, request.url), {
       status: 303,
   });
-  }
-  return NextResponse.redirect(new URL('/search', request.url), {
+  }*/
+  return NextResponse.redirect(new URL('/protected/search', request.url), {
     status: 303,
     
-});
+  });
 
   
 }

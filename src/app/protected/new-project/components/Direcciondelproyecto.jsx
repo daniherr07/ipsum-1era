@@ -1,10 +1,9 @@
-import style from "../newproject.module.css";
-import React, { useState } from "react";
+'use client'
 
-export default function Direcciondelproyecto() {
-    const [provincia, setProvincia] = useState(null);
-    const [canton, setCanton] = useState(null);
-    const [eleccion, setEleccion] = useState(null);  // Estado para almacenar el ID del cantón seleccionado
+import styles from "./location-form.module.css";
+
+export default function DireccionDelProyecto({directionData, setDirectionData}) {
+
 
     const datos = [
         {
@@ -74,57 +73,169 @@ export default function Direcciondelproyecto() {
         }
     ];
 
-    const handleCanton = (e) => {
-        setCanton(e.target.value);
-        const cantonSeleccionado = datos[0].provincias.find(p => p.nombre === provincia)?.cantones.find(c => c.nombre === e.target.value);
-        setEleccion(cantonSeleccionado ? cantonSeleccionado.id : null);
-    };
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setDirectionData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
 
-    const handleProvincia = (e) => {
-        setProvincia(e.target.value);
-        setCanton(null);  // Restablecer el cantón seleccionado cuando cambie la provincia
-        setEleccion(null); // Restablecer la elección del cantón
+        // Reset dependent fields
+        if (name === "provincia") {
+            setDirectionData(prevState => ({
+                ...prevState,
+                canton: "",
+                distrito: ""
+            }));
+        } else if (name === "canton") {
+            setDirectionData(prevState => ({
+                ...prevState,
+                distrito: ""
+            }));
+        }
     };
 
     return (
-        <>
-            <div className={style.datoscontainer1}>
-                <h1 className={style.titulocontainer1}>Nuevo caso - Dirección del proyecto</h1>
-
-                {/* Select de Provincia */}
-                <select className={style.selecttipo1} name="Provincia" id="" onChange={handleProvincia}>
-                    <option value="">Seleccione una provincia</option>
-                    {
-                        datos[0].provincias.map((prov) => (
-                            <option key={prov.id} value={prov.nombre}>
-                                {prov.nombre}
-                            </option>
-                        ))
-                    }
-                </select>
-
-                {/* Select de Cantones */}
-                <select className={style.selecttipo1} name="Cantones" id="" onChange={handleCanton} disabled={!provincia}>
-                    <option value="">Seleccione un cantón</option>
-                    {
-                        provincia && datos[0].provincias.find(p => p.nombre === provincia)?.cantones.map((canton1) => (
-                            <option key={canton1.id} value={canton1.nombre}>
-                                {canton1.nombre}
-                            </option>
-                        ))
-                    }
-                </select>
-
-                {/* Select de Distritos */}
-                <select className={style.selecttipo1} name="Distrito" id="" disabled={!canton || !provincia}>
-                    <option value="">Seleccione un distrito</option>
-                    {
-                        eleccion && datos[0].provincias.find(p => p.nombre === provincia)?.cantones.find(c => c.id === eleccion)?.distritos.map((distrito1, id) => (
-                            <option key={id} value={distrito1}>{distrito1}</option>
-                        ))
-                    }
-                </select>
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <h1 className={styles.title}>Nuevo Caso - Dirección del Proyecto</h1>
             </div>
-        </>
+
+            <div className={styles.formContent}>
+                <div className={styles.locationSelects}>
+                    <div className={styles.selectGroup}>
+                        <label>Provincia</label>
+                        <select
+                            className={styles.select}
+                            name="provincia"
+                            value={directionData.provincia}
+                            onChange={handleInputChange}
+                        >
+                            <option value="">Seleccione una provincia</option>
+                            {datos[0].provincias.map((prov) => (
+                                <option key={prov.id} value={prov.nombre}>
+                                    {prov.nombre}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className={styles.selectGroup}>
+                        <label>Cantón</label>
+                        <select
+                            className={styles.select}
+                            name="canton"
+                            value={directionData.canton}
+                            onChange={handleInputChange}
+                            disabled={!directionData.provincia}
+                        >
+                            <option value="">Seleccione un cantón</option>
+                            {directionData.provincia &&
+                                datos[0].provincias
+                                    .find((p) => p.nombre === directionData.provincia)
+                                    ?.cantones.map((canton) => (
+                                        <option key={canton.id} value={canton.nombre}>
+                                            {canton.nombre}
+                                        </option>
+                                    ))}
+                        </select>
+                    </div>
+
+                    <div className={styles.selectGroup}>
+                        <label>Distrito</label>
+                        <select
+                            className={styles.select}
+                            name="distrito"
+                            value={directionData.distrito}
+                            onChange={handleInputChange}
+                            disabled={!directionData.canton}
+                        >
+                            <option value="">Seleccione un distrito</option>
+                            {directionData.canton &&
+                                datos[0].provincias
+                                    .find((p) => p.nombre === directionData.provincia)
+                                    ?.cantones.find((c) => c.nombre === directionData.canton)
+                                    ?.distritos.map((distrito, index) => (
+                                        <option key={index} value={distrito}>
+                                            {distrito}
+                                        </option>
+                                    ))}
+                        </select>
+                    </div>
+                </div>
+
+                <div className={styles.addressGroup}>
+                    <label>Otras señas:</label>
+                    <textarea
+                        className={styles.textarea}
+                        name="otrasSenas"
+                        value={directionData.otrasSenas}
+                        onChange={handleInputChange}
+                        placeholder="Del higuerón antiguo, 200 metros norte, en la esquina"
+                    />
+                </div>
+
+                <div className={styles.locationSelects}>
+                    <div className={styles.selectGroup}>
+                        <label>Tipo de identificacion</label>
+                        <select
+                            className={styles.select}
+                            name="loteTipoIdentificacion"
+                            value={directionData.loteTipoIdentificacion}
+                            onChange={handleInputChange}
+                        >
+                            <option value="">Seleccione un Tipo</option>
+                            <option value="1">Persona Fisica</option>
+                            <option value="2">Persona Juridica</option>
+                        </select>
+                    </div>
+
+                    <div className={styles.selectGroup}>
+                        <label>Numero de Identifiacion</label>
+
+                        <input className={styles.select} 
+                        type="number" value={directionData.loteIdentificacion} 
+                        name="loteIdentificacion" onChange={handleInputChange} 
+                        placeholder="000000000000000"
+                        required/>
+                    </div>
+
+                </div>
+
+
+                <div className={styles.cadastralGroup}>
+                    <div className={styles.uploadSection}>
+                        <button className={styles.uploadButton}>
+                            Cargar Plano ↑
+                        </button>
+                    </div>
+                    
+                    <div className={styles.cadastralNumber}>
+                        <label>Número de Plano Catastro</label>
+                        <input
+                            type="text"
+                            className={styles.input}
+                            name="numeroPlanoCatastro"
+                            value={directionData.numeroPlanoCatastro}
+                            onChange={handleInputChange}
+                            placeholder="PC-2024-303033"
+                        />
+                    </div>
+
+                    <div className={styles.cadastralNumber}>
+                        <label>Número de Finca</label>
+                        <input
+                            type="text"
+                            className={styles.input}
+                            name="finca"
+                            value={directionData.finca}
+                            onChange={handleInputChange}
+                            placeholder="F002"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }
+
