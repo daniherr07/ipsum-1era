@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 
   .container {
@@ -8,30 +8,40 @@
   
   /* #region NAVBAR*/
   .nav {
-    background-color: transparent;
-    color: #fff;
+    background-color: #00294a93;
+    color: #ffffff;
     position: fixed;
-    width: 100vw;
+    width: 100%;
     top: 0;
     left: 0;
     z-index: 550;
-    padding: 1em 2em 1em 2em;
-    background-color: #00000042;
-    
-  }
-
-  .navContainer{
-    display: flex;
-    flex-direction: row;
-    place-items: center;
-    place-content: space-between;
+    padding: 1em 2em;
   }
   
-  .navInner {
+  .navContainer {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
     align-items: center;
-    height: 4rem;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .navLogo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logoButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .logoImage {
+    width: 36px;
+    height: 36px;
   }
   
   .navLinks {
@@ -39,350 +49,814 @@
   }
   
   .navLink {
-    margin-left: 2rem;
+    margin-left: 3rem;
     transition: color 0.2s;
-    color: white;
+    color: rgba(255, 255, 255, 0.884);
+    font-weight: 500;
+    font-size: 1.2em;
     text-decoration: none;
-    mix-blend-mode: difference;;
-    
+    font-family: 'Fira Sans', sans-serif;
   }
   
   .navLink:hover {
     color: #60a5fa;
   }
-
+  
+  .mobileMenuButton {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+  
+  .mobileMenu {
+    display: none;
+  }
+  
+  @media (max-width: 768px) {
+    .navLinks {
+      display: none;
+    }
+  
+    .mobileMenuButton {
+      display: block;
+    }
+  
+    .mobileMenu {
+      display: flex;
+      flex-direction: column;
+      padding: 1em 0;
+    }
+  
+    .mobileNavLink {
+      padding: 0.5em 0;
+      color: rgba(255, 255, 255, 0.884);
+      font-weight: 500;
+      font-size: 1.2em;
+      text-decoration: none;
+      font-family: 'Fira Sans', sans-serif;
+      transition: color 0.2s;
+    }
+  
+    .mobileNavLink:hover {
+      color: #60a5fa;
+    }
+  }
+    
     /* #endregion*/
   
 
   /* #region HERO*/ 
-  .videoBack{
+  .container {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .videoBack {
     width: 100%;
     height: 100%;
     background-color: #000;
     position: relative;
-    
   }
-  .bgVideo{
+  
+  .bgVideo {
     width: 100%;
     height: 100%;
     opacity: 0.3;
-    object-fit: fill;
+    object-fit: cover;
   }
   
   .heroContent {
     position: absolute;
-    bottom: 0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     padding: 2em;
     display: flex;
     flex-direction: column;
-    place-items: flex-start;
-    place-content: center;
+    align-items: center;
+    justify-content: center;
   }
   
   .heroLogo {
-    width: 60%;
+    width: 80%;
+    max-width: 800px;
     height: auto;
+    filter: drop-shadow(2px -1px 12px rgba(0, 0, 0, 0.54));
   }
   
   .heroText {
     color: #ffffff;
-    font-size: clamp(16px, 2vw, 30px);
+    font-size: clamp(16px, 2vw, 24px);
+    text-wrap: balance;
+    padding: 2em 0;
     line-height: 1.75rem;
-    width: 70%;
+    width: 90%;
+    max-width: 800px;
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 200;
+    text-align: center;
   }
-
+  
+  .heroButton {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: clamp(16px, 2vw, 20px);
+    padding: 15px 50px;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: linear-gradient(90deg, rgba(3,87,155,1) 18%, rgba(50,127,189,1) 81%);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .heroButton:hover {
+    box-shadow: 0 0 20px 3px rgba(255, 255, 255, 0.3);
+  }
+  
+  @media (max-width: 768px) {
+    .heroContent {
+      padding: 1em;
+    }
+  
+    .heroLogo {
+      width: 90%;
+    }
+  
+    .heroText {
+      width: 100%;
+      font-size: 16px;
+      padding: 1.5em 0;
+    }
+  
+    .heroButton {
+      padding: 12px 40px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .heroLogo {
+      width: 95%;
+    }
+  
+    .heroText {
+      font-size: 14px;
+      line-height: 1.5rem;
+    }
+  
+    .heroButton {
+      padding: 10px 30px;
+      font-size: 16px;
+    }
+  }
   /* #endregion */
 
 
   /* #region Nosotros, Mision y Vision*/
-    .aboutUs{
-      display: flex;
-      flex-direction: column;
-      place-items: center;
-      place-content: space-around;
-    }
-
-    .buttons{
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      gap: 1em;
-      place-content: center;
-      padding: 1em;
-    }
-
-    .button{
-      font-family: "Inter", sans-serif;
-      border: none;
-      box-shadow: 5px 7px #02244165;
-      width: 10em;
-      padding: 1em;
-      background-color: #03579B;
-      border-radius: 1px;
-      color: #f1f9ff;
-      font-weight: bold;
-      transition: all 0.2s ease-in-out;
-
-    }
-
-    .aboutInfo{
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1em;
-      margin-right: 2em;
-      margin-left: 2em;
-    }
-
-    .aboutText{
-      display: flex;
-      place-content: center;
-      place-items: center;
-    }
-
-    .aboutUsImage{
-      width: 45vw !important;
-      height: auto;
-      box-shadow: 5px 7px #02244165;
-    }
-  /* #endregion */
-  
-
-  /* #region Bonos (Projects) */
-  .projectsSection {
-    width: 100%;
-    height: 100%;
-    background-color: #000000;
-    color: #ffffff;
-    position: relative;
+  .section {
     display: flex;
-    flex-direction: column;
-    place-items: center;
-    place-content: space-around;
-    
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    gap: 4rem;
   }
   
-  .projectsTitle {
-    font-size: 2.25rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 3rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .projectsFondo{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    opacity: 0.3;
-    transition: all 0.2s ease-in-out;
-    object-fit: cover;
+  .content {
+    flex: 1;
+    max-width: 600px;
+    padding: 4rem 0;
   }
   
-  .keys{
-    display: flex;
-    flex-direction: column;
-    gap: 2em;
-    width: 19vw;
-    min-width: 19vw;
-    place-items: flex-start;
-    background-color: #000;
-  }
-
-  .key{
-    display: flex;
-    place-content: center;
-    place-items: center;
-    position: relative;
-    left: -8vw;
-
-    transition: all 0.2s ease-in-out;
-  }
-
-  .keyText, .keyImage{
-    background-color: #ffffff;
-  }
-
-  .keyText{
+  .title {
     color: #03579B;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    font-family: Fira Sans, sans-serif;
+  }
+  
+  .description {
+    color: #4a4a4a;
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    line-height: 1.6;
+    margin: 0;
+    font-family: PT Sans, sans-serif;
+    text-wrap: balance;
+  }
+  
+  .imageWrapper {
+    position: relative;
+    width: 613px;
+    height: 512px;
+    flex-shrink: 0;
+  }
+  
+  .image {
+    object-fit:contain;
+  }
+  
+  @media (max-width: 1024px) {
+    .section {
+      flex-direction: column;
+      text-align: center;
+      gap: 2rem;
+      padding: 2rem;
+    }
+  
+    .content {
+      max-width: 100%;
+      padding: 2rem 0;
+    }
+  
+    .imageWrapper {
+      width: 100%;
+      max-width: 500px;
+      height: 400px;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .section {
+      padding: 1rem;
+    }
+  
+    .content {
+      padding: 1rem 0;
+    }
+  
+    .imageWrapper {
+      max-width: 300px;
+      height: 300px;
+      
+    }
+    .image{
+    }
+  }
+  /* #endregion */
+  
+
+  /* #region Seccion Proyectos */
+  .seccionProyectos {
+    padding: 2rem;
+    max-width: 1374px;
+    margin: 0 auto;
+  }
+  
+  .tituloProyectos {
+    font-size: 3rem;
+    color: #03579B;
+    text-align: center;
+    font-weight: 400;
+    margin-bottom: 4rem;
+    font-family: Fira Sans, sans-serif;
+  }
+  
+  .galeriaProyectos {
     display: flex;
-    place-content: flex-end;
-    place-items: center;
-    width: 10vw;
-    padding-right: 2em;
-    height: 2.5em;
-
+    height: 575px;
+    gap: 14px;
   }
-
-  .keyImage{
-    padding: 0.9em;
-    border-radius: 50%;
-    width: 5em;
-    height: 5em;
+  
+  .columnaIzquierdaProyectos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 690px;
+  }
+  
+  .columnaDerechaProyectos {
+    width: 670px;
+  }
+  
+  .filaArribaProyectos {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .imagenPequenaProyectos {
+    width: 340px;
+    height: 280px;
+  }
+  
+  .imagenMedianaProyectos {
+    width: 690px;
+    height: 280px;
+  }
+  
+  .imagenGrandeProyectos {
+    width: 670px;
+    height: 575px;
+  }
+  
+  .imageContainer {
     position: relative;
-    right: 1.5em;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
-
-  .projectsInfo{
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    grid-template-rows: repeat(2,1fr);
-    background-color: #000;
-    width: 50vw;
-    height: 50vh;
+  
+  .imagenProyectos {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
   }
-
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #03579B 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .imageContainer:hover .overlay {
+    opacity: 1;
+  }
+  
+  .imageContainer:hover .imagenProyectos {
+    transform: scale(1.05);
+  }
+  
+  .projectTitle {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 500;
+    font-family: Fira Sans, sans-serif;
+  }
+  
+  @media (max-width: 1400px) {
+    .seccionProyectos {
+      max-width: 100%;
+      padding: 1rem;
+    }
+  
+    .galeriaProyectos {
+      height: auto;
+      flex-direction: column;
+    }
+  
+    .columnaIzquierdaProyectos, .columnaDerechaProyectos {
+      width: 100%;
+    }
+  
+    .filaArribaProyectos {
+      flex-direction: column;
+    }
+  
+    .imagenPequenaProyectos, .imagenMedianaProyectos, .imagenGrandeProyectos {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .tituloProyectos {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .tituloProyectos {
+      font-size: 1.5rem;
+    }
+  }
+  
+  
+  
   /* #endregion */
 
-  
-  /* #region Contacto*/
+  /* #region Servicios */
 
-  .contactSection {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
-    background-color: #03579B;
+  .seccionServicios {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .tituloServicios {
+    color: #03579B;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 4rem;
+    font-family: Fira Sans, sans-serif;
+    font-weight: 400;
+  }
+  
+  .listaServicios {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .itemServicio {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+  }
+  .parahover:hover .contenedorIcono{
+    transition: ease-in 0.3s;
+    background-color: #03579B;  
     color: #fff;
+
+  }
+  .parahover:hover .textoServicio{
+    transition: ease-in 0.3s;
+    background-color: #03579B;
+    color: #fff; 
+  }
+  .parahover:hover img.icono{
+    transition: ease-in 0.3s;
+    filter: brightness(0) invert(1);
+  }
+  .itemServicioDerecha {
+    flex-direction: row-reverse;
+  }
+  
+  .contenedorIcono {
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    z-index: 1;
+    transition: ease-in 0.3s;
+  }
+  
+  .textoServicio {
+    background: white;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1.3rem;
+    color: #333;
+    flex-grow: 1;
+    position: relative;
+    font-family: PT Sans, sans-serif;
+    transition: ease-in 0.3s;
+  }
+  
+  .itemServicioDerecha .textoServicio {
+    text-align: right;
+  }
+  
+  .icono {
+    width: 32px;
+    height: 32px;
+    color: #0066cc;
+    transition: ease-in 0.3s;
+  }
+  
+  @media (max-width: 768px) {
+    .seccionServicios {
+      padding: 2rem 1rem;
+    }
+  
+    .tituloServicios {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+  
+    .itemServicio, .itemServicioDerecha {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .textoServicio, .itemServicioDerecha .textoServicio {
+      text-align: center;
+      margin-top: 1rem;
+    }
+  }
+  
+  
+  
+  /* #endregion */
+
+  /* #region Filosofia*/
+  .seccionFilosofia {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 400px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+  }
+  
+  .contenedorMision,
+  .contenedorVision {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .contenedorMision {
+    background-color: #03579B;
+    color: white;
+    -webkit-box-shadow: 0px 0px 138px -67px rgba(0,0,0,0.48);
+    -moz-box-shadow: 0px 0px 138px -67px rgba(0,0,0,0.48);
+    box-shadow: 0px 0px 138px -67px rgba(0,0,0,0.48);
+  }
+  
+  .contenedorVision {
+    background-color: white;
+    color: #333;
+    -webkit-box-shadow: 0px 0px 138px -67px rgba(0,0,0,0.48);
+    -moz-box-shadow: 0px 0px 138px -67px rgba(0,0,0,0.48);
+    box-shadow: 0px 0px 138px -67px rgba(0,0,0,0.48);
+  }
+  
+  .iconoMision,
+  .iconoVision {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .tituloMision,
+  .tituloVision {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    font-family: Fira Sans, sans-serif;
+
+  }
+  .tituloVision{
+    color: #03579B;
+  }
+  
+  .textoMision,
+  .textoVision {
+    max-width: 600px;
+    line-height: 1.6;
+    font-size: 1rem;
+    font-family: PT Sans, sans-serif;
+    text-wrap: balance;
+  }
+  .textoVision{
+    color: #03579B;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .seccionFilosofia {
+      grid-template-columns: 1fr;
+    }
+  
+    .contenedorMision,
+    .contenedorVision {
+      padding: 3rem 1.5rem;
+    }
+  
+    .tituloMision,
+    .tituloVision {
+      font-size: 1.75rem;
+    }
+  
+    .textoMision,
+    .textoVision {
+      font-size: 0.95rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .contenedorMision,
+    .contenedorVision {
+      padding: 2rem 1rem;
+    }
+  
+    .tituloMision,
+    .tituloVision {
+      font-size: 1.5rem;
+    }
+  }
+  
+  
+  /* #endregion */
+  /* #region Contacto*/
+  .contactSection {
+    background: linear-gradient(180deg, #ffffff 0%, #005293 100%);
+    padding: 4rem 2rem;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .containerFooter {
+    padding-top: 18em;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
   }
   
   .contactTitle {
-    font-size: 2.25rem;
-    font-weight: bold;
     text-align: center;
+    font-size: 2.5rem;
     margin-bottom: 3rem;
+    color: white;
+    font-family: Fira Sans, sans-serif;
+    font-weight: 300;
   }
   
   .contactGrid {
     display: grid;
-    place-items: center;
-    place-content: center;
-    gap: 3rem;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1.5fr 1fr;
+    gap: 4rem;
   }
   
-  .contactFormTitle {
+  .contactFormTitle,
+  .contactInfoTitle {
     font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    color: white;
+    font-family: Fira Sans, sans-serif;
+    font-weight: 300;
   }
   
   .contactForm {
     display: grid;
-    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
   
   .formInput {
-    padding: 0.5rem 0;
-    color: #ffffff;
-    width: 100%;
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #fff;
-
+    padding: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    background: transparent;
+    color: white;
+    font-size: 1rem;
+    font-family: PT Sans;
   }
-
-  .formInput::placeholder{
-    color: #fff;
+  
+  .formInput::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .formInput[type="email"],
+  .formInput[type="number"],
+  .formTextarea {
+    grid-column: 1 / -1;
   }
   
   .formTextarea {
-    width: 100%;
-    padding: 0.5rem;
-    border-radius: 0.25rem;
-    color: #000;
-    background-color: none;
-    border: 1px solid #fff;
+    padding: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    background: transparent;
+    color: white;
+    font-size: 1rem;
+    resize: vertical;
+    font-family: PT Sans;
+  }
+  
+  .formTextarea::placeholder {
+    color: rgba(255, 255, 255, 0.7);
   }
   
   .formSubmitButton {
-    background-color: #a0a0a0;
-    color: #ffffff;
-    font-size: 1.7rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.25rem;
-    font-weight: bold;
-    transition: background-color 0.2s;
+    grid-column: 1 / -1;
+    background: white;
+    color: #005293;
+    padding: 1rem;
     border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
   }
   
-  .contactInfoTitle {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
+  .formSubmitButton:hover {
+    background: #f0f0f0;
   }
   
   .contactInfoItem {
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
-  }
-  
-  .contactInfoItem > *:not(:first-child) {
-    margin-left: 0.75rem;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    color: white;
+    font-family: PT Sans;
   }
   
   .whatsappButton {
     display: inline-flex;
     align-items: center;
-    background-color: #ffffff;
-    color: #000000;
-    padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
-    transition: background-color 0.2s;
+    background: #128C7E;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-top: 2rem;
+    transition: background-color 0.3s;
   }
   
   
-  .whatsappButton > *:not(:first-child) {
-    margin-left: 0.5rem;
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .contactGrid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  
+    .contactForm {
+      grid-template-columns: 1fr;
+    }
+  
+    .formInput {
+      grid-column: 1 / -1;
+    }
+  
+    .contactTitle {
+      font-size: 2rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .contactSection {
+      padding: 3rem 1rem;
+    }
+  
+    .contactTitle {
+      font-size: 1.75rem;
+    }
+  
+    .contactFormTitle,
+    .contactInfoTitle {
+      font-size: 1.25rem;
+    }
   }
 
+
+  
+  /* #region Whatsapp*/
+  .whatsappButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25D366;
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    padding: 14px;
+  }
+  
+  .whatsappIcon {
+    width: 100%;
+    height: 100%;
+    color: white;
+  }
+  
+  .whatsappButton:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    background-color: #22c15e;
+  }
+  
+  @media (max-width: 768px) {
+    .whatsappButton {
+      width: 50px;
+      height: 50px;
+      padding: 12px;
+    }
+  }
+  
+  
+  
+  
   /* #endregion */
   
-  /* Responsive adjustments */
-  @media (max-width: 800px) {
-    .missionVisionGrid {
-      grid-template-rows: repeat(2, 1fr);
-    }
-  
-    .contactGrid {
-      grid-template-columns: repeat(1, 1fr);
-    }
-
-    .projectsCards {
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap; /* Allows items to wrap within the column */
-      height: 1300px; /* Adjust this to control the height and trigger wrapping */
-
-      & .cardBono{
-        width: 45vw;
-        min-height: 80px;
-        height: 600px;
-      }
-    }
-
-    .navLink{
-      display: none;
-    }
-    .missionVisionGrid{
-      flex-direction: column;
-    }
-
-    .missionVisionImage {
-      width: 70vw;
-      height: auto;
-      
-    }
-
-    & .cardDesc{
-      font-size: 0.8rem;
-    }
-
-    .contactSection{
-      height: fit-content;
-    }
-  }
