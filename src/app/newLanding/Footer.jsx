@@ -78,7 +78,7 @@ export default function Footer(){
                 </button>
               </form>
             </div>
-            <div>
+            <div className={styles.contactInfo}>
               <h3 className={styles.contactInfoTitle}>Información de contacto</h3>
               <div>
                 <div className={styles.contactInfoItem}>
@@ -93,7 +93,6 @@ export default function Footer(){
                   <MapPin />
                   <span>Moravia, San José</span>
                 </div>
-
               </div>
             </div>
           </div>

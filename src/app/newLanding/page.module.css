@@ -370,28 +370,6 @@
     transition: transform 0.3s ease;
   }
   
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #03579B 100%);
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    padding-bottom: 20px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  .imageContainer:hover .overlay {
-    opacity: 1;
-  }
-  
-  .imageContainer:hover .imagenProyectos {
-    transform: scale(1.05);
-  }
   
   .projectTitle {
     color: white;
@@ -765,19 +743,7 @@
     color: white;
     font-family: PT Sans;
   }
-  
-  .whatsappButton {
-    display: inline-flex;
-    align-items: center;
-    background: #128C7E;
-    color: white;
-    padding: 1rem 2rem;
-    border-radius: 4px;
-    text-decoration: none;
-    margin-top: 2rem;
-    transition: background-color 0.3s;
-  }
-  
+
   
   /* Responsive styles */
   @media (max-width: 768px) {
@@ -797,6 +763,9 @@
     .contactTitle {
       font-size: 2rem;
     }
+    .contactInfo{
+      justify-items: center;
+    }
   }
   
   @media (max-width: 480px) {
@@ -811,6 +780,9 @@
     .contactFormTitle,
     .contactInfoTitle {
       font-size: 1.25rem;
+    }
+    .contactInfo{
+      justify-items: center;
     }
   }
 

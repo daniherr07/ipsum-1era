@@ -93,7 +93,7 @@ export default function IpsumConstruction() {
       </div>
     </section>
 
-    <section className={styles.seccionProyectos}>
+    <section className={styles.seccionProyectos} id='proyectos'>
   <h1 className={styles.tituloProyectos}>Nuestros proyectos</h1>
   <div className={styles.galeriaProyectos}>
     <div className={styles.columnaIzquierdaProyectos}>
@@ -182,7 +182,7 @@ export default function IpsumConstruction() {
       </div>
     </section>
 
-    <section className={styles.seccionFilosofia}>
+    <section className={styles.seccionFilosofia} id='filosofia'>
       <div className={styles.contenedorMision}>
       <img 
           src="/landing/Flag.svg" 
@@ -193,12 +193,7 @@ export default function IpsumConstruction() {
       />
         <h2 className={styles.tituloMision}>Misión</h2>
         <p className={styles.textoMision}>
-          Brindar soluciones habitacionales accesibles y de calidad 
-          que mejoren la calidad de vida de las familias 
-          costarricenses, mediante la construcción de viviendas de 
-          bien social y bonos de vivienda, comprometidos con la 
-          sostenibilidad, el respeto al entorno y la 
-          dignidad de cada hogar.
+        Somos una empresa dedicada a la construcción, gestión y diseño obras civiles integrales, promoviendo edificaciones sostenibles y de alta calidad. Con un enfoque que va dirigido hacia la vivienda unifamiliar de bien social, brindando a las familias costarricenses espacios dignos y seguros. A través de nuestra experiencia y compromiso contribuimos al desarrollo de las comunidades y al crecimiento del sector de la construcción.
         </p>
       </div>
       <div className={styles.contenedorVision}>
@@ -211,12 +206,7 @@ export default function IpsumConstruction() {
       />
         <h2 className={styles.tituloVision}>Visión</h2>
         <p className={styles.textoVision}>
-          Ser la empresa líder en construcción de viviendas sociales en 
-          Costa Rica, reconocida por nuestra excelencia en el diseño, calidad 
-          y accesibilidad de nuestras soluciones habitacionales, y por 
-          contribuir al desarrollo de comunidades inclusivas y sostenibles, 
-          donde cada familia tenga la oportunidad de un hogar 
-          seguro y digno.
+        Ser una de las empresas lideres en construcción integral en Costa Rica, enfocada por ofrecer soluciones innovadoras, accesibles y de alta calidad en obras civiles, con un enfoque especial en la construcción de viviendas unifamiliares de bien social, mejorando así la calidad de las comunidades y transformando positivamente la vida de las familias costarricenses.   
         </p>
       </div>
     </section>
