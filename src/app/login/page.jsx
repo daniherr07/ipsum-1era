@@ -55,7 +55,7 @@ export default function Login(){
           }
 
           if (result.toHome) {
-            router.push(`/protected/home?user=${result.user}`);
+            router.push(`/protected/home`);
           }
 
           if (result.toError){
@@ -68,7 +68,7 @@ export default function Login(){
         
             <div className={style.body}>
                 <main className={style.main}>
-                    <Image src={'logo.svg'} width={20} height={20}  className={style.logo} alt='logo'/>\
+                    <Image src={'logo.svg'} width={20} height={20}  className={style.logo} alt='logo'/>
                     <Suspense>
                         <Search></Search>
                     </Suspense>

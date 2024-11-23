@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './card.module.css'
-import { HotTable, HotColumn } from "handsontable";
 import Image from 'next/image';
 
 export default function Card({item}) {

@@ -1,4 +1,4 @@
-'use client'
+
 
 import style from './page.module.css'
 import Image from 'next/image';
@@ -6,17 +6,12 @@ import { TagPicker } from 'rsuite';
 import 'rsuite/dist/rsuite-no-reset.min.css';
 import NavBar from '../components/navbar/Navbar';
 import { Suspense } from 'react';
-import { useSearchParams } from 'next/navigation'
-
-function Search() {
-    const searchParams = useSearchParams()
-    const user = searchParams.get('user')
-   
-    return <NavBar logo={false} searchBar={false} user={user}/>
-  }
 
 
-export default function Home() {
+
+
+export default async function Home() {
+
 
 
     const data = ['Bono: Articulo 59', 'Bono: CLP', 'Entidad: Mutual', 'Entidad: Mucap'].map(
@@ -27,7 +22,7 @@ export default function Home() {
     return(
         <>
         <Suspense>
-            <Search></Search>
+            <NavBar logo={false} searchBar={false}/>
         </Suspense>
         
 

@@ -1,33 +1,60 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
 .main{
-    display: flex;
-    flex-direction: row;
-    height: 90vh;
+    display: grid; 
+    grid-template-columns: 0.2fr 1.8fr;
+    grid-template-rows: 1fr;
+    height: 100vh;
+    place-items: center;
+    position: relative;
+
 
 }
+
+.main *{
+    font-family: "Inter", sans-serif;
+}
+
+.sectionTitle{
+    position: absolute;
+    top: 10vh;
+}
+.sectionTitle2{
+    position: absolute;
+    top: 15vh;
+}
+
 .accordioncontainer{
-    height: 100vh;
+    height: 80vh;
     position: relative;
-    bottom: 4em;
     width: 10vw;
-    background-color: #d9d9d9;
+    min-width: 180px;
     align-content: center;
+    place-self: end;
+    left: 0;
+    bottom: 50%;
+    transform: translate(0, 50%);
+    border-radius: 10px;
     
     z-index: 1 !important;
     & ul{
         display: flex;
         flex-direction: column;
         gap: 3em;
+        &:hover{
+            cursor: pointer;
+        }
         & .itemleft{
             display: flex;
             flex-direction: row;
             place-items: center;
             justify-content: center;
-            
-            & :hover{
-                cursor: pointer;
-                
-            }
+            background-color: #fff;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+            width: fit-content;
+            place-self: center;
+            width: 5em;
+            height: 5em;
+            border-radius: 50%;
             & .optionleft{
                 font-family: Inter;
                 color: #03579B;
@@ -39,72 +66,26 @@
     }
     
 }
-.datoscontainer1{
-    border: 1px solid #03579B;
-    height: 50vh;
-    position: relative;
-    left: 10em;
-    top: 4em;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    & .titulocontainer1{
-        background-color: #03579B;
-        color: #ffff;
-        padding: 0.5em 10em;
-        display: flex;
-        flex-direction: row !important;
-        gap: 10em;
-    }
-    & .input1{
-        color: #0000009d;
-        margin-bottom: 1em;
-    }
-    & .textoinput1{
-        color: #02233ed0;
-        font-size: 1em;
-        margin-bottom: 1em;
-        
-    }
-    & .selecttipo1{
-        padding: 0.4em;
-        border: 1px solid #00000042;
-        font-family: Inter;
-        font-size: 1em;
-        text-align: left;
-        margin-bottom: 1em;
-        box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-        & :focus-visible{
-                outline: none;
-        }
-    }
-    & .textogrupo{
-        color: #9c9c9c;
-        font-size: 1em;
-        margin-bottom: 1em;
 
-    }
-    & .inputgrupo1{
-        padding: 0.4em 0em 0.4em 0.5em;
-        width: 17em;
-        margin-bottom: 1em;
-        
-        border: 1px solid #00000042;
-        font-family: Inter;
-        font-size: 1em;
-        box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-        & ::placeholder{
-            text-align: left;
-        }
-        & :focus{
-            outline: none;
-        }
-    }
+.datoscontainer1{
+    border: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    min-width: fit-content;
+    position: relative;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
     & .maincontainer1{
-        display: flex;
-        flex-direction: row !important;
-        justify-content: space-around;
+        padding: 1em;
+        height: fit-content;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        place-items: center;
         position: relative;
-        top: 5em;
+
         & .containerderecha1{
+            padding: 1em;
             display: flex;
             flex-direction: column;
             justify-self: center;
@@ -122,11 +103,82 @@
                 }
             }
         }
+
         & .containerizquierda1{
             display: flex;
             flex-direction: column;
+            gap: 1em;
         }
     } 
+
+    & .titulocontainer1{
+        background-color: #03579B;
+        color: #ffff;
+        text-align: center;
+        padding: 1em 0;
+        display: flex;
+        flex-direction: row !important;
+        gap: 10em;
+        width: 100%;
+    }
+
+    & .input1{
+        display: flex;
+        flex-direction: row;
+        place-content: center;
+        place-items: center;
+
+        & .booleanInput1{
+            width: 1.7em;
+            height: 1.7em;
+        }
+
+        & .textInput1{
+            font-weight: bold;
+        }
+
+    }
+
+    & .textoinput1{
+        color: #02233ed0;
+        font-size: 1em;
+        
+    }
+
+    & .selecttipo1{
+        padding: 0.4em;
+        border: 1px solid #00000042;
+        font-family: Inter;
+        font-size: 1em;
+        text-align: left;
+        box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+        & :focus-visible{
+                outline: none;
+        }
+    }
+
+    & .textogrupo{
+        color: #000;
+        font-size: 1em;
+
+    }
+    & .inputgrupo1{
+        padding: 0.4em 0em 0.4em 0.5em;
+        width: 17em;
+        
+        border: 1px solid #00000042;
+        font-family: Inter;
+        font-size: 1em;
+        box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+        & ::placeholder{
+            text-align: left;
+        }
+        & :focus{
+            outline: none;
+        }
+    }
+
+
 }
 .datoscontainer{
     background-color: lightblue;
@@ -150,3 +202,234 @@
     display: flex;
     gap: 10px;
 }
+
+
+
+
+/* #region Miembros de familia */
+
+
+
+
+
+.container {
+    width: 100%;
+    padding: 1rem;
+    font-family: "Inter", sans-serif;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+
+  .container *{
+    font-family: "Inter", sans-serif;
+  }
+  
+  .header {
+    background-color: #03579B;
+    color: white;
+    padding: 1rem;
+  }
+  
+  .headerTitle {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .form {
+    background-color: white;
+    padding: 1.5rem;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 1.5rem;
+  }
+  
+  .formGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .formContacto{
+    align-items: baseline;
+  }
+  
+  @media (min-width: 768px) {
+    .formGrid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  
+    .formGrid2Col {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  .input, .select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.25rem;
+  }
+
+  
+  .checkboxGroup {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1em;
+  }
+  
+  .checkbox {
+    margin-right: 0.5rem;
+  }
+  
+  .button {
+    background-color: #03579B;
+    color: white;
+    padding: 0.9rem 1.5rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #005292;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .tableHeader {
+    text-align: left;
+    padding: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .tableCell {
+    padding: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .subText {
+    font-size: 0.875rem;
+    color: #3b82f6;
+  }
+  
+  .actionButton {
+    padding: 0.25rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .deleteButton {
+    color: #ef4444;
+  }
+  
+  .uploadGroup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+
+  }
+  
+  .requiredStar {
+    color: #ef4444;
+  }
+  
+  .uploadButton {
+    border: 1px solid #e5e7eb;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+  }
+  
+  .saveButton{
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+    border: none;
+    background-color: #03579B;
+    color: #fff;
+    padding: 0.9em 1.2em;
+    border-radius: 11px;
+    width: 20vw;
+    height: 5vh;
+    font-size: 1rem;
+  }
+
+  .saveButton:hover{
+    cursor: pointer;
+  }
+
+  @media (max-width: 800px) {
+    .main{
+        margin-top: 10dvh;
+        display: flex;
+        flex-direction: column;
+        gap: 3em;
+    }
+
+    .accordioncontainer{
+        width: 100dvw;
+        height: fit-content;
+        position: relative;
+        bottom: 0;
+        transform: none;
+        
+
+
+
+        & ul{
+            width: inherit;
+            display: flex;
+            flex-direction: row;
+            gap: 1em;
+            place-content: center;
+        }
+    }
+
+    .maincontainer1{
+        display: flex !important;
+        flex-direction: column;
+    }
+
+    .saveButton{
+        font-family: "Inter", sans-serif;
+        position: relative;
+        top: auto;
+        right: auto;
+        border: none;
+        background-color: #03579B;
+        color: #fff;
+        padding: 0.9em 1.2em;
+        border-radius: 11px;
+        width: 80vw;
+        height: 8vh;
+        font-size: 1rem;
+      }
+    
+    .container{
+        display: flex;
+        flex-direction: column;
+        place-content: center;
+        place-items: center;
+    }
+
+    .uploadGroup{
+        justify-content: center;
+    }
+
+    .tableContainer{
+        max-width: 90vw;
+        overflow: scroll;
+    }
+
+    .titulocontainer1{
+        font-size: 3vw;
+    }
+  }
+
+
+
+
+/* #endregion */

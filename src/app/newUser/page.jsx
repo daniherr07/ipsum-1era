@@ -85,7 +85,7 @@ export default function Login(){
 
                         <label htmlFor="psw2" className={style.label}> Confirmar Contraseña</label>
                         <input type="password" name="psw2" id="pswForm" className={style.pswForm} onChange={handleChange} required/>
-                        <button className={style.submit} type='submit' >Iniciar Sesion</button>
+                        <button className={style.submit} type='submit' >Actualizar Contraseña</button>
                     </form>
                     
                 </main>

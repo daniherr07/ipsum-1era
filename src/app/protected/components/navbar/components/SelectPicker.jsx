@@ -5,13 +5,14 @@ import SpinnerIcon from '@rsuite/icons/legacy/Spinner';
 import 'rsuite/dist/rsuite-no-reset.min.css';
 import { useState } from 'react';
 import style from '../navbar.module.css'
+import { address } from '@/app/const';
 
 const useData = () => {
   const [storedData, setStoredData] = useState();
   const [loading, setLoading] = useState(false);
   const featUsers = word => {
     setLoading(true);
-    fetch(`https://ipsum-backend.vercel.app/test/${word}`)
+    fetch(`${address}/test/${word}`)
       .then(response => response.json())
       .then(data => {
         console.log(data)
