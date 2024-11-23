@@ -55,7 +55,7 @@ export default function Footer(){
                   rows={5}
                   className={styles.formTextarea}
                   required
-                  defaultValue={"Hola, estoy interesado en obtener información sobre IPSUM y los bonos de vivienda. ¿Podrían brindarme detalles sobre los requisitos y beneficios? ¡Gracias!"}
+                  defaultValue={"Hola, estoy interesado en obtener información sobre IPSUM y sus servicios. ¿Podrían brindarme detalles sobre estos? ¡Gracias!"}
                 />
                 
                 <input type="hidden" name="_subject" value="Nuevo solicitud de información" />

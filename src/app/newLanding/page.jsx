@@ -58,9 +58,9 @@ export default function IpsumConstruction() {
             Somos una empresa constructora con amplia experiencia y compromiso en el desarrollo de soluciones habitacionales y de infraestructura. Nos especializamos en diseñar y construir proyectos que van desde viviendas personalizadas hasta obras funcionales y comerciales, adaptándonos a las necesidades específicas de cada cliente.
           </p>
 
-          <button className={styles.heroButton}>
+          <a className={styles.heroButton} href="https://wa.me/+50688082269/?text=Hola,%20estoy%20interesado%20en%20obtener%20información%20sobre%20IPSUM%20y%20sus%20servicios%20¿Podrían%20brindarme%20detalles%20sobre%20estos?%20¡Gracias!">
             ¡Comienza hoy mismo!
-          </button>
+          </a>
         </div>
       </div>
     </header>
@@ -193,7 +193,7 @@ export default function IpsumConstruction() {
       />
         <h2 className={styles.tituloMision}>Misión</h2>
         <p className={styles.textoMision}>
-        Somos una empresa dedicada a la construcción, gestión y diseño obras civiles integrales, promoviendo edificaciones sostenibles y de alta calidad. Con un enfoque que va dirigido hacia la vivienda unifamiliar de bien social, brindando a las familias costarricenses espacios dignos y seguros. A través de nuestra experiencia y compromiso contribuimos al desarrollo de las comunidades y al crecimiento del sector de la construcción.
+          Somos una empresa dedicada a la construcción, gestión y diseño obras civiles integrales, promoviendo edificaciones sostenibles y de alta calidad. Con un enfoque que va dirigido hacia la vivienda unifamiliar de bien social, brindando a las familias costarricenses espacios dignos y seguros. A través de nuestra experiencia y compromiso contribuimos al desarrollo de las comunidades y al crecimiento del sector de la construcción.
         </p>
       </div>
       <div className={styles.contenedorVision}>
