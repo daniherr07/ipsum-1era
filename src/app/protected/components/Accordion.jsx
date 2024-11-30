@@ -19,7 +19,17 @@ export default function Accordion({searchBar = true, userData}){
     return(
     <div className={style.accordion} style={ opened ?{top: "0"} : {top: "-13.1em"}}> {/* -13.1em */}
 
+        
+
         <ul className={style.options}>
+            <li className={style.option}>
+                <form action="/api/home" method='POST' >
+                    
+                    <button type="submit" style={{background: "none", border: "none"}}>
+                        <p className={style.option}>Inicio</p>
+                    </button>
+                </form>
+            </li>
             {
                 userData.role == "Root" || userData.role == "Admin" ? 
                 <li className={style.option}>
@@ -34,14 +44,7 @@ export default function Accordion({searchBar = true, userData}){
                 null
             }
                 
-                <li className={style.option}>
-                <form action="/api/users" method='POST' >
-                    
-                    <button type="submit" style={{background: "none", border: "none"}}>
-                        <p className={style.option}>Control de Usuarios</p>
-                    </button>
-                </form>
-                </li>
+
             
 
             <li className={style.option}>

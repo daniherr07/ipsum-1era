@@ -5,41 +5,22 @@ import { useState, useEffect } from 'react'
 import style from "../newproject.module.css"
 
 export default function Datosdelproyecto({ projectData, setProjectData }) {
-    const [localProjectData, setLocalProjectData] = useState({
-        hasFIS: false,
-        bonoSeleccionado: "",
-        grupoSeleccionado: "",
-        subtipoSeleccionado: null,
-        desc: "",
-    });
 
     const [tipos_bonos, setBonos] = useState([])
 
-    useEffect(() => {
-        setLocalProjectData(prevData => ({
-            ...prevData,
-            ...projectData
-        }));
-    }, [projectData]);
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
         const newValue = type === 'checkbox' ? checked : value;
-        setLocalProjectData(prevData => ({
-            ...prevData,
-            [name]: newValue
-        }));
         setProjectData(prevData => ({
             ...prevData,
             [name]: newValue
         }));
+
+        console.log(name, value)
     };
 
     const handleSubtipoClick = (id) => {
-        setLocalProjectData(prevData => ({
-            ...prevData,
-            subtipoSeleccionado: id - 1
-        }));
         setProjectData(prevData => ({
             ...prevData,
             subtipoSeleccionado: id
@@ -67,7 +48,7 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                         <input
                             type="checkbox"
                             name="hasFIS"
-                            checked={localProjectData.hasFIS}
+                            checked={projectData.hasFIS}
                             onChange={handleInputChange}
                             style={{marginRight: "1em"}}
                             className={style.booleanInput1}
@@ -80,7 +61,7 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                     <select
                         className={style.selecttipo1}
                         name="bonoSeleccionado"
-                        value={localProjectData.bonoSeleccionado}
+                        value={projectData.bonoSeleccionado}
                         onChange={handleInputChange}
                     >
                         <option value="">Tipo de bono</option>
@@ -94,9 +75,10 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                     <select
                         className={style.selecttipo1}
                         name="grupoSeleccionado"
-                        value={localProjectData.grupoSeleccionado}
+                        value={projectData.grupoSeleccionado}
                         onChange={handleInputChange}
                     >
+                        <option value="">Seleccione un tipo</option>
                         <option value="1">Sin agrupación (Individual)</option>
                         <option value="2">Grupo A</option>
                         <option value="3">Grupo B</option>
@@ -104,17 +86,17 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                     </select>
 
                     <label htmlFor="desc">Descripcion Corta</label>
-                    <textarea name="desc" id="desc" rows={5} onChange={handleInputChange} value={localProjectData.desc}></textarea>
+                    <textarea name="desc" id="desc" rows={5} onChange={handleInputChange} value={projectData.desc}></textarea>
                 </div>
 
                 <div className={style.containerderecha1}>
                     {tipos_bonos.map((item) => (
                         <div key={item.id} className={style.item_opciones1}>
-                            {localProjectData.bonoSeleccionado == item.id &&
+                            {projectData.bonoSeleccionado == item.id &&
                             item.subtipos.map((subtipo, id) => (
                                 <div
                                     key={id}
-                                    className={`${style.subtipo} ${localProjectData.subtipoSeleccionado === id ? style.seleccionado : ''}`}
+                                    className={`${style.subtipo} ${projectData.subtipoSeleccionado === id ? style.seleccionado : ''}`}
                                     onClick={() => handleSubtipoClick(id)}
                                 >
                                     <h1>{subtipo.nombre}</h1>
