@@ -2,89 +2,118 @@
 
 import Image from 'next/image'
 import style from './login.module.css'
-import { useState } from 'react'
+import { useEffect, useState, useCallback, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { Suspense } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function Search() {
-    const searchParams = useSearchParams()
+function Search(){
+  const searchParams = useSearchParams()
+  useEffect(() => {
     const error = searchParams.get('error')
-    const newUserModal = searchParams.get('newUser')
-   
-    return (
-        <>
-        {error && <p style={{ color: 'red' }}>Hubo un error: {error}</p>}
-        {newUserModal && <p style={{ color: 'green' }}>Contraseña cambiada exitosamente</p>}
-        </>
-    )
+    if (error) {
+        showErrorToast();
+    }
+}, [searchParams, showErrorToast]);
+
+return (<ToastContainer />)
 }
 
-export default function Login(){
+export default function Login() {
+
     const router = useRouter()
-
-
     const [formData, setFormData] = useState({
         user: '',
         psw: '',
-      });
-    
-      const handleChange = (e) => {
+    });
+
+    const showErrorToast = useCallback(() => {
+        toast.error("Hubo un error: Usuario o contraseña incorrectos", {
+            toastId: 'loginError', // Unique ID for this toast
+        });
+    }, []);
+
+
+
+    const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
-          ...prevData,
-          [name]: value,
+            ...prevData,
+            [name]: value,
         }));
-      };
+    };
     
-      const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
     
-          const response = await fetch('/api/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
     
-          const result = await response.json();
-          console.log(result);
+            const result = await response.json();
+            console.log(result);
 
-          if (result.toChange) {
-            router.push('/newUser');
-          }
+            if (result.toChange) {
+                router.push('/newUser');
+            } else if (result.toHome) {
+                router.push(`/protected/home`);
+            } else if (result.toError) {
+                if (searchParams.get('error')) {
+                    // If we're already on the error URL, show the toast directly
+                    showErrorToast();
+                } else {
+                    // Otherwise, change the URL which will trigger the useEffect
+                    router.push('/login?error=Usuario%20o%20contraseña%20incorrectos');
+                }
+            } else {
+                toast.error("Ocurrió un error inesperado");
+            }
+        } catch (error) {
+            console.error("Error during login:", error);
+            toast.error("Error de conexión. Por favor, intente de nuevo.");
+        }
+    };
 
-          if (result.toHome) {
-            router.push(`/protected/home`);
-          }
+    return (
+        <div className={style.body}>
+            
+            <Suspense>
+              <Search></Search>
+            </Suspense>
+            <main className={style.main}>
+                <Image src={'/logo.svg'} width={200} height={100} className={style.logo} alt='logo'/>
+                <form className={style.form} onSubmit={handleSubmit}>
+                    <label htmlFor="user" className={style.label}>ID</label>
+                    <input 
+                        type="text" 
+                        name="user" 
+                        className={style.idForm}
+                        id="idForm" 
+                        onChange={handleChange} 
+                        value={formData.user}
+                        required
+                    />
 
-          if (result.toError){
-            router.push('/login?error=authentication_failed')
-          }
-      };
+                    <label htmlFor="psw" className={style.label}>Contraseña</label>
+                    <input 
+                        type="password" 
+                        name="psw" 
+                        id="pswForm" 
+                        className={style.pswForm}
+                        onChange={handleChange} 
+                        value={formData.psw}
+                        required
+                    />
 
-    return(
-        <>
-        
-            <div className={style.body}>
-                <main className={style.main}>
-                    <Image src={'logo.svg'} width={20} height={20}  className={style.logo} alt='logo'/>
-                    <Suspense>
-                        <Search></Search>
-                    </Suspense>
-                    <form className={style.form} onSubmit={handleSubmit} >
-                        <label htmlFor="user" className={style.label}>ID</label>
-                        <input type="text" name="user" className={style.idForm} id="idForm" onChange={handleChange} required/>
-
-                        <label htmlFor="psw" className={style.label}>Contraseña</label>
-                        <input type="password" name="psw" id="pswForm" className={style.pswForm} onChange={handleChange} required/>
-
-                        <p className={style.forget}>¿Olvidó la contraseña?</p>
-                        <button className={style.submit} type='submit' >Iniciar Sesion</button>
-                    </form>
-                    
-                </main>
-            </div>
-        </>
+                    <p className={style.forget}>¿Olvidó la contraseña?</p>
+                    <button className={style.submit} type='submit'>Iniciar Sesión</button>
+                </form>
+            </main>
+        </div>
     )
 }

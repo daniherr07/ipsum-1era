@@ -105,6 +105,7 @@ export default function AccordionMenu() {
       
       <ul>
         <li onClick={() => setPage(1)} className={style.itemleft} style={page == 1 ? {background: "#03579B"} : {background: "#fff"}}>
+          
           <Image 
           src={`${page == 1 ? "/new/houseWhite.svg" : "/new/houseBlue.svg"}`} 
           width={30} 
@@ -114,6 +115,8 @@ export default function AccordionMenu() {
           className={style.optionleft}
           
           />
+          
+          <p style={page == 1 ? {color: "#fff"} : {color: "#03579B"}}> Datos </p>
         </li>
 
         <li onClick={() => setPage(2)} className={style.itemleft} style={page == 2 ? {background: "#03579B"} : {background: "#fff"}}>
@@ -126,6 +129,7 @@ export default function AccordionMenu() {
           className={style.optionleft}
           
           />
+          <p style={page == 2 ? {color: "#fff"} : {color: "#03579B"}}> Núcleo </p>
         </li>
 
         <li onClick={() => setPage(3)} className={style.itemleft} style={page == 3 ? {background: "#03579B"} : {background: "#fff"}}>
@@ -137,6 +141,8 @@ export default function AccordionMenu() {
           className={style.optionleft}
           
           />
+
+        <p style={page == 3 ? {color: "#fff"} : {color: "#03579B"}}>Ubicación</p>
           
         </li>
 
@@ -149,6 +155,8 @@ export default function AccordionMenu() {
           className={style.optionleft}
           
           />
+
+        <p style={page == 4 ? {color: "#fff"} : {color: "#03579B"}}>Admin.</p>
           
         </li>
       </ul>

@@ -6,7 +6,7 @@ import SideBar from './components/SideBar';
 
 import style from "./newproject.module.css";
 
-export default function NewProject({ searchParams }) {
+export default function NewProject() {
 
   return (
     <>

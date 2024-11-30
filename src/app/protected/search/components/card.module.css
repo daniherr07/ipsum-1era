@@ -7,10 +7,14 @@
     overflow: hidden;
     font-family: Arial, sans-serif;
   }
+
+  .card *{
+    font-family: "Inter", sans-serif;
+  }
   
   /* Header Styles */
   .header {
-    background-color: #0056b3;
+    background-color: #03579B;
     height: 10%;
     color: white;
     padding: 15px;
@@ -22,13 +26,13 @@
   .headerLeft {
     display: flex;
     align-items: baseline;
+    gap: 1em;
   }
   
   .name {
     font-size: 24px;
     font-weight: bold;
     margin: 0;
-    margin-right: 15px;
   }
   
   .id {
@@ -37,7 +41,7 @@
   
   .copyButton {
     background-color: white;
-    color: #0056b3;
+    color: #03579B;
     border: none;
     border-radius: 4px;
     padding: 8px 12px;
@@ -144,7 +148,7 @@
   .editButton {
     box-shadow: 1px 1px 2px rgb(102, 102, 102);
     text-shadow: 1px 1px 2px rgb(102, 102, 102);
-    background-color: #0056b3;
+    background-color: #03579B;
     color: white;
     border: none;
     border-radius: 4px;
@@ -179,7 +183,7 @@
   }
   
   .callButton, .emailButton {
-    background-color: #0056b3;
+    background-color: #03579B;
     color: white;
   }
   
@@ -237,5 +241,34 @@
     .card{
       overflow: visible;
       height: fit-content;
+    }
+
+    .header{
+      flex-direction: column;
+      gap: 1em;
+    }
+    .headerLeft{
+      flex-direction: column;
+      place-content: center;
+      place-items: center;
+      gap: 0.5em;
+      text-align: center;
+    }
+
+    .name{
+      font-size: 2em;
+    }
+
+    .id{
+      font-size: 1.5em;
+    }
+
+    .copyButton{
+      width: 90%;
+      text-align: center;
+      display: flex;
+      place-content: center;
+      place-items: center;
+      font-size: 1em;
     }
   }

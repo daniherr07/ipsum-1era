@@ -45,15 +45,15 @@
         }
         & .itemleft{
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             place-items: center;
             justify-content: center;
             background-color: #fff;
             box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
             width: fit-content;
             place-self: center;
-            width: 5em;
-            height: 5em;
+            width: 6.5em;
+            height: 6.5em;
             border-radius: 50%;
             & .optionleft{
                 font-family: Inter;
@@ -362,6 +362,14 @@
   }
 
   @media (max-width: 800px) {
+    .sectionTitle{
+      position: static;
+    }
+
+    .sectionTitle2{
+      position: static;
+    }
+
     .main{
         margin-top: 10dvh;
         display: flex;

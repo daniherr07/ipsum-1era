@@ -117,6 +117,9 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 disabled={!formData.entidad}
                             >
                                 <option value="">Seleccione un centro de negocio</option>
+                                <option value={null}>
+                                        Pendiente
+                                </option>
                                 {centrosNegocio.map((centro, key) => (
                                     <option key={key} value={centro.localId}>
                                         {centro.nombre}
@@ -200,7 +203,6 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 className={styles.select}
                             >
                                 <option value="">Seleccione un promotor</option>
-                                <option value="1">Ninguno</option>
                                 {data.Promotor_Ipsum.map((promotor, key) => (
                                     <option key={key} value={promotor.localID}>
                                         {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`}

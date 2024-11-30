@@ -47,10 +47,10 @@ export default function ProjectSubmissionForm({
       }
 
       const result = await response.json();
-      router.push('/new-project?succesful=true'); // Redirect to a success page
+      router.push('protected/new-project?succesful=true'); // Redirect to a success page
     } catch (error) {
       console.error('Error:', error);
-      router.push('/new-project?error=true'); // Redirect to a success page
+      router.push('protected/new-project?error=true'); // Redirect to a success page
     }
   };
 
