@@ -33,6 +33,8 @@ export default function ProjectSubmissionForm({
       formDataAdmin
     };
 
+    console.log(submissionData)
+
     try {
       const response = await fetch(`${address}/saveData`, {
         method: 'POST',
@@ -47,10 +49,10 @@ export default function ProjectSubmissionForm({
       }
 
       const result = await response.json();
-      router.push('protected/new-project?succesful=true'); // Redirect to a success page
+      router.push('/protected/new-project?succesful=true'); // Redirect to a success page
     } catch (error) {
       console.error('Error:', error);
-      router.push('protected/new-project?error=true'); // Redirect to a success page
+      router.push('/protected/new-project?error=true'); // Redirect to a success page
     }
   };
 
