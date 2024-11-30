@@ -76,7 +76,7 @@ export default function Login() {
             }
         } catch (error) {
             console.error("Error during login:", error);
-            toast.error("Error de conexión. Por favor, intente de nuevo.");
+            toast.error("Error: Usuario o contraseña incorrectos");
         }
     };
 
