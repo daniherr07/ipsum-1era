@@ -2,13 +2,25 @@
 
 import Image from 'next/image'
 import style from './login.module.css'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+function Search(){
+  const searchParams = useSearchParams()
+  useEffect(() => {
+    const error = searchParams.get('error')
+    if (error) {
+        showErrorToast();
+    }
+}, [searchParams, showErrorToast]);
+
+return (<ToastContainer />)
+}
+
 export default function Login() {
-    const searchParams = useSearchParams()
+
     const router = useRouter()
     const [formData, setFormData] = useState({
         user: '',
@@ -21,12 +33,7 @@ export default function Login() {
         });
     }, []);
 
-    useEffect(() => {
-        const error = searchParams.get('error')
-        if (error) {
-            showErrorToast();
-        }
-    }, [searchParams, showErrorToast]);
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -74,7 +81,10 @@ export default function Login() {
 
     return (
         <div className={style.body}>
-            <ToastContainer />
+            
+            <Suspense>
+              <Search></Search>
+            </Suspense>
             <main className={style.main}>
                 <Image src={'/logo.svg'} width={200} height={100} className={style.logo} alt='logo'/>
                 <form className={style.form} onSubmit={handleSubmit}>
