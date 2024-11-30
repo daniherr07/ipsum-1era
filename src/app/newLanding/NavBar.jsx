@@ -7,6 +7,34 @@ import styles from './page.module.css'
 
 export default function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const scrollToContactos = (e) => {
+    e.preventDefault()
+    const servicesSection = document.getElementById('contactos')
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth', block: 'end' })
+    }
+  }
+  const scrollToFilosofia = (e) => {
+    e.preventDefault()
+    const servicesSection = document.getElementById('filosofia')
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }
+  const scrollToProyectos = (e) => {
+    e.preventDefault()
+    const servicesSection = document.getElementById('proyectos')
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }
+  const scrollToInicio = (e) => {
+    e.preventDefault()
+    const servicesSection = document.getElementById('inicio')
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }
 
   return (
     <nav className={styles.nav}>
@@ -27,10 +55,10 @@ export default function Nav() {
 
         {/* Desktop Menu */}
         <div className={styles.navLinks}>
-          <Link href="#inicio" className={styles.navLink}>Inicio</Link>
-          <Link href="#filosofia" className={styles.navLink}>Sobre Nosotros</Link>
-          <Link href="#proyectos" className={styles.navLink}>Proyectos</Link>
-          <Link href="#contactos" className={styles.navLink}>Contactos</Link>
+          <Link href="#inicio" className={styles.navLink} onClick={scrollToInicio}>Inicio</Link>
+          <Link href="#filosofia" className={styles.navLink} onClick={scrollToFilosofia}>Sobre Nosotros</Link>
+          <Link href="#proyectos" className={styles.navLink} onClick={scrollToProyectos}>Proyectos</Link>
+          <Link href="#contactos" className={styles.navLink} onClick={scrollToContactos}>Contactos</Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -45,10 +73,10 @@ export default function Nav() {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className={styles.mobileMenu}>
-          <Link href="#inicio" className={styles.mobileNavLink}>Inicio</Link>
-          <Link href="#filosofia" className={styles.mobileNavLink}>Sobre Nosotros</Link>
-          <Link href="#proyectos" className={styles.mobileNavLink}>Proyectos</Link>
-          <Link href="#contactos" className={styles.mobileNavLink}>Contactos</Link>
+          <Link href="#inicio" className={styles.mobileNavLink} onClick={scrollToInicio}>Inicio</Link>
+          <Link href="#filosofia" className={styles.mobileNavLink} onClick={scrollToFilosofia}>Sobre Nosotros</Link>
+          <Link href="#proyectos" className={styles.mobileNavLink} onClick={scrollToProyectos}>Proyectos</Link>
+          <Link href="#contactos" className={styles.mobileNavLink} onClick={scrollToContactos}>Contactos</Link>
         </div>
       )}
     </nav>

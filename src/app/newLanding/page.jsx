@@ -15,7 +15,8 @@ export default function IpsumConstruction() {
     {
       titulo: 'Bonos de vivienda',
       icono: <img src="/landing/Home.svg" alt="Light blue building with wooden door" className={styles.icono} loading="lazy" decoding="async"/>,
-      alineacion: 'izquierda'
+      alineacion: 'izquierda',
+      href: "/bonosVivienda"
     },
     {
       titulo: 'Instalaciones especializadas',
@@ -33,6 +34,15 @@ export default function IpsumConstruction() {
       alineacion: 'derecha'
     }
   ]
+  const scrollToServices = (e) => {
+    e.preventDefault()
+    const servicesSection = document.getElementById('servicios')
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }
+  
+  
 
   return (
     <>
@@ -58,7 +68,8 @@ export default function IpsumConstruction() {
             Somos una empresa constructora con amplia experiencia y compromiso en el desarrollo de soluciones habitacionales y de infraestructura. Nos especializamos en diseñar y construir proyectos que van desde viviendas personalizadas hasta obras funcionales y comerciales, adaptándonos a las necesidades específicas de cada cliente.
           </p>
 
-          <a className={styles.heroButton} href="https://wa.me/+50688082269/?text=Hola,%20estoy%20interesado%20en%20obtener%20información%20sobre%20IPSUM%20y%20sus%20servicios%20¿Podrían%20brindarme%20detalles%20sobre%20estos?%20¡Gracias!">
+          <a className={styles.heroButton} 
+          onClick={scrollToServices}>
             ¡Comienza hoy mismo!
           </a>
         </div>
@@ -102,13 +113,13 @@ export default function IpsumConstruction() {
           <div className={styles.imageContainer}>
             <img 
               src="/landing/casa1.webp" 
-              alt="White residential building with ramp"
+              alt="Casa 1"
               className={styles.imagenProyectos}
               loading="lazy"
               decoding="async"
             />
             <div className={styles.overlay}>
-              <span className={styles.projectTitle}>Proyecto 1</span>
+              
             </div>
           </div>
         </div>
@@ -116,13 +127,13 @@ export default function IpsumConstruction() {
           <div className={styles.imageContainer}>
             <img 
               src="/landing/casa2.webp" 
-              alt="Gray building with wooden door"
+              alt="Casa 2"
               className={styles.imagenProyectos}
               loading="lazy"
               decoding="async"
             />
             <div className={styles.overlay}>
-              <span className={styles.projectTitle}>Proyecto 2</span>
+              
             </div>
           </div>
         </div>
@@ -131,13 +142,13 @@ export default function IpsumConstruction() {
         <div className={styles.imageContainer}>
           <img 
             src="/landing/casa3.webp" 
-            alt="Blue building with ramp and walkway"
+            alt="Casa 3"
             className={styles.imagenProyectos}
             loading="lazy"
             decoding="async"
           />
           <div className={styles.overlay}>
-            <span className={styles.projectTitle}>Proyecto 3</span>
+            
           </div>
         </div>
       </div>
@@ -147,13 +158,13 @@ export default function IpsumConstruction() {
         <div className={styles.imageContainer}>
           <img 
             src="/landing/casa4.webp" 
-            alt="Light blue building with wooden door"
+            alt="Casa 4"
             className={styles.imagenProyectos}
             loading="lazy"
             decoding="async"
           />
           <div className={styles.overlay}>
-            <span className={styles.projectTitle}>Proyecto 4</span>
+    
           </div>
         </div>
       </div>
@@ -163,20 +174,24 @@ export default function IpsumConstruction() {
 
 
 
-    <section className={styles.seccionServicios}>
-      <h2 className={styles.tituloServicios}>Servicios</h2>
+    <section className={styles.seccionServicios} id='servicios'>
+      <h2 className={styles.tituloServicios} >Servicios</h2>
       <div className={styles.listaServicios}>
-        {servicios.map((servicio, index) => (
+        {servicios.map((servicio, index, href) => (
           <div 
             key={index} 
             className={`${styles.itemServicio} ${servicio.alineacion === 'derecha' ? styles.itemServicioDerecha : ''} ${styles.parahover}`}
           >
-            <div className={`${styles.contenedorIcono} `}>
+            
+            <div className={`${styles.contenedorIcono} `} >
               {servicio.icono}
             </div>
             <div className={`${styles.textoServicio}`}>
+              
               {servicio.titulo}
+              
             </div>
+            
           </div>
         ))}
       </div>
@@ -207,6 +222,11 @@ export default function IpsumConstruction() {
         <h2 className={styles.tituloVision}>Visión</h2>
         <p className={styles.textoVision}>
         Ser una de las empresas lideres en construcción integral en Costa Rica, enfocada por ofrecer soluciones innovadoras, accesibles y de alta calidad en obras civiles, con un enfoque especial en la construcción de viviendas unifamiliares de bien social, mejorando así la calidad de las comunidades y transformando positivamente la vida de las familias costarricenses.   
+        </p>
+      </div>
+      <div className={styles.objetivoContainer}>
+        <p className={styles.objetivoText}>
+          Nuestro objetivo es ser tu aliado en la construcción, brindándote una solución global y acompañándote en cada paso del proceso, desde la idea inicial hasta la entrega final.
         </p>
       </div>
     </section>

@@ -11,7 +11,7 @@ export default function Footer(){
     return(
         <section className={styles.contactSection} id='contactos'>
         <div className={styles.containerFooter}>
-          <h2 className={styles.contactTitle}>Contáctanos</h2>
+          <h2 className={styles.contactTitle} >Contáctanos</h2>
           <div className={styles.contactGrid}>
             <div style={{width: "100%"}}>
               <h3 className={styles.contactFormTitle}>Escribenos</h3>
