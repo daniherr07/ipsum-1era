@@ -8,6 +8,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Search(){
+  const showErrorToast = useCallback(() => {
+    toast.error("Hubo un error: Usuario o contraseña incorrectos", {
+        toastId: 'loginError', // Unique ID for this toast
+    });
+}, []);
   const searchParams = useSearchParams()
   useEffect(() => {
     const error = searchParams.get('error')
@@ -27,11 +32,7 @@ export default function Login() {
         psw: '',
     });
 
-    const showErrorToast = useCallback(() => {
-        toast.error("Hubo un error: Usuario o contraseña incorrectos", {
-            toastId: 'loginError', // Unique ID for this toast
-        });
-    }, []);
+
 
 
 
