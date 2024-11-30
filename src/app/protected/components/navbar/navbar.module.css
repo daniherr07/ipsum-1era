@@ -1,13 +1,21 @@
 
+.navContainer{
+    width: 80vw;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: #fff;
+    z-index: 11;
+}
+
 
 .nav{
     font-family: "Inter", sans-serif;
-    width: 80vw;
+    width: 87%;
     position: absolute;
-    z-index: 2;
+    z-index: 10;
     height: 4em;
-    left: 50%;
-    transform: translate(-50%);
+    
     border-radius: 0 0 20px 20px;
     box-shadow: 0 2px 3px 1px #00000049;
     display: flex;
@@ -17,7 +25,7 @@
 
     & .col1{
         display: flex;
-    
+        position: relative;
         place-items: center;
         place-content: center;
         gap: 2vw;
@@ -66,7 +74,7 @@
         display: flex;
         place-items: center;
         gap: 5px;
-        margin-right: 5vw;
+        position: relative;
 
         & .username{
             font-weight: bold;
@@ -91,13 +99,13 @@
 .accordion{
     display: flex;
     position: absolute;
-    z-index: 4 !important;
-    width: 80vw;
+    z-index: 9;
+    width: 10vw;
+    
     height: 13em;
-    background-color: #fff;
+    background-color: #03579B;
     box-shadow: 0 2px 3px 1px #00000049;
-    left: 50%;
-    transform: translate(-50%);
+    right: 0;
     flex-direction: column;
     place-items: center;
     padding-top: 4em;
@@ -146,23 +154,33 @@
         list-style: none;
         display: flex;
         flex-direction: column;
-        width: 70vw;
         place-content: space-between;
         place-items: center;
         gap: 5px;
 
         & .option {
+            color: #fff;
             font-weight: bold;
             
+            &:hover{
+                cursor: pointer;
+                text-decoration: underline;
+            }
         }
     }
 
     & .ham{
-        width: 2em;
+        width: 2.4em;
         height: auto;
         display: flex;
         position: absolute;
         transition: all 0.5s ease-in-out;
+
+
+
+        &:hover{
+            cursor: pointer;
+        }
     }
 }
 

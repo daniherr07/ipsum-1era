@@ -1,6 +1,7 @@
 .main{
     width: 80vw;
-    height: calc(100% - 4em);
+    height: calc(90% - 4em);
+    z-index: 0;
     position: absolute;
     left: 50%;
     top: 50%;

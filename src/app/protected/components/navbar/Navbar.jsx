@@ -13,8 +13,8 @@ export default async function NavBar({logo = true, searchBar = true}){
     const userData = JSON.parse(authCookie.value)
 
     return(
-        <>
-        <Accordion searchBar={searchBar}></Accordion>
+        <div className={style.navContainer}>
+        <Accordion searchBar={searchBar} userData={userData}></Accordion>
 
         <nav className={style.nav}>
 
@@ -45,6 +45,7 @@ export default async function NavBar({logo = true, searchBar = true}){
                 <p className={style.username}>{userData.userName}</p>
                 <Image src={'/person.svg'} width={20} height={20} className={style.person} alt='person'/>
                 
+                
             </div>
 
 
@@ -52,6 +53,6 @@ export default async function NavBar({logo = true, searchBar = true}){
 
 
         </nav>
-        </>
+        </div>
     );
 }

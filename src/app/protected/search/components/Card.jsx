@@ -7,7 +7,7 @@ export default function Card({item}) {
     <>
     <div className={styles.card}>
       {/* Header */}
-      <header className={styles.header}>
+      <header className={styles.header} style={{backgroundColor: `${item.estadoColor}`}}>
         <div className={styles.headerLeft}>
           <h1 className={styles.name}>{item.nombreProyecto}</h1>
           <span className={styles.id}>
@@ -76,7 +76,7 @@ export default function Card({item}) {
         {/* Right Column */}
         <div className={styles.rightColumn}>
           {/* RAMT Badge */}
-          <div className={styles.ramtBadge} style={{backgroundColor: `${item.colorEtapa}`}}>
+          <div className={styles.ramtBadge} style={{backgroundColor: `#03579B`}}>
             <p className={styles.ramtBadgeTxt}>{item.tipoBono}</p>
           </div>
 
