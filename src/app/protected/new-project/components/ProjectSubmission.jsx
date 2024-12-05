@@ -17,7 +17,6 @@ export default function ProjectSubmissionForm({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
 
     // Validate that there's at least one family member who is the head of the household
     const hasHeadOfHousehold = familyMembers.some(member => member.tipo === 'Jefe/a de Familia');
