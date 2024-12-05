@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { address } from '@/app/const';
+import { ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import styles from '../newproject.module.css'
 
 export default function ProjectSubmissionForm({
@@ -45,19 +47,32 @@ export default function ProjectSubmissionForm({
       });
 
       if (!response.ok) {
-        throw new Error('Error al guardar el proyecto');
+        return toast.error("Hubo un error, verifica los datos e intentalo más tarde")
       }
 
       const result = await response.json();
-      router.push('/protected/new-project?succesful=true'); // Redirect to a success page
+      toast.success("Proyecto añadido exitosamente!")
+      router.refresh(); // Redirect to a success page
     } catch (error) {
       console.error('Error:', error);
-      router.push('/protected/new-project?error=true'); // Redirect to a success page
+      toast.error("Hubo un error, verifica los datos e intentalo más tarde") // Redirect to a success page
     }
   };
 
   return (
     <div>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       {error && <p>{error}</p>}
       <form onSubmit={handleSubmit} >
         <button type="submit" className={styles.saveButton}>

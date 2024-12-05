@@ -3,15 +3,9 @@
 import Image from 'next/image'
 import style from './login.module.css'
 import { useState } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
-import { Suspense } from 'react'
-
-function Search() {
-    const searchParams = useSearchParams()
-    const error = searchParams.get('error')
-   
-    return <>{error && <p style={{ color: 'red' }}>Hubo un error: {error}</p>}</>
-  }
+import { useRouter } from 'next/navigation'
+import { ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login(){
     const router = useRouter()
@@ -45,34 +39,42 @@ export default function Login(){
           const result = await response.json();
           console.log(result);
 
-          
-          if (result.pswError) {
-            router.push('/newUser?error=Las_contraseñas_no_coinciden');
-          }
-
           if (result.userError) {
-            router.push('/newUser?error=Usuario_incorrecto');
+            toast.error("Usuario incorrecto")
           }
 
           if (result.emailError) {
-            router.push('/newUser?error=Email_incorrecto');
+            toast.error("Email incorrrecto")
+          }
+          
+          if (result.pswError) {
+            toast.error("Las contraseñas no coinciden")
           }
 
           if (result.toLogin){
+            toast.success("Usuario actualizado! Por favor iniciar sesion")
             router.push('/login?newUser=true')
           }
       };
 
     return(
         <>
-        
+            <ToastContainer
+              position="bottom-right"
+              autoClose={3000}
+              hideProgressBar
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
             <div className={style.body}>
                 <main className={style.main}>
                     <Image src={'logo.svg'} width={20} height={20}  className={style.logo} alt='logo'/>
                     <h1>Por favor cambie su contraseña</h1>
-                    <Suspense>
-                    <Search></Search>
-                    </Suspense>
                     <form className={style.form} onSubmit={handleSubmit} >
                         <label htmlFor="user" className={style.label}>ID</label>
                         <input type="text" name="user" className={style.idForm} id="idForm" onChange={handleChange} required/>

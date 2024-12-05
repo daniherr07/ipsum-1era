@@ -6,9 +6,11 @@ import { address } from '@/app/const'
 import { toast } from 'react-toastify';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
+import { useRouter } from 'next/navigation';
 
 
 export default function UserRow({ user }) {
+    const router = useRouter();
     const [editable, isEditable] = useState(false)
     const roles = ["Ingeniero", "Analista", "Admin", "Root", "Promotor"] 
     const [userEdit, setUser] = useState({
@@ -83,8 +85,42 @@ export default function UserRow({ user }) {
                 );
               }
         })
-      };
+    };
 
+
+    const changeStatus = () => {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                return (
+                    <div className={styles.modal}>
+                        <h1>¿Estás seguro de {user.activated == 1 ? "desactivar" : "activar"} a {user.user_name} {user.last_name1}?</h1>
+                        <p>Este usuario no podrá participar en ningun proyecto si está desactivado</p>
+
+                        <div className={styles.modalBtns}>
+                            <button
+                                className={styles.modalUpdate}
+                                onClick={() => {
+                                updateStatus();
+                                onClose();
+                                }}
+                            >
+                                {user.activated == 1 ? "Desactivar" : "Activar"}
+                            </button>
+
+                            <button 
+                            onClick={onClose}
+                            className={styles.modalCancel}
+                            >Cancelar
+                            </button>
+
+                        </div>
+
+
+                  </div>
+                );
+              }
+        })
+    };
 
 
 
@@ -108,12 +144,35 @@ export default function UserRow({ user }) {
 
     }
 
+    const updateStatus = async ()  => {
+        const data = {
+            id: user.id,
+            activated: user.activated,
+        }
+        const response = await fetch(`${address}/changeStatus`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          });
+
+        if (!response.ok) {
+            toast.error(`Hubo un error, intentalo más tarde...`)
+        }
+
+        toast.success(`Usuario exitosamente ${user.activated == 1 ? "Desactivado" : "Activado"}`)
+        router.refresh();
+
+
+    }
+
 
   return (
     <>
 
     
-    <tr className={styles.row}>
+    <tr className={`${styles.row} ${user.activated == 0 && styles.rowDeactivated}`}>
         {
             editable ?
             <>
@@ -145,7 +204,7 @@ export default function UserRow({ user }) {
                     <p className={styles.updateBtn} onClick={submit} >💾</p>
                     <button className={styles.cancelBtn} type='button' onClick={() => isEditable(!editable)}>Cancelar</button>    
                 </td>
-                <td className={`${styles.cell} ${styles.btn}`}>🚫</td>
+                <td className={`${styles.cell} ${styles.btn}`} onClick={changeStatus}>🚫</td>
             </>
 
 
@@ -156,8 +215,18 @@ export default function UserRow({ user }) {
                 <td className={styles.cell}>{userEdit.lastName2}</td>
                 <td className={styles.cell}>{userEdit.userName}</td>
                 <td className={styles.cell}> {userEdit.roles} </td>
-                <td className={styles.cell} onClick={() => isEditable(!editable)} ><p className={styles.btn}>✏️</p></td>
-                <td className={styles.cell}><p className={styles.btn}>🚫</p></td>
+                {user.activated == 1 &&
+                    <td className={styles.cell} onClick={() => isEditable(!editable)} ><p className={styles.btn}>✏️</p></td>
+                }
+                
+                {
+                    user.activated == 1 ?
+                    <td className={styles.cell}><p className={styles.btn} onClick={changeStatus}>🚫</p></td>
+                    :
+                    <td className={styles.cell}><p className={styles.btn} onClick={changeStatus}>✅</p></td>
+                }
+                
+                
             </>
         }
 

@@ -20,6 +20,10 @@ export async function POST(request) {
     // Manejar la respuesta del backend si es necesario
     const backendData = await backendResponse.json();
 
+    if (backendData.activated == false) {
+      return NextResponse.json({deactivated: true});
+    }
+
     if (backendData.authorized) {
       if (backendData.newUser) {
         return NextResponse.json({toChange: true});
