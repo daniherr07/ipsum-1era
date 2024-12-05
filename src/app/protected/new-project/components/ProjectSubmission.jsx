@@ -14,7 +14,6 @@ export default function ProjectSubmissionForm({
   formDataAdmin
 }) {
   const router = useRouter();
-  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,8 +22,7 @@ export default function ProjectSubmissionForm({
     // Validate that there's at least one family member who is the head of the household
     const hasHeadOfHousehold = familyMembers.some(member => member.tipo === 'Jefe/a de Familia');
     if (!hasHeadOfHousehold) {
-      setError('Debe haber al menos un miembro de familia que sea jefe/a de hogar');
-      return;
+      return toast.error('Debe haber al menos un miembro de familia que sea jefe/a de hogar');
     }
 
     // Combine all data
@@ -73,7 +71,6 @@ export default function ProjectSubmissionForm({
           pauseOnHover
           theme="light"
         />
-      {error && <p>{error}</p>}
       <form onSubmit={handleSubmit} >
         <button type="submit" className={styles.saveButton}>
           Guardar Proyecto
