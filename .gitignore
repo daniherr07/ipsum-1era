@@ -44,3 +44,4 @@ package.json
 .env.production
 package-lock.json
 .gitignore
+package-lock.json
