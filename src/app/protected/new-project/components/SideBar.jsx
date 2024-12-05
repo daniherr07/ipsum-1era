@@ -3,8 +3,6 @@
 import Image from 'next/image';
 import style from "../newproject.module.css";
 import { useState } from 'react';
-import { useSearchParams } from 'next/navigation'
-import { Suspense } from 'react';
 
 import Datosdelproyecto from './Datosdelproyecto';
 import Miembrosdelafamilia from './Miembrosdelafamilia';
@@ -13,16 +11,6 @@ import Datosadministrativos from './Datosadministrativos';
 
 import ProjectSubmissionForm from './ProjectSubmission';
 
-function Search() {
-  const searchParams = useSearchParams()
-  const succesful = searchParams.get("succesful")
-  const error = searchParams.get("error")
-
-  return(<>
-      {succesful && <h2 className={style.sectionTitle2} style={{color: "green"}}>¡Guardado Exitosamente!</h2>}
-      {error && <h2 className={style.sectionTitle2} style={{color: "red"}}>Hubo un error, intentalo mas tarde...</h2>}
-  </>)
-}
 
 
 export default function AccordionMenu() {
@@ -97,9 +85,6 @@ export default function AccordionMenu() {
   return (  
     <>
     <h1 className={style.sectionTitle}>Nuevo Proyecto</h1>
-    <Suspense>
-      <Search />
-    </Suspense>
 
     <aside className={style.accordioncontainer}>
       
