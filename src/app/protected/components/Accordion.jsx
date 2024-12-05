@@ -46,6 +46,14 @@ export default function Accordion({searchBar = true, userData}){
                 
 
             
+            <li className={style.option}>
+                <form action="/api/search" method='POST' >
+                
+                    <button type="submit" style={{background: "none", border: "none"}}>
+                        <p className={style.option}>Proyectos</p>
+                    </button>
+                </form>
+            </li>
 
             <li className={style.option}>
                 <form action="/api/new-project" method='POST' >

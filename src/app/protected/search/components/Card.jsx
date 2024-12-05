@@ -3,6 +3,7 @@ import styles from './card.module.css'
 import Image from 'next/image';
 
 export default function Card({item}) {
+  console.log(item)
     return (
     <>
     <div className={styles.card}>
@@ -101,13 +102,21 @@ export default function Card({item}) {
           {/* Communication Buttons */}
           <div className={styles.communicationButtons}>
             <button className={styles.callButton}>
-              <Image src={"/call.svg"}  width={20} height={20} alt='llamada'/>
+              <a href={`tel:+506${item.telefono}`}>
+                <Image src={"/call.svg"}  width={20} height={20} alt='llamada'/>
+              </a>
+              
             </button>
             <button className={styles.emailButton}>
-              <Image src={"/mail.svg"}  width={20} height={20} alt='correo' />
+              <a href={`mailto:${item.email}`}>
+                <Image src={"/mail.svg"}  width={20} height={20} alt='correo' />
+              </a>
             </button>
             <button className={styles.whatsappButton}>
-              <Image src={"/whatsapp.svg"}  width={20} height={20} alt='wasap'/>
+              <a href={`https://wa.me/+506${item.telefono}`}>
+                <Image src={"/whatsapp.svg"}  width={20} height={20} alt='wasap'/>
+              </a>
+
             </button>
           </div>
 
@@ -129,7 +138,7 @@ export default function Card({item}) {
           </div>
           <div>
             <span className={styles.label}>Tipo proyecto</span>
-            <span className={styles.value}>Grupal: {item.grupoProyecto}</span>
+            <span className={styles.value}>{item.grupoProyecto}</span>
           </div>
           <div>
             <span className={styles.label}>Analista</span>
