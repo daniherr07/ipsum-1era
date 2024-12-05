@@ -1,1 +1,1 @@
-export const address = process.env.NEXT_PUBLIC_API_ADDRESS
+export const address = "https://ipsum-backend.vercel.app"
