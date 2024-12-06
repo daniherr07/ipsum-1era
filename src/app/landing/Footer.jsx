@@ -15,7 +15,7 @@ export default function Footer(){
           <div className={styles.contactGrid}>
             <div style={{width: "100%"}}>
               <h3 className={styles.contactFormTitle}>Escribenos</h3>
-              <form action="https://formsubmit.co/fb44e2f611d7e60f8b3e326459d201ab" method="POST" className={styles.contactForm}>
+              <form method="POST" className={styles.contactForm}>
               <input
                   type="text"
                   placeholder="Nombre"
