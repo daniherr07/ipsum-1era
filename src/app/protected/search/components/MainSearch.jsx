@@ -2,10 +2,8 @@
 
 import { useState } from 'react'
 import style from './mainSearch.module.css'
-import { useSearchParams } from 'next/navigation'
 import Card from './Card'
 import { useEffect } from 'react'
-import Filter from './Filter'
 import { address } from '@/app/const'
 
 
@@ -53,10 +51,9 @@ export default function MainSearch({label, value}){
             { 
                 <>
                     <div className={style.cardsContainerAll}>
-                        <Filter ordenarData={ordenarData}></Filter>
                         {
                             isLoading ? <p>Loading...</p> :
-                            <p>Cantidad: {Object.keys(pName).length}</p>
+                            <p>Encontrados: {Object.keys(pName).length}</p>
                         }
                         
                         <section className={style.cardsContainer}>

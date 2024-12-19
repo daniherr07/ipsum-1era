@@ -3,8 +3,10 @@ import MainSearch from "./components/MainSearch";
 import style from './search.module.css'
 import { Suspense } from 'react'
 
-export default function Search({searchParams}){
-    console.log('Search params:', searchParams.label)
+export default async function Search({searchParams}){
+    const searchWaited = await searchParams;
+    const searchLabel = await searchWaited.label;
+    const searchValue = await searchWaited.value;
 
     return(
         <>
@@ -15,7 +17,7 @@ export default function Search({searchParams}){
             <Suspense>
             <main className={style.main}>
 
-                <MainSearch label={searchParams.label} value={searchParams.value}></MainSearch>
+                <MainSearch label={searchLabel} value={searchValue}></MainSearch>
             </main>
             </Suspense>
         </>

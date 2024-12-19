@@ -17,10 +17,11 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
             [name]: newValue
         }));
 
-        console.log(name, value)
+        console.log(tipos_bonos)
     };
 
     const handleSubtipoClick = (id) => {
+        console.log(id)
         setProjectData(prevData => ({
             ...prevData,
             subtipoSeleccionado: id
@@ -32,6 +33,7 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
             .then((res) => res.json())
             .then((fetchedData) => {
                 setBonos(fetchedData);
+                console.log(fetchedData)
             })
             .catch((error) => console.error('Error fetching admin data:', error));
     }, []);
@@ -96,8 +98,8 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                             item.subtipos.map((subtipo, id) => (
                                 <div
                                     key={id}
-                                    className={`${style.subtipo} ${projectData.subtipoSeleccionado === id ? style.seleccionado : ''}`}
-                                    onClick={() => handleSubtipoClick(id)}
+                                    className={`${style.subtipo} ${projectData.subtipoSeleccionado === subtipo.id ? style.seleccionado : ''}`}
+                                    onClick={() => handleSubtipoClick(subtipo.id)}
                                 >
                                     <h1>{subtipo.nombre}</h1>
                                 </div>

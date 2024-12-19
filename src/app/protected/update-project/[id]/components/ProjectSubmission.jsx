@@ -11,12 +11,15 @@ export default function ProjectSubmissionForm({
   projectData,
   familyMembers,
   directionData,
-  formDataAdmin
+  formDataAdmin,
+  deletedMembers,
 }) {
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log("Despues de actualizar", deletedMembers)
 
     //Validacion de errores
     if (projectData.bonoSeleccionado == "") {
@@ -130,7 +133,8 @@ export default function ProjectSubmissionForm({
       projectData,
       familyMembers,
       directionData,
-      formDataAdmin
+      formDataAdmin,
+      deletedMembers
     };
 
     console.log(submissionData)

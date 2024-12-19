@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { data } from './data';
 import { address } from '@/app/const';
 import 'rsuite/dist/rsuite-no-reset.min.css';
-import style from '../page.module.css';
+import style from './search.module.css';
 import {useRouter}  from 'next/navigation';
 
 export default function SearchInputs() {
