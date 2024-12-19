@@ -6,7 +6,28 @@ import NavBar from './NavBar'
 import WhatsAppButton from './WhatsAppButton'
 
 export default function IpsumConstruction() {
-
+    const servicios = [
+        {
+          titulo: 'Bono Artículo 59',
+          imagen: '/landing/servicios/art59.png',
+          descripcion: 'El Bono Artículo 59 responde a la directriz 27 del Banhvi y es una modalidad de subsidio que se otorga a las familias con necesidades especiales, facilitando el acceso a una vivienda adecuada bajo condiciones específicas y flexibles. El subsidio no incluye Gastos Administrativos',
+        },
+        {
+          titulo: 'Construcción en lote propio',
+          imagen: '/landing/servicios/construccion.png',
+          descripcion: 'Para poder construir una casa, es necesario que la familia tenga un lote propio inscrito en el registro nacional a nombre de la persona que realiza el trámite, con plano de catastro visado por la municipalidad, acceso a servicios públicos (agua y luz) y estar al día en la municipalidad.',
+        },
+        {
+          titulo: 'Remodelación, Ampliación, Mejoras y Terminación',
+          imagen: '/landing/servicios/admayor.jpeg',
+          descripcion: 'Permite a las familias realizar mejoras significativas en sus hogares mediante un bono de vivienda, facilitando el financiamiento para proyectos de remodelación, ampliación, mejora o terminación de su vivienda. Este programa está diseñado para apoyar a aquellas familias que ya poseen una vivienda',
+        },
+        {
+          titulo: 'Bono crédito',
+          imagen: '/landing/servicios/credito.png',
+          descripcion: 'Modalidad de financiamiento diseñada para que las familias puedan acceder a una vivienda mediante la combinación de un bono y un crédito complementario para cubrir una parte del costo de la vivienda con el bono, que la familia puede pagar de manera gradual',
+        },
+      ]
     return(
         <>
         <NavBar></NavBar>
@@ -64,6 +85,32 @@ export default function IpsumConstruction() {
                 </div>
             </div>
             </section>
+
+            <section className={styles.serviciosContenedor}>
+        <div className={styles.serviciosRejilla}>
+            {servicios.map((servicio, index) => (
+            <article key={index} className={styles.serviciosTarjeta}>
+                <div className={styles.serviciosEnvolturImagen}>
+                <img
+                    src={servicio.imagen}
+                    alt=""
+                    width={400}
+                    height={300}
+                    className={styles.serviciosImagen}
+                />
+                </div>
+                <div className={styles.serviciosContenido}>
+              <h2 className={styles.serviciosTitulo}>{servicio.titulo}</h2>
+              <p className={styles.serviciosDescripcion}>{servicio.descripcion}</p>
+              <button className={styles.serviciosBoton}>
+                Más información
+              </button>
+            </div>
+            </article>
+            ))}
+        </div>
+        </section>
+
         <Footer></Footer>
         <WhatsAppButton></WhatsAppButton>
         </>    

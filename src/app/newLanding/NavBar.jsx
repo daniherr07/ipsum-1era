@@ -35,6 +35,13 @@ export default function Nav() {
       servicesSection.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }
   }
+  const scrollToServicios = (e) => {
+    e.preventDefault()
+    const servicesSection = document.getElementById('servicios')
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }
 
   return (
     <nav className={styles.nav}>
@@ -58,6 +65,7 @@ export default function Nav() {
           <Link href="#inicio" className={styles.navLink} onClick={scrollToInicio}>Inicio</Link>
           <Link href="#filosofia" className={styles.navLink} onClick={scrollToFilosofia}>Sobre Nosotros</Link>
           <Link href="#proyectos" className={styles.navLink} onClick={scrollToProyectos}>Proyectos</Link>
+          <Link href="#proyectos" className={styles.navLink} onClick={scrollToServicios}>Servicios</Link>
           <Link href="#contactos" className={styles.navLink} onClick={scrollToContactos}>Contactos</Link>
         </div>
 
@@ -76,6 +84,7 @@ export default function Nav() {
           <Link href="#inicio" className={styles.mobileNavLink} onClick={scrollToInicio}>Inicio</Link>
           <Link href="#filosofia" className={styles.mobileNavLink} onClick={scrollToFilosofia}>Sobre Nosotros</Link>
           <Link href="#proyectos" className={styles.mobileNavLink} onClick={scrollToProyectos}>Proyectos</Link>
+          <Link href="#proyectos" className={styles.mobileNavLink} onClick={scrollToServicios}>Servicios</Link>
           <Link href="#contactos" className={styles.mobileNavLink} onClick={scrollToContactos}>Contactos</Link>
         </div>
       )}
