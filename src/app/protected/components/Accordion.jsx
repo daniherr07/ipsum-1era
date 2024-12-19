@@ -1,7 +1,7 @@
 'use client'
 
 import style from './navbar/navbar.module.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 
 
@@ -11,13 +11,58 @@ export default function Accordion({searchBar = true, userData}){
 
     const [opened, setOpened] = useState(false)
 
+    const [windowBool, setWindowBool] = useState(false)
+
     const handleOpened = () => {
         setOpened(!opened)
-
     }
+ 
+    useEffect(() => {
+        setOpened(false)
+        
+        function handleResize() { 
+
+            if (window.innerWidth >= 768) {
+                setWindowBool(false)
+            } else{
+                setWindowBool(true)
+            }
+
+
+        }
+        
+        window.addEventListener("resize", handleResize)
+        
+        handleResize()
+
+        return () => window.removeEventListener("resize", handleResize)
+    }, [])
 
     return(
-    <div className={style.accordion} style={ opened ?{top: "0"} : {top: "-13.1em"}}> {/* -13.1em */}
+
+    <>
+    <div className={style.accordion} 
+    style=
+    { opened ?
+    
+    windowBool ? 
+    //Abierto y en Celular
+    {right: "-19.6vw", width: "30vw", zIndex: "20", height: "100dvh"} 
+    :  
+    //Abierto y en Compu
+    {right: "-19.6vw", width: "19vw", zIndex: "20", height: "100dvh"} 
+    
+    : 
+    
+    windowBool ?  
+    //Cerrado y en Celular
+    {right: "-50vw", width: "30vw", zIndex: "20", height: "100dvh"} 
+    : 
+
+    //Cerrado y en Compu
+    {right: "-50vw", width: "19vw", zIndex: "20", height: "100dvh"} 
+    
+    }>
 
         
 
@@ -74,18 +119,26 @@ export default function Accordion({searchBar = true, userData}){
             </li>
         </ul>
 
-        <img 
-            src={`${opened ? '/hamWhite.svg' :'/hamburger.svg'}`} 
-            className={style.ham}
-            style={
-                opened ?
-                {top: "1em", right: "1em"}
-                :
-                {top: "14.2em", right: "1em"}
-            }
-            onClick={handleOpened} 
-            alt='hamburger'
-            />
+
     </div>
+        <img 
+                src={`${opened ? '/hamburger.svg' :'/hamburger.svg'}`} 
+                className={style.ham}
+                style={
+                    opened ?
+                    
+
+                    windowBool ?  
+                    {top: "1em", right: "-10%", zIndex: "100"} : 
+                    {top: "1em", right: "-10%", zIndex: "100"}
+                    :
+                    windowBool ? 
+                    {top: "1em", right: "-10%", zIndex: "100"} : 
+                    {top: "1em", right: "-10%", zIndex: "100"}
+                }
+                onClick={handleOpened} 
+                alt='hamburger'
+                />
+    </>
     )
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './card.module.css'
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Card({item}) {
   console.log(item)
@@ -44,8 +45,11 @@ export default function Card({item}) {
             <div>
               <span className={styles.label}>Etapa</span>
               <span className={styles.value}>
-                {item.etapa}. {item.subetapa}
-                </span>
+                Etapa: {item.etapa}
+              </span>
+              <span className={styles.value}>
+                Subetapa: {item.subetapa}
+              </span>
             </div>
           </div>
 
@@ -88,10 +92,14 @@ export default function Card({item}) {
           </div>
 
           {/* Edit Button */}
+          <Link href={`/protected/update-project/${item.id}`}>
           <button className={styles.editButton}>
-            <Image src={"/pen.svg"} className={styles.editIcon} width={20} height={20} alt='icono'/>
-            Editar
+            
+              <Image src={"/pen.svg"} className={styles.editIcon} width={20} height={20} alt='icono'/>
+              <p style={{color: "#fff", textDecoration: "none"}}>Editar</p> 
+
           </button>
+          </Link>
 
           {/* Phone Number */}
           <div>
@@ -122,9 +130,12 @@ export default function Card({item}) {
 
           {/* Referral Information */}
           <div>
-            <span className={styles.label}>Referido por</span>
-            <span className={styles.value}>{item.promotorInterno} (Interno) y {item.promotorExterno} (Externo)</span>
-            <span className={styles.currentStage}>Etapa Actual : (WIP)</span>
+            <span className={styles.label}>Promotor Ipsum</span>
+            <span className={styles.value}>{item.promotorInterno} (Interno)</span>
+          </div>
+          <div>
+            <span className={styles.label}>Promotor Entidad</span>
+            <span className={styles.value}>{item.promotorExterno} </span>
           </div>
         </div>
       </div>
