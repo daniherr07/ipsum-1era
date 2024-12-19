@@ -19,18 +19,8 @@ export default function IpsumConstruction() {
       href: "/bonosVivienda"
     },
     {
-      titulo: 'Instalaciones especializadas',
-      icono: <img src="/landing/Rayo.svg" alt="Light blue building with wooden door" className={styles.icono} loading="lazy" decoding="async"/>,
-      alineacion: 'derecha'
-    },
-    {
-      titulo: 'Reformas y remodelaciones',
+      titulo: 'Otros proyectos',
       icono: <img src="/landing/Grua.svg" alt="Light blue building with wooden door" className={styles.icono} loading="lazy" decoding="async"/>,
-      alineacion: 'izquierda'
-    },
-    {
-      titulo: 'Obras civiles',
-      icono: <img src="/landing/Puente.svg" alt="Light blue building with wooden door" className={styles.icono} loading="lazy" decoding="async"/>,
       alineacion: 'derecha'
     }
   ]
@@ -112,7 +102,7 @@ export default function IpsumConstruction() {
         <div className={styles.imagenPequenaProyectos}>
           <div className={styles.imageContainer}>
             <img 
-              src="/landing/casa1.webp" 
+              src="/landing/tambor2.jpg" 
               alt="Casa 1"
               className={styles.imagenProyectos}
               loading="lazy"
@@ -141,7 +131,7 @@ export default function IpsumConstruction() {
       <div className={styles.imagenMedianaProyectos}>
         <div className={styles.imageContainer}>
           <img 
-            src="/landing/casa3.webp" 
+            src="/landing/tambor.jpg" 
             alt="Casa 3"
             className={styles.imagenProyectos}
             loading="lazy"
@@ -188,7 +178,7 @@ export default function IpsumConstruction() {
             </div>
             <div className={`${styles.textoServicio}`}>
               
-              {servicio.titulo}
+              <a href={servicio.href}>{servicio.titulo}</a>
               
             </div>
             

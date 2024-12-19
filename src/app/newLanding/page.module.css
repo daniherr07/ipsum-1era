@@ -528,7 +528,18 @@
   .itemServicioDerecha {
     flex-direction: row-reverse;
   }
-  
+  .textoServicio a{
+    text-decoration: none;  
+  }
+  .textoServicio a:visited{
+    text-decoration: none; 
+    color: #333; 
+  }
+  .textoServicio a:hover{
+    transition: ease-in 0.3s;
+    text-decoration: none; 
+    color: #fff; 
+  }
   .contenedorIcono {
     width: 80px;
     height: 80px;
