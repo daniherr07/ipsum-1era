@@ -1,3 +1,43 @@
-<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M14.1666 2.50005C14.3855 2.28118 14.6453 2.10756 14.9313 1.98911C15.2173 1.87066 15.5238 1.80969 15.8333 1.80969C16.1428 1.80969 16.4493 1.87066 16.7353 1.98911C17.0213 2.10756 17.2811 2.28118 17.5 2.50005C17.7188 2.71892 17.8924 2.97875 18.0109 3.26472C18.1293 3.55069 18.1903 3.85719 18.1903 4.16671C18.1903 4.47624 18.1293 4.78274 18.0109 5.06871C17.8924 5.35468 17.7188 5.61451 17.5 5.83338L6.24996 17.0834L1.66663 18.3334L2.91663 13.75L14.1666 2.50005Z" stroke="#757575" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="20"
+   height="20"
+   viewBox="0 0 20 20"
+   fill="none"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="pen.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="43.05"
+     inkscape:cx="10"
+     inkscape:cy="10"
+     inkscape:window-width="1601"
+     inkscape:window-height="1041"
+     inkscape:window-x="161"
+     inkscape:window-y="42"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg1" />
+  <path
+     d="m 14.1666,2.50005 c 0.2189,-0.21887 0.4787,-0.39249 0.7647,-0.51094 0.286,-0.11845 0.5925,-0.17942 0.902,-0.17942 0.3095,0 0.616,0.06097 0.902,0.17942 0.286,0.11845 0.5458,0.29207 0.7647,0.51094 0.2188,0.21887 0.3924,0.4787 0.5109,0.76467 0.1184,0.28597 0.1794,0.59247 0.1794,0.90199 0,0.30953 -0.061,0.61603 -0.1794,0.902 C 17.8924,5.35468 17.7188,5.61451 17.5,5.83338 L 6.24996,17.0834 l -4.58333,1.25 1.25,-4.5834 z"
+     stroke="#757575"
+     stroke-width="2"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="path1"
+     style="mix-blend-mode:normal;fill:#ffffff;stroke:#ffffff;stroke-opacity:1" />
 </svg>

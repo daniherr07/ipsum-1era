@@ -10,11 +10,10 @@ import { address } from '@/app/const'
 
 
 
-export default function MainSearch(){
+export default function MainSearch({label, value}){
     const [pName, setPName] = useState()
     const [isLoading, setLoading] = useState(true)
     const [data, setData] = useState()
-    const searchParams = useSearchParams()
     const [id, setId] = useState(null)
 
     function ordenarData() {
@@ -37,7 +36,7 @@ export default function MainSearch(){
 
 
     useEffect(() => {
-        fetch(`${address}/projectNames`)
+        fetch(`${address}/projectNames?label=${label}&value=${value}`)
             .then((res) => res.json())
             .then((data) => {
                 console.log(data)

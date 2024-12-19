@@ -5,75 +5,75 @@ import styles from '../newproject.module.css';
 
 export default function FamilyForm({formData, setFormData, familyMembers, setFamilyMembers}) {
 
-    const deleteConfirm = (nombre, apellido1, tipo, id) => {
-      confirmAlert({
-          customUI: ({ onClose }) => {
-              return (
-                  <div className={styles.modal}>
-                      <h1>¿Estás seguro de eliminar a este miembro familiar?</h1>
-                      <div className={styles.modalMain}>
-                          <div className={styles.modalOld}>
-                              <h2>Nombre: {nombre + " " + apellido1}</h2>
-                              <h2>Tipo: {tipo}</h2>
-                          </div>
-                      </div>
-                      <div className={styles.modalBtns}>
-                          <button
-                              className={styles.modalUpdate}
-                              onClick={() => {
-                              handleDelete(id);
-                              onClose();
-                              }}
-                          >
-                              Confirmar
-                          </button>
+  const deleteConfirm = (member) => {
+    confirmAlert({
+        customUI: ({ onClose }) => {
+            return (
+                <div className={styles.modal}>
+                    <h1>¿Estás seguro de eliminar a este miembro familiar?</h1>
+                    <div className={styles.modalMain}>
+                        <div className={styles.modalOld}>
+                            <h2>Nombre: {member.nombre + " " + member.primerApellido}</h2>
+                            <h2>Tipo: {member.tipoMiembro}</h2>
+                        </div>
+                    </div>
+                    <div className={styles.modalBtns}>
+                        <button
+                            className={styles.modalUpdate}
+                            onClick={() => {
+                            handleDelete(member);
+                            onClose();
+                            }}
+                        >
+                            Confirmar
+                        </button>
 
-                          <button 
-                          onClick={onClose}
-                          className={styles.modalCancel}
-                          >Cancelar
-                          </button>
-                      </div>
-                </div>
-              );
-            }
-      })
-    };
+                        <button 
+                        onClick={onClose}
+                        className={styles.modalCancel}
+                        >Cancelar
+                        </button>
+                    </div>
+              </div>
+            );
+          }
+    })
+  };
 
-    const editConfirm = (member) => {
-      confirmAlert({
-          customUI: ({ onClose }) => {
-              return (
-                  <div className={styles.modal}>
-                      <h1>¿Estás seguro de editar a este miembro familiar?</h1>
-                      <div className={styles.modalMain}>
-                          <div className={styles.modalOld}>
-                              <h2>Nombre: {member.nombre + " " + member.primerApellido}</h2>
-                              <h2>Tipo: {member.tipoMiembro}</h2>
-                          </div>
-                      </div>
-                      <div className={styles.modalBtns}>
-                          <button
-                              className={styles.modalUpdate}
-                              onClick={() => {
-                              handleEdit(member);
-                              onClose();
-                              }}
-                          >
-                              Confirmar
-                          </button>
+  const editConfirm = (member) => {
+    confirmAlert({
+        customUI: ({ onClose }) => {
+            return (
+                <div className={styles.modal}>
+                    <h1>¿Estás seguro de editar a este miembro familiar?</h1>
+                    <div className={styles.modalMain}>
+                        <div className={styles.modalOld}>
+                            <h2>Nombre: {member.nombre + " " + member.primerApellido}</h2>
+                            <h2>Tipo: {member.tipoMiembro}</h2>
+                        </div>
+                    </div>
+                    <div className={styles.modalBtns}>
+                        <button
+                            className={styles.modalUpdate}
+                            onClick={() => {
+                            handleEdit(member);
+                            onClose();
+                            }}
+                        >
+                            Confirmar
+                        </button>
 
-                          <button 
-                          onClick={onClose}
-                          className={styles.modalCancel}
-                          >Cancelar
-                          </button>
-                      </div>
-                </div>
-              );
-            }
-      })
-    };
+                        <button 
+                        onClick={onClose}
+                        className={styles.modalCancel}
+                        >Cancelar
+                        </button>
+                    </div>
+              </div>
+            );
+          }
+    })
+  };
 
 
   const handleInputChange = (e) => {
@@ -84,10 +84,11 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
     }));
   };
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const newMember = {
-      id: familyMembers.length,
+      id: formData.id,
       nombre: formData.nombre ,
       primerApellido: formData.primerApellido, 
       segundoApellido: formData.segundoApellido,
@@ -101,11 +102,13 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
       tipoIngresos: formData.tipoIngresos,
       tipoTelefono: formData.tipoTelefono,
       adultoMayor: formData.adultoMayor,
-      discapacidad: formData.discapacidad
+      discapacidad: formData.discapacidad,
+      newID: familyMembers.length,
     };
 
     setFamilyMembers(prev => [...prev, newMember]);
     setFormData({
+      id: "",
       primerApellido: '',
       segundoApellido: '',
       nombre: '',
@@ -123,20 +126,47 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
     });
   };
 
-  const handleDelete = (id) => {
-    console.log(familyMembers)
-    setFamilyMembers(prev => prev.filter(member => member.id !== id));
-  };
-
   const handleEdit = (member) =>{
-    handleDelete(member.id)
+    member.adultoMayor = member.adultoMayor == 1 ? true : false
+    member.discapacidad = member.discapacidad == 1 ? true : false
+
+    if (!member.especifique) {
+      member.especifique = ""
+    }
+    console.log(member)
+    console.log(formData)
+
+    if (member.id) {
+      setFamilyMembers(prev => prev.filter(memberCheck => memberCheck.id !== member.id));
+    }
+    
+    if (member.newID){
+      setFamilyMembers(prev => prev.filter(memberCheck => memberCheck.newID !== member.newID));
+    }
     setFormData(prev => (member));
   }
+  
+  var deletedMembers = []
+
+  const handleDelete = (deleteMember) => {
+
+    if (deleteMember.id) {
+      deletedMembers.push(familyMembers.filter(member => member.id == deleteMember.id)[0])
+      setFamilyMembers(prev => prev.filter(member => member.id !== deleteMember.id));
+    }
+    
+    if (deleteMember.newID){
+      setFamilyMembers(prev => prev.filter(member => member.newID !== deleteMember.newID));
+    }
+
+    console.log(deletedMembers)
+    
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.headerTitle}>Nuevo Caso - Miembros del núcleo familiar</h1>
+        <h1 className={styles.headerTitle}>Editar - Miembros del núcleo familiar</h1>
       </div>
 
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -221,7 +251,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               <option value="">Tipo de Identificación</option>
               <option value="Cédula Nacional">Cédula Nacional</option>
               <option value="DIMEX">DIMEX o Residencia</option>
-              <option value="Menor de edad">Menor de edad</option>
+              <option value="Menor de Edad">Menor de edad</option>
             </select>
           </div>
         </div>
@@ -248,7 +278,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
             >
               <option value="">Tipo de ingreso</option>
               <option value="Trabajo Formal">Trabajo Formal</option>
-              <option value="Trabajo Inormal">Trabajo Informal</option>
+              <option value="Trabajo Informal">Trabajo Informal</option>
               <option value="Beca IMAS">Beca IMAS</option>
               <option value="Sin Ingresos">Sin ingresos</option>
             </select>
@@ -265,12 +295,12 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               required
             >
               <option value="">Tipo de miembro</option>
-              <option value="Jefe/a de Familia">Jefe/a de Familia</option>
-              <option value="Cónyuge">Cónyuge</option>
-              <option value="Hijo/a">Hijo/a</option>
-              <option value="Abuela/o">Abuela/o</option>
-              <option value="Hermano/a">Hermano/a</option>
-              <option value="Otro">Otro</option>
+              <option value="jefe/a de familia">Jefe/a de Familia</option>
+              <option value="cónyuge">Cónyuge</option>
+              <option value="hijo/a">Hijo/a</option>
+              <option value="abuela/o">Abuela/o</option>
+              <option value="hermano/a">Hermano/a</option>
+              <option value="otro">Otro</option>
             </select>
           </div>
 
@@ -319,8 +349,8 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               className={styles.select}
             >
               <option value="">Tipo</option>
-              <option value="Celular">Celular</option>
-              <option value="Casa">Casa</option>
+              <option value="celular">Celular</option>
+              <option value="casa">Casa</option>
             </select>
           </div>
           <div>
@@ -366,6 +396,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
           </thead>
           <tbody>
             {familyMembers.map((member, key) => (
+              
               <tr key={key}>
                 <td className={styles.tableCell}>
                   {member.nombre}
@@ -396,7 +427,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
                   <div className={styles.actionGroup}>
                     <button className={styles.actionButton} onClick={() => editConfirm(member)}>✏️</button>
                     <button
-                      onClick={() => deleteConfirm(member.nombre, member.primerApellido, member.tipo, member.id)}
+                      onClick={() => deleteConfirm(member)}
                       className={`${styles.actionButton} ${styles.deleteButton}`}
                     >
                       ✕

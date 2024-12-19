@@ -215,6 +215,8 @@
 .container {
     width: 100%;
     padding: 1rem;
+    max-height: 70vh;
+    overflow: scroll;
     font-family: "Inter", sans-serif;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   }
@@ -342,11 +344,19 @@
     padding: 0.5rem;
     border-radius: 0.25rem;
   }
+
+  .finishBtns{
+    position: absolute;
+    right: 1em;
+    bottom: 1em;
+    display: flex;
+    gap: 1em;
+  }
   
   .saveButton{
-    position: absolute;
-    bottom: 1em;
-    right: 1em;
+    
+
+
     border: none;
     background-color: #03579B;
     color: #fff;
@@ -360,7 +370,22 @@
   .saveButton:hover{
     cursor: pointer;
   }
+  
 
+  .nextEtapaBtn{
+    border: none;
+    background-color: #008d2f;
+    color: #fff;
+    padding: 0.9em 1.2em;
+    border-radius: 11px;
+    width: 20vw;
+    height: 5vh;
+    font-size: 1rem;
+  }
+
+  .nextEtapaBtn:hover{
+    cursor: pointer;
+  }
 
   .modal{
     border: 1px solid #0068bd83;
@@ -456,26 +481,54 @@
         flex-direction: column;
     }
 
-    .saveButton{
+    .finishBtns{
         font-family: "Inter", sans-serif;
         position: relative;
+        flex-direction: column;
+        place-content: center;
+        place-items: center;
         top: auto;
         right: auto;
         border: none;
-        background-color: #03579B;
         color: #fff;
-        padding: 0.9em 1.2em;
         border-radius: 11px;
         width: 80vw;
-        height: 8vh;
+        height: fit-content;
         font-size: 1rem;
-      }
+        padding-bottom: 2em;
+    }
+
+    .saveButton{
+      display: flex;
+      place-content: center;
+      place-items: center;
+      position: relative;
+      flex: 1;
+      width: 100%;
+      height: 100%;
+    }
+
+    .nextEtapaBtn{
+      display: flex;
+      place-content: center;
+      place-items: center;
+      flex: 1;
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
     
     .container{
         display: flex;
         flex-direction: column;
         place-content: center;
         place-items: center;
+        overflow: visible;
+        max-height: fit-content;
+    }
+
+    .form, .header{
+      width: 100%;
     }
 
     .uploadGroup{
@@ -492,6 +545,16 @@
     }
   }
 
+
+  @media (min-width: 768px) {
+    .formGrid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  
+    .formGrid2Col {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
 
 
 

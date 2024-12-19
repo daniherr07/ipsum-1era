@@ -77,13 +77,51 @@
     }
 }
 
+.inputs {
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 50%;
+    margin: 0 auto;
+    place-items: center;
+}
+
+.inputText, .textInput {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    box-shadow: none;
+    transition: border-color 0.3s;
+
+    &:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+}
+
+.itemLupa{
+
+    &:hover{
+        cursor: pointer;
+    }
+}
+
 @media (max-width: 640px) {
 
     .logo{
         width: 80vw !important;
     }
 
-    .inputText{
-        width: 80vw !important;
+    .inputs {
+        width: 80%;
+        flex-direction: column;
     }
-  }
+
+    .inputText, .textInput {
+        width: 100% !important;
+    }
+}
