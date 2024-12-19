@@ -21,6 +21,7 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
 
   console.log(projectDataOld)
   const [page, setPage] = useState(1)
+  const [deletedMembers, setDeletedMembers] = useState([])
 
   const [projectData, setProjectData] = useState({
     idProyecto: formDataAdminOld.proyecto_id,
@@ -149,7 +150,7 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
     </aside>
 
     {page === 1 && <Datosdelproyecto projectData={projectData} setProjectData={setProjectData}/>}
-    {page === 2 && <Miembrosdelafamilia formData={formData} setFormData={setFormData} familyMembers={familyMembers} setFamilyMembers={setFamilyMembers}/>}
+    {page === 2 && <Miembrosdelafamilia formData={formData} setFormData={setFormData} familyMembers={familyMembers} setFamilyMembers={setFamilyMembers} deletedMembers={deletedMembers} setDeletedMembers={setDeletedMembers}/>}
     {page === 3 && <Direcciondelproyecto directionData={directionData} setDirectionData={setDirectionData} />}
     {page === 4 && <Datosadministrativos formData={formDataAdmin} setFormData={setFormDataAdmin} />}
 
@@ -159,6 +160,7 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
         familyMembers={familyMembers}
         directionData={directionData}
         formDataAdmin={formDataAdmin}
+        deletedMembers={deletedMembers}
       />
       <NextEtapa idProyecto={formDataAdminOld.proyecto_id} nombreProyecto={projectDataOld.proyecto_nombre} etapaAnterior={projectDataOld.etapa_nombre} subetapaAnterior={projectDataOld.subetapa_nombre}/>
     </div>

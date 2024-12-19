@@ -3,7 +3,7 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import styles from '../newproject.module.css';
 
-export default function FamilyForm({formData, setFormData, familyMembers, setFamilyMembers}) {
+export default function FamilyForm({formData, setFormData, familyMembers, setFamilyMembers, deletedMembers, setDeletedMembers}) {
 
   const deleteConfirm = (member) => {
     confirmAlert({
@@ -146,20 +146,17 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
     setFormData(prev => (member));
   }
   
-  var deletedMembers = []
 
   const handleDelete = (deleteMember) => {
 
     if (deleteMember.id) {
-      deletedMembers.push(familyMembers.filter(member => member.id == deleteMember.id)[0])
+      setDeletedMembers(prev => [...prev, familyMembers.filter(member => member.id == deleteMember.id)[0]]);
       setFamilyMembers(prev => prev.filter(member => member.id !== deleteMember.id));
     }
     
     if (deleteMember.newID){
       setFamilyMembers(prev => prev.filter(member => member.newID !== deleteMember.newID));
     }
-
-    console.log(deletedMembers)
     
   };
 

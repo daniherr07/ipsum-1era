@@ -440,6 +440,29 @@
     }
   }
 
+  .newUserModal{
+    border: 1px solid #0068bd83;
+    padding: 1vw;
+    border-radius: 11px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 50vw;
+    place-content: center;
+    place-items: center;
+  }
+
+  .newModalInput{
+    width: 100%;
+  }
+
+  .newUserForm{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
 
   @media (max-width: 800px) {
     .sectionTitle{

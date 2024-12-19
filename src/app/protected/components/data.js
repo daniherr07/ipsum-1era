@@ -6,6 +6,12 @@ export const data = [
         nombre: "nombre",
     },
     {
+        label: "Grupos",
+        value: "grupo_proyecto_id",
+        table: "grupos_proyectos",
+        nombre: "nombre",
+    },
+    {
         label: "Analista Entidad",
         value: "analista_asigna_entidad_id",
         table: "analistas_entidades",

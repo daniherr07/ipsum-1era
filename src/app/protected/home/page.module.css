@@ -110,6 +110,10 @@
     }
 }
 
+.searchContainer{
+    width: 60vw;
+}
+
 @media (max-width: 640px) {
 
     .logo{

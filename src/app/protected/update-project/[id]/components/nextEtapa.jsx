@@ -47,8 +47,8 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
 
   const [etapaEdit, setEtapaEdit] = useState({
     id: idProyecto,
-    etapa: "",
-    subetapa: "",
+    etapa: "0",
+    subetapa: "0",
   })
 
   const handleInputChange = (e) => {
@@ -57,18 +57,19 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
       ...prevState,
       [name]: value,
     }))
+    console.log(etapaEdit.subetapa)
   }
 
+
+
   const updateChanges = async () => {
+    console.log(etapaEdit)
+
     if (etapaEdit.etapa == '') {
       return toast.error("Etapa sin completar!")
     }
 
-    if (etapaEdit.subetapa == '') {
-      return toast.error("Subetapa sin completar!")
-    }
 
-    const address = process.env.NEXT_PUBLIC_API_ADDRESS;
 
     const response = await fetch(`${address}/updateEtapa`, {
       method: 'POST',
@@ -93,6 +94,8 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
     onClose(); // Close the modal
     router.refresh(); // Refresh the page
   }
+
+  const isDisabled = !etapaEdit.etapa
 
 
   return (
@@ -130,15 +133,24 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
                 value={etapaEdit.subetapa}
                 className={styles.newModalInput}
                 onChange={handleInputChange}
-                disabled={!etapaEdit.etapa}
+                disabled={isDisabled}
               >
+
+                {subetapas.find((subetapa) => subetapa.etapa_id == etapaEdit.etapa) == undefined &&
+                    <option value="0">
+                        No hay subetapas disponibles
+                    </option>
+                }
                 {etapaEdit.etapa &&
                     subetapas.map((subetapa) => (
                         subetapa.etapa_id == etapaEdit.etapa &&
                         <option key={subetapa.id} value={subetapa.id}>
                             {subetapa.nombre}
                         </option>
-                ))}
+                    ))
+                }
+
+
               </select>
           </div>
       </div>
@@ -147,7 +159,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
 
       <div className={styles.modalBtns}>
         <button className={styles.modalUpdate} onClick={updateChanges}>
-          Añadir
+          Actualizar
         </button>
         <button onClick={onClose} className={styles.modalCancel}>
           Cancelar
