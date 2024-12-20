@@ -1,6 +1,7 @@
 'use client'
 
 import styles from "./location-form.module.css";
+import { handleChange } from '@/utils/handleChange';
 
 export default function DireccionDelProyecto({directionData, setDirectionData}) {
     console.log(directionData)

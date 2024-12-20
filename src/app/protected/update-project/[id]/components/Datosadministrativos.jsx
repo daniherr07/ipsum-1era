@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import styles from './datos-administrativos.module.css';
+import { useFetchBackend } from '@/hooks/useFetchApi';
 
 export default function DatosAdministrativos({formData, setFormData}) {
     const [data, setData] = useState({

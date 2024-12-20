@@ -22,7 +22,7 @@
     font-size: 1em;
     box-shadow: none;
     transition: border-color 0.3s;
-    overflow-y: scroll hidden;
+    overflow-y: scroll;
     max-height: 50px;
 
     &:focus {
