@@ -1,6 +1,4 @@
 'use client'
-
-import { address } from '@/app/const';
 import { useState, useEffect } from 'react'
 import style from "../newproject.module.css"
 
@@ -29,11 +27,9 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
     };
 
     useEffect(() => {
-        fetch(`${address}/getBonos`)
-            .then((res) => res.json())
+        useFetchBackend("getBonos", "GET")
             .then((fetchedData) => {
                 setBonos(fetchedData);
-                console.log(fetchedData)
             })
             .catch((error) => console.error('Error fetching admin data:', error));
     }, []);

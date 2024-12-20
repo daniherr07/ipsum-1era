@@ -1,14 +1,12 @@
 'use client'
 
 import { useRouter } from 'next/navigation';
-import { address } from '@/app/const';
 import { toast} from 'react-toastify';
 import { useEffect, useState } from 'react';
 import styles from '../newproject.module.css'
-
-
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
+import { useFetchBackend } from '@/hooks/useFetchApi';
 
 export default function NextEtapa({idProyecto, nombreProyecto, etapaAnterior, subetapaAnterior}) {
   const router = useRouter();
@@ -16,7 +14,15 @@ export default function NextEtapa({idProyecto, nombreProyecto, etapaAnterior, su
   const etapaPopup = (e) => {
     e.preventDefault()
     confirmAlert({
-      customUI: ({ onClose }) => <AddUserModal onClose={onClose} router={router} idProyecto={idProyecto} nombreProyecto={nombreProyecto}  etapaAnterior={etapaAnterior} subetapaAnterior={subetapaAnterior}/>,
+      customUI: ({ onClose }) => 
+      <AddUserModal 
+        onClose={onClose} 
+        router={router} 
+        idProyecto={idProyecto} 
+        nombreProyecto={nombreProyecto}  
+        etapaAnterior={etapaAnterior} 
+        subetapaAnterior={subetapaAnterior}
+      />,
     })
   }
 
@@ -35,8 +41,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
   const [subetapas, setSubetapas] = useState([])
 
   useEffect(() => {
-    fetch(`${address}/getEtapas`)
-        .then((res) => res.json())
+    useFetchBackend("getEtapas", "GET")
         .then((fetchedData) => {
           setEtapas(fetchedData[0]);
           setSubetapas(fetchedData[1])
@@ -51,34 +56,13 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
     subetapa: "0",
   })
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setEtapaEdit((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }))
-    console.log(etapaEdit.subetapa)
-  }
-
-
-
   const updateChanges = async () => {
-    console.log(etapaEdit)
 
     if (etapaEdit.etapa == '') {
       return toast.error("Etapa sin completar!")
     }
 
-
-
-    const response = await fetch(`${address}/updateEtapa`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(etapaEdit),
-    });
-
+    const response = await useFetchBackend("updateEtapa", "POST", etapaEdit)
     if (!response.ok) {
       const result = await response.json()
       
@@ -117,7 +101,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
                 id="etapa"
                 value={etapaEdit.etapa}
                 className={styles.newModalInput}
-                onChange={handleInputChange}
+                onChange={e => handleChange(e, setEtapaEdit)}
               >
                 {etapas.map((etapa, key) => (
                   <option key={key} value={etapa.id}>
@@ -132,7 +116,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
                 id="subetapa"
                 value={etapaEdit.subetapa}
                 className={styles.newModalInput}
-                onChange={handleInputChange}
+                onChange={e => handleChange(e, setEtapaEdit)}
                 disabled={isDisabled}
               >
 

@@ -6,6 +6,7 @@ import { address } from '@/app/const';
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from '../newproject.module.css'
+import { useFetchBackend } from '@/hooks/useFetchApi';
 
 export default function ProjectSubmissionForm({
   projectData,
@@ -135,19 +136,11 @@ export default function ProjectSubmissionForm({
     console.log(submissionData)
 
     try {
-      const response = await fetch(`${address}/saveData`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(submissionData),
-      });
+      const response = await useFetchBackend('newProject', 'POST', submissionData);
 
       if (!response.ok) {
         return toast.error("Hubo un error, verifica los datos e intentalo más tarde")
       }
-
-      const result = await response.json();
       toast.success("Proyecto añadido exitosamente!")
       router.refresh(); // Redirect to a success page
     } catch (error) {

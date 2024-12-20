@@ -1,8 +1,7 @@
 'use client'
-
-import { address } from '@/app/const';
 import { useEffect, useState } from 'react';
 import styles from './datos-administrativos.module.css';
+import { useFetchBackend } from '@/hooks/useFetchApi';
 
 export default function DatosAdministrativos({formData, setFormData}) {
     const [data, setData] = useState({
@@ -20,11 +19,9 @@ export default function DatosAdministrativos({formData, setFormData}) {
 
 
     useEffect(() => {
-        fetch(`${address}/getAdminData`)
-            .then((res) => res.json())
+       useFetchBackend("getAdminData", "GET")
             .then((fetchedData) => {
                 setData(fetchedData);
-                console.log(fetchedData)
             })
             .catch((error) => console.error('Error fetching admin data:', error));
     }, []);

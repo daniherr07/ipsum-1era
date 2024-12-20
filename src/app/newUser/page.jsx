@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import style from './login.module.css'
+import { handleChange } from '@/utils/handleChange'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ToastContainer, toast} from 'react-toastify';
@@ -16,14 +17,6 @@ export default function Login(){
         psw: '',
         psw2: ''
       });
-    
-      const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-          ...prevData,
-          [name]: value,
-        }));
-      };
     
       const handleSubmit = async (e) => {
         e.preventDefault();
@@ -77,16 +70,16 @@ export default function Login(){
                     <h1>Por favor cambie su contraseña</h1>
                     <form className={style.form} onSubmit={handleSubmit} >
                         <label htmlFor="user" className={style.label}>ID</label>
-                        <input type="text" name="user" className={style.idForm} id="idForm" onChange={handleChange} required/>
+                        <input type="text" name="user" className={style.idForm} id="idForm" onChange={e => handleChange(e, setFormData)} required/>
 
                         <label htmlFor="email" className={style.label}>Email</label>
-                        <input type="text" name="email" className={style.idForm} id="idForm" onChange={handleChange} required/>
+                        <input type="text" name="email" className={style.idForm} id="idForm" onChange={e => handleChange(e, setFormData)} required/>
 
                         <label htmlFor="psw" className={style.label}>Contraseña</label>
-                        <input type="password" name="psw" id="pswForm" className={style.pswForm} onChange={handleChange} required/>
+                        <input type="password" name="psw" id="pswForm" className={style.pswForm} onChange={e => handleChange(e, setFormData)} required/>
 
                         <label htmlFor="psw2" className={style.label}> Confirmar Contraseña</label>
-                        <input type="password" name="psw2" id="pswForm" className={style.pswForm} onChange={handleChange} required/>
+                        <input type="password" name="psw2" id="pswForm" className={style.pswForm} onChange={e => handleChange(e, setFormData)} required/>
                         <button className={style.submit} type='submit' >Actualizar Contraseña</button>
                     </form>
                     

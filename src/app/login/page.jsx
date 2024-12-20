@@ -2,52 +2,14 @@
 
 import Image from 'next/image'
 import style from './login.module.css'
-import { useEffect, useState, useCallback, Suspense } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
-import { ToastContainer, toast } from 'react-toastify';
+import { handleChange } from '@/utils/handleChange'
+import { useState, Suspense } from 'react'
+import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ErrorToast } from './ErrorToast'
 
-function Search(){
-    const searchParams = useSearchParams()
 
-    const showErrorToast = useCallback(() => {
-        toast.error("Hubo un error: Usuario o contraseña incorrectos", {
-            toastId: 'loginError', // Unique ID for this toast
-        });
-    }, []);
-
-    const showNewToast = useCallback(() => {
-        toast.success("Usuario actualizado correctamente, inicia sesión por favor", {
-            toastId: 'loginError', // Unique ID for this toast
-        });
-    }, []);
-    
-
-    useEffect(() => {
-        const error = searchParams.get('error')
-        const newUser = searchParams.get('newUser')
-        if (error) {
-            showErrorToast();
-        }
-
-        if (newUser){
-            showNewToast();
-        }
-    }, [searchParams, showErrorToast, showNewToast]);
-
-return (            <ToastContainer
-    position="bottom-right"
-    autoClose={3000}
-    hideProgressBar
-    newestOnTop={false}
-    closeOnClick
-    rtl={false}
-    pauseOnFocusLoss
-    draggable
-    pauseOnHover
-    theme="light"
-  />)
-}
 
 export default function Login() {
 
@@ -56,14 +18,6 @@ export default function Login() {
         user: '',
         psw: '',
     });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -109,7 +63,7 @@ export default function Login() {
         <div className={style.body}>
             
             <Suspense>
-              <Search></Search>
+              <ErrorToast></ErrorToast>
             </Suspense>
             <main className={style.main}>
                 <Image src={'/logo.svg'} width={200} height={100} className={style.logo} alt='logo'/>
@@ -120,7 +74,7 @@ export default function Login() {
                         name="user" 
                         className={style.idForm}
                         id="idForm" 
-                        onChange={handleChange} 
+                        onChange={e => handleChange(e, setFormData)} 
                         value={formData.user}
                         required
                     />
@@ -131,7 +85,7 @@ export default function Login() {
                         name="psw" 
                         id="pswForm" 
                         className={style.pswForm}
-                        onChange={handleChange} 
+                        onChange={e => handleChange(e, setFormData)} 
                         value={formData.psw}
                         required
                     />

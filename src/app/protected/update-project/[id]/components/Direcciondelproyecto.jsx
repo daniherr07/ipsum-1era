@@ -74,11 +74,8 @@ export default function DireccionDelProyecto({directionData, setDirectionData}) 
     ];
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setDirectionData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+        const { name } = e.target;
+        handleChange(e, setDirectionData);
 
         // Reset dependent fields
         if (name === "provincia") {

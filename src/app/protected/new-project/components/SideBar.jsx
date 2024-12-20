@@ -25,8 +25,6 @@ export default function AccordionMenu() {
     desc:"",
   });
 
-
-
   const [formData, setFormData] = useState({
     primerApellido: '',
     segundoApellido: '',
@@ -73,14 +71,6 @@ export default function AccordionMenu() {
     avaluo: '',
     ingenieroAsignado: ''
   });
-
-
-  const menuItems = [
-    { id: 1, title: 'Datos del proyecto' },
-    { id: 2, title: 'Miembros de la familia' },
-    { id: 3, title: 'Direccion del proyecto' },
-    { id: 4, title: 'Datos administrativos' },
-  ];
 
   return (  
     <>

@@ -1,17 +1,15 @@
-import NavBar from "../components/navbar/Navbar";
+import NavBar from "../components/Navbar";
 import styles from './styles/page.module.css'
 import { Suspense } from "react";
 import UserRow from './components/UserRow'
-import { address } from "@/app/const";
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddUser from "./components/AddUser";
+import { useFetchBackend } from "@/hooks/useFetchApi";
 
 
   export default async function Page() {
-    const res = await fetch(`${address}/getUsers`)
-    const users = await res.json()
-    console.log(users)
+    const users = await useFetchBackend("getUsers", "GET")
 
     return (
         <>
@@ -27,9 +25,7 @@ import AddUser from "./components/AddUser";
           pauseOnHover
           theme="light"
         />
-        <Suspense>
-            <NavBar />
-        </Suspense>
+        <NavBar />
 
 
       <div className={styles.container}>

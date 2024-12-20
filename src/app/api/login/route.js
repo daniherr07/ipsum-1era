@@ -1,7 +1,7 @@
 // src/app/api/login/route.js
 
 import { NextResponse } from 'next/server';
-import { address } from '@/app/const';
+import { useFetchBackend } from '@/hooks/useFetchApi';
 
 export async function POST(request) {
     // Obtener los datos del formulario en JSON
@@ -9,16 +9,7 @@ export async function POST(request) {
     console.log('Datos del formulario:', formData);
 
     // Hacer un POST a tu backend
-    const backendResponse = await fetch(`${address}/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-
-    // Manejar la respuesta del backend si es necesario
-    const backendData = await backendResponse.json();
+    const backendData = await useFetchBackend('login', 'POST', formData);
 
     if (backendData.activated == false) {
       return NextResponse.json({deactivated: true});

@@ -1,7 +1,7 @@
 
 
 import { Suspense } from 'react';
-import NavBar from '../../components/navbar/Navbar';
+import NavBar from '../../components/Navbar';
 import SideBar from './components/SideBar';
 import { address } from '@/app/const';
 
