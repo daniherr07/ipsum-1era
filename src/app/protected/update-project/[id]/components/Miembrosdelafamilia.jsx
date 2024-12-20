@@ -282,12 +282,12 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               required
             >
               <option value="">Tipo de miembro</option>
-              <option value="jefe/a de familia">Jefe/a de Familia</option>
-              <option value="cónyuge">Cónyuge</option>
-              <option value="hijo/a">Hijo/a</option>
-              <option value="abuela/o">Abuela/o</option>
-              <option value="hermano/a">Hermano/a</option>
-              <option value="otro">Otro</option>
+              <option value="Jefe/a de Familia">Jefe/a de Familia</option>
+              <option value="Cónyuge">Cónyuge</option>
+              <option value="Hijo/a">Hijo/a</option>
+              <option value="Abuela/o">Abuela/o</option>
+              <option value="Hermano/a">Hermano/a</option>
+              <option value="Otro">Otro</option>
             </select>
           </div>
 

@@ -2,6 +2,7 @@
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import styles from '../newproject.module.css';
+import { handleChange } from '@/utils/handleChange';
 
 export default function FamilyForm({formData, setFormData, familyMembers, setFamilyMembers}) {
 

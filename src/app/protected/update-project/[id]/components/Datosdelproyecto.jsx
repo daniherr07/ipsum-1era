@@ -7,6 +7,7 @@ import { handleChange } from '@/utils/handleChange';
 export default function Datosdelproyecto({ projectData, setProjectData }) {
 
     const [tipos_bonos, setBonos] = useState([])
+    console.log(projectData)
 
 
     const handleSubtipoClick = (id) => {

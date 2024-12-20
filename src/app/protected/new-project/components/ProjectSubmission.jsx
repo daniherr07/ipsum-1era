@@ -38,7 +38,8 @@ export default function ProjectSubmissionForm({
     }
 
     // Validate that there's at least one family member who is the head of the household
-    const hasHeadOfHousehold = familyMembers.some(member => member.tipo === 'Jefe/a de Familia');
+    const hasHeadOfHousehold = familyMembers.some(member => member.tipoMiembro == 'Jefe/a de Familia');
+
     if (!hasHeadOfHousehold) {
       return toast.error('Seccion 2: Debe haber al menos un miembro de familia que sea jefe/a de hogar');
     }
@@ -134,8 +135,7 @@ export default function ProjectSubmissionForm({
     console.log(submissionData)
 
     try {
-      const response = await useFetchBackend('newProject', 'POST', submissionData);
-
+      const response = await useFetchBackend('saveData', 'POST', submissionData);
       if (!response.ok) {
         return toast.error("Hubo un error, verifica los datos e intentalo más tarde")
       }
@@ -143,7 +143,7 @@ export default function ProjectSubmissionForm({
       router.refresh(); // Redirect to a success page
     } catch (error) {
       console.error('Error:', error);
-      toast.error("Hubo un error, verifica los datos e intentalo más tarde") // Redirect to a success page
+      toast.error("Hubo un error, verifica los datos e intentalo más tarde" + error) // Redirect to a success page
     }
   };
 
