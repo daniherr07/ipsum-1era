@@ -1,11 +1,10 @@
 'use client'
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { address } from '@/app/const';
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from '../newproject.module.css'
+import { useFetchBackend } from '@/hooks/useFetchApi';
 
 export default function ProjectSubmissionForm({
   projectData,
@@ -39,7 +38,8 @@ export default function ProjectSubmissionForm({
     }
 
     // Validate that there's at least one family member who is the head of the household
-    const hasHeadOfHousehold = familyMembers.some(member => member.tipo === 'Jefe/a de Familia');
+    const hasHeadOfHousehold = familyMembers.some(member => member.tipoMiembro == 'Jefe/a de Familia');
+
     if (!hasHeadOfHousehold) {
       return toast.error('Seccion 2: Debe haber al menos un miembro de familia que sea jefe/a de hogar');
     }
@@ -135,24 +135,15 @@ export default function ProjectSubmissionForm({
     console.log(submissionData)
 
     try {
-      const response = await fetch(`${address}/saveData`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(submissionData),
-      });
-
+      const response = await useFetchBackend('saveData', 'POST', submissionData);
       if (!response.ok) {
         return toast.error("Hubo un error, verifica los datos e intentalo más tarde")
       }
-
-      const result = await response.json();
       toast.success("Proyecto añadido exitosamente!")
       router.refresh(); // Redirect to a success page
     } catch (error) {
       console.error('Error:', error);
-      toast.error("Hubo un error, verifica los datos e intentalo más tarde") // Redirect to a success page
+      toast.error("Hubo un error, verifica los datos e intentalo más tarde" + error) // Redirect to a success page
     }
   };
 

@@ -1,27 +1,16 @@
 'use client'
-
-import { address } from '@/app/const';
 import { useState, useEffect } from 'react'
 import style from "../newproject.module.css"
+import { useFetchBackend } from '@/hooks/useFetchApi';
+import { handleChange } from '@/utils/handleChange';
 
 export default function Datosdelproyecto({ projectData, setProjectData }) {
 
     const [tipos_bonos, setBonos] = useState([])
+    console.log(projectData)
 
-
-    const handleInputChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        const newValue = type === 'checkbox' ? checked : value;
-        setProjectData(prevData => ({
-            ...prevData,
-            [name]: newValue
-        }));
-
-        console.log(tipos_bonos)
-    };
 
     const handleSubtipoClick = (id) => {
-        console.log(id)
         setProjectData(prevData => ({
             ...prevData,
             subtipoSeleccionado: id
@@ -29,11 +18,9 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
     };
 
     useEffect(() => {
-        fetch(`${address}/getBonos`)
-            .then((res) => res.json())
+        useFetchBackend("getBonos", "GET")
             .then((fetchedData) => {
                 setBonos(fetchedData);
-                console.log(fetchedData)
             })
             .catch((error) => console.error('Error fetching admin data:', error));
     }, []);
@@ -51,7 +38,7 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                             type="checkbox"
                             name="hasFIS"
                             checked={projectData.hasFIS}
-                            onChange={handleInputChange}
+                            onChange={e => handleChange(e, setProjectData)}
                             style={{marginRight: "1em"}}
                             className={style.booleanInput1}
                         />
@@ -64,7 +51,7 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                         className={style.selecttipo1}
                         name="bonoSeleccionado"
                         value={projectData.bonoSeleccionado}
-                        onChange={handleInputChange}
+                        onChange={e => handleChange(e, setProjectData)}
                     >
                         <option value="">Tipo de bono</option>
                         {tipos_bonos.map((item, key) => (
@@ -78,7 +65,7 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                         className={style.selecttipo1}
                         name="grupoSeleccionado"
                         value={projectData.grupoSeleccionado}
-                        onChange={handleInputChange}
+                        onChange={e => handleChange(e, setProjectData)}
                     >
                         <option value="">Seleccione un tipo</option>
                         <option value="1">Sin agrupación (Individual)</option>
@@ -88,7 +75,7 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                     </select>
 
                     <label htmlFor="desc">Descripcion Corta</label>
-                    <textarea name="desc" id="desc" rows={5} onChange={handleInputChange} value={projectData.desc}></textarea>
+                    <textarea name="desc" id="desc" rows={5} onChange={e => handleChange(e, setProjectData)} value={projectData.desc}></textarea>
                 </div>
 
                 <div className={style.containerderecha1}>

@@ -1,21 +1,14 @@
 'use client'
-
-import style from './navbar/navbar.module.css'
+import style from './navbar.module.css'
 import { useState, useEffect } from 'react'
 
 
 
-export default function Accordion({searchBar = true, userData}){
-
-    console.log(userData.role)
-
+export default function Accordion({userData = {}}){
     const [opened, setOpened] = useState(false)
-
     const [windowBool, setWindowBool] = useState(false)
 
-    const handleOpened = () => {
-        setOpened(!opened)
-    }
+    const isAdminOrRoot = userData.role == 'Admin' || userData.role == 'Root' ? true : false;
  
     useEffect(() => {
         setOpened(false)
@@ -28,7 +21,6 @@ export default function Accordion({searchBar = true, userData}){
                 setWindowBool(true)
             }
 
-
         }
         
         window.addEventListener("resize", handleResize)
@@ -39,7 +31,6 @@ export default function Accordion({searchBar = true, userData}){
     }, [])
 
     return(
-
     <>
     <div className={style.accordion} 
     style=
@@ -76,7 +67,7 @@ export default function Accordion({searchBar = true, userData}){
                 </form>
             </li>
             {
-                userData.role == "Root" || userData.role == "Admin" ? 
+                isAdminOrRoot ? 
                 <li className={style.option}>
                     <form action="/api/users" method='POST' >
                     
@@ -136,7 +127,7 @@ export default function Accordion({searchBar = true, userData}){
                     {top: "1em", right: "-10%", zIndex: "100"} : 
                     {top: "1em", right: "-10%", zIndex: "100"}
                 }
-                onClick={handleOpened} 
+                onClick={() => setOpened(!opened)} 
                 alt='hamburger'
                 />
     </>

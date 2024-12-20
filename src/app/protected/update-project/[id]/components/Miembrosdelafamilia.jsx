@@ -2,6 +2,7 @@
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import styles from '../newproject.module.css';
+import { handleChange } from '@/utils/handleChange';
 
 export default function FamilyForm({formData, setFormData, familyMembers, setFamilyMembers, deletedMembers, setDeletedMembers}) {
 
@@ -75,16 +76,6 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
     })
   };
 
-
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
-  };
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const newMember = {
@@ -133,8 +124,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
     if (!member.especifique) {
       member.especifique = ""
     }
-    console.log(member)
-    console.log(formData)
+
 
     if (member.id) {
       setFamilyMembers(prev => prev.filter(memberCheck => memberCheck.id !== member.id));
@@ -173,7 +163,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               type="text"
               name="primerApellido"
               value={formData.primerApellido}
-              onChange={handleInputChange}
+              onChange={e => handleChange(e, setFormData)}
               placeholder="Primer Apellido"
               className={styles.input}
               required
@@ -184,7 +174,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               type="text"
               name="segundoApellido"
               value={formData.segundoApellido}
-              onChange={handleInputChange}
+              onChange={e => handleChange(e, setFormData)}
               placeholder="Segundo Apellido"
               className={styles.input}
               required
@@ -195,7 +185,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               type="text"
               name="nombre"
               value={formData.nombre}
-              onChange={handleInputChange}
+              onChange={e => handleChange(e, setFormData)}
               placeholder="Nombre"
               className={styles.input}
               required
@@ -209,7 +199,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               type="number"
               name="identificacion"
               value={formData.identificacion}
-              onChange={handleInputChange}
+              onChange={e => handleChange(e, setFormData)}
               placeholder="Identificación"
               className={`${styles.input} mb-2`}
               required
@@ -220,7 +210,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
                   type="checkbox"
                   name="adultoMayor"
                   checked={formData.adultoMayor}
-                  onChange={handleInputChange}
+                  onChange={e => handleChange(e, setFormData)}
                   className={styles.checkbox}
                 />
                 Adulto mayor
@@ -230,7 +220,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
                   type="checkbox"
                   name="discapacidad"
                   checked={formData.discapacidad}
-                  onChange={handleInputChange}
+                  onChange={e => handleChange(e, setFormData)}
                   className={styles.checkbox}
                 />
                 Discapacidad
@@ -241,7 +231,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
             <select
               name="tipoIdentificacion"
               value={formData.tipoIdentificacion}
-              onChange={handleInputChange}
+              onChange={e => handleChange(e, setFormData)}
               className={styles.select}
               required
             >
@@ -259,7 +249,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               type="number"
               name="ingresos"
               value={formData.ingresos}
-              onChange={handleInputChange}
+              onChange={e => handleChange(e, setFormData)}
               placeholder="Ingresos (en colones)"
               className={styles.input}
               required
@@ -269,7 +259,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
             <select
               name="tipoIngresos"
               value={formData.tipoIngresos}
-              onChange={handleInputChange}
+              onChange={e => handleChange(e, setFormData)}
               className={styles.select}
               required
             >
@@ -287,17 +277,17 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
             <select
               name="tipoMiembro"
               value={formData.tipoMiembro}
-              onChange={handleInputChange}
+              onChange={e => handleChange(e, setFormData)}
               className={styles.select}
               required
             >
               <option value="">Tipo de miembro</option>
-              <option value="jefe/a de familia">Jefe/a de Familia</option>
-              <option value="cónyuge">Cónyuge</option>
-              <option value="hijo/a">Hijo/a</option>
-              <option value="abuela/o">Abuela/o</option>
-              <option value="hermano/a">Hermano/a</option>
-              <option value="otro">Otro</option>
+              <option value="Jefe/a de Familia">Jefe/a de Familia</option>
+              <option value="Cónyuge">Cónyuge</option>
+              <option value="Hijo/a">Hijo/a</option>
+              <option value="Abuela/o">Abuela/o</option>
+              <option value="Hermano/a">Hermano/a</option>
+              <option value="Otro">Otro</option>
             </select>
           </div>
 
@@ -307,7 +297,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
                     type="text"
                     name="especifique"
                     value={formData.especifique}
-                    onChange={handleInputChange}
+                    onChange={e => handleChange(e, setFormData)}
                     placeholder="Especifíque:"
                     className={styles.input}
                     />
@@ -318,7 +308,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
                     type="text"
                     name="especifique"
                     value={formData.especifique}
-                    onChange={handleInputChange}
+                    onChange={e => handleChange(e, setFormData)}
                     placeholder="Especifíque:"
                     className={styles.input}
                     disabled
@@ -335,14 +325,14 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               type="text"
               name="telefono"
               value={formData.telefono}
-              onChange={handleInputChange}
+              onChange={e => handleChange(e, setFormData)}
               placeholder="Teléfono contacto"
               className={styles.input}
             />
             <select
               name="tipoTelefono"
               value={formData.tipoTelefono}
-              onChange={handleInputChange}
+              onChange={e => handleChange(e, setFormData)}
               className={styles.select}
             >
               <option value="">Tipo</option>
@@ -355,7 +345,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               type="email"
               name="email"
               value={formData.email}
-              onChange={handleInputChange}
+              onChange={e => handleChange(e, setFormData)}
               placeholder="Email:"
               className={styles.input}
             />

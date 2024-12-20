@@ -2,11 +2,11 @@
 
 import { useState } from 'react'
 import styles from '../styles/page.module.css'
-import { address } from '@/app/const'
 import { toast } from 'react-toastify';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 import { useRouter } from 'next/navigation';
+import { useFetchBackend } from '@/hooks/useFetchApi';
 
 
 export default function UserRow({ user }) {
@@ -20,17 +20,6 @@ export default function UserRow({ user }) {
         userName: user.user_name,
         roles: user.role_name
     })
-
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setUser(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-
-        console.log(userEdit)
-    };
 
 
 
@@ -126,22 +115,11 @@ export default function UserRow({ user }) {
 
     const updateChanges = async ()  => {
         isEditable(!editable)
-        console.log("Si llegó")
-        const response = await fetch(`${address}/updateUser`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userEdit),
-          });
-
+        const response = await useFetchBackend(`updateUser`, 'POST', userEdit)
         if (!response.ok) {
             throw new Error('Error al guardar el proyecto');
         }
-
         toast.success("Usuario exitosamente editado!")
-
-
     }
 
     const updateStatus = async ()  => {
@@ -149,22 +127,12 @@ export default function UserRow({ user }) {
             id: user.id,
             activated: user.activated,
         }
-        const response = await fetch(`${address}/changeStatus`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-          });
-
+        const response = await useFetchBackend(`changeStatus`, 'POST', data)
         if (!response.ok) {
             toast.error(`Hubo un error, intentalo más tarde...`)
         }
-
         toast.success(`Usuario exitosamente ${user.activated == 1 ? "Desactivado" : "Activado"}`)
         router.refresh();
-
-
     }
 
 
@@ -177,19 +145,19 @@ export default function UserRow({ user }) {
             editable ?
             <>
                 <td className={styles.cell}>
-                    <input className={styles.input} type="text" name='lastName1' value={userEdit.lastName1} onChange={handleInputChange} />
+                    <input className={styles.input} type="text" name='lastName1' value={userEdit.lastName1} onChange={e => handleChange(e, setUser)} />
                 </td>
 
                 <td className={styles.cell}>
-                    <input className={styles.input} type="text" name='lastName2' value={userEdit.lastName2} onChange={handleInputChange} /> 
+                    <input className={styles.input} type="text" name='lastName2' value={userEdit.lastName2} onChange={e => handleChange(e, setUser)} /> 
                 </td>
 
                 <td className={styles.cell}>
-                    <input className={styles.input} type="text" name='userName' value={userEdit.userName} onChange={handleInputChange} />
+                    <input className={styles.input} type="text" name='userName' value={userEdit.userName} onChange={e => handleChange(e, setUser)} />
                 </td>
 
                 <td className={styles.cell}>
-                    <select className={styles.input} name="roles" id="roles" onChange={handleInputChange}>
+                    <select className={styles.input} name="roles" id="roles" onChange={e => handleChange(e, setUser)}>
                         <option value={user.role_name}>{user.role_name}</option>
                         {
                             roles.map((rol, key) => (

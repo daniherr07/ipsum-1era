@@ -1,6 +1,7 @@
 'use client'
 
 import styles from "./location-form.module.css";
+import { handleChange } from '@/utils/handleChange';
 
 export default function DireccionDelProyecto({directionData, setDirectionData}) {
     console.log(directionData)
@@ -74,11 +75,8 @@ export default function DireccionDelProyecto({directionData, setDirectionData}) 
     ];
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setDirectionData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+        const { name } = e.target;
+        handleChange(e, setDirectionData);
 
         // Reset dependent fields
         if (name === "provincia") {

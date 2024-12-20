@@ -6,6 +6,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css'
 import styles from '../styles/page.module.css'
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import { useFetchBackend } from '@/hooks/useFetchApi'
 
 
 export default function AddUser() {
@@ -34,14 +35,6 @@ function AddUserModal({ onClose, roles, router }) {
     email: ''
   })
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setUser((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }))
-  }
-
   const updateChanges = async () => {
     if (userEdit.userName == '') {
       return toast.error("Nombre sin completar!")
@@ -62,16 +55,7 @@ function AddUserModal({ onClose, roles, router }) {
     if (userEdit.roles == '') {
       return toast.error("Rol sin completar!")
     }
-
-    const address = process.env.NEXT_PUBLIC_API_ADDRESS;
-
-    const response = await fetch(`${address}/addUser`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userEdit),
-    });
+    const response = await useFetchBackend("addUser", "POST", userEdit)
 
     if (!response.ok) {
       const result = await response.json()
@@ -99,7 +83,7 @@ function AddUserModal({ onClose, roles, router }) {
         name="userName"
         value={userEdit.userName}
         className={styles.newModalInput}
-        onChange={handleInputChange}
+        onChange={e => handleChange(e, setUser)}
       />
 
       <label htmlFor="lastName1">1° Apellido: </label>
@@ -108,7 +92,7 @@ function AddUserModal({ onClose, roles, router }) {
         name="lastName1"
         value={userEdit.lastName1}
         className={styles.newModalInput}
-        onChange={handleInputChange}
+        onChange={e => handleChange(e, setUser)}
       />
 
       <label htmlFor="lastName2">2° Apellido: </label>
@@ -117,7 +101,7 @@ function AddUserModal({ onClose, roles, router }) {
         name="lastName2"
         value={userEdit.lastName2}
         className={styles.newModalInput}
-        onChange={handleInputChange}
+        onChange={e => handleChange(e, setUser)}
       />
 
       <label htmlFor="email">Email: </label>
@@ -126,7 +110,7 @@ function AddUserModal({ onClose, roles, router }) {
         name="email"
         value={userEdit.email}
         className={styles.newModalInput}
-        onChange={handleInputChange}
+        onChange={e => handleChange(e, setUser)}
       />
 
       <label htmlFor="roles">Rol: </label>
@@ -135,7 +119,7 @@ function AddUserModal({ onClose, roles, router }) {
         id="roles"
         value={userEdit.roles}
         className={styles.newModalInput}
-        onChange={handleInputChange}
+        onChange={e => handleChange(e, setUser)}
       >
         {roles.map((rol, key) => (
           <option key={key} value={rol}>

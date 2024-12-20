@@ -1,4 +1,4 @@
-import NavBar from "../components/navbar/Navbar";
+import NavBar from "../components/Navbar";
 import MainSearch from "./components/MainSearch";
 import style from './search.module.css'
 import { Suspense } from 'react'
@@ -10,9 +10,7 @@ export default async function Search({searchParams}){
 
     return(
         <>
-            <Suspense>
-                <NavBar></NavBar>
-            </Suspense>
+            <NavBar></NavBar>
 
             <Suspense>
             <main className={style.main}>

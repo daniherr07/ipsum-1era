@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { TagPicker } from 'rsuite';
 import Image from 'next/image';
 import { data } from './data';
-import { address } from '@/app/const';
 import 'rsuite/dist/rsuite-no-reset.min.css';
 import style from './search.module.css';
 import {useRouter}  from 'next/navigation';
+import { useFetchBackend } from '@/hooks/useFetchApi';
 
 export default function SearchInputs() {
     const router = useRouter()
@@ -26,12 +26,11 @@ export default function SearchInputs() {
             let hasRoleId = selectedItem.rol_id ? true : false;
             
             try {
-                let url = `${address}/filter?table=${table}&nombre=${selectedItem.nombre}`;
+                let url = `filter?table=${table}&nombre=${selectedItem.nombre}`;
                 if (hasRoleId) {
                     url += `&rol_id=${selectedItem.rol_id}`;
                 }
-                const response = await fetch(url);
-                const result = await response.json();
+                const result = await useFetchBackend(url, "GET");
                 setTagData(result);
             } catch (error) {
                 console.error('Error fetching data:', error);
