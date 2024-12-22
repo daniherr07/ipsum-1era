@@ -3,8 +3,11 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import styles from '../newproject.module.css';
 import { handleChange } from '@/utils/handleChange';
+import { useRef } from 'react';
+
 
 export default function FamilyForm({formData, setFormData, familyMembers, setFamilyMembers, deletedMembers, setDeletedMembers}) {
+  const inputFileRef = useRef(null);
 
   const deleteConfirm = (member) => {
     confirmAlert({
@@ -95,31 +98,18 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
       adultoMayor: formData.adultoMayor,
       discapacidad: formData.discapacidad,
       newID: familyMembers.length,
+      cedulaFile: inputFileRef.current.files[0] ? inputFileRef.current.files[0] : "",
     };
 
     setFamilyMembers(prev => [...prev, newMember]);
-    setFormData({
-      id: "",
-      primerApellido: '',
-      segundoApellido: '',
-      nombre: '',
-      identificacion: '',
-      adultoMayor: false,
-      discapacidad: false,
-      ingresos: '',
-      especifique: '',
-      tipoIdentificacion: '',
-      tipoIngresos: '',
-      telefono: '',
-      tipoTelefono: '',
-      email: '',
-      tipoMiembro: ''
-    });
+    setFormData(Object.fromEntries(Object.entries(formData).map(([key, value]) => [key, typeof value === 'boolean' ? false : (typeof value === 'number' ? 0 : "")])));
+    inputFileRef.current.value = null;
   };
 
   const handleEdit = (member) =>{
     member.adultoMayor = member.adultoMayor == 1 ? true : false
     member.discapacidad = member.discapacidad == 1 ? true : false
+    console.log(member)
 
     if (!member.especifique) {
       member.especifique = ""
@@ -133,7 +123,36 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
     if (member.newID){
       setFamilyMembers(prev => prev.filter(memberCheck => memberCheck.newID !== member.newID));
     }
+
+    member.segundoApellido = member.segundoApellido == null ? "" : member.segundoApellido
+    member.ingresos = member.ingresos == null ? "" : member.ingresos
+    member.tipoIngresos = member.tipoIngresos == null ? "" : member.tipoIngresos
     setFormData(prev => (member));
+    if (member.cedulaFile) {
+      console.log("Antes de empezar el data transfer", member.cedulaFile)
+      const dataTransfer = new DataTransfer();
+
+      let file;
+      if (member.cedulaFile.type && member.cedulaFile.type != "application/octet-stream") {
+        file = member.cedulaFile
+      } 
+      else{
+        file = new File([""], member.cedulaFile.name ? member.cedulaFile.name : member.cedulaFile, {
+          type: "application/octet-stream",
+        });
+      }
+
+
+      
+      // Add the file to the DataTransfer object
+      dataTransfer.items.add(file);
+      
+      // Set the files property of the input element
+      if (inputFileRef.current) {
+        inputFileRef.current.files = dataTransfer.files;
+        console.log("Despues del data transfer", dataTransfer.files)
+      }
+    }
   }
   
 
@@ -177,7 +196,6 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               onChange={e => handleChange(e, setFormData)}
               placeholder="Segundo Apellido"
               className={styles.input}
-              required
             />
           </div>
           <div>
@@ -252,7 +270,6 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               onChange={e => handleChange(e, setFormData)}
               placeholder="Ingresos (en colones)"
               className={styles.input}
-              required
             />
           </div>
           <div>
@@ -261,7 +278,6 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               value={formData.tipoIngresos}
               onChange={e => handleChange(e, setFormData)}
               className={styles.select}
-              required
             >
               <option value="">Tipo de ingreso</option>
               <option value="Trabajo Formal">Trabajo Formal</option>
@@ -320,45 +336,92 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
         </div>
 
         <div className={`${styles.formGrid} ${styles.formGrid2Col} ${styles.formContacto}`}>
-          <div className={styles.checkboxGroup}>
-            <input
-              type="text"
-              name="telefono"
-              value={formData.telefono}
-              onChange={e => handleChange(e, setFormData)}
-              placeholder="Teléfono contacto"
-              className={styles.input}
-            />
-            <select
-              name="tipoTelefono"
-              value={formData.tipoTelefono}
-              onChange={e => handleChange(e, setFormData)}
-              className={styles.select}
-            >
-              <option value="">Tipo</option>
-              <option value="celular">Celular</option>
-              <option value="casa">Casa</option>
-            </select>
-          </div>
-          <div>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={e => handleChange(e, setFormData)}
-              placeholder="Email:"
-              className={styles.input}
-            />
-          </div>
+        {
+            formData.tipoMiembro == "Jefe/a de Familia" ?
+            <>
+            
+            <div className={styles.checkboxGroup}>
+              <input
+                type="text"
+                name="telefono"
+                value={formData.telefono}
+                onChange={e => handleChange(e, setFormData)}
+                placeholder="Teléfono contacto"
+                className={styles.input}
+                required
+              />
+              <select
+                name="tipoTelefono"
+                value={formData.tipoTelefono}
+                onChange={e => handleChange(e, setFormData)}
+                className={styles.select}
+                required
+              >
+                <option value="">Tipo</option>
+                <option value="celular">Celular</option>
+                <option value="casa">Casa</option>
+              </select>
+            </div>
+            <div>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={e => handleChange(e, setFormData)}
+                placeholder="Email:"
+                className={styles.input}
+              />
+            </div>
+            
+            </>
+
+            :
+
+            <>
+            
+            <div className={styles.checkboxGroup}>
+              <input
+                type="text"
+                name="telefono"
+                value={formData.telefono}
+                onChange={e => handleChange(e, setFormData)}
+                placeholder="Teléfono contacto"
+                className={styles.input}
+                
+              />
+              <select
+                name="tipoTelefono"
+                value={formData.tipoTelefono}
+                onChange={e => handleChange(e, setFormData)}
+                className={styles.select}
+                
+              >
+                <option value="">Tipo</option>
+                <option value="Celular">Celular</option>
+                <option value="Casa">Casa</option>
+              </select>
+            </div>
+            <div>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={e => handleChange(e, setFormData)}
+                placeholder="Email:"
+                className={styles.input}
+              />
+            </div>
+            
+            </>
+          }
         </div>
 
         <div className={styles.uploadGroup}>
           <div className={styles.cedulaGroup}>
-            <span>Subir copia de cédula (PDF)</span>
-            <span className={styles.requiredStar}>*</span>
-            <button type="button" className={styles.uploadButton}>
-              ↑
-            </button>
+            <label htmlFor="file" className={styles.uploadLabel}>
+              Subir copia de cédula ↑
+            </label>
+            <input name="file" id='file' ref={inputFileRef}  type="file" className={styles.uploadInput}/>
           </div>
           <button
             type="submit"
@@ -378,6 +441,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               <th className={styles.tableHeader}>Ingresos</th>
               <th className={styles.tableHeader}>Teléfono</th>
               <th className={styles.tableHeader}>Email</th>
+              <th className={styles.tableHeader}>Cedula</th>
               <th className={styles.tableHeader}>Acciones</th>
             </tr>
           </thead>
@@ -394,7 +458,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
                   <div className={styles.subText}>{member.tipoIdentificacion}</div>
                 </td>
                 <td className={styles.tableCell}>
-                    ₵{member.ingresos}
+                    {member.ingresos == null ? "Sin ingresos" : `₵${member.ingresos}`}
                   <div className={styles.subText}>{member.tipoIngresos}</div>
                 </td>
                 <td className={styles.tableCell}>
@@ -409,6 +473,21 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
                     {(member.adultoMayor || member.adultoMayor == 1) && (member.discapacidad || member.discapacidad == 1) && <span>Mayor y Discapacidad</span>}
                     {(!member.adultoMayor || member.adultoMayor == 0) && (!member.discapacidad || member.discapacidad == 0) && <span>N/A</span>}
                   </div>
+                </td>
+                <td className={styles.tableCell}>
+                  {member.cedulaFile ? 
+                    member.cedulaFile instanceof File ?
+
+                      member.cedulaFile.size != 0 || member.cedulaFile.type != "application/octet-stream"?
+
+                      <a href={URL.createObjectURL(member.cedulaFile)} target="_blank">Ver cédula</a>
+                      : 
+                      <a href={member.cedulaFile.name} target="_blank">Ver cédula </a> 
+                    :
+                    
+                    <a href={member.cedulaFile} target="_blank">Ver cédula </a>
+                  :
+                  "No hay cedula"}
                 </td>
                 <td className={styles.tableCell}>
                   <div className={styles.actionGroup}>

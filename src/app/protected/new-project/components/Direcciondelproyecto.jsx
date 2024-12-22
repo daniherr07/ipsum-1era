@@ -1,78 +1,55 @@
 'use client'
 
+import { useEffect, useState } from "react";
 import styles from "./location-form.module.css";
 import { handleChange } from "@/utils/handleChange";
 
 export default function DireccionDelProyecto({directionData, setDirectionData}) {
+    const [provincias, setProvincias] = useState("")
+    const [cantones, setCantones] = useState("")
+    const [distritos, setDistritos] = useState("")
+    
 
+    useEffect(() => {
+      fetch('https://api-geo-cr.vercel.app/provincias')
+        .then(response => response.json())
+        .then(data => {
+            setProvincias(data.data)
+        })
+    
+    })
 
-    const datos = [
-        {
-            "provincias": [
-                {
-                    "id": 1,
-                    "nombre": "San José",
-                    "cantones": [
-                        {
-                            "id": 1,
-                            "nombre": "Central",
-                            "distritos": [
-                                "Carmen",
-                                "Merced",
-                                "Hospital",
-                                "Catedral",
-                                "Zapote",
-                                "San Francisco De Dos Ríos",
-                                "Uruca",
-                                "Mata Redonda",
-                                "Pavas",
-                                "Hatillo",
-                                "San Sebastián"
-                            ]
-                        },
-                        {
-                            "id": 2,
-                            "nombre": "Escazú",
-                            "distritos": [
-                                "Escazú",
-                                "San Antonio",
-                                "San Rafael"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "id": 2,
-                    "nombre": "Heredia",
-                    "cantones": [
-                        {
-                            "id": 1,
-                            "nombre": "Central",
-                            "distritos": [
-                                "Heredia",
-                                "Mercedes",
-                                "San Francisco",
-                                "Ulloa",
-                                "Varablanca"
-                            ]
-                        },
-                        {
-                            "id": 2,
-                            "nombre": "Barva",
-                            "distritos": [
-                                "Barva",
-                                "San Pedro",
-                                "San Pablo",
-                                "San Roque",
-                                "Santa Lucía",
-                                "San José de la Montaña"
-                            ]
-                        }
-                    ]
-                }
-            ]
+    const handleProvinciaChange = (e) => {
+        let provinciaId = provincias.find(prov => prov.descripcion == e.target.value).idProvincia;
+
+        switch (provinciaId) {
+            case 3:
+                provinciaId = 4
+                break;
+            case 4:
+                provinciaId = 3
+                break;
         }
-    ];
+
+
+        fetch(`https://api-geo-cr.vercel.app/provincias/${provinciaId}/cantones`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            setCantones(data.data)
+        })
+    }
+
+    const handleCantonChange = (e) => {
+        const cantonId = cantones.find(can => can.descripcion == e.target.value).idCanton;
+
+        fetch(`https://api-geo-cr.vercel.app/cantones/${cantonId}/distritos`)
+        .then(response => response.json())
+        .then(data => {
+            setDistritos(data.data)
+        })
+    }
+    
 
     const handleInputChange = (e) => {
         const { name } = e.target;
@@ -80,12 +57,14 @@ export default function DireccionDelProyecto({directionData, setDirectionData}) 
 
         // Reset dependent fields
         if (name === "provincia") {
+            handleProvinciaChange(e)
             setDirectionData(prevState => ({
                 ...prevState,
                 canton: "",
                 distrito: ""
             }));
         } else if (name === "canton") {
+            handleCantonChange(e)
             setDirectionData(prevState => ({
                 ...prevState,
                 distrito: ""
@@ -108,11 +87,12 @@ export default function DireccionDelProyecto({directionData, setDirectionData}) 
                             name="provincia"
                             value={directionData.provincia}
                             onChange={handleInputChange}
+                            required
                         >
                             <option value="">Seleccione una provincia</option>
-                            {datos[0].provincias.map((prov) => (
-                                <option key={prov.id} value={prov.nombre}>
-                                    {prov.nombre}
+                            {provincias.length > 0 && provincias.map((prov) => (
+                                <option key={prov.idProvincia} value={prov.descripcion}>
+                                    {prov.descripcion}
                                 </option>
                             ))}
                         </select>
@@ -126,16 +106,16 @@ export default function DireccionDelProyecto({directionData, setDirectionData}) 
                             value={directionData.canton}
                             onChange={handleInputChange}
                             disabled={!directionData.provincia}
+                            required
                         >
                             <option value="">Seleccione un cantón</option>
-                            {directionData.provincia &&
-                                datos[0].provincias
-                                    .find((p) => p.nombre === directionData.provincia)
-                                    ?.cantones.map((canton) => (
-                                        <option key={canton.id} value={canton.nombre}>
-                                            {canton.nombre}
-                                        </option>
-                                    ))}
+                            {(directionData.provincia && cantones.length > 0) &&
+                                cantones.map((canton) => (
+                                    <option key={canton.idCanton} value={canton.descripcion}>
+                                        {canton.descripcion}
+                                    </option>
+                                ))
+                            }
                         </select>
                     </div>
 
@@ -147,17 +127,16 @@ export default function DireccionDelProyecto({directionData, setDirectionData}) 
                             value={directionData.distrito}
                             onChange={handleInputChange}
                             disabled={!directionData.canton}
+                            required
                         >
                             <option value="">Seleccione un distrito</option>
-                            {directionData.canton &&
-                                datos[0].provincias
-                                    .find((p) => p.nombre === directionData.provincia)
-                                    ?.cantones.find((c) => c.nombre === directionData.canton)
-                                    ?.distritos.map((distrito, index) => (
-                                        <option key={index} value={distrito}>
-                                            {distrito}
-                                        </option>
-                                    ))}
+                            {(directionData.canton && distritos.length > 0) &&
+                                distritos.map((distrito) => (
+                                    <option key={distrito.idDistrito} value={distrito.descripcion}>
+                                        {distrito.descripcion}
+                                    </option>
+                                ))
+                            }
                         </select>
                     </div>
                 </div>
@@ -170,6 +149,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData}) 
                         value={directionData.otrasSenas}
                         onChange={handleInputChange}
                         placeholder="Del higuerón antiguo, 200 metros norte, en la esquina"
+                        required
                     />
                 </div>
 
@@ -181,8 +161,10 @@ export default function DireccionDelProyecto({directionData, setDirectionData}) 
                             name="loteTipoIdentificacion"
                             value={directionData.loteTipoIdentificacion}
                             onChange={handleInputChange}
+                            required
                         >
                             <option value="">Seleccione un Tipo</option>
+                            <option value="3">Pendiente</option>
                             <option value="1">Persona Fisica</option>
                             <option value="2">Persona Juridica</option>
                         </select>
@@ -195,7 +177,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData}) 
                         type="number" value={directionData.loteIdentificacion} 
                         name="loteIdentificacion" onChange={handleInputChange} 
                         placeholder="000000000000000"
-                        required/>
+                        />
                     </div>
 
                 </div>
@@ -217,6 +199,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData}) 
                             value={directionData.numeroPlanoCatastro}
                             onChange={handleInputChange}
                             placeholder="PC-2024-303033"
+                            required
                         />
                     </div>
 

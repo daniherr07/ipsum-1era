@@ -39,7 +39,8 @@ export default function AccordionMenu() {
     telefono: '',
     tipoTelefono: '',
     email: '',
-    tipoMiembro: ''
+    tipoMiembro: '',
+    cedulaFile: '',
   });
 
   const [familyMembers, setFamilyMembers] = useState([

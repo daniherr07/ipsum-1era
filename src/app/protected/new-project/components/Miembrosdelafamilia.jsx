@@ -3,8 +3,11 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import styles from '../newproject.module.css';
 import { handleChange } from '@/utils/handleChange';
+import { useRef, useState } from 'react';
 
 export default function FamilyForm({formData, setFormData, familyMembers, setFamilyMembers}) {
+  const inputFileRef = useRef(null);
+  
 
   const deleteConfirm = (nombre, apellido1, tipo, id) => {
     confirmAlert({
@@ -76,9 +79,10 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
     })
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newMember = {
+
+    let newMember = {
       id: familyMembers.length,
       nombre: formData.nombre ,
       primerApellido: formData.primerApellido, 
@@ -93,26 +97,15 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
       tipoIngresos: formData.tipoIngresos,
       tipoTelefono: formData.tipoTelefono,
       adultoMayor: formData.adultoMayor,
-      discapacidad: formData.discapacidad
+      discapacidad: formData.discapacidad,
+      cedulaFile: inputFileRef.current.files[0] ? inputFileRef.current.files[0] : "",
     };
 
+    
+
     setFamilyMembers(prev => [...prev, newMember]);
-    setFormData({
-      primerApellido: '',
-      segundoApellido: '',
-      nombre: '',
-      identificacion: '',
-      adultoMayor: false,
-      discapacidad: false,
-      ingresos: '',
-      especifique: '',
-      tipoIdentificacion: '',
-      tipoIngresos: '',
-      telefono: '',
-      tipoTelefono: '',
-      email: '',
-      tipoMiembro: ''
-    });
+    setFormData(Object.fromEntries(Object.entries(formData).map(([key, value]) => [key, typeof value === 'boolean' ? false : (typeof value === 'number' ? 0 : "")])));
+    inputFileRef.current.value = null;
   };
 
   const handleDelete = (id) => {
@@ -122,6 +115,28 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
   const handleEdit = (member) =>{
     handleDelete(member.id)
     setFormData(prev => (member));
+
+    if (member.cedulaFile instanceof File) {
+      
+      const newFileInput = document.createElement('input');
+      newFileInput.type = 'file';
+      newFileInput.id = 'file';
+      newFileInput.name = 'file';
+      newFileInput.className = styles.uploadInput;
+
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(member.cedulaFile);
+      newFileInput.files = dataTransfer.files;
+
+      if (inputFileRef.current) {
+        inputFileRef.current.parentNode.replaceChild(newFileInput, inputFileRef.current);
+        inputFileRef.current = newFileInput;
+      }
+    } else {
+      if (inputFileRef.current) {
+        inputFileRef.current.value = '';
+      }
+    }
   }
 
   return (
@@ -151,7 +166,6 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               onChange={e => handleChange(e, setFormData)}
               placeholder="Segundo Apellido"
               className={styles.input}
-              required
             />
           </div>
           <div>
@@ -175,7 +189,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               value={formData.identificacion}
               onChange={e => handleChange(e, setFormData)}
               placeholder="Identificación"
-              className={`${styles.input} mb-2`}
+              className={`${styles.input}`}
               required
             />
             <div className={styles.checkboxGroup}>
@@ -226,7 +240,6 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               onChange={e => handleChange(e, setFormData)}
               placeholder="Ingresos (en colones)"
               className={styles.input}
-              required
             />
           </div>
           <div>
@@ -235,7 +248,6 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               value={formData.tipoIngresos}
               onChange={e => handleChange(e, setFormData)}
               className={styles.select}
-              required
             >
               <option value="">Tipo de ingreso</option>
               <option value="Trabajo Formal">Trabajo Formal</option>
@@ -255,8 +267,9 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               className={styles.select}
               required
             >
+              
               <option value="">Tipo de miembro</option>
-              <option value="Jefe/a de Familia">Jefe/a de Familia</option>
+              {familyMembers.some(member => member.tipoMiembro == "Jefe/a de Familia") ? null : <option value="Jefe/a de Familia">Jefe/a de Familia</option>}
               <option value="Cónyuge">Cónyuge</option>
               <option value="Hijo/a">Hijo/a</option>
               <option value="Abuela/o">Abuela/o</option>
@@ -294,45 +307,95 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
         </div>
 
         <div className={`${styles.formGrid} ${styles.formGrid2Col} ${styles.formContacto}`}>
-          <div className={styles.checkboxGroup}>
-            <input
-              type="text"
-              name="telefono"
-              value={formData.telefono}
-              onChange={e => handleChange(e, setFormData)}
-              placeholder="Teléfono contacto"
-              className={styles.input}
-            />
-            <select
-              name="tipoTelefono"
-              value={formData.tipoTelefono}
-              onChange={e => handleChange(e, setFormData)}
-              className={styles.select}
-            >
-              <option value="">Tipo</option>
-              <option value="Celular">Celular</option>
-              <option value="Casa">Casa</option>
-            </select>
-          </div>
-          <div>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={e => handleChange(e, setFormData)}
-              placeholder="Email:"
-              className={styles.input}
-            />
-          </div>
+
+          {
+            formData.tipoMiembro == "Jefe/a de Familia" ?
+            <>
+            
+            <div className={styles.checkboxGroup}>
+              <input
+                type="text"
+                name="telefono"
+                value={formData.telefono}
+                onChange={e => handleChange(e, setFormData)}
+                placeholder="Teléfono contacto"
+                className={styles.input}
+                required
+              />
+              <select
+                name="tipoTelefono"
+                value={formData.tipoTelefono}
+                onChange={e => handleChange(e, setFormData)}
+                className={styles.select}
+                required
+              >
+                <option value="">Tipo</option>
+                <option value="Celular">Celular</option>
+                <option value="Casa">Casa</option>
+              </select>
+            </div>
+            <div>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={e => handleChange(e, setFormData)}
+                placeholder="Email:"
+                className={styles.input}
+              />
+            </div>
+            
+            </>
+
+            :
+
+            <>
+            
+            <div className={styles.checkboxGroup}>
+              <input
+                type="text"
+                name="telefono"
+                value={formData.telefono}
+                onChange={e => handleChange(e, setFormData)}
+                placeholder="Teléfono contacto"
+                className={styles.input}
+                
+              />
+              <select
+                name="tipoTelefono"
+                value={formData.tipoTelefono}
+                onChange={e => handleChange(e, setFormData)}
+                className={styles.select}
+                
+              >
+                <option value="">Tipo</option>
+                <option value="Celular">Celular</option>
+                <option value="Casa">Casa</option>
+              </select>
+            </div>
+            <div>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={e => handleChange(e, setFormData)}
+                placeholder="Email:"
+                className={styles.input}
+              />
+            </div>
+            
+            </>
+          }
+          
         </div>
 
         <div className={styles.uploadGroup}>
           <div className={styles.cedulaGroup}>
-            <span>Subir copia de cédula (PDF)</span>
-            <span className={styles.requiredStar}>*</span>
-            <button type="button" className={styles.uploadButton}>
-              ↑
-            </button>
+
+            <label htmlFor="file" className={styles.uploadLabel}>
+              Subir copia de cédula ↑
+            </label>
+            <input name="file" id='file' ref={inputFileRef}  type="file" className={styles.uploadInput}/>
           </div>
           <button
             type="submit"
@@ -352,6 +415,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               <th className={styles.tableHeader}>Ingresos</th>
               <th className={styles.tableHeader}>Teléfono</th>
               <th className={styles.tableHeader}>Email</th>
+              <th className={styles.tableHeader}>Cedula</th>
               <th className={styles.tableHeader}>Acciones</th>
             </tr>
           </thead>
@@ -367,7 +431,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
                   <div className={styles.subText}>{member.tipoIdentificacion}</div>
                 </td>
                 <td className={styles.tableCell}>
-                    ₵{member.ingresos}
+                    {member.ingresos == null ? "Sin ingresos" : `₵${member.ingresos}`}
                   <div className={styles.subText}>{member.tipoIngresos}</div>
                 </td>
                 <td className={styles.tableCell}>
@@ -382,6 +446,12 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
                     {(member.adultoMayor || member.adultoMayor == 1) && (member.discapacidad || member.discapacidad == 1) && <span>Mayor y Discapacidad</span>}
                     {(!member.adultoMayor || member.adultoMayor == 0) && (!member.discapacidad || member.discapacidad == 0) && <span>N/A</span>}
                   </div>
+                </td>
+                <td className={styles.tableCell}>
+                  {member.cedulaFile ? <a href={URL.createObjectURL(member.cedulaFile)} target="_blank">Ver cédula</a> : "No hay cédula"}
+                </td>
+                <td className={styles.tableCell}>
+                  
                 </td>
                 <td className={styles.tableCell}>
                   <div className={styles.actionGroup}>
