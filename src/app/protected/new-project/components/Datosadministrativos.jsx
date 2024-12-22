@@ -114,7 +114,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 disabled={!formData.entidad}
                             >
                                 <option value="">Seleccione un centro de negocio</option>
-                                <option value={null}>
+                                <option value="pendiente">
                                         Pendiente
                                 </option>
                                 {centrosNegocio.map((centro, key) => (
@@ -165,6 +165,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 disabled={!formData.entidad}
                             >
                                 <option value="">Seleccione un analista</option>
+                                <option value="pendiente">Pendiente</option>
                                 {analistasEntidad.map((analista, key) => (
                                     <option key={key} value={analista.localID}>
                                         {`${analista.Nombre} ${analista.Apellido_1} ${analista.Apellido_2}`}
@@ -183,6 +184,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 disabled={!formData.entidad}
                             >
                                 <option value="">Seleccione un promotor</option>
+                                <option value="pendiente">Pendiente</option>
                                 {promotoresEntidad.map((promotor, key) => (
                                     <option key={key} value={promotor.localID}>
                                         {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`}
@@ -236,6 +238,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 className={styles.select}
                             >
                                 <option value="">Seleccione un fiscal</option>
+                                <option value="pendiente">Pendiente</option>
                                 {data.Fiscal.map((fiscal, key) => (
                                     <option key={key} value={fiscal.localID}>
                                         {`${fiscal.Nombre} ${fiscal.Apellido_1} ${fiscal.Apellido_2}`}

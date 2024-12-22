@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { address } from '@/app/const';
-import { ToastContainer, toast} from 'react-toastify';
+import { toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from '../newproject.module.css'
+import { UseUploadBlob } from '@/hooks/useUploadBlob';
+import {del, list} from "@vercel/blob"
 
 export default function ProjectSubmissionForm({
   projectData,
@@ -15,13 +16,11 @@ export default function ProjectSubmissionForm({
   deletedMembers,
 }) {
   const router = useRouter();
+  const { uploadFile, isUploading, uploadError } = UseUploadBlob();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Despues de actualizar", deletedMembers)
-
-    //Validacion de errores
     if (projectData.bonoSeleccionado == "") {
       return toast.error('Seccion 1: Selecciona un tipo de bono');
     }
@@ -41,11 +40,15 @@ export default function ProjectSubmissionForm({
       return toast.error('Seccion 1: Añada una descripcion al proyecto');
     }
 
-    console.log(familyMembers)
     // Validate that there's at least one family member who is the head of the household
-    const hasHeadOfHousehold = familyMembers.some(member => member.tipoMiembro == 'Jefe/a de Familia' || member.tipoMiembro == 'jefe/a de familia');
+    const hasHeadOfHousehold = familyMembers.some(member => member.tipoMiembro == 'Jefe/a de Familia');
+
     if (!hasHeadOfHousehold) {
       return toast.error('Seccion 2: Debe haber al menos un miembro de familia que sea jefe/a de hogar');
+    }
+
+    if (directionData.loteTipoIdentificacion == "") {
+      return toast.error('Seccion 3: Seleccione un tipo de identificacion para el dueño del lote');
     }
 
     if (directionData.provincia == "") {
@@ -64,82 +67,110 @@ export default function ProjectSubmissionForm({
       return toast.error('Seccion 3: Añada otras señas a la direccion');
     }
 
-    if (directionData.loteTipoIdentificacion == "") {
-      return toast.error('Seccion 3: Añada un tipo de identificacion para el lote');
-    }
-
-    if (directionData.loteIdentificacion == "") {
-      return toast.error('Seccion 3: Añada una identificacion para el lote');
-    }
-
     if (directionData.numeroPlanoCatastro == "") {
       return toast.error('Seccion 3: Añada un numero de plano de catastro');
-    }
-
-    if (directionData.finca == "") {
-      return toast.error('Seccion 3: Añada un numero de finca');
     }
 
     if (formDataAdmin.entidad == "") {
       return toast.error('Seccion 4: Añada una entidad');
     }
 
-    if (formDataAdmin.entidadSecundaria == "") {
-      return toast.error('Seccion 4: Añada un centro de negocio');
-    }
-
-    if (formDataAdmin.apc == "") {
-      return toast.error('Seccion 4: Añada un codigo APC');
-    }
-
-    if (formDataAdmin.cfia == "") {
-      return toast.error('Seccion 4: Añada un codigo CFIA');
-    }
-
-    if (formDataAdmin.analistaEntidad == "") {
-      return toast.error('Seccion 4: Seleccione un analista de la entidad');
-    }
-
     if (formDataAdmin.analistaIPSUM == "") {
       return toast.error('Seccion 4: Seleccione un analista de IPSUM');
-    }
-
-    if (formDataAdmin.promotorEntidad == "") {
-      return toast.error('Seccion 4: Seleccione un promotor de la entidad');
     }
 
     if (formDataAdmin.Promotor_Ipsum == "") {
       return toast.error('Seccion 4: Seleccione un promotor de Ipsum');
     }
 
-    if (formDataAdmin.fiscalAsignado == "") {
-      return toast.error('Seccion 4: Seleccione un fiscal');
-    }
-
-    if (formDataAdmin.presupuesto == "") {
-      return toast.error('Seccion 4: Añada un presupuesto');
-    }
-
-    if (formDataAdmin.avaluo == "") {
-      return toast.error('Seccion 4: Añada un avaluo');
-    }
-
     if (formDataAdmin.ingenieroAsignado == "") {
       return toast.error('Seccion 4: Seleccione un ingeniero');
     }
 
-    // Combine all data
-    const submissionData = {
-      projectData,
-      familyMembers,
-      directionData,
-      formDataAdmin,
-      deletedMembers
-    };
+    const headOfHousehold = familyMembers.find(member => member.tipoMiembro == 'Jefe/a de Familia');
+    const projectName = headOfHousehold.nombre + ' ' + headOfHousehold.primerApellido + ' ' + headOfHousehold.segundoApellido;
 
-    console.log(submissionData)
+
 
     try {
+        
+      // Use Promise.all to wait for all file uploads to complete
+      await Promise.all(familyMembers.map(async (member) => {
+        if (member.cedulaFile !== "") {
+          const memberCedula = member.cedulaFile;
+
+          if (memberCedula instanceof File) {
+
+            const response = await fetch(`/api/listBlobs?prefix=${projectName}`)
+            if (!response.ok) {
+              throw new Error('Failed to fetch blobs')
+            }
+            const data = await response.json()
+            const blobs = data.blobs
+  
+            const memberUrl = blobs.find(object => object.pathname == `Proyecto ${projectName}/${member.nombre}`);
+  
+            if (memberUrl != undefined) {
+              const response = await fetch(`/api/deleteBlob`, {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({"url": memberUrl.url})
+              })
+  
+              const result = await response.json()
+              console.log(result)
+            }
+
+            const blobResponse = await uploadFile(memberCedula, member.nombre, projectName);
+          
+            if (blobResponse) {
+              console.log("La blob respuesta supongo", blobResponse);
+              member.cedulaFile = blobResponse.url;
+            } else {
+              throw new Error(`Failed to upload file for ${member.nombre}`);
+            }
+          }
+
+          
+        }
+      }));
+
+      await Promise.all(deletedMembers.map(async (member) => {
+        const response = await fetch(`/api/listBlobs?prefix=${projectName}`)
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch blobs')
+        }
+        const data = await response.json()
+        const blobs = data.blobs
+
+        const memberUrl = blobs.find(object => object.pathname == `Proyecto ${projectName}/${member.nombre}`);
+
+        if (memberUrl != undefined) {
+          const response = await fetch(`/api/deleteBlob`, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({"url": memberUrl.url})
+          })
+
+          const result = await response.json()
+          console.log(result)
+        }
+      }))
+
+      // All file uploads are complete, proceed with form submission
+      const submissionData = {
+        projectData,
+        familyMembers,
+        directionData,
+        formDataAdmin,
+        deletedMembers
+      };
+
       const response = await fetch(`${address}/updateData`, {
         method: 'POST',
         headers: {
@@ -149,16 +180,20 @@ export default function ProjectSubmissionForm({
       });
 
       if (!response.ok) {
-        return toast.error("Hubo un error, verifica los datos e intentalo más tarde")
+        throw new Error('Server responded with an error');
       }
 
       const result = await response.json();
-      toast.success("Proyecto actualizado exitosamente!")
-      router.refresh(); // Redirect to a success page
+      toast.success("Proyecto actualizado exitosamente!");
+      router.refresh(); // Refresh the page
     } catch (error) {
       console.error('Error:', error);
-      toast.error("Hubo un error, verifica los datos e intentalo más tarde") // Redirect to a success page
+      toast.error("Hubo un error, verifica los datos e intentalo más tarde");
     }
+    
+
+
+    
   };
 
   return (

@@ -214,6 +214,8 @@
 
 .container {
     width: 100%;
+    max-height: 700px;
+    overflow-y: scroll;
     padding: 1rem;
     font-family: "Inter", sans-serif;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
@@ -337,10 +339,15 @@
     color: #ef4444;
   }
   
-  .uploadButton {
+  .uploadInput::file-selector-button {
+    display: none;
+  }
+
+  .uploadLabel{
     border: 1px solid #e5e7eb;
     padding: 0.5rem;
     border-radius: 0.25rem;
+    margin-right: 1em;
   }
   
   .saveButton{

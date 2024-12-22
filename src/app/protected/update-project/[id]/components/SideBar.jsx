@@ -18,8 +18,6 @@ import NextEtapa from './nextEtapa';
 
 
 export default function AccordionMenu({projectDataOld, familyMembersOld, directionDataOld, formDataAdminOld}) {
-
-  console.log(projectDataOld)
   const [page, setPage] = useState(1)
   const [deletedMembers, setDeletedMembers] = useState([])
 
@@ -49,7 +47,8 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
     telefono: '',
     tipoTelefono: '',
     email: '',
-    tipoMiembro: ''
+    tipoMiembro: '',
+    cedulaFile: '',
   });
 
   const [familyMembers, setFamilyMembers] = useState(familyMembersOld);

@@ -5,14 +5,17 @@ import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from '../newproject.module.css'
 import { useFetchBackend } from '@/hooks/useFetchApi';
+import { UseUploadBlob } from '@/hooks/useUploadBlob';
+
 
 export default function ProjectSubmissionForm({
   projectData,
   familyMembers,
   directionData,
-  formDataAdmin
+  formDataAdmin,
 }) {
   const router = useRouter();
+  const { uploadFile, isUploading, uploadError } = UseUploadBlob();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,6 +47,10 @@ export default function ProjectSubmissionForm({
       return toast.error('Seccion 2: Debe haber al menos un miembro de familia que sea jefe/a de hogar');
     }
 
+    if (directionData.loteTipoIdentificacion == "") {
+      return toast.error('Seccion 3: Seleccione un tipo de identificacion para el dueño del lote');
+    }
+
     if (directionData.provincia == "") {
       return toast.error('Seccion 3: Seleccione una provincia');
     }
@@ -60,71 +67,40 @@ export default function ProjectSubmissionForm({
       return toast.error('Seccion 3: Añada otras señas a la direccion');
     }
 
-    if (directionData.loteTipoIdentificacion == "") {
-      return toast.error('Seccion 3: Añada un tipo de identificacion para el lote');
-    }
-
-    if (directionData.loteIdentificacion == "") {
-      return toast.error('Seccion 3: Añada una identificacion para el lote');
-    }
-
     if (directionData.numeroPlanoCatastro == "") {
       return toast.error('Seccion 3: Añada un numero de plano de catastro');
-    }
-
-    if (directionData.finca == "") {
-      return toast.error('Seccion 3: Añada un numero de finca');
     }
 
     if (formDataAdmin.entidad == "") {
       return toast.error('Seccion 4: Añada una entidad');
     }
 
-    if (formDataAdmin.entidadSecundaria == "") {
-      return toast.error('Seccion 4: Añada un centro de negocio');
-    }
-
-    if (formDataAdmin.apc == "") {
-      return toast.error('Seccion 4: Añada un codigo APC');
-    }
-
-    if (formDataAdmin.cfia == "") {
-      return toast.error('Seccion 4: Añada un codigo CFIA');
-    }
-
-    if (formDataAdmin.analistaEntidad == "") {
-      return toast.error('Seccion 4: Seleccione un analista de la entidad');
-    }
-
     if (formDataAdmin.analistaIPSUM == "") {
       return toast.error('Seccion 4: Seleccione un analista de IPSUM');
-    }
-
-    if (formDataAdmin.promotorEntidad == "") {
-      return toast.error('Seccion 4: Seleccione un promotor de la entidad');
     }
 
     if (formDataAdmin.Promotor_Ipsum == "") {
       return toast.error('Seccion 4: Seleccione un promotor de Ipsum');
     }
 
-    if (formDataAdmin.fiscalAsignado == "") {
-      return toast.error('Seccion 4: Seleccione un fiscal');
-    }
-
-    if (formDataAdmin.presupuesto == "") {
-      return toast.error('Seccion 4: Añada un presupuesto');
-    }
-
-    if (formDataAdmin.avaluo == "") {
-      return toast.error('Seccion 4: Añada un avaluo');
-    }
-
     if (formDataAdmin.ingenieroAsignado == "") {
       return toast.error('Seccion 4: Seleccione un ingeniero');
     }
 
-    // Combine all data
+    const headOfHousehold = familyMembers.find(member => member.tipoMiembro == 'Jefe/a de Familia');
+    const projectName = headOfHousehold.nombre + ' ' + headOfHousehold.primerApellido + ' ' + headOfHousehold.segundoApellido;
+
+    familyMembers.forEach(async (member, index) => {
+      if (member.cedulaFile !== ""){
+        const memberCedula = member.cedulaFile;
+        const blobResponse = await uploadFile(memberCedula, member.nombre, projectName);
+        
+        if (blobResponse) {
+          member.cedulaFile = blobResponse.url;
+        }
+      }
+    });
+
     const submissionData = {
       projectData,
       familyMembers,
