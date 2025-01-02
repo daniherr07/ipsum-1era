@@ -7,6 +7,7 @@ import styles from '../newproject.module.css'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import { useFetchBackend } from '@/hooks/useFetchApi';
+import { handleChange } from '@/utils/handleChange';
 
 export default function NextEtapa({idProyecto, nombreProyecto, etapaAnterior, subetapaAnterior}) {
   const router = useRouter();
@@ -63,13 +64,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
     }
 
     const response = await useFetchBackend("updateEtapa", "POST", etapaEdit)
-    if (!response.ok) {
-      const result = await response.json()
-      
-      if (result.msj) {
-        return toast.error(result.msj)
-      }
-
+    if (!response) {
       throw new Error('Error al guardar el proyecto');
     }
 
