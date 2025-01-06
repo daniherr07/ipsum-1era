@@ -226,6 +226,7 @@ function AddBitacoraEntry({ onClose, userData, proyecto_id, item, handleClick, h
     color: '#03579B',
     usuario: userData.id, 
     proyecto: proyecto_id,
+    time: new Date()
   })
 
   const updateChanges = async () => {
@@ -295,6 +296,6 @@ function AddBitacoraEntry({ onClose, userData, proyecto_id, item, handleClick, h
 }
 
 function dateConverter(date){
-  const newDate = new Date(date);
-  return newDate.toLocaleString()
+  const newDate = new Date(date).toLocaleString();
+  return newDate
 }
