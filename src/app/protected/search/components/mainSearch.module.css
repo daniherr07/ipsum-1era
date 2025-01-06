@@ -22,7 +22,6 @@
     overflow: scroll;
 
     & .card{
-        background-color: #03579B;
         width: 90%;
         padding: 11px 0;
         text-align: center;

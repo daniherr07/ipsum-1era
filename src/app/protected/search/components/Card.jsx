@@ -13,13 +13,13 @@ import { useFetchBackend } from '@/hooks/useFetchApi';
 
 
 
-export default function Card({item, bitData, handleClick}) {
+export default function Card({item, bitData, handleClick, handleColor}) {
     const userData = useProtectedContext();
 
   
     const newBitacora = () => {
       confirmAlert({
-        customUI: ({ onClose }) => <AddBitacoraEntry onClose={onClose} userData={userData} proyecto_id={item.id} item={item} handleClick={handleClick}/>,
+        customUI: ({ onClose }) => <AddBitacoraEntry onClose={onClose} userData={userData} proyecto_id={item.id} item={item} handleClick={handleClick} handleColor={handleColor}/>,
       })
     }
   
@@ -105,7 +105,7 @@ export default function Card({item, bitData, handleClick}) {
                 <div className={styles.bitacoraEntry} key={entry.id} >
                   <div className={styles.colorBit} style={{backgroundColor: entry.color}}></div>
                   <div className={styles.descripcionContainer}>
-                    <p>{entry.fecha_ingreso.split('T')[0]}</p>
+                    <p>{dateConverter(entry.fecha_ingreso)}</p>
                     <p className={styles.bitInfo}>{entry.usuario} ingresó: {entry.descripcion}</p>
                   </div>
                   
@@ -219,7 +219,7 @@ export default function Card({item, bitData, handleClick}) {
     );
   }
 
-function AddBitacoraEntry({ onClose, userData, proyecto_id, item, handleClick }) {
+function AddBitacoraEntry({ onClose, userData, proyecto_id, item, handleClick, handleColor }) {
 
   const [newEntryData, setNewEntryData] = useState({
     descripcion: '',
@@ -243,6 +243,7 @@ function AddBitacoraEntry({ onClose, userData, proyecto_id, item, handleClick })
     toast.success("Incidencia añadida exitosamente!");
     onClose(); // Close the modal
     handleClick(item)
+    handleColor()
   }
 
   return (
@@ -291,4 +292,9 @@ function AddBitacoraEntry({ onClose, userData, proyecto_id, item, handleClick })
       </div>
     </div>
   )
+}
+
+function dateConverter(date){
+  const newDate = new Date(date);
+  return newDate.toLocaleString()
 }

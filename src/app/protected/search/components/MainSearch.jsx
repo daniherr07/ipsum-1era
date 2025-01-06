@@ -35,10 +35,17 @@ export default function MainSearch({label, value}){
         useFetchBackend(`projectNames?label=${label}&value=${value}`, "GET")
             .then((data) => {
                 setPName(data)
-                console.log("pname", data)
                 setLoading(false)
             })
     }, [])
+
+    const handleColor = () => {
+        useFetchBackend(`projectNames?label=${label}&value=${value}`, "GET")
+            .then((data) => {
+                setPName(data)
+                setLoading(false)
+            })
+    } 
 
     return(
         <>
@@ -55,7 +62,11 @@ export default function MainSearch({label, value}){
                             {
                                 isLoading ? <p>Loading...</p> :
                                 pName.map((item) => (
-                                    <div className={`${style.card} ${item.id == id ? style.focused : null}`} key={item.id} onClick={() => {handleClick(item)}}>
+                                    <div className={`${style.card} ${item.id == id ? style.focused : null}`} 
+                                    key={item.id} 
+                                    onClick={() => {handleClick(item)}}
+                                    style={{backgroundColor: `${item.estado_color}`}}
+                                    >
                                         <h1 className={style.cardName}>{item.nombre}</h1>
                                     </div>
                                 ))
@@ -75,7 +86,7 @@ export default function MainSearch({label, value}){
 
                         :
                         <section className={style.info}>
-                            <Card item={data} bitData={bitData} handleClick={handleClick}/>
+                            <Card item={data} bitData={bitData} handleClick={handleClick} handleColor={handleColor}/>
                         </section>
 
                     }
