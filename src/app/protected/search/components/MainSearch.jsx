@@ -4,8 +4,8 @@ import { useState } from 'react'
 import style from './mainSearch.module.css'
 import Card from './Card'
 import { useEffect } from 'react'
-import { address } from '@/app/const'
 import { useFetchBackend } from '@/hooks/useFetchApi'
+
 
 
 
@@ -14,14 +14,20 @@ export default function MainSearch({label, value}){
     const [isLoading, setLoading] = useState(true)
     const [data, setData] = useState()
     const [id, setId] = useState(null)
+    const [bitData, setBitData] = useState()
+
+
     
 
     const handleClick = (item) =>{
-        useFetchBackend(`getData/${item.nombre}`, "GET")
+        useFetchBackend(`getData/${item.id}`, "GET")
             .then((data) => {
-                setData(data[0])
+                setData(data[0][0])
+                setBitData(data[1])
+                console.log(data)
                 setId(item.id)
-            })            
+        })
+                  
     }
 
 
@@ -29,12 +35,11 @@ export default function MainSearch({label, value}){
         useFetchBackend(`projectNames?label=${label}&value=${value}`, "GET")
             .then((data) => {
                 setPName(data)
+                console.log("pname", data)
                 setLoading(false)
             })
     }, [])
 
-
-    
     return(
         <>
             { 
@@ -70,7 +75,7 @@ export default function MainSearch({label, value}){
 
                         :
                         <section className={style.info}>
-                            <Card item={data} />
+                            <Card item={data} bitData={bitData} handleClick={handleClick}/>
                         </section>
 
                     }

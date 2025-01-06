@@ -1,14 +1,33 @@
-import React from 'react';
+'use client'
+
+import { useState } from 'react';
 import styles from './card.module.css'
 import Image from 'next/image';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
+import { handleChange } from '@/utils/handleChange';
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css'
+import { useProtectedContext } from '@/app/context/ProtectedContext'
+import { useFetchBackend } from '@/hooks/useFetchApi';
 
-export default function Card({item}) {
+
+
+export default function Card({item, bitData, handleClick}) {
+    const userData = useProtectedContext();
+
+  
+    const newBitacora = () => {
+      confirmAlert({
+        customUI: ({ onClose }) => <AddBitacoraEntry onClose={onClose} userData={userData} proyecto_id={item.id} item={item} handleClick={handleClick}/>,
+      })
+    }
+  
     return (
     <>
     <div className={styles.card}>
       {/* Header */}
-      <header className={styles.header} style={{backgroundColor: `${item.estadoColor}`}}>
+      <header className={styles.header} style={{backgroundColor: `${bitData[0]?.color ? bitData[0].color : "#03579B"}`}}>
         <div className={styles.headerLeft}>
           <h1 className={styles.name}>{item.nombreProyecto}</h1>
           <span className={styles.id}>
@@ -27,6 +46,11 @@ export default function Card({item}) {
       <div className={styles.content}>
         {/* Left Column */}
         <div className={styles.leftColumn}>
+
+          <div className={styles.fechaIngresoBlock}>
+            <h1>Fecha: {item.fechaIngreso.split('T')[0]}</h1>
+          </div>
+
           {/* Location Grid */}
           <div className={styles.locationGrid}>
             <div>
@@ -74,7 +98,22 @@ export default function Card({item}) {
           </div>
 
           {/* Scrollable Area (placeholder) */}
-          <div className={styles.scrollArea}></div>
+          <div className={styles.scrollArea}>
+
+            {
+              bitData.map((entry) => (
+                <div className={styles.bitacoraEntry} key={entry.id} >
+                  <div className={styles.colorBit} style={{backgroundColor: entry.color}}></div>
+                  <div className={styles.descripcionContainer}>
+                    <p>{entry.fecha_ingreso.split('T')[0]}</p>
+                    <p className={styles.bitInfo}>{entry.usuario} ingresó: {entry.descripcion}</p>
+                  </div>
+                  
+                </div>
+              ))
+            }
+
+          </div>
         </div>
 
         {/* Right Column */}
@@ -136,6 +175,12 @@ export default function Card({item}) {
             <span className={styles.label}>Promotor Entidad</span>
             <span className={styles.value}>{item.promotorExterno} </span>
           </div>
+
+          <button className={styles.editButton} onClick={newBitacora}>
+            
+            <p style={{color: "#fff", textDecoration: "none"}}>Agregar a bitacora</p> 
+
+        </button>
         </div>
       </div>
 
@@ -173,3 +218,77 @@ export default function Card({item}) {
     </>
     );
   }
+
+function AddBitacoraEntry({ onClose, userData, proyecto_id, item, handleClick }) {
+
+  const [newEntryData, setNewEntryData] = useState({
+    descripcion: '',
+    color: '#03579B',
+    usuario: userData.id, 
+    proyecto: proyecto_id,
+  })
+
+  const updateChanges = async () => {
+    if (newEntryData.descripcion == '') {
+      return toast.error("Descripcion sin completar!")
+    }
+
+    if (newEntryData.color == '') {
+      return toast.error("Porfavor elije un color")
+    }
+
+    const response = await useFetchBackend("insertBitacora", "POST", newEntryData)
+
+    // Reload page here
+    toast.success("Incidencia añadida exitosamente!");
+    onClose(); // Close the modal
+    handleClick(item)
+  }
+
+  return (
+    <div className={styles.newUserModal}>
+      <h1>Añadir nueva incidencia</h1>
+
+      <label htmlFor="userName">Descripcion </label>
+      <textarea
+        name="descripcion"
+        rows={7}
+        value={newEntryData.descripcion}
+        className={styles.newModalInput}
+        onChange={e => handleChange(e, setNewEntryData)}
+        style={{width: "80%"}}
+      />
+
+      <label htmlFor="roles">Color </label>
+      <select
+        name="color"
+        id="color"
+        value={newEntryData.roles}
+        className={styles.newModalInput}
+        onChange={e => handleChange(e, setNewEntryData)}
+      >
+          <option value="#03579B">
+            Azul:  Todo correcto
+          </option>
+
+          <option value="#F4C400">
+            Amarillo:  Priorizar 
+          </option>
+
+          <option value="#C91212">
+            Rojo:  Priorizar con urgencia
+          </option>
+
+      </select>
+
+      <div className={styles.modalBtns}>
+        <button className={styles.modalUpdate} onClick={updateChanges}>
+          Añadir
+        </button>
+        <button onClick={onClose} className={styles.modalCancel}>
+          Cancelar
+        </button>
+      </div>
+    </div>
+  )
+}

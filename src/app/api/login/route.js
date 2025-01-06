@@ -10,6 +10,7 @@ export async function POST(request) {
 
     // Hacer un POST a tu backend
     const backendData = await useFetchBackend('login', 'POST', formData);
+    console.log("backendData", backendData)
 
     if (backendData.activated == false) {
       return NextResponse.json({deactivated: true});
@@ -20,10 +21,11 @@ export async function POST(request) {
         return NextResponse.json({toChange: true});
       } else{
         const response = NextResponse.json({ toHome: true});
-        console.log(backendData)
+        console.log("backendData", backendData)
         const userData = {
           auth: true,
           userName: backendData.user,
+          id: backendData.id,
           role: backendData.rol,
           // Add any other custom fields you need
         };
