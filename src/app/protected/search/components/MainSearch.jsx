@@ -41,12 +41,15 @@ export default function MainSearch({label, value}){
     }, [order])
 
     const handleColor = () => {
-        useFetchBackend(`projectNames?label=${label}&value=${value}`, "GET")
+        setLoading(true)
+        useFetchBackend(`projectNames?label=${label}&value=${value}&order=${order}`, "GET")
             .then((data) => {
                 setPName(data)
                 setLoading(false)
             })
     } 
+
+    console.log(pName)
 
     return(
         <>
@@ -82,7 +85,7 @@ export default function MainSearch({label, value}){
                             
                             {
                                 isLoading ? <p>Loading...</p> :
-                                pName.map((item) => (
+                                pName && pName.map((item) => (
                                     <div className={`${style.card} ${item.id == id ? style.focused : null}`} 
                                     key={item.id} 
                                     onClick={() => {handleClick(item)}}

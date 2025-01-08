@@ -53,18 +53,19 @@ function PhotosCard({item}) {
   const [loading, setLoading] = useState(true);
   const [update, setUpdate] = useState(false)
 
-  const deletePopup = (url) => {
+
+  const deletePopup = (blob) => {
     confirmAlert({
       customUI: ({ onClose, }) => {
         return (
             <div className={styles.modal}>
-                <h1>¿Estas seguro de eliminar la imagen?</h1>
+                <h1>¿Que deseas hacer?</h1>
 
                 <div className={styles.modalBtns}>
                     <button
                         className={styles.modalUpdate}
                         onClick={() => {
-                        deleteImage(url);
+                        deleteImage(blob.url);
                         onClose();
                         }}
                     >
@@ -72,9 +73,17 @@ function PhotosCard({item}) {
                     </button>
 
                     <button 
-                    onClick={onClose}
+                    onClick={() => {onClose; downloadImage;}}
                     className={styles.modalCancel}
-                    >Cancelar
+                    >
+                      Cancelar
+                    </button>
+
+                    <button 
+                    onClick={onClose}
+                    className={styles.modalDownload}
+                    >
+                      <Link href={blob.downloadUrl} className={styles.linkText}>Descargar</Link>
                     </button>
 
                 </div>
@@ -154,7 +163,7 @@ function PhotosCard({item}) {
         ) : (
           <>
             {blobs && blobs.map((blob, index) => (
-              <div key={index} className={styles.photo} style={{backgroundImage: `url(${blob.url})`}} onClick={() => deletePopup(blob.pathname)}></div>
+              <div key={index} className={styles.photo} style={{backgroundImage: `url(${blob.url})`}} onClick={() => deletePopup(blob)}></div>
             ))}
             <label className={styles.fileInput} style={file ? {} : null}>
               <input type="file" onChange={handleFileChange} />

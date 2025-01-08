@@ -4,14 +4,14 @@
     flex-direction: column;
     place-content: center;
     place-items: center;
-    height: 60%;
+    height: 80%;
     gap: 1em;
 }
 
 .cardsContainer{
 
     display: flex;
-    width: 90%;
+    width: 100%;
     flex-direction: column;
     gap: 1em;
     height: auto;
@@ -97,6 +97,9 @@
     .cardsContainer{
         width: 100%;
         place-items: center;
+    }
+    .cardsContainerAll{
+        width: 70vw;
     }
 
 }
