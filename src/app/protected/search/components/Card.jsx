@@ -437,7 +437,7 @@ function AddBitacoraEntry({ onClose, userData, proyecto_id, item, handleClick, h
     usuario: userData.id, 
     proyecto: proyecto_id,
     time: new Date(),
-    tipo: "Analisis",
+    tipo: "Análisis",
   })
 
   const updateChanges = async () => {
