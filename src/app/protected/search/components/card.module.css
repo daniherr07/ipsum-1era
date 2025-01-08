@@ -139,6 +139,13 @@
     display: flex;
     flex-direction: column;
     padding: 10px;
+    width: 100%;
+  }
+
+  .bitacoraHeader{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
   }
   .bitacoraEntry{
     display: flex;
@@ -201,8 +208,10 @@
   }
 
   .newModalInput{
-    width: fit-content;
+    width: 100%;
   }
+
+
   
   
   /* RAMT Badge Styles */
@@ -298,6 +307,21 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
+  }
+
+  .selectContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    width: 80%;
+    justify-content: space-around;
+  }
+
+  .selectInput{
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    place-items: center;
   }
   
   /* Responsive Design */

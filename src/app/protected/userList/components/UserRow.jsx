@@ -116,7 +116,7 @@ export default function UserRow({ user }) {
     const updateChanges = async ()  => {
         isEditable(!editable)
         const response = await useFetchBackend(`updateUser`, 'POST', userEdit)
-        if (!response.ok) {
+        if (response.errno) {
             throw new Error('Error al guardar el proyecto');
         }
         toast.success("Usuario exitosamente editado!")
@@ -128,7 +128,7 @@ export default function UserRow({ user }) {
             activated: user.activated,
         }
         const response = await useFetchBackend(`changeStatus`, 'POST', data)
-        if (!response.ok) {
+        if (response.errno) {
             toast.error(`Hubo un error, intentalo más tarde...`)
         }
         toast.success(`Usuario exitosamente ${user.activated == 1 ? "Desactivado" : "Activado"}`)

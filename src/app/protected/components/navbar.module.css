@@ -184,6 +184,116 @@
 
 }
 
+.filterSelectContainer{
+    display: flex;
+    flex-direction: row;
+    place-content: space-around;
+    place-items: center;
+    gap: 1em;
+    width: 100%;
+
+}
+
+.typeContainer{
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    place-items: center;
+    gap: 1em;
+    width: 45%;
+}
+
+.actionContainer{
+    display: flex;
+    flex-direction: row;
+    place-content: center;
+    place-items: center;
+    gap: 1em;
+    width: 45%;
+
+
+}
+
+.buttonAccion{
+    width: 8em;
+    padding: 1em;
+    border-radius: 10px;
+    background-color: #0058b1;
+    border: none;
+    color: #fff;
+    font-size: 1em;
+    transition: all 0.2s ease-in-out;
+
+    &:hover{
+        cursor: pointer;
+    }
+
+}
+
+.modalBtns{
+    display: flex;
+    gap: 1em;
+  }
+
+  .modalUpdate{
+    border: none;
+    background-color: #0066cc;
+    padding: 1em;
+    color: #fff;
+    border-radius: 11px;
+    font-size: 1rem;
+    width: 100%;
+
+    &:hover{
+      background-color: #0058b1;
+      cursor: pointer;
+    }
+  }
+
+  .modalCancel{
+    color: #fff;
+    border-radius: 11px;
+    border: none;
+    background-color: rgb(252, 91, 91);
+    padding: 1em;
+    font-size: 1rem;
+    width: 100%;
+
+    &:hover{
+      cursor: pointer;
+      background-color: rgb(255, 62, 62)
+    }
+  }
+
+  .newUserModal{
+    border: 1px solid #0068bd83;
+    padding: 1vw;
+    border-radius: 11px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: fit-content;
+    place-content: center;
+    place-items: center;
+  }
+
+  .newModalInput{
+    width: 90%;
+  }
+
+  @media (max-width: 900px){
+    .modal{
+      width: 90vw;
+      padding: 4em;
+    }
+
+    .newUserModal{
+      width: 90vw;
+      padding: 4em;
+    }
+  }
+
 
 @media (max-width: 1185px) {
 

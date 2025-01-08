@@ -15,6 +15,7 @@ export default function MainSearch({label, value}){
     const [data, setData] = useState()
     const [id, setId] = useState(null)
     const [bitData, setBitData] = useState()
+    const [order, setOrder] = useState("asc")
 
 
     
@@ -32,12 +33,12 @@ export default function MainSearch({label, value}){
 
 
     useEffect(() => {
-        useFetchBackend(`projectNames?label=${label}&value=${value}`, "GET")
+        useFetchBackend(`projectNames?label=${label}&value=${value}&order=${order}`, "GET")
             .then((data) => {
                 setPName(data)
                 setLoading(false)
             })
-    }, [])
+    }, [order])
 
     const handleColor = () => {
         useFetchBackend(`projectNames?label=${label}&value=${value}`, "GET")
@@ -56,8 +57,28 @@ export default function MainSearch({label, value}){
                             isLoading ? <p>Loading...</p> :
                             <p>Encontrados: {Object.keys(pName).length}</p>
                         }
+
+                        <div className={style.filterSelectContainer}>
+                            <label htmlFor="order">Filtrar Por Fecha</label>
+                            <select
+                            name="order"
+                            id="order"
+                            value={order}
+                            className={style.newModalInput}
+                            onChange={e => setOrder(e.target.value)}
+                            >
+                                <option value="asc">
+                                Más antiguo primero
+                                </option>
+
+                                <option value="desc">
+                                Más reciente primero
+                                </option>
+
+                            </select>
+                        </div>
                         
-                        <section className={style.cardsContainer}>
+                        <section className={style.cardsContainer}>    
                             
                             {
                                 isLoading ? <p>Loading...</p> :

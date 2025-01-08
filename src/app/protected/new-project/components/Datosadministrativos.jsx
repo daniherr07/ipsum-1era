@@ -2,8 +2,20 @@
 import { useEffect, useState } from 'react';
 import styles from './datos-administrativos.module.css';
 import { useFetchBackend } from '@/hooks/useFetchApi';
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css'
+import { AddSomething } from '../../components/Accordion';
+import { useRouter } from 'next/navigation';
 
 export default function DatosAdministrativos({formData, setFormData}) {
+    const router = useRouter()
+
+    const addSomethingFunction = (enterTo = "Analista") => {
+        confirmAlert({
+          customUI: ({ onClose }) => <AddSomething onClose={onClose} router={router} enterTo={enterTo}/>,
+        })
+      }
+
     const [data, setData] = useState({
         Entidad: [],
         Analista_Ipsum: [],
@@ -35,6 +47,30 @@ export default function DatosAdministrativos({formData, setFormData}) {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        console.log(name)
+
+        if (value == "" || value == "otro") {
+            switch (name) {
+                case "fiscalAsignado":
+                    addSomethingFunction("Fiscal")
+                    break;
+                case "entidad":
+                    addSomethingFunction("Entidad")
+                    break;
+                case "entidadSecundaria":
+                    addSomethingFunction("CentroNegocio")
+                    break;
+                case "analistaEntidad":
+                    addSomethingFunction("Analista")
+                    break;
+                case "promotorEntidad":
+                    addSomethingFunction("Promotor")
+                    break;
+                default:
+                    break;
+            }
+            
+        }
         setFormData(prevState => ({
             ...prevState,
             [name]: value
@@ -61,15 +97,23 @@ export default function DatosAdministrativos({formData, setFormData}) {
 
     const updateAnalistasYPromotores = (entidadId) => {
         const entidadSeleccionada = data.Entidad.find(e => e.localId == entidadId);
-        const analistasCoincidentes = data.Analista_de_Entidades.filter(
-            analista => analista.Entidad == entidadSeleccionada.Nombre
-        );
-        setAnalistasEntidad(analistasCoincidentes);
 
-        const promotoresCoincidentes = data.Promotor_de_Entidades.filter(
-            promotor => promotor.Entidad == entidadSeleccionada.Nombre
-        );
-        setPromotoresEntidad(promotoresCoincidentes);
+        if (entidadSeleccionada != undefined) {
+            const analistasCoincidentes = data.Analista_de_Entidades.filter(
+                analista => analista.Entidad == entidadSeleccionada.Nombre
+            );
+
+            setAnalistasEntidad(analistasCoincidentes);
+
+            const promotoresCoincidentes = data.Promotor_de_Entidades.filter(
+                promotor => promotor.Entidad == entidadSeleccionada.Nombre
+            );
+            setPromotoresEntidad(promotoresCoincidentes);
+        }
+        
+
+
+
     };
 
     return (
@@ -171,6 +215,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                         {`${analista.Nombre} ${analista.Apellido_1} ${analista.Apellido_2}`}
                                     </option>
                                 ))}
+                                <option value="otro">+ Agregar Otro Analista</option>
                             </select>
                         </div>
 
@@ -190,6 +235,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                         {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`}
                                     </option>
                                 ))}
+                                <option value="otro">+ Agregar Otro Promotor</option>
                             </select>
                         </div>
 
@@ -207,7 +253,6 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                         {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`}
                                     </option>
                                 ))}
-                                <option value="">+ Añadir uno nuevo</option>
                             </select>
                         </div>
 
@@ -225,7 +270,6 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                         {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`}
                                     </option>
                                 ))}
-                                <option value="">+ Añadir un Analista</option>
                             </select>
                         </div>
 
@@ -244,6 +288,8 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                         {`${fiscal.Nombre} ${fiscal.Apellido_1} ${fiscal.Apellido_2}`}
                                     </option>
                                 ))}
+
+                                <option value="" >+ Añadir uno nuevo</option>
                             </select>
                         </div>
                     </div>

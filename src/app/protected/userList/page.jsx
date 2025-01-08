@@ -2,8 +2,6 @@ import NavBar from "../components/Navbar";
 import styles from './styles/page.module.css'
 import { Suspense } from "react";
 import UserRow from './components/UserRow'
-import { ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import AddUser from "./components/AddUser";
 import { useFetchBackend } from "@/hooks/useFetchApi";
 
@@ -13,18 +11,6 @@ import { useFetchBackend } from "@/hooks/useFetchApi";
 
     return (
         <>
-        <ToastContainer
-          position="bottom-right"
-          autoClose={3000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
         <NavBar />
 
 
@@ -45,11 +31,10 @@ import { useFetchBackend } from "@/hooks/useFetchApi";
             </thead>
             <tbody>
               <Suspense fallback={<p>Loading...</p>}>
-                  {users && users.map(user => (
+                  {users && users.map((user, index) => (
                   user.activated == 1 &&
-                  <>
+                  
                     <UserRow key={user.id} user={user} />
-                  </>
                   
                   ))}
               </Suspense>

@@ -4,10 +4,39 @@ import { useState, useEffect } from 'react'
 import style from "../newproject.module.css"
 import { handleChange } from '@/utils/handleChange'
 import { useFetchBackend } from '@/hooks/useFetchApi';
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css'
+import { AddSomething } from '../../components/Accordion';
+import { useRouter } from 'next/navigation';
 
 export default function Datosdelproyecto({ projectData, setProjectData }) {
-
+    const router = useRouter()
     const [tipos_bonos, setBonos] = useState([])
+
+    const addSomethingFunction = (enterTo = "Bono") => {
+        confirmAlert({
+            customUI: ({ onClose }) => <AddSomething onClose={onClose} router={router} enterTo={enterTo}/>,
+        })
+    }
+
+    const handleChangeNew = (e) => {
+        const { name, value } = e.target;
+
+        if (value == "" || value == "nuevo") {
+            switch (name) {
+                case "bonoSeleccionado":
+                    addSomethingFunction("Bono")
+                    break;
+                case "grupoSeleccionado":
+                    addSomethingFunction("Grupo")
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+    }
 
     const handleSubtipoClick = (id) => {
         setProjectData(prevData => ({
@@ -50,12 +79,13 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                         className={style.selecttipo1}
                         name="bonoSeleccionado"
                         value={projectData.bonoSeleccionado}
-                        onChange={e => handleChange(e, setProjectData)}
+                        onChange={e => {handleChange(e, setProjectData);  handleChangeNew(e)}}
                     >
                         <option value="">Tipo de bono</option>
                         {tipos_bonos.map((item, key) => (
                             <option value={item.id} key={key}>{item.nombre}</option>
                         ))}
+                        <option value="nuevo">+ Crear nuevo</option>
                     </select>
 
                     <h2 className={style.textogrupo}>¿Agrupado?</h2>
@@ -64,7 +94,7 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                         className={style.selecttipo1}
                         name="grupoSeleccionado"
                         value={projectData.grupoSeleccionado}
-                        onChange={e => handleChange(e, setProjectData)}
+                        onChange={e => {handleChange(e, setProjectData);  handleChangeNew(e)}}
                     >
                         <option value="">Seleccione un tipo</option>
                         <option value="1">Sin agrupación (Individual)</option>

@@ -1,14 +1,37 @@
 'use client'
 import style from './navbar.module.css'
 import { useState, useEffect } from 'react'
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css'
+import AddAnalista from './popupPlantilla/insert/AddAnalista'
+import { useRouter } from 'next/navigation';
+import AddCentroNegocio from './popupPlantilla/insert/AddCentroNegocio'
+import AddConstructor from './popupPlantilla/insert/AddConstructor'
+import AddEntidad from './popupPlantilla/insert/AddEntidad'
+import AddFiscal from './popupPlantilla/insert/AddFiscal'
+import AddGrupo from './popupPlantilla/insert/AddGrupo'
+import AddPromotor from './popupPlantilla/insert/AddPromotorEntidad'
+import AddBono from './popupPlantilla/insert/AddBono'
+import AddSubBono from './popupPlantilla/insert/AddSubBono'
+import EditGeneric from './popupPlantilla/edit/EditGeneric'
+
+
+
 
 
 
 export default function Accordion({userData = {}}){
     const [opened, setOpened] = useState(false)
     const [windowBool, setWindowBool] = useState(false)
+    const router = useRouter();
 
     const isAdminOrRoot = userData.role == 'Admin' || userData.role == 'Root' ? true : false;
+
+        const addSomethingFunction = () => {
+          confirmAlert({
+            customUI: ({ onClose }) => <AddSomething onClose={onClose} router={router}/>,
+          })
+        }
  
     useEffect(() => {
         setOpened(false)
@@ -101,6 +124,12 @@ export default function Accordion({userData = {}}){
             </li>
 
             <li className={style.option}>
+                <button type="submit" style={{background: "none", border: "none"}} onClick={addSomethingFunction}>
+                    <p className={style.option}>Mantenimiento</p>
+                </button>
+            </li>
+
+            <li className={style.option}>
                 <form action="/api/logoff" method='POST' >
                 
                     <button type="submit" style={{background: "none", border: "none"}}>
@@ -130,6 +159,178 @@ export default function Accordion({userData = {}}){
                 onClick={() => setOpened(!opened)} 
                 alt='hamburger'
                 />
+        
     </>
     )
+    
 }
+
+export function AddSomething({ onClose, router, enterTo="Analista" }) {
+    const [type, setType] = useState(enterTo)
+    const [accion, setAccion] = useState(true)
+  
+    return (
+      <div className={style.newUserModal}>
+        <h1 style={{marginBottom: "1em"}}>Mantenimiento</h1>
+  
+        <div className={style.filterSelectContainer}>
+
+            <div className={style.typeContainer}>
+                <label htmlFor="type">Agregar Tipo</label>
+                <select
+                    name="type"
+                    id="type"
+                    value={type}
+                    className={style.newModalInput}
+                    onChange={e => setType(e.target.value)}
+                >
+                    <option value="Analista">
+                        Analista de entidad
+                    </option>
+
+                    <option value="CentroNegocio">
+                        Centro de Negocio
+                    </option>
+
+                    <option value="Constructor">
+                        Constructor
+                    </option>
+
+                    <option value="Entidad">
+                        Entidad
+                    </option>
+
+                    <option value="Fiscal">
+                        Fiscal
+                    </option>
+
+                    <option value="Grupo">
+                        Grupo
+                    </option>
+
+                    <option value="Promotor">
+                        Promotor Entidad
+                    </option>
+
+                    <option value="Bono">
+                        Bono
+                    </option>
+
+                    <option value="Subtipo">
+                        Subtipo de bono
+                    </option>
+
+                </select>
+            </div>
+
+            <div className={style.actionContainer}>
+                <button 
+                className={style.buttonAccion}
+                onClick={() => setAccion(true)}
+                style={accion ? {color: "#0058b1", backgroundColor: "#fff", boxShadow: "inset 0px 0px 5px 0px rgba(143,143,143,1)"} : null}
+                >
+                    Insertar
+                </button>
+
+                <button 
+                className={style.buttonAccion}
+                onClick={() => setAccion(false)}
+                style={accion == false ? {color: "#0058b1", backgroundColor: "#fff", boxShadow: "inset 0px 0px 5px 0px rgba(143,143,143,1)"} : null}
+                >
+                    Ver y Editar
+                </button>
+            </div>
+
+            
+
+            
+            
+        </div>
+
+        { accion &&
+            < >
+            {type == "Analista" &&
+                    <AddAnalista onClose={onClose} router={router}/>
+                }
+
+
+                {type == "CentroNegocio" &&
+                    <AddCentroNegocio onClose={onClose} router={router}/>
+                }
+
+                {type == "Constructor" &&
+                    <AddConstructor onClose={onClose} router={router}/>
+                }
+
+                {type == "Entidad" &&
+                    <AddEntidad onClose={onClose} router={router}/>
+                }
+
+                {type == "Fiscal" &&
+                    <AddFiscal onClose={onClose} router={router}/>
+                }
+
+                {type == "Grupo" &&
+                    <AddGrupo onClose={onClose} router={router}/>
+                }
+
+                {type == "Promotor" &&
+                    <AddPromotor onClose={onClose} router={router}/>
+                }
+
+                {type == "Bono" &&
+                    <AddBono onClose={onClose} router={router}/>
+                }
+
+                {type == "Subtipo" &&
+                    <AddSubBono onClose={onClose} router={router}/>
+                }
+            </>
+        }
+
+        { !accion &&
+            < >
+                {type == "Analista" &&
+                    <EditGeneric table={"analistas_entidades"}/>
+                }
+
+                {type == "CentroNegocio" &&
+                    <EditGeneric table={"centros_negocios"}/>
+                }
+
+                {type == "Constructor" &&
+                    <EditGeneric table={"constructores"}/>
+                }
+
+                {type == "Entidad" &&
+                    <EditGeneric table={"entidades"}/>
+                }
+
+                {type == "Fiscal" &&
+                    <EditGeneric table={"fiscales"}/>
+                }
+
+                {type == "Grupo" &&
+                    <EditGeneric table={"grupos_proyectos"}/>
+                }
+
+                {type == "Promotor" &&
+                    <EditGeneric table={"promotores_entidades"}/>
+                }
+
+                {type == "Bono" &&
+                    <EditGeneric table={"tipos_bono"}/>
+                }
+
+                {type == "Subtipo" &&
+                    <EditGeneric table={"variantes_bono"}/>
+                }
+
+            </>
+        }
+
+            
+
+    </div>
+    )
+  }

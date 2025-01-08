@@ -56,6 +56,18 @@
     height: 80%;
 }
 
+.filterSelectContainer{
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    width: 60%;
+    text-align: center;
+}
+
+.newModalInput{
+    width: 100%;
+}
+
 
 @media (max-width: 1185px) {
 

@@ -2,8 +2,6 @@ import NavBar from "../components/Navbar";
 import MainSearch from "./components/MainSearch";
 import style from './search.module.css'
 import { Suspense } from 'react'
-import { ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 export default async function Search({searchParams}){
     const searchWaited = await searchParams;
@@ -21,19 +19,6 @@ export default async function Search({searchParams}){
             </main>
 
             </Suspense>
-            
-            <ToastContainer
-                position="bottom-right"
-                autoClose={3000}
-                hideProgressBar
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />
         </>
     );
 }

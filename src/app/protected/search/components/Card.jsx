@@ -15,6 +15,7 @@ import { useFetchBackend } from '@/hooks/useFetchApi';
 
 export default function Card({item, bitData, handleClick, handleColor}) {
     const userData = useProtectedContext();
+    const [filter, setFilter] = useState("Todos")
 
   
     const newBitacora = () => {
@@ -48,7 +49,7 @@ export default function Card({item, bitData, handleClick, handleColor}) {
         <div className={styles.leftColumn}>
 
           <div className={styles.fechaIngresoBlock}>
-            <h1>Fecha: {item.fechaIngreso.split('T')[0]}</h1>
+            <h1>Fecha: {dateConverter(item.fechaIngreso).split(',')[0]}</h1>
           </div>
 
           {/* Location Grid */}
@@ -97,18 +98,70 @@ export default function Card({item, bitData, handleClick, handleColor}) {
             </div>
           </div>
 
+          {/* Filter Select */}
+
+          <div className={styles.filterSelectContainer}>
+            <label htmlFor="filter">Filtrar Tipo</label>
+            <select
+              name="filter"
+              id="filter"
+              value={filter}
+              className={styles.newModalInput}
+              onChange={e => setFilter(e.target.value)}
+            >
+                <option value="Todos">
+                  Todos
+                </option>
+
+                <option value="Análisis">
+                  Análisis
+                </option>
+
+                <option value="Técnico">
+                  Técnico
+                </option>
+
+            </select>
+          </div>
+
           {/* Scrollable Area (placeholder) */}
           <div className={styles.scrollArea}>
 
             {
               bitData.map((entry) => (
+                filter == "Todos" ?
+
                 <div className={styles.bitacoraEntry} key={entry.id} >
                   <div className={styles.colorBit} style={{backgroundColor: entry.color}}></div>
                   <div className={styles.descripcionContainer}>
-                    <p>{dateConverter(entry.fecha_ingreso)}</p>
+                    <div className={styles.bitacoraHeader}>
+                      <p>{dateConverter(entry.fecha_ingreso)}</p>
+                      <p style={entry.tipo == "Análisis" ? {fontWeight: "bold", textDecoration: "underline"} : {color: "#25d366"}}>
+                        {entry.tipo}
+                      </p>
+                      
+                    </div>
+                    
                     <p className={styles.bitInfo}>{entry.usuario} ingresó: {entry.descripcion}</p>
                   </div>
-                  
+                </div>
+
+                :
+                entry.tipo == filter && 
+                
+                <div className={styles.bitacoraEntry} key={entry.id} >
+                  <div className={styles.colorBit} style={{backgroundColor: entry.color}}></div>
+                  <div className={styles.descripcionContainer}>
+                    <div className={styles.bitacoraHeader}>
+                      <p>{dateConverter(entry.fecha_ingreso)}</p>
+                      <p style={entry.tipo == "Análisis" ? {fontWeight: "bold", textDecoration: "underline"} : {color: "#25d366"}}>
+                        {entry.tipo}
+                      </p>
+                      
+                    </div>
+                    
+                    <p className={styles.bitInfo}>{entry.usuario} ingresó: {entry.descripcion}</p>
+                  </div>
                 </div>
               ))
             }
@@ -226,7 +279,8 @@ function AddBitacoraEntry({ onClose, userData, proyecto_id, item, handleClick, h
     color: '#03579B',
     usuario: userData.id, 
     proyecto: proyecto_id,
-    time: new Date()
+    time: new Date(),
+    tipo: "Analisis",
   })
 
   const updateChanges = async () => {
@@ -235,7 +289,11 @@ function AddBitacoraEntry({ onClose, userData, proyecto_id, item, handleClick, h
     }
 
     if (newEntryData.color == '') {
-      return toast.error("Porfavor elije un color")
+      return toast.error("Por favor elije un color")
+    }
+
+    if (newEntryData.tipo == '') {
+      return toast.error("Por favor elija un tipo")
     }
 
     const response = await useFetchBackend("insertBitacora", "POST", newEntryData)
@@ -261,27 +319,56 @@ function AddBitacoraEntry({ onClose, userData, proyecto_id, item, handleClick, h
         style={{width: "80%"}}
       />
 
-      <label htmlFor="roles">Color </label>
-      <select
-        name="color"
-        id="color"
-        value={newEntryData.roles}
-        className={styles.newModalInput}
-        onChange={e => handleChange(e, setNewEntryData)}
-      >
-          <option value="#03579B">
-            Azul:  Todo correcto
-          </option>
+      <div className={styles.selectContainer}>
 
-          <option value="#F4C400">
-            Amarillo:  Priorizar 
-          </option>
+        <div className={styles.selectInput}>
+          <label htmlFor="color">Color </label>
+          <select
+            name="color"
+            id="color"
+            value={newEntryData.roles}
+            className={styles.newModalInput}
+            onChange={e => handleChange(e, setNewEntryData)}
+          >
+              <option value="#03579B">
+                Azul:  Todo correcto
+              </option>
 
-          <option value="#C91212">
-            Rojo:  Priorizar con urgencia
-          </option>
+              <option value="#F4C400">
+                Amarillo:  Priorizar 
+              </option>
 
-      </select>
+              <option value="#C91212">
+                Rojo:  Priorizar con urgencia
+              </option>
+
+          </select>
+        </div>
+
+
+        <div className={styles.selectInput}>
+          <label htmlFor="tipo">Tipo de Incidencia</label>
+          <select
+            name="tipo"
+            id="tipo"
+            value={newEntryData.roles}
+            className={styles.newModalInput}
+            onChange={e => handleChange(e, setNewEntryData)}
+          >
+              <option value="Análisis">
+                Análisis
+              </option>
+
+              <option value="Técnico">
+                Técnico
+              </option>
+
+          </select>
+
+        </div>
+      </div>
+
+
 
       <div className={styles.modalBtns}>
         <button className={styles.modalUpdate} onClick={updateChanges}>
