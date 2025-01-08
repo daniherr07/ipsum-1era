@@ -12,12 +12,14 @@ import { useRouter } from 'next/navigation';
 export default function Datosdelproyecto({ projectData, setProjectData }) {
     const router = useRouter()
     const [tipos_bonos, setBonos] = useState([])
+    const [update, setUpdate] = useState(false)
+    const [grupos, setGrupos] = useState()
 
-    const addSomethingFunction = (enterTo = "Bono") => {
+    const addSomethingFunction = (enterTo = "Analista") => {
         confirmAlert({
-            customUI: ({ onClose }) => <AddSomething onClose={onClose} router={router} enterTo={enterTo}/>,
+          customUI: ({ onClose }) => <AddSomething onClose={() => {onClose(), setUpdate(!update)}} router={router} enterTo={enterTo} />,
         })
-    }
+      }
 
     const handleChangeNew = (e) => {
         const { name, value } = e.target;
@@ -39,10 +41,15 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
     }
 
     const handleSubtipoClick = (id) => {
-        setProjectData(prevData => ({
-            ...prevData,
-            subtipoSeleccionado: id
-        }));
+        if (id="new") {
+            addSomethingFunction("Subtipo")
+        }else{
+            setProjectData(prevData => ({
+                ...prevData,
+                subtipoSeleccionado: id
+            }));
+        }
+
     };
 
     useEffect(() => {
@@ -51,7 +58,16 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                 setBonos(fetchedData);
             })
             .catch((error) => console.error('Error fetching admin data:', error));
-    }, []);
+    }, [update]);
+
+    useEffect(() => {
+        useFetchBackend("getGrupos", "GET")
+            .then((fetchedData) => {
+                setGrupos(fetchedData);
+                console.log(fetchedData)
+            })
+            .catch((error) => console.error('Error fetching admin data:', error));
+    }, [update]);
 
     return(
         <div className={style.datoscontainer1}>
@@ -83,7 +99,7 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                     >
                         <option value="">Tipo de bono</option>
                         {tipos_bonos.map((item, key) => (
-                            <option value={item.id} key={key}>{item.nombre}</option>
+                            <option value={item.id} key={key}>{item.nombre} {item.activated == 0 && "(Desactivado)"}</option>
                         ))}
                         <option value="nuevo">+ Crear nuevo</option>
                     </select>
@@ -97,9 +113,12 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                         onChange={e => {handleChange(e, setProjectData);  handleChangeNew(e)}}
                     >
                         <option value="">Seleccione un tipo</option>
-                        <option value="1">Sin agrupación (Individual)</option>
-                        <option value="2">Grupo A</option>
-                        <option value="3">Grupo B</option>
+                        {
+                            grupos && grupos.map((grupo) => (
+                                <option key={grupo.id} value={grupo.id}>{grupo.nombre} {grupo.activated == 0 && "(Desactivado)"}</option>
+
+                            ))
+                        }
                         <option value="nuevo">+ Crear nuevo</option>
                     </select>
 
@@ -109,7 +128,9 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
 
                 <div className={style.containerderecha1}>
                     {tipos_bonos.map((item) => (
+                        
                         <div key={item.id} className={style.item_opciones1}>
+                            
                             {projectData.bonoSeleccionado == item.id &&
                             item.subtipos.map((subtipo, id) => (
                                 <div
@@ -117,9 +138,15 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                                     className={`${style.subtipo} ${projectData.subtipoSeleccionado === subtipo.id ? style.seleccionado : ''}`}
                                     onClick={() => handleSubtipoClick(subtipo.id)}
                                 >
-                                    <h1>{subtipo.nombre}</h1>
+                                    <h1>{subtipo.nombre} {subtipo.activated == 0 && "(Desactivado)"}</h1>
                                 </div>
+
+                                
                             ))}
+
+                            
+
+
                         </div>
                     ))}
                 </div>

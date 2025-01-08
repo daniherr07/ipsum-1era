@@ -3,8 +3,13 @@
 import { useEffect, useState } from 'react';
 import styles from './datos-administrativos.module.css';
 import { useFetchBackend } from '@/hooks/useFetchApi';
+import { useRouter } from 'next/navigation';
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css'
+import { AddSomething } from '../../../components/Accordion';
 
 export default function DatosAdministrativos({formData, setFormData}) {
+    const router = useRouter()
     const [data, setData] = useState({
         Entidad: [],
         Analista_Ipsum: [],
@@ -18,6 +23,14 @@ export default function DatosAdministrativos({formData, setFormData}) {
     const [analistasEntidad, setAnalistasEntidad] = useState([]);
     const [promotoresEntidad, setPromotoresEntidad] = useState([]);
 
+    const [update, setUpdate] = useState(false)
+
+    const addSomethingFunction = (enterTo = "Analista") => {
+        confirmAlert({
+            customUI: ({ onClose }) => <AddSomething onClose={() => {onClose(), setUpdate(!update)}} router={router} enterTo={enterTo} />,
+        })
+    }
+
 
     useEffect(() => {
        useFetchBackend("getAdminData", "GET")
@@ -25,7 +38,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
                 setData(fetchedData);
             })
             .catch((error) => console.error('Error fetching admin data:', error));
-    }, []);
+    }, [update]);
 
     useEffect(() => {
         if (formData.entidad) {
@@ -36,6 +49,31 @@ export default function DatosAdministrativos({formData, setFormData}) {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+
+
+        if (value == "" || value == "otro") {
+            switch (name) {
+                case "fiscalAsignado":
+                    addSomethingFunction("Fiscal")
+                    break;
+                case "entidad":
+                    addSomethingFunction("Entidad")
+                    break;
+                case "entidadSecundaria":
+                    addSomethingFunction("CentroNegocio")
+                    break;
+                case "analistaEntidad":
+                    addSomethingFunction("Analista")
+                    break;
+                case "promotorEntidad":
+                    addSomethingFunction("Promotor")
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+
         setFormData(prevState => ({
             ...prevState,
             [name]: value
@@ -62,15 +100,18 @@ export default function DatosAdministrativos({formData, setFormData}) {
 
     const updateAnalistasYPromotores = (entidadId) => {
         const entidadSeleccionada = data.Entidad.find(e => e.localId == entidadId);
-        const analistasCoincidentes = data.Analista_de_Entidades.filter(
-            analista => analista.Entidad == entidadSeleccionada.Nombre
-        );
-        setAnalistasEntidad(analistasCoincidentes);
+        if (entidadSeleccionada != undefined) {
+            const analistasCoincidentes = data.Analista_de_Entidades.filter(
+                analista => analista.Entidad == entidadSeleccionada.Nombre
+            );
 
-        const promotoresCoincidentes = data.Promotor_de_Entidades.filter(
-            promotor => promotor.Entidad == entidadSeleccionada.Nombre
-        );
-        setPromotoresEntidad(promotoresCoincidentes);
+            setAnalistasEntidad(analistasCoincidentes);
+
+            const promotoresCoincidentes = data.Promotor_de_Entidades.filter(
+                promotor => promotor.Entidad == entidadSeleccionada.Nombre
+            );
+            setPromotoresEntidad(promotoresCoincidentes);
+        }
     };
 
     return (
@@ -98,7 +139,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 <option value="">Seleccione una entidad</option>
                                 {data.Entidad.map((item, key) => (
                                     <option key={key} value={item.localId}>
-                                        {item.Nombre}
+                                        {item.Nombre} {item.activated == 0 && "(Desactivado)"}
                                     </option>
                                 ))}
                                 <option value="otro">+ Agregar Otra Entidad</option>
@@ -120,7 +161,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 </option>
                                 {centrosNegocio.map((centro, key) => (
                                     <option key={key} value={centro.localId}>
-                                        {centro.nombre}
+                                        {centro.nombre} {centro.activated == 0 && "(Desactivado)"}
                                     </option>
                                 ))}
                                 <option value="otro">+ Agregar Otro Centro de Negocio</option>
@@ -169,9 +210,10 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 <option value="pendiente">Pendiente</option>
                                 {analistasEntidad.map((analista, key) => (
                                     <option key={key} value={analista.localID}>
-                                        {`${analista.Nombre} ${analista.Apellido_1} ${analista.Apellido_2}`}
+                                        {`${analista.Nombre} ${analista.Apellido_1} ${analista.Apellido_2}`} {analista.activated == 0 && "(Desactivado)"}
                                     </option>
                                 ))}
+                                <option value="otro">+ Agregar Otro Analista</option>
                             </select>
                         </div>
 
@@ -188,9 +230,10 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 <option value="pendiente">Pendiente</option>
                                 {promotoresEntidad.map((promotor, key) => (
                                     <option key={key} value={promotor.localID}>
-                                        {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`}
+                                        {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`} {promotor.activated == 0 && "(Desactivado)"}
                                     </option>
                                 ))}
+                                <option value="otro">+ Agregar Otro Promotor</option>
                             </select>
                         </div>
 
@@ -205,10 +248,10 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 <option value="">Seleccione un promotor</option>
                                 {data.Promotor_Ipsum.map((promotor, key) => (
                                     <option key={key} value={promotor.localID}>
-                                        {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`}
+                                        {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`} {promotor.activated == 0 && "(Desactivado)"}
                                     </option>
                                 ))}
-                                <option value="">+ Añadir uno nuevo</option>
+
                             </select>
                         </div>
 
@@ -223,10 +266,9 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 <option value="">Seleccione un Analista Ipsum</option>
                                 {data.Analista_Ipsum.map((promotor, key) => (
                                     <option key={key} value={promotor.localID}>
-                                        {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`}
+                                        {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`} {promotor.activated == 0 && "(Desactivado)"}
                                     </option>
                                 ))}
-                                <option value="">+ Añadir un Analista</option>
                             </select>
                         </div>
 
@@ -242,9 +284,10 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 <option value="pendiente">Pendiente</option>
                                 {data.Fiscal.map((fiscal, key) => (
                                     <option key={key} value={fiscal.localID}>
-                                        {`${fiscal.Nombre} ${fiscal.Apellido_1} ${fiscal.Apellido_2}`}
+                                        {`${fiscal.Nombre} ${fiscal.Apellido_1} ${fiscal.Apellido_2}`} {fiscal.activated == 0 && "(Desactivado)"}
                                     </option>
                                 ))}
+                                <option value="otro">+ Agregar Otro Fiscal</option>
                             </select>
                         </div>
                     </div>
@@ -288,10 +331,9 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 <option value="">Seleccione un Ingeniero</option>
                                 {data.Ingeniero.map((promotor, key) => (
                                     <option key={key} value={promotor.localID}>
-                                        {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`}
+                                        {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`} {promotor.activated == 0 && "(Desactivado)"}
                                     </option>
                                 ))}
-                                <option value="0">+ Añadir un Ingeniero</option>
                             </select>
                         </div>
                     </div>

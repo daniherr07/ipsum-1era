@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './card.module.css'
 import Image from 'next/image';
 import Link from 'next/link';
@@ -10,23 +10,176 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import { useProtectedContext } from '@/app/context/ProtectedContext'
 import { useFetchBackend } from '@/hooks/useFetchApi';
-
+import { UseUploadBlob } from '@/hooks/useUploadBlob';
 
 
 export default function Card({item, bitData, handleClick, handleColor}) {
     const userData = useProtectedContext();
-    const [filter, setFilter] = useState("Todos")
+    const [page, setPage] = useState(true)
+    
+    
 
   
-    const newBitacora = () => {
-      confirmAlert({
-        customUI: ({ onClose }) => <AddBitacoraEntry onClose={onClose} userData={userData} proyecto_id={item.id} item={item} handleClick={handleClick} handleColor={handleColor}/>,
-      })
-    }
+
   
     return (
-    <>
+      <>
+        <div className={styles.cardButtonsSwitch}>
+          <button 
+          className={styles.buttonAccion}
+          onClick={() => setPage(true)}
+          style={page ? {color: "#0058b1", backgroundColor: "#fff", boxShadow: "inset 0px 0px 5px 0px rgba(143,143,143,1)"} : null}
+          >
+              Info General
+          </button>
+
+          <button 
+          className={styles.buttonAccion}
+          onClick={() => setPage(false)}
+          style={page == false ? {color: "#0058b1", backgroundColor: "#fff", boxShadow: "inset 0px 0px 5px 0px rgba(143,143,143,1)"} : null}
+          >
+              Fotos
+          </button>
+        </div>
+
+        {page == true && <GeneralInfo item={item} bitData={bitData} userData={userData} />}
+        {page == false && <PhotosCard item={item}/>}
+      </>
+    
+    );
+  }
+
+function PhotosCard({item}) {
+  const { uploadFile, isUploading, uploadError } = UseUploadBlob();
+  const [file, setFile] = useState('');
+  const directoryName = (item.nombreProyecto + " " + "Fotos")
+  const [blobs, setBlobs] = useState()
+  const [loading, setLoading] = useState(true);
+  const [update, setUpdate] = useState(false)
+
+  const deletePopup = (url) => {
+    confirmAlert({
+      customUI: ({ onClose, }) => {
+        return (
+            <div className={styles.modal}>
+                <h1>¿Estas seguro de eliminar la imagen?</h1>
+
+                <div className={styles.modalBtns}>
+                    <button
+                        className={styles.modalUpdate}
+                        onClick={() => {
+                        deleteImage(url);
+                        onClose();
+                        }}
+                    >
+                        Eliminar
+                    </button>
+
+                    <button 
+                    onClick={onClose}
+                    className={styles.modalCancel}
+                    >Cancelar
+                    </button>
+
+                </div>
+
+
+          </div>
+        );
+      }
+    })
+  }
+
+  useEffect(() => {
+
+    const fetchBlobs = async () => {
+      try {
+        const response = await fetch(`/api/listBlobs?prefix=${directoryName.replace(/Proyecto\s+/g, '')}`)
+        if (!response.ok) {
+          throw new Error('Failed to fetch blobs')
+        }
+        const data = await response.json()
+        console.log(data)
+        setBlobs(data.blobs)
+      } catch (error) {
+        console.error('Error fetching blobs:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchBlobs()
+    
+  }, [directoryName, update])
+
+
+   const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setFile(file);
+    }
+    
+    const blobResponse = await uploadFile(file, file.name, directoryName.replace(/Proyecto\s+/g, ''));
+      
+    if (blobResponse) {
+      toast.success("Imagen subida correctamente!")
+    } else {
+      throw new Error(`Failed to upload file`, uploadError);
+    }
+
+    setUpdate(!update)
+  };
+
+  const deleteImage = async (url) => {
+    const response = await fetch(`/api/deleteBlob`, {
+      method: "DELETE",
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({"url": url})
+    })
+
+    const result = await response.json()
+
+    toast.success("Imagen eliminada existosamente!")
+    setUpdate(!update)
+  }
+  
+
+
+
+  return(
     <div className={styles.card}>
+      <div className={styles.responsiveCardContainer}>
+
+
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            {blobs && blobs.map((blob, index) => (
+              <div key={index} className={styles.photo} style={{backgroundImage: `url(${blob.url})`}} onClick={() => deletePopup(blob.pathname)}></div>
+            ))}
+            <label className={styles.fileInput} style={file ? {} : null}>
+              <input type="file" onChange={handleFileChange} />
+            </label>
+          </>
+        )}
+
+      </div>
+    </div>
+  )
+}
+
+function GeneralInfo({item, bitData, userData}){
+  const [filter, setFilter] = useState("Todos")
+  const newBitacora = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => <AddBitacoraEntry onClose={onClose} userData={userData} proyecto_id={item.id} item={item} handleClick={handleClick} handleColor={handleColor}/>,
+    })
+  }
+  return (
+  <div className={styles.card}>
       {/* Header */}
       <header className={styles.header} style={{backgroundColor: `${bitData[0]?.color ? bitData[0].color : "#03579B"}`}}>
         <div className={styles.headerLeft}>
@@ -268,9 +421,8 @@ export default function Card({item, bitData, handleClick, handleColor}) {
       </footer>
     </div>
   
-    </>
-    );
-  }
+  )
+}
 
 function AddBitacoraEntry({ onClose, userData, proyecto_id, item, handleClick, handleColor }) {
 

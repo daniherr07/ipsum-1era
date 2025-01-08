@@ -3,11 +3,41 @@ import { useState, useEffect } from 'react'
 import style from "../newproject.module.css"
 import { useFetchBackend } from '@/hooks/useFetchApi';
 import { handleChange } from '@/utils/handleChange';
+import { useRouter } from 'next/navigation';
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css'
+import { AddSomething } from '../../../components/Accordion';
 
 export default function Datosdelproyecto({ projectData, setProjectData }) {
-
+    const router = useRouter()
     const [tipos_bonos, setBonos] = useState([])
-    console.log(projectData)
+    const [update, setUpdate] = useState(false)
+    const [grupos, setGrupos] = useState()
+
+    const addSomethingFunction = (enterTo = "Analista") => {
+        confirmAlert({
+            customUI: ({ onClose }) => <AddSomething onClose={() => {onClose(), setUpdate(!update)}} router={router} enterTo={enterTo} />,
+        })
+        }
+
+    const handleChangeNew = (e) => {
+        const { name, value } = e.target;
+
+        if (value == "" || value == "nuevo") {
+            switch (name) {
+                case "bonoSeleccionado":
+                    addSomethingFunction("Bono")
+                    break;
+                case "grupoSeleccionado":
+                    addSomethingFunction("Grupo")
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+    }
 
 
     const handleSubtipoClick = (id) => {
@@ -23,7 +53,16 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                 setBonos(fetchedData);
             })
             .catch((error) => console.error('Error fetching admin data:', error));
-    }, []);
+    }, [update]);
+
+    useEffect(() => {
+        useFetchBackend("getGrupos", "GET")
+            .then((fetchedData) => {
+                setGrupos(fetchedData);
+                console.log(fetchedData)
+            })
+            .catch((error) => console.error('Error fetching admin data:', error));
+    }, [update]);
 
     return(
         <div className={style.datoscontainer1}>
@@ -51,12 +90,13 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                         className={style.selecttipo1}
                         name="bonoSeleccionado"
                         value={projectData.bonoSeleccionado}
-                        onChange={e => handleChange(e, setProjectData)}
+                        onChange={e => {handleChange(e, setProjectData);  handleChangeNew(e)}}
                     >
                         <option value="">Tipo de bono</option>
                         {tipos_bonos.map((item, key) => (
-                            <option value={item.id} key={key}>{item.nombre}</option>
+                            <option value={item.id} key={key}>{item.nombre} {item.activated == 0 && "(Desactivado)"}</option>
                         ))}
+                        <option value="nuevo">+ Crear nuevo</option>
                     </select>
 
                     <h2 className={style.textogrupo}>¿Agrupado?</h2>
@@ -65,12 +105,15 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                         className={style.selecttipo1}
                         name="grupoSeleccionado"
                         value={projectData.grupoSeleccionado}
-                        onChange={e => handleChange(e, setProjectData)}
+                        onChange={e => {handleChange(e, setProjectData);  handleChangeNew(e)}}
                     >
                         <option value="">Seleccione un tipo</option>
-                        <option value="1">Sin agrupación (Individual)</option>
-                        <option value="2">Grupo A</option>
-                        <option value="3">Grupo B</option>
+                        {
+                            grupos && grupos.map((grupo) => (
+                                <option key={grupo.id} value={grupo.id}>{grupo.nombre} {grupo.activated == 0 && "(Desactivado)"}</option>
+
+                            ))
+                        }
                         <option value="nuevo">+ Crear nuevo</option>
                     </select>
 
@@ -91,6 +134,7 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                                     <h1>{subtipo.nombre}</h1>
                                 </div>
                             ))}
+                            
                         </div>
                     ))}
                 </div>

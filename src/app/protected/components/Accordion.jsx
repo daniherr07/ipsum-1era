@@ -1,6 +1,6 @@
 'use client'
 import style from './navbar.module.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useReducer } from 'react'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import AddAnalista from './popupPlantilla/insert/AddAnalista'
@@ -165,9 +165,11 @@ export default function Accordion({userData = {}}){
     
 }
 
-export function AddSomething({ onClose, router, enterTo="Analista" }) {
+export function AddSomething({ onClose, router, enterTo="Analista"}) {
+    const [_, forceUpdate] = useReducer(x => x + 1, 0);
     const [type, setType] = useState(enterTo)
     const [accion, setAccion] = useState(true)
+    console.log("accionEstado", accion)
   
     return (
       <div className={style.newUserModal}>
@@ -291,39 +293,39 @@ export function AddSomething({ onClose, router, enterTo="Analista" }) {
         { !accion &&
             < >
                 {type == "Analista" &&
-                    <EditGeneric table={"analistas_entidades"}/>
+                    <EditGeneric onClose={onClose} table={"analistas_entidades"}/>
                 }
 
                 {type == "CentroNegocio" &&
-                    <EditGeneric table={"centros_negocios"}/>
+                    <EditGeneric onClose={onClose} table={"centros_negocios"} />
                 }
 
                 {type == "Constructor" &&
-                    <EditGeneric table={"constructores"}/>
+                    <EditGeneric onClose={onClose} table={"constructores"} />
                 }
 
                 {type == "Entidad" &&
-                    <EditGeneric table={"entidades"}/>
+                    <EditGeneric onClose={onClose} table={"entidades"} />
                 }
 
                 {type == "Fiscal" &&
-                    <EditGeneric table={"fiscales"}/>
+                    <EditGeneric onClose={onClose} table={"fiscales"} />
                 }
 
                 {type == "Grupo" &&
-                    <EditGeneric table={"grupos_proyectos"}/>
+                    <EditGeneric onClose={onClose} table={"grupos_proyectos"} />
                 }
 
                 {type == "Promotor" &&
-                    <EditGeneric table={"promotores_entidades"}/>
+                    <EditGeneric onClose={onClose} table={"promotores_entidades"} />
                 }
 
                 {type == "Bono" &&
-                    <EditGeneric table={"tipos_bono"}/>
+                    <EditGeneric onClose={onClose} table={"tipos_bono"} />
                 }
 
                 {type == "Subtipo" &&
-                    <EditGeneric table={"variantes_bono"}/>
+                    <EditGeneric onClose={onClose} table={"variantes_bono"} />
                 }
 
             </>

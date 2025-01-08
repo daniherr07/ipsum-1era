@@ -9,19 +9,19 @@ import { Suspense } from 'react';
 
 
 
-export default function EditGeneric({table}){
+
+export default function EditGeneric({onClose, table}){
     const [data, setData] = useState()
     const [claves, setClaves] = useState([])
     const [entidades, setEntidades] = useState()
     const [tiposBono, setTiposBono] = useState()
-
+    const [update, setUpdate] = useState()
 
     useEffect(() => {
         useFetchBackend(`getGenerics?table=${table}`, "GET")
         .then((data) => {
             setClaves(Object.keys(data[0]))
             setData(data)
-            console.log(data)
         })
 
         useFetchBackend(`getEntidades`, "GET")
@@ -33,7 +33,7 @@ export default function EditGeneric({table}){
         .then((data) => {
             setTiposBono(data)
         })
-    }, [])
+    }, [update])
 
 
     
@@ -48,7 +48,7 @@ export default function EditGeneric({table}){
                 {
                     claves &&
                     claves.map((clave, index) => (
-                        clave !== "id" ?
+                        (clave !== "id" && clave !== "activated") ?
                         <th key={index} className={styles.headerCell}>{
                             clave == "entidad_id" && "Entidad" ||
                             clave == "nombre" && "Nombre" ||
@@ -71,8 +71,17 @@ export default function EditGeneric({table}){
           </thead>
           <tbody>
               <Suspense fallback={<p>Loading...</p>}>
-                  {data && data.map((row, index) => ( //El row es la informacion
-                      <InfoRow key={index} data={row} claves={claves} entidades={entidades} table={table} tiposBono={tiposBono} />
+                  {data && data.map((row, index) => (
+                    (row && row.activated == 1) && //El row es la informacion
+                      <InfoRow key={index} 
+                      data={row} 
+                      claves={claves} 
+                      entidades={entidades} 
+                      table={table} 
+                      tiposBono={tiposBono} 
+                      update={update}
+                      setUpdate={setUpdate}
+                      />
                   ))}
               </Suspense>
           </tbody>
@@ -86,17 +95,52 @@ export default function EditGeneric({table}){
         <table className={styles.table}>
           <thead>
             <tr>
-              <th className={styles.headerCell}>Primer apellido</th>
-              <th className={styles.headerCell}>Segundo apellido</th>
-              <th className={styles.headerCell}>Nombre</th>
-              <th className={styles.headerCell}>Rol</th>
-              <th className={styles.headerCell}>Activar</th>
+            {
+                    claves &&
+                    claves.map((clave, index) => (
+                        (clave !== "id" && clave !== "activated") ?
+                        <th key={index} className={styles.headerCell}>{
+                            clave == "entidad_id" && "Entidad" ||
+                            clave == "nombre" && "Nombre" ||
+                            clave == "apellido1" && "1° Apellido" ||
+                            clave == "apellido2" && "2° Apellido" ||
+                            clave == "correo_electronico" && "Email" ||
+                            clave == "telefono" && "Teléfono" ||
+                            clave == "direccion" && "Dirección" ||
+                            clave == "descripcion" && "Descripción" ||
+                            clave == "tipo_bono_id" && "Tipo"
+                            
+                            }</th>
+                        :
+                        null
+                    ) )
+                }
+                <th className={styles.headerCell}>Activar</th>
             </tr>
           </thead>
           <tbody>
-
+          <Suspense fallback={<p>Loading...</p>}>
+                  {data && data.map((row, index) => ( //El row es la informacion
+                       (row && row.activated == 0) &&
+                      <DeletedRow key={index} 
+                      data={row} 
+                      claves={claves} 
+                      entidades={entidades} 
+                      table={table} 
+                      tiposBono={tiposBono} 
+                      update={update}
+                      setUpdate={setUpdate}
+                      />
+                  ))}
+              </Suspense>
           </tbody>
         </table>
+
+        <div className={styles.modalBtns}>
+          <button onClick={onClose} className={styles.modalCancel}>
+            Cancelar
+          </button>
+        </div>
       </div>
       
     </>
@@ -104,13 +148,12 @@ export default function EditGeneric({table}){
     
 }
 
-function InfoRow({ data, claves, entidades, table, tiposBono }) {
+function InfoRow({ data, claves, entidades, table, tiposBono, update, setUpdate}) {
 
     const [editable, isEditable] = useState(false)
     const [dataEdit, setData] = useState(() => 
-        Object.fromEntries(claves.map(clave => [clave, data[clave]]))
+        Object.fromEntries(claves.map(clave =>  [clave, data[clave]]))
     );
-
 
 
 
@@ -135,26 +178,30 @@ function InfoRow({ data, claves, entidades, table, tiposBono }) {
 
     const updateStatus = async ()  => {
         const data = {
-            id: user.id,
-            activated: user.activated,
+            id: dataEdit.id,
+            activated: dataEdit.activated,
+            table: table,
         }
-        const response = await useFetchBackend(`updateStatus`, 'POST', data)
-        if (!response.ok) {
+        const response = await useFetchBackend(`updateStatusGenerics`, 'POST', data)
+        if (response.errno) {
             toast.error(`Hubo un error, intentalo más tarde...`)
         }
-        toast.success(`Usuario exitosamente ${user.activated == 1 ? "Desactivado" : "Activado"}`)
+        setUpdate(!update)
+        toast.success(`Elemento exitosamente ${dataEdit.activated == 1 ? "Desactivado" : "Activado"}`)
     }
 
 
   return (
     <>
 
-    
+    {
+    (dataEdit && dataEdit.activated == 1) &&
+
     <tr className={`${styles.row}`}>
         {
             editable ?
             <>
-                {dataEdit && (
+                {(dataEdit && dataEdit.activated == 1) && (
                     () => {
                         var elements = []
                         Object.keys(dataEdit).forEach((Ukey, index) => { // Ukey de Unique Key
@@ -163,7 +210,9 @@ function InfoRow({ data, claves, entidades, table, tiposBono }) {
                                 case "id":
                 
                                     break;
-                            
+                                case "activated":
+            
+                                break;
                                 case "entidad_id":
                                     elements.push(
                                         <td key={index}>
@@ -222,11 +271,11 @@ function InfoRow({ data, claves, entidades, table, tiposBono }) {
 
             :
             <>
-                {dataEdit && (
+                {(dataEdit && dataEdit.activated == 1) && (
                     () => {
                         var elements = []
                         Object.keys(dataEdit).forEach((Ukey, index) => { // Ukey de Unique Key
-                            if (Ukey == "id") {
+                            if (Ukey == "id" || Ukey == "activated") {
                                 ()=>{}
                             } else{
                             elements.push(<td key={index} className={styles.cell}>{
@@ -255,7 +304,75 @@ function InfoRow({ data, claves, entidades, table, tiposBono }) {
         }
 
     </tr>
+    }
     </>
   )
 }
 
+function DeletedRow({ data, claves, entidades, table, tiposBono, update, setUpdate}) {
+
+    const [dataEdit, setData] = useState(() => 
+        Object.fromEntries(claves.map(clave => [clave, data[clave]]))
+    );
+
+
+    const updateStatus = async ()  => {
+        const data = {
+            id: dataEdit.id,
+            activated: dataEdit.activated,
+            table: table,
+        }
+        const response = await useFetchBackend(`updateStatusGenerics`, 'POST', data)
+        if (response.errno) {
+            toast.error(`Hubo un error, intentalo más tarde...`)
+        }
+        setUpdate(!update)
+        toast.success(`Elemento exitosamente ${dataEdit.activated == 1 ? "Desactivado" : "Activado"}`)
+    }
+
+
+  return (
+    <>
+
+    {
+
+    (dataEdit && dataEdit.activated == 0) && 
+    <tr className={`${styles.row}`}>
+        {
+            <>
+                {(dataEdit && dataEdit.activated == 0) && (
+                    () => {
+                        var elements = []
+                        Object.keys(dataEdit).forEach((Ukey, index) => { // Ukey de Unique Key
+                            if (Ukey == "id" || Ukey == "activated") {
+                                ()=>{}
+                            } else{
+                            elements.push(<td key={index} className={styles.cell}>{
+                                
+                                Ukey == "entidad_id" ?
+                                entidades && entidades.find(entidad => entidad.id == dataEdit[Ukey]).nombre
+                                :
+                                Ukey == "tipo_bono_id" ?
+                                tiposBono && tiposBono.find(tipoBono => tipoBono.id == dataEdit[Ukey]).nombre
+                                :
+                                dataEdit[Ukey]
+
+                                
+                            }</td>)}
+                        })
+                        return elements
+                    }
+                )()
+                    
+                }
+                
+                    <td className={styles.cell}><p className={styles.btn} onClick={updateStatus}>✅</p></td>
+   
+            </>
+        }
+
+    </tr>
+     }
+    </>
+  )
+}

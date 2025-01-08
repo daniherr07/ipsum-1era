@@ -16,6 +16,7 @@ export function UseUploadBlob() {
     setUploadError(null);
 
     try {
+      
       const newBlob = await upload(`Proyecto ${directory}/${name}`, file, {
         access: 'public',
         handleUploadUrl: '/api/blobRoute',
@@ -23,6 +24,7 @@ export function UseUploadBlob() {
       });
       return newBlob;
     } catch (error) {
+      console.log(error)
       setUploadError(error.message);
       return null;
     } finally {

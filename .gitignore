@@ -50,3 +50,4 @@ package-lock.json
 .env*.local
 
 src/app/const.js
+src/app/const.js
