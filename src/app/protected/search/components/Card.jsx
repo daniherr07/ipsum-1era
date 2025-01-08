@@ -73,7 +73,7 @@ function PhotosCard({item}) {
                     </button>
 
                     <button 
-                    onClick={() => {onClose; downloadImage;}}
+                    onClick={onClose}
                     className={styles.modalCancel}
                     >
                       Cancelar
