@@ -16,10 +16,6 @@ import { UseUploadBlob } from '@/hooks/useUploadBlob';
 export default function Card({item, bitData, handleClick, handleColor}) {
     const userData = useProtectedContext();
     const [page, setPage] = useState(true)
-    
-    
-
-  
 
   
     return (
@@ -42,7 +38,7 @@ export default function Card({item, bitData, handleClick, handleColor}) {
           </button>
         </div>
 
-        {page == true && <GeneralInfo item={item} bitData={bitData} userData={userData} />}
+        {page == true && <GeneralInfo item={item} bitData={bitData} userData={userData} handleClick={handleClick} handleColor={handleColor} />}
         {page == false && <PhotosCard item={item}/>}
       </>
     
@@ -171,7 +167,7 @@ function PhotosCard({item}) {
   )
 }
 
-function GeneralInfo({item, bitData, userData}){
+function GeneralInfo({item, bitData, userData, handleClick, handleColor}){
   const [filter, setFilter] = useState("Todos")
   const newBitacora = () => {
     confirmAlert({
