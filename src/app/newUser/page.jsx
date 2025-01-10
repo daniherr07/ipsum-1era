@@ -6,6 +6,7 @@ import { handleChange } from '@/utils/handleChange'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function Login(){
