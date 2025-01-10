@@ -1,11 +1,14 @@
 'use client'
 
 import { useRouter } from 'next/navigation';
-import { ToastContainer, toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {toast} from 'react-toastify';
+
 import styles from '../newproject.module.css'
 import { useFetchBackend } from '@/hooks/useFetchApi';
 import { UseUploadBlob } from '@/hooks/useUploadBlob';
+import SendEmails from './SendEmails';
+import { useProtectedContext } from '@/app/context/ProtectedContext';
+
 
 
 export default function ProjectSubmissionForm({
@@ -16,11 +19,14 @@ export default function ProjectSubmissionForm({
 }) {
   const router = useRouter();
   const { uploadFile, isUploading, uploadError } = UseUploadBlob();
+  const userData = useProtectedContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     //Validacion de errores
+
+    
     if (projectData.bonoSeleccionado == "") {
       return toast.error('Seccion 1: Selecciona un tipo de bono');
     }
@@ -90,6 +96,11 @@ export default function ProjectSubmissionForm({
     const headOfHousehold = familyMembers.find(member => member.tipoMiembro == 'Jefe/a de Familia');
     const projectName = headOfHousehold.nombre + ' ' + headOfHousehold.primerApellido + ' ' + headOfHousehold.segundoApellido;
 
+    console.log(userData)
+    
+
+    
+
     familyMembers.forEach(async (member, index) => {
       if (member.cedulaFile !== ""){
         const memberCedula = member.cedulaFile;
@@ -101,6 +112,8 @@ export default function ProjectSubmissionForm({
       }
     });
 
+    
+
     const submissionData = {
       projectData,
       familyMembers,
@@ -108,13 +121,14 @@ export default function ProjectSubmissionForm({
       formDataAdmin
     };
 
-    console.log(submissionData)
+    
 
     try {
       const response = await useFetchBackend('saveData', 'POST', submissionData);
       if (!response.ok) {
         return toast.error("Hubo un error, verifica los datos e intentalo más tarde")
       }
+      SendEmails(formDataAdmin.analistaIPSUM, formDataAdmin.ingenieroAsignado, userData.userName, projectName )
       toast.success("Proyecto añadido exitosamente!")
       router.refresh(); // Redirect to a success page
     } catch (error) {
@@ -125,18 +139,6 @@ export default function ProjectSubmissionForm({
 
   return (
     <div>
-        <ToastContainer
-          position="bottom-right"
-          autoClose={3000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
       <form onSubmit={handleSubmit} >
         <button type="submit" className={styles.saveButton}>
           Guardar Proyecto

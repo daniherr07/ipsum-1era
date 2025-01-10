@@ -2,7 +2,7 @@
 import { useEffect, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 
 
 

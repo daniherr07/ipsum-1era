@@ -7,6 +7,9 @@ export default async function Search({searchParams}){
     const searchWaited = await searchParams;
     const searchLabel = await searchWaited.label;
     const searchValue = await searchWaited.value;
+    const isDisabled = await searchWaited.isDisabled;
+
+    console.log(isDisabled)
 
     return(
         <>
@@ -15,7 +18,7 @@ export default async function Search({searchParams}){
             <Suspense>
             <main className={style.main}>
 
-                <MainSearch label={searchLabel} value={searchValue}></MainSearch>
+                <MainSearch label={searchLabel} value={searchValue} isDisabled={isDisabled}></MainSearch>
             </main>
 
             </Suspense>

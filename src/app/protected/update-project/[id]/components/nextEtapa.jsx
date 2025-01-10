@@ -7,9 +7,13 @@ import styles from '../newproject.module.css'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import { useFetchBackend } from '@/hooks/useFetchApi';
+import { handleChange } from '@/utils/handleChange';
 
-export default function NextEtapa({idProyecto, nombreProyecto, etapaAnterior, subetapaAnterior}) {
+export default function NextEtapa({idProyecto, nombreProyecto, etapaAnterior, subetapaAnterior, getUpdatedData}) {
   const router = useRouter();
+  const emailData = getUpdatedData()
+
+
 
   const etapaPopup = (e) => {
     e.preventDefault()
@@ -22,6 +26,7 @@ export default function NextEtapa({idProyecto, nombreProyecto, etapaAnterior, su
         nombreProyecto={nombreProyecto}  
         etapaAnterior={etapaAnterior} 
         subetapaAnterior={subetapaAnterior}
+        emailData = {emailData}
       />,
     })
   }
@@ -36,7 +41,7 @@ export default function NextEtapa({idProyecto, nombreProyecto, etapaAnterior, su
 }
 
 
-function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnterior, subetapaAnterior }) {
+function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnterior, subetapaAnterior, emailData }) {
   const [etapas, setEtapas] = useState([])
   const [subetapas, setSubetapas] = useState([])
 
@@ -56,6 +61,41 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
     subetapa: "0",
   })
 
+  const sendEmails = async () => {
+    let emailAnalista
+    let emailIngeniero
+
+    const result = await useFetchBackend(`getEmails?id_analista=${emailData.id_analista}&id_ingeniero=${emailData.id_ingeniero}`, "GET")
+
+    emailAnalista = result[0].correo_electronico
+    emailIngeniero = result[1].correo_electronico
+
+    const etapaActual = etapas.find(etapa => etapa.id == etapaEdit.etapa)
+    const subetapaActual = subetapas.find(subetapa => subetapa.id == etapaEdit.subetapa)
+
+    console.log(etapaActual, subetapaActual)
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            recipients: [emailAnalista, emailIngeniero],
+            subject: `Avance de etapa proyecto "${nombreProyecto}"`,
+            content: `<p>El proyecto ${nombreProyecto} ha pasado de ${etapaAnterior} ${subetapaAnterior != null ? ":" + " " + subetapaAnterior : ""} y se ha actualizado a ${etapaActual.nombre} ${(subetapaActual !== undefined && subetapaActual !== null) ? ":" + " " + subetapaActual.nombre : ""} . <br /> <p>Por favor corroborar la información en el sistema</p>`
+        })
+
+      });
+  
+      const data = await response.json();
+      console.log('Respuesta:', data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }; 
+
   const updateChanges = async () => {
 
     if (etapaEdit.etapa == '') {
@@ -63,8 +103,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
     }
 
     const response = await useFetchBackend("updateEtapa", "POST", etapaEdit)
-    if (!response.ok) {
-      const result = await response.json()
+    if (response.errno) {
       
       if (result.msj) {
         return toast.error(result.msj)
@@ -73,11 +112,17 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
       throw new Error('Error al guardar el proyecto');
     }
 
+
     // Reload page here
-    toast.success("Etapa actualizada exitosamente!");
+    sendEmails()
+    toast.success("Etapa exitosamente actualizada")
     onClose(); // Close the modal
     router.refresh(); // Refresh the page
   }
+
+
+
+
 
   const isDisabled = !etapaEdit.etapa
 

@@ -24,12 +24,19 @@ export default function SearchInputs() {
             let selectedItem = data.find(item => item.value === value);
             let table = selectedItem.table;
             let hasRoleId = selectedItem.rol_id ? true : false;
+            let isDisabled = selectedItem.label == "Eliminados" ? true: false
             
             try {
                 let url = `filter?table=${table}&nombre=${selectedItem.nombre}`;
+                if (table == "proyectos" && isDisabled) {
+                    url += `&activated=0`
+                } else if(table == "proyectos" && !isDisabled) {
+                    url += `&activated=1`
+                }
                 if (hasRoleId) {
                     url += `&rol_id=${selectedItem.rol_id}`;
                 }
+                console.log(url)
                 const result = await useFetchBackend(url, "GET");
                 setTagData(result);
             } catch (error) {
@@ -43,7 +50,18 @@ export default function SearchInputs() {
     };
 
     const handleSubmit = () => {
-        router.push(`/protected/search?label=${selectedValue}&value=${pickerValue.join(',')}`);
+        let url = `/protected/search?label=${selectedValue}&value=${pickerValue.join(',')}`
+        let selectedItem = data.find(item => item.value === selectedValue);
+        let isDisabled = selectedItem.label == "Eliminados" ? true: false
+        console.log("Is disabled en handle submit", isDisabled)
+
+        if (isDisabled) {
+            url += `&isDisabled=0`
+        } else {
+            url += `&isDisabled=1`
+        }
+        
+        router.push(url);
     };
 
     return (
@@ -56,7 +74,7 @@ export default function SearchInputs() {
             >
                 <option value="">Buscar...</option>
                 {data.map(item => (
-                    <option key={item.value} value={item.value}>{item.label}</option>
+                    <option key={item.id} value={item.value}>{item.label}</option>
                 ))}
             </select>
 

@@ -6,7 +6,7 @@ import { handleChange } from '@/utils/handleChange'
 import { useState, Suspense } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 import { ErrorToast } from './ErrorToast'
 
 
@@ -43,13 +43,7 @@ export default function Login() {
             } else if (result.toHome) {
                 router.push(`/protected/home`);
             } else if (result.toError) {
-                if (searchParams.get('error')) {
-                    // If we're already on the error URL, show the toast directly
-                    showErrorToast();
-                } else {
-                    // Otherwise, change the URL which will trigger the useEffect
-                    router.push('/login?error=Usuario%20o%20contraseña%20incorrectos');
-                }
+                toast.error("Error: Usuario o contraseña incorrectos");
             } else {
                 toast.error("Ocurrió un error inesperado");
             }

@@ -9,7 +9,7 @@ import { useFetchBackend } from '@/hooks/useFetchApi'
 
 
 
-export default function MainSearch({label, value}){
+export default function MainSearch({label, value, isDisabled}){
     const [pName, setPName] = useState()
     const [isLoading, setLoading] = useState(true)
     const [data, setData] = useState()
@@ -33,7 +33,7 @@ export default function MainSearch({label, value}){
 
 
     useEffect(() => {
-        useFetchBackend(`projectNames?label=${label}&value=${value}&order=${order}`, "GET")
+        useFetchBackend(`projectNames?label=${label}&value=${value}&order=${order}&isDisabled=${isDisabled}`, "GET")
             .then((data) => {
                 setPName(data)
                 setLoading(false)
@@ -42,7 +42,7 @@ export default function MainSearch({label, value}){
 
     const handleColor = () => {
         setLoading(true)
-        useFetchBackend(`projectNames?label=${label}&value=${value}&order=${order}`, "GET")
+        useFetchBackend(`projectNames?label=${label}&value=${value}&order=${order}&isDisabled=${isDisabled}`, "GET")
             .then((data) => {
                 setPName(data)
                 setLoading(false)

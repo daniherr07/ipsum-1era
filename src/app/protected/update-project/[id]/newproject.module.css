@@ -384,6 +384,21 @@
     font-size: 1rem;
   }
 
+  .deleteProyectoBtn{
+    border: none;
+    background-color: rgb(201, 18, 18);
+    color: #fff;
+    padding: 0.9em 1.2em;
+    border-radius: 11px;
+    width: 20vw;
+    height: 5vh;
+    font-size: 1rem;
+
+    &:hover{
+      cursor: pointer;
+    }
+  }
+
   .nextEtapaBtn:hover{
     cursor: pointer;
   }

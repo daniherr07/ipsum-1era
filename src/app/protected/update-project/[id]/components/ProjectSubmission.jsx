@@ -3,10 +3,13 @@
 import { useRouter } from 'next/navigation';
 import { address } from '@/app/const';
 import { toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 import styles from '../newproject.module.css'
 import { UseUploadBlob } from '@/hooks/useUploadBlob';
 import {del, list} from "@vercel/blob"
+import { useProtectedContext } from '@/app/context/ProtectedContext';
+import SendEmails from './SendEmails';
+
 
 export default function ProjectSubmissionForm({
   projectData,
@@ -17,6 +20,7 @@ export default function ProjectSubmissionForm({
 }) {
   const router = useRouter();
   const { uploadFile, isUploading, uploadError } = UseUploadBlob();
+  const userData = useProtectedContext()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -184,6 +188,7 @@ export default function ProjectSubmissionForm({
       }
 
       const result = await response.json();
+      SendEmails(formDataAdmin.analistaIPSUM, formDataAdmin.ingenieroAsignado, userData.userName, projectName)
       toast.success("Proyecto actualizado exitosamente!");
       router.refresh(); // Refresh the page
     } catch (error) {

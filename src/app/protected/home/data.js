@@ -4,12 +4,14 @@ export const data = [
         value: "id",
         table: "proyectos",
         nombre: "nombre",
+        id: 0,
     },
     {
         label: "Grupos",
         value: "grupo_proyecto_id",
         table: "grupos_proyectos",
         nombre: "nombre",
+        id: 1,
     },
     {
         label: "Analista Entidad",
@@ -19,7 +21,8 @@ export const data = [
             "nombre",
             "apellido1",
             "apellido2"
-        ]
+        ],
+        id: 2,
 
     },
     {
@@ -31,7 +34,8 @@ export const data = [
             "nombre",
             "apellido1",
             "apellido2"
-        ]
+        ],
+        id: 3,
     },
     {
         label: "Fiscal",
@@ -41,7 +45,8 @@ export const data = [
             "nombre",
             "apellido1",
             "apellido2"
-        ]
+        ],
+        id: 4,
     },
     {
         label: "Ingeniero",
@@ -52,7 +57,8 @@ export const data = [
             "nombre",
             "apellido1",
             "apellido2"
-        ]
+        ],
+        id: 5,
     },
     {
         label: "Promotor Externo",
@@ -62,7 +68,8 @@ export const data = [
             "nombre",
             "apellido1",
             "apellido2"
-        ]
+        ],
+        id: 6,
 
     },
     {
@@ -73,7 +80,8 @@ export const data = [
             "nombre",
             "apellido1",
             "apellido2"
-        ]
+        ],
+        id: 7,
     },
     {
         label: "Constructor",
@@ -83,30 +91,42 @@ export const data = [
             "nombre",
             "apellido1",
             "apellido2"
-        ]
+        ],
+        id: 8,
     },
     {
         label: "Tipo de bono",
         value: "tipo_bono_id",
         table: "tipos_bono",
-        nombre: "nombre"
+        nombre: "nombre",
+        id: 9,
     },
     {
         label: "Entidad",
         value: "entidad_id",
         table: "entidades",
-        nombre: "nombre"
+        nombre: "nombre",
+        id: 10,
     },
     {
         label: "Centro de negocios",
         value: "centro_negocio_id",
         table: "centros_negocios",
-        nombre: "nombre"
+        nombre: "nombre",
+        id: 11,
     },
     {
         label: "Etapa",
         value: "etapa_actual_id",
         table: "etapas",
-        nombre: "nombre"
+        nombre: "nombre",
+        id: 12,
+    },
+    {
+        label: "Eliminados",
+        value: "id,activated",
+        table: "proyectos",
+        nombre: "nombre",
+        id: 13,
     },
 ];

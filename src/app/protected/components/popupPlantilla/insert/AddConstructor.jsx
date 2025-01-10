@@ -1,7 +1,7 @@
 'use client'
 import style from './plantilla.module.css'
 import { useState, useEffect } from 'react'
-import 'react-confirm-alert/src/react-confirm-alert.css'
+
 import { toast } from 'react-toastify';
 import { handleChange } from '@/utils/handleChange';
 import { useFetchBackend } from '@/hooks/useFetchApi';

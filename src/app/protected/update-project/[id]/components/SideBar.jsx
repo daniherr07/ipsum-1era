@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import style from "../newproject.module.css";
 import { useState, useEffect } from 'react';
-import { ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
+
 
 import Datosdelproyecto from './Datosdelproyecto';
 import Miembrosdelafamilia from './Miembrosdelafamilia';
@@ -13,11 +13,14 @@ import Datosadministrativos from './Datosadministrativos';
 
 import ProjectSubmissionForm from './ProjectSubmission';
 import NextEtapa from './nextEtapa';
+import UpdateProyectoStatus from './UpdateProyectoStatus';
+import { useProtectedContext } from '@/app/context/ProtectedContext';
 
 
 
 
 export default function AccordionMenu({projectDataOld, familyMembersOld, directionDataOld, formDataAdminOld}) {
+  const userData = useProtectedContext();
   const [page, setPage] = useState(1)
   const [deletedMembers, setDeletedMembers] = useState([])
 
@@ -80,6 +83,16 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
     avaluo: formDataAdminOld.avaluo,
     ingenieroAsignado: formDataAdminOld.ingeniero_id
   });
+
+  const getUpdatedData = () => {
+    const emailData = {
+      id_analista: formDataAdmin.analistaIPSUM,
+      id_ingeniero: formDataAdmin.ingenieroAsignado,
+      usuario: userData.userName,
+    }
+
+    return emailData
+  }
 
 
 
@@ -154,6 +167,11 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
     {page === 4 && <Datosadministrativos formData={formDataAdmin} setFormData={setFormDataAdmin} />}
 
     <div className={style.finishBtns}>
+      {
+        userData.role == "Root" &&/* Añadir otros usuarios despues */
+        <UpdateProyectoStatus idProyecto={formDataAdminOld.proyecto_id} currentStatus={projectDataOld.activated} nombreProyecto={projectDataOld.proyecto_nombre}/>
+      }
+      
       <ProjectSubmissionForm
         projectData={projectData}
         familyMembers={familyMembers}
@@ -161,22 +179,9 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
         formDataAdmin={formDataAdmin}
         deletedMembers={deletedMembers}
       />
-      <NextEtapa idProyecto={formDataAdminOld.proyecto_id} nombreProyecto={projectDataOld.proyecto_nombre} etapaAnterior={projectDataOld.etapa_nombre} subetapaAnterior={projectDataOld.subetapa_nombre}/>
+      <NextEtapa idProyecto={formDataAdminOld.proyecto_id} nombreProyecto={projectDataOld.proyecto_nombre} etapaAnterior={projectDataOld.etapa_nombre} subetapaAnterior={projectDataOld.subetapa_nombre} getUpdatedData={getUpdatedData}/>
+
     </div>
-
-    <ToastContainer
-          position="bottom-right"
-          autoClose={3000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
-
 
     </>
 

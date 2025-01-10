@@ -1,6 +1,6 @@
 import { ProtectedProvider } from "../context/ProtectedContext";
 import { getCookies } from "@/utils/getCookies";
-import { ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default async function protectedLayout({ children }) {
