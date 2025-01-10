@@ -10,12 +10,12 @@ export default function Footer(){
     const [loading, setLoading] = useState(false);
     return(
         <section className={styles.contactSection} id='contactos'>
-        <div className={styles.container}>
-          <h2 className={styles.contactTitle}>Contáctanos</h2>
+        <div className={styles.containerFooter}>
+          <h2 className={styles.contactTitle} >Contáctanos</h2>
           <div className={styles.contactGrid}>
             <div style={{width: "100%"}}>
               <h3 className={styles.contactFormTitle}>Escribenos</h3>
-              <form method="POST" className={styles.contactForm}>
+              <form action="https://formsubmit.co/fb44e2f611d7e60f8b3e326459d201ab" method="POST" className={styles.contactForm}>
               <input
                   type="text"
                   placeholder="Nombre"
@@ -55,7 +55,7 @@ export default function Footer(){
                   rows={5}
                   className={styles.formTextarea}
                   required
-                  defaultValue={"Hola, estoy interesado en obtener información sobre IPSUM y los bonos de vivienda. ¿Podrían brindarme detalles sobre los requisitos y beneficios? ¡Gracias!"}
+                  defaultValue={"Hola, estoy interesado en obtener información sobre IPSUM y sus servicios. ¿Podrían brindarme detalles sobre estos? ¡Gracias!"}
                 />
                 
                 <input type="hidden" name="_subject" value="Nuevo solicitud de información" />
@@ -78,7 +78,7 @@ export default function Footer(){
                 </button>
               </form>
             </div>
-            <div>
+            <div className={styles.contactInfo}>
               <h3 className={styles.contactInfoTitle}>Información de contacto</h3>
               <div>
                 <div className={styles.contactInfoItem}>
@@ -93,14 +93,6 @@ export default function Footer(){
                   <MapPin />
                   <span>Moravia, San José</span>
                 </div>
-                <Link
-                  href="https://wa.me/+50688082269/?text=Hola,%20estoy%20interesado%20en%20obtener%20información%20sobre%20IPSUM%20y%20los%20bonos%20de%20vivienda.%20¿Podrían%20brindarme%20detalles%20sobre%20los%20requisitos?%20¡Gracias!"
-                  className={styles.whatsappButton}
-                  style={{display:"flex", flexDirection: "row", placeContent: "center", placeItems: "center", gap: "1em"}}
-                >
-                  <span>¡Escribenos al Whatsapp!</span>
-                  <Image src="/landing/wasap.svg" width={40} height={40} alt='logo wasap'/>
-                </Link>
               </div>
             </div>
           </div>
