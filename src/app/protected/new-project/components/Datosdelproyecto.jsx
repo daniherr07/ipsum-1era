@@ -41,14 +41,10 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
     }
 
     const handleSubtipoClick = (id) => {
-        if (id="new") {
-            addSomethingFunction("Subtipo")
-        }else{
-            setProjectData(prevData => ({
-                ...prevData,
-                subtipoSeleccionado: id
-            }));
-        }
+        setProjectData(prevData => ({
+            ...prevData,
+            subtipoSeleccionado: id
+        }));
 
     };
 
