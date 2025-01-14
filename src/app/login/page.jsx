@@ -6,8 +6,8 @@ import { handleChange } from '@/utils/handleChange'
 import { useState, Suspense } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify';
-
 import { ErrorToast } from './ErrorToast'
+import Link from 'next/link'
 
 
 
@@ -84,7 +84,11 @@ export default function Login() {
                         required
                     />
 
+
+                    <Link href={"/forgetPassword"}>
                     <p className={style.forget}>¿Olvidó la contraseña?</p>
+                    </Link>
+                    
                     <button className={style.submit} type='submit'>Iniciar Sesión</button>
                 </form>
             </main>

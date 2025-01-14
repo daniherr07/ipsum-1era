@@ -6,9 +6,10 @@ import { toast} from 'react-toastify';
 
 import styles from '../newproject.module.css'
 import { UseUploadBlob } from '@/hooks/useUploadBlob';
-import {del, list} from "@vercel/blob"
+
 import { useProtectedContext } from '@/app/context/ProtectedContext';
 import SendEmails from './SendEmails';
+import useFcmToken from '@/hooks/useFcmToken';
 
 
 export default function ProjectSubmissionForm({
@@ -21,6 +22,27 @@ export default function ProjectSubmissionForm({
   const router = useRouter();
   const { uploadFile, isUploading, uploadError } = UseUploadBlob();
   const userData = useProtectedContext()
+  const { token, notificationPermissionStatus } = useFcmToken();
+
+  const handleTestNotification = async () => {
+    const response = await fetch("/api/send-notification", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token: token,
+        title: "Test Notification",
+        message: "This is a test notification",
+        link: "/login",
+      }),
+    });
+
+    console.log("Entro acá a la notificacion")
+
+    const data = await response.json();
+    console.log(data);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -188,9 +210,11 @@ export default function ProjectSubmissionForm({
       }
 
       const result = await response.json();
+      await handleTestNotification()
       SendEmails(formDataAdmin.analistaIPSUM, formDataAdmin.ingenieroAsignado, userData.userName, projectName)
       toast.success("Proyecto actualizado exitosamente!");
       router.refresh(); // Refresh the page
+      
     } catch (error) {
       console.error('Error:', error);
       toast.error("Hubo un error, verifica los datos e intentalo más tarde");
