@@ -1,9 +1,12 @@
 import admin from "firebase-admin";
 import { NextRequest, NextResponse } from "next/server";
 
+
+
 // Initialize Firebase Admin SDK
 if (!admin.apps.length) {
-  try {
+  console.log("si llega aca")
+    console.log(process.env.FIREBASE_SERVICE_ACCOUNT_KEY)
     const serviceAccount = JSON.parse(
       process.env.FIREBASE_SERVICE_ACCOUNT_KEY
     );
@@ -11,9 +14,7 @@ if (!admin.apps.length) {
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
     });
-  } catch (error) {
-    console.error('Failed to initialize Firebase Admin:', error);
-  }
+
 }
 
 export async function POST(request) {
