@@ -1,5 +1,1 @@
-export const address = "http://localhost:3001"
-
-
-//https://ipsum-backend.vercel.app
-//
+export const address = process.env.API_URL
