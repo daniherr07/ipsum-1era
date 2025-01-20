@@ -35,6 +35,9 @@ export default function SendEmails(id_analista, id_ingeniero, usuario, nombre_pr
         } catch (error) {
           console.error('Error:', error);
         }
+
+        await useFetchBackend("insertNoti", "POST", {message: `${usuario} ha actualizado el proyecto: "${nombre_proyecto}"`, user_id: id_analista})
+        await useFetchBackend("insertNoti", "POST", {message: `${usuario} ha actualizado el proyecto: "${nombre_proyecto}"`, user_id: id_ingeniero})
       }; 
 
     sendEmails()

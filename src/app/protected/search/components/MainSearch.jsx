@@ -9,7 +9,7 @@ import { useFetchBackend } from '@/hooks/useFetchApi'
 
 
 
-export default function MainSearch({label, value, isDisabled}){
+export default function MainSearch({label, value, isDisabled, etapa_id, tipo_bono_id}){
     const [pName, setPName] = useState()
     const [isLoading, setLoading] = useState(true)
     const [data, setData] = useState()
@@ -33,7 +33,7 @@ export default function MainSearch({label, value, isDisabled}){
 
 
     useEffect(() => {
-        useFetchBackend(`projectNames?label=${label}&value=${value}&order=${order}&isDisabled=${isDisabled}`, "GET")
+        useFetchBackend(`projectNames?label=${label}&value=${value}&order=${order}&isDisabled=${isDisabled}&etapa_id=${etapa_id}&tipo_bono_id=${tipo_bono_id}`, "GET")
             .then((data) => {
                 setPName(data)
                 setLoading(false)

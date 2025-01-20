@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TagPicker } from 'rsuite';
 import Image from 'next/image';
 import { data } from './data';
@@ -8,11 +8,17 @@ import 'rsuite/dist/rsuite-no-reset.min.css';
 import style from './search.module.css';
 import {useRouter}  from 'next/navigation';
 import { useFetchBackend } from '@/hooks/useFetchApi';
+import { handleChange } from '@/utils/handleChange';
 
 export default function SearchInputs() {
     const router = useRouter()
     const [selectedValue, setSelectedValue] = useState('');
     const [tagData, setTagData] = useState([]);
+    const [etapasSelect, setEtapasSelect] = useState("")
+    const [bonosSelect, setBonosSelect] = useState("")
+
+    const [etapas, setEtapas] = useState()
+    const [bonos, setBonos] = useState()
     const [pickerValue, setPickerValue] = useState([]);
 
     const handleSelectChange = async (event) => {
@@ -45,57 +51,149 @@ export default function SearchInputs() {
         }
     };
 
+    const loadEtapasData = async () => {
+        let url = `filter?table=etapas&nombre=nombre`;
+        const result = await useFetchBackend(url, "GET");
+        setEtapas(result);
+        console.log(result)
+        
+    }
+
+    const loadBonos = async () => {
+        let url = `filter?table=tipos_bono&nombre=nombre`;
+        const result = await useFetchBackend(url, "GET");
+        setBonos(result);
+        
+    }
+
     const handleTagChange = (value) => {
         setPickerValue(value);
     };
 
     const handleSubmit = () => {
-        let url = `/protected/search?label=${selectedValue}&value=${pickerValue.join(',')}`
-        let selectedItem = data.find(item => item.value === selectedValue);
-        let isDisabled = selectedItem.label == "Eliminados" ? true: false
-        console.log("Is disabled en handle submit", isDisabled)
+        const label = "label=${selectedValue}&value=${pickerValue.join(',')"
 
-        if (isDisabled) {
-            url += `&isDisabled=0`
-        } else {
-            url += `&isDisabled=1`
+        let url = `/protected/search?`
+        if (pickerValue.length != 0) {
+            url += `&label=${selectedValue}&value=${pickerValue.join(',')}`
+            let selectedItem = data.find(item => item.value === selectedValue);
+            let isDisabled = selectedItem.label == "Eliminados" ? true: false
+
+            if (isDisabled) {
+                url += `&isDisabled=0`
+            } else {
+                url += `&isDisabled=1`
+            }
         }
+
+        if (etapasSelect != "") {
+            url += `&etapa_id=${etapasSelect}`
+        }
+
+        if (bonosSelect != "") {
+            url += `&tipo_bono_id=${bonosSelect}`
+        }
+
+
+
         
         router.push(url);
     };
 
+    useEffect(() => {
+        const loadAllData = async () => {
+            await loadEtapasData()
+            await loadBonos()
+        }
+
+        loadAllData()
+
+    }, [])
+
     return (
         <div className={style.inputs}>
-            <select 
-                name='tags' 
-                className={style.inputText} 
-                onChange={handleSelectChange}
-                value={selectedValue}
-            >
-                <option value="">Buscar...</option>
-                {data.map(item => (
-                    <option key={item.id} value={item.value}>{item.label}</option>
-                ))}
-            </select>
 
-            <TagPicker
-                disabled={!selectedValue}
-                data={tagData}
-                className={style.inputText}
-                labelKey='nombre'
-                valueKey='id'
-                value={pickerValue}
-                onChange={handleTagChange}
-            />
+            <div className={style.tagPickers}>
 
-            <Image 
+                <label htmlFor="etapa">Seleccionar Etapa</label>
+                <select 
+                    name='etapa' 
+                    id='etapa'
+                    className={style.inputText} 
+                    value={etapasSelect}
+                    onChange={(e) => setEtapasSelect(e.target.value)}
+                >
+                    <option value="">Etapas</option>
+
+                    {
+                        etapas ?
+                        etapas.map((etapa) => (
+                            <option key={etapa.id} value={etapa.id}>{etapa.nombre}</option>
+                        )) :
+                        <option value="">Cargando Etapas</option>
+                    }
+                </select>
+
+
+                <label htmlFor="bonos">Seleccionar Bonos</label>
+                <select 
+                    name='bonos' 
+                    className={style.inputText} 
+                    value={bonosSelect}
+                    onChange={(e) => setBonosSelect(e.target.value)}
+                >
+                    <option value="">Tipos de Bono</option>
+
+                    {
+                        bonos ?
+                        bonos.map((etapa) => (
+                            <option key={etapa.id} value={etapa.id}>{etapa.nombre}</option>
+                        )):
+                        <option value="">Cargando Bonos</option>
+                    }
+                </select>
+
+
+                
+
+
+                <label htmlFor="otros">Seleccionar Otros</label>
+                <select 
+                    name='otros' 
+                    className={style.inputText} 
+                    onChange={handleSelectChange}
+                    value={selectedValue}
+                >
+                    <option value="">Buscar...</option>
+                    {data.map(item => (
+                        <option key={item.id} value={item.value}>{item.label}</option>
+                    ))}
+                </select>
+
+                <TagPicker
+                    disabled={!selectedValue}
+                    data={tagData}
+                    className={style.inputText}
+                    labelKey='nombre'
+                    valueKey='id'
+                    value={pickerValue}
+                    onChange={handleTagChange}
+                />
+
+            </div>
+
+            <button type='button' onClick={handleSubmit} className={style.buscarBtn}>
+                Buscar
+
+                <Image 
                 src="/lupa.svg" 
                 width={30} 
                 height={30} 
                 alt='lupa' 
                 className={style.itemLupa} 
-                onClick={handleSubmit}
-            />
+                />
+            </button>
+
         </div>
     );
 }

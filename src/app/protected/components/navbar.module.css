@@ -282,6 +282,74 @@
     width: 90%;
   }
 
+  .bellContainer{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    place-items: center;
+    
+  }
+
+  .bellIcon{
+    cursor: pointer;
+  }
+
+    .notificationsNumber{
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        display: flex;
+        place-items: center;
+        place-content: center;
+        text-align: center;
+        top: -5px;
+        right: -5px;
+        background-color: rgb(255, 101, 101);
+        color: #fff;
+        border-radius: 50%;
+        padding: 10px;
+    }
+ 
+    .floatingBox{
+        position: absolute;
+        top: 150%;
+        right: -60% ;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 0 2px 3px 1px #00000049;
+        width: 30em;
+        padding: 10px;
+        height: auto;
+        max-height: 60vh;
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .noti{
+        display: flex;
+        flex-direction: row;
+        place-content: space-between;
+        place-items: center;
+        padding: 1em;
+        border: 1px solid rgba(0, 0, 0, 0.185);
+        width: 100%;
+         
+    }
+
+    .notiText{
+        max-width: 90%;
+    }
+
+    .redCircle{
+        background-color: red;
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+    }
+
+
   @media (max-width: 900px){
     .modal{
       width: 90vw;

@@ -24,17 +24,22 @@ messaging.onBackgroundMessage((payload) => {
     payload
   );
 
-  // payload.fcmOptions?.link comes from our backend API route handle
-  // payload.data.link comes from the Firebase Console where link is the 'key'
-  const link = payload.fcmOptions?.link || payload.data?.link;
-
-  const notificationTitle = payload.notification.title;
-  const notificationOptions = {
-    body: payload.notification.body,
-    icon: "./logo.svg",
-    data: { url: link },
-  };
-  self.registration.showNotification(notificationTitle, notificationOptions);
+  // Solo muestra la notificación si no hay clientes activos
+  self.clients.matchAll({
+    type: 'window',
+    includeUncontrolled: true
+  }).then(clients => {
+    if (clients.length === 0) {
+      // No hay clientes activos, muestra la notificación
+      const notificationTitle = payload.notification.title;
+      const notificationOptions = {
+        body: payload.notification.body,
+        icon: "/logo.svg",
+        data: { url: payload.fcmOptions?.link || payload.data?.link },
+      };
+      self.registration.showNotification(notificationTitle, notificationOptions);
+    }
+  });
 });
 
 self.addEventListener("notificationclick", function (event) {

@@ -87,6 +87,8 @@
     place-items: center;
 }
 
+
+
 .inputText, .textInput {
     flex: 1;
     min-width: 200px;
@@ -115,6 +117,9 @@
 }
 
 @media (max-width: 640px) {
+    .searchContainer{
+        width: 100vw;
+    }
 
     .logo{
         width: 80vw !important;

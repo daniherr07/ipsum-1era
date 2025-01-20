@@ -1,4 +1,28 @@
 
+.tagPickers{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
+}
+
+.buscarBtn{
+    border: none;
+    background-color: #03579B;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    place-content: center;
+    place-items: center;
+    border-radius: 2px;
+    font-size: 1.2em;
+    gap: 1em;
+    padding: 0.7em;
+
+    cursor: pointer;
+    
+}
+
 .inputs {
     display: flex;
     gap: 1em;
@@ -43,6 +67,8 @@
         width: 80%;
         flex-direction: column;
     }
+
+
 
     .inputText, .textInput {
         width: 100% !important;
