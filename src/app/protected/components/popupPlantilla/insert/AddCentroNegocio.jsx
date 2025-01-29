@@ -8,7 +8,7 @@ import { useFetchBackend } from '@/hooks/useFetchApi';
 
 export default function AddCentroNegocio({ onClose, router }) {
     const [formData, setFormData] = useState({
-      entidad_id: '1',
+      entidad_id: '',
       nombre: '',
       direccion: '',
       telefono: '',
@@ -69,6 +69,9 @@ export default function AddCentroNegocio({ onClose, router }) {
         className={style.newModalInput}
         onChange={e => handleChange(e, setFormData)}
         >
+            <option value="">
+                Seleccione una entidad
+            </option>
             {
                 entidades &&
                 entidades.map((entidad) =>(

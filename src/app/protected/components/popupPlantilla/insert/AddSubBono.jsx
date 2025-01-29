@@ -45,7 +45,7 @@ export default function AddSubBono({ onClose, router }) {
       <div className={style.newUserModal}>
         <h1>Añadir Nuevo Bono</h1>
 
-        <label htmlFor="tipo_bono_id">Elija una entidad</label>
+        <label htmlFor="tipo_bono_id">Elija una tipo de bono</label>
         <select 
         name="tipo_bono_id" 
         id="tipo_bono_id" 
@@ -53,6 +53,9 @@ export default function AddSubBono({ onClose, router }) {
         className={style.newModalInput}
         onChange={e => handleChange(e, setFormData)}
         >
+              <option value="">
+                  Seleccione un tipo de bono
+              </option>
             {
                 bonos &&
                 bonos.map((bono) =>(

@@ -9,7 +9,7 @@ import { handleChange } from '@/utils/handleChange';
 
 export default function AddAnalista({ onClose, router }) {
     const [formData, setFormData] = useState({
-      entidad_id: '1',
+      entidad_id: '',
       nombre: '',
       apellido1: '',
       apellido2: '', 
@@ -75,6 +75,9 @@ export default function AddAnalista({ onClose, router }) {
         className={style.newModalInput}
         onChange={e => handleChange(e, setFormData)}
         >
+            <option value="">
+                Seleccione una entidad
+            </option>
             {
                 entidades &&
                 entidades.map((entidad) =>(

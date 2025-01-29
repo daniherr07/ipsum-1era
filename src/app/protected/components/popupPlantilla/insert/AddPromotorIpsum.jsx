@@ -9,24 +9,12 @@ import { useFetchBackend } from '@/hooks/useFetchApi';
 
 export default function AddPromotor({ onClose, router }) {
     const [formData, setFormData] = useState({
-      entidad_id: '1',
       nombre: '',
       apellido1: '',
       apellido2: '',
-      telefono: '', 
-      correo_electronico: '', 
-      tabla: 'promotores_entidades',
+      activated: '1',
+      tabla: 'promotores_ipsum',
     })
-
-    const [entidades, setEntidades] = useState()
-  
-    useEffect(()=> {
-        useFetchBackend(`getEntidades`, "GET")
-            .then((data) => {
-                console.log(data)
-                setEntidades(data)
-        })
-    }, [])
   
     const updateChanges = async () => {
       if (formData.nombre == '') {
@@ -41,14 +29,6 @@ export default function AddPromotor({ onClose, router }) {
         return toast.error("Segundo apellido sin completar!")
       }
   
-      if (formData.telefono == '') {
-        return toast.error("Telefono sin completar!")
-      }
-
-      if (formData.correo_electronico == '') {
-        return toast.error("Email sin completar!")
-      }
-
       const response = await useFetchBackend("insertData", "POST", formData)
   
       if (response.errno) {
@@ -63,26 +43,8 @@ export default function AddPromotor({ onClose, router }) {
   
     return (
       <div className={style.newUserModal}>
-        <h1>Añadir Nuevo Promotor de Entidad</h1>
+        <h1>Añadir Nuevo Promotor de Ipsum</h1>
 
-        <label htmlFor="entidad_id">Elija una entidad</label>
-        <select 
-        name="entidad_id" 
-        id="entidad_id" 
-        value={formData.entidad_id}
-        className={style.newModalInput}
-        onChange={e => handleChange(e, setFormData)}
-        >
-            {
-                entidades &&
-                entidades.map((entidad) =>(
-                    <option value={entidad.id} key={entidad.id}>
-                        {entidad.nombre}
-                    </option>
-                ))
-            }
-        </select>
-  
         <label htmlFor="nombre">Nombre: </label>
         <input
           type="text"
@@ -109,26 +71,7 @@ export default function AddPromotor({ onClose, router }) {
           className={style.newModalInput}
           onChange={e => handleChange(e, setFormData)}
         />
-  
-        <label htmlFor="telefono">Teléfono: </label>
-        <input
-          type="text"
-          name="telefono"
-          value={formData.telefono}
-          className={style.newModalInput}
-          onChange={e => handleChange(e, setFormData)}
-        />
 
-        <label htmlFor="correo_electronico">Email: </label>
-        <input
-          type="text"
-          name="correo_electronico"
-          value={formData.correo_electronico}
-          className={style.newModalInput}
-          onChange={e => handleChange(e, setFormData)}
-        />
-
-  
         <div className={style.modalBtns}>
           <button className={style.modalUpdate} onClick={updateChanges}>
             Añadir

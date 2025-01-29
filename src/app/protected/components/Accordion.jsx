@@ -10,7 +10,7 @@ import AddConstructor from './popupPlantilla/insert/AddConstructor'
 import AddEntidad from './popupPlantilla/insert/AddEntidad'
 import AddFiscal from './popupPlantilla/insert/AddFiscal'
 import AddGrupo from './popupPlantilla/insert/AddGrupo'
-import AddPromotor from './popupPlantilla/insert/AddPromotorEntidad'
+import AddPromotor from './popupPlantilla/insert/AddPromotorIpsum'
 import AddBono from './popupPlantilla/insert/AddBono'
 import AddSubBono from './popupPlantilla/insert/AddSubBono'
 import EditGeneric from './popupPlantilla/edit/EditGeneric'
@@ -221,7 +221,7 @@ export function AddSomething({ onClose, router, enterTo="Analista"}) {
                     </option>
 
                     <option value="Promotor">
-                        Promotor Entidad
+                        Promotor Ipsum
                     </option>
 
                     <option value="Bono">
@@ -327,7 +327,7 @@ export function AddSomething({ onClose, router, enterTo="Analista"}) {
                 }
 
                 {type == "Promotor" &&
-                    <EditGeneric onClose={onClose} table={"promotores_entidades"} />
+                    <EditGeneric onClose={onClose} table={"promotores_ipsum"} />
                 }
 
                 {type == "Bono" &&

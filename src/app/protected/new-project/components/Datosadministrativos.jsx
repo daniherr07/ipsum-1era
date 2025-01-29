@@ -63,6 +63,18 @@ export default function DatosAdministrativos({formData, setFormData}) {
                 case "entidadSecundaria":
                     addSomethingFunction("CentroNegocio")
                     break;
+
+                case "constructor":
+                    addSomethingFunction("Constructor")
+                    break;
+
+                case "Promotor_Ipsum":
+                    addSomethingFunction("Promotor")
+                    break;
+
+                case "analistaEntidad":
+                    addSomethingFunction("Analista")
+                    break;
                 default:
                     break;
             }
@@ -264,6 +276,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                         {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`} {promotor.activated == 0 && "(Desactivado)"}
                                     </option>
                                 ))}
+                                <option value="otro">+ Agregar Otro Promotor</option>
                             </select>
                         </div>
 
