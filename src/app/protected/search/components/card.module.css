@@ -460,6 +460,10 @@
       flex-direction: column;
     }
 
+    .selectContainer{
+      flex-direction: column;
+    }
+
     .leftColumn{
       width: 100%;
       border-bottom: 1px solid #ccc;

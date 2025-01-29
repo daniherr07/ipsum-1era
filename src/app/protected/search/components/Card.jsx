@@ -560,7 +560,7 @@ function PDFDownloadButton({ data }) {
     const tableData = Object.entries(data)
       .filter(([key]) => key !== "id")
       .filter(([key]) => key !== "estadoColor")
-      .map(([key, value]) => [formatText(key), formatText(value.toString())])
+      .map(([key, value]) => [formatText(key), (value == null || value == "" || value == " " || value == undefined) ?  formatText("Sin asignar") : formatText(value.toString())])
 
     // Calculate table width (80% of page width)
     const tableWidth = pageWidth * 0.8

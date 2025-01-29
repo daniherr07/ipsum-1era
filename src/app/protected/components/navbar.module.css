@@ -29,7 +29,6 @@
     position: absolute;
     z-index: 10;
     height: 4em;
-    gap: 15em;
     border-radius: 0 0 20px 20px;
     box-shadow: 0 2px 3px 1px #00000049;
     display: flex;
@@ -167,12 +166,21 @@
         place-content: start;
         place-items: center;
         height: 100%;
-        gap: 1em;
+        gap: 3em;
 
         & .option {
-            color: #fff;
-            font-weight: bold;
-            font-size: 1.4vw;
+            font-size: 1.4vw ;
+            padding: 0 1em 0 1em;
+            background-color: #ffffffc9;
+            color: #03579B;
+            border-radius: 10px;
+            height: 60px;
+            width: 15vw ;
+            display: flex;
+            place-content: center;
+            place-items: center;
+            box-shadow: 0 2px 3px 1px #00000021;
+
             
             &:hover{
                 cursor: pointer;
@@ -360,6 +368,10 @@
       width: 90vw;
       padding: 4em;
     }
+
+    .logo{
+        display: none;
+    }
   }
 
 
@@ -369,22 +381,12 @@
         display: flex !important;
     }
 
-
-    .username{
-        display: none;
-    }
-
-
-    .person{
-        display: none;
-    }
-
     .searchBarAccordion{
         display: flex !important;
     }
 
     .logo{
-        display: none;
+        margin-left: -3em;
     }
 
     .col1{
@@ -392,36 +394,51 @@
     }
 
 
-    .username{
-        display: none;
-    }
-
-
-    .person{
-        display: none;
-    }
-
 }
 
 
 @media (max-width: 1000px) {
 
+    .options{
+        place-content: space-around !important;
+        padding-bottom: 5dvh !important;
+        
+    }
+
     .option{
-        font-size: 2.5vw !important;
+        font-size: 1.9vw !important;
         padding: 0 1em 0 1em;
+        color: #03579B;
+        border-radius: 10px;
+        height: 60px;
+        width: 15vw ;
+        display: flex;
+        place-content: center;
+        place-items: center;
+        box-shadow: 0 2px 3px 1px #00000021;
     }
 
 }
 
 @media (max-width: 768px) {
     .options{
-        place-content: center !important;
+        place-content: space-around !important;
         padding-bottom: 5dvh !important;
+        
     }
 
     .option{
-        font-size: 3.5vw !important;
+        font-size: 2.7vw !important;
         padding: 0 1em 0 1em;
+        color: #03579B;
+        border-radius: 10px;
+        height: 50px;
+        width: 25vw !important;
+        display: flex;
+        place-content: center;
+        place-items: center;
+        box-shadow: 0 2px 3px 1px #00000021;
+
     }
 
 }

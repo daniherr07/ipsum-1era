@@ -135,7 +135,7 @@ export default function Accordion({userData = {}}){
 
             <li className={style.option}>
                 <button type="submit" style={{background: "none", border: "none"}} onClick={addSomethingFunction}>
-                    <p className={style.option}>Mantenimiento</p>
+                    <p className={style.option}>Ajustes</p>
                 </button>
             </li>
 
@@ -159,12 +159,12 @@ export default function Accordion({userData = {}}){
                     
 
                     windowBool ?  
-                    {top: "1em", right: "-10%", zIndex: "100"} : 
-                    {top: "1em", right: "-10%", zIndex: "100"}
+                    {top: "1em", right: "-3.2em", zIndex: "100"} : 
+                    {top: "1em", right: "-3.2em", zIndex: "100"}
                     :
                     windowBool ? 
-                    {top: "1em", right: "-10%", zIndex: "100"} : 
-                    {top: "1em", right: "-10%", zIndex: "100"}
+                    {top: "1em", right: "-3.2em", zIndex: "100"} : 
+                    {top: "1em", right: "-3.2em", zIndex: "100"}
                 }
                 onClick={() => setOpened(!opened)} 
                 alt='hamburger'
@@ -183,7 +183,7 @@ export function AddSomething({ onClose, router, enterTo="Analista"}) {
   
     return (
       <div className={style.newUserModal}>
-        <h1 style={{marginBottom: "1em"}}>Mantenimiento</h1>
+        <h1 style={{marginBottom: "1em"}}>Ajustes</h1>
   
         <div className={style.filterSelectContainer}>
 

@@ -147,7 +147,8 @@ function DeleteProyectoModal({ onClose, router, idProyecto, currentStatus, nombr
   return (
     <div className={styles.newUserModal}>
       <h1>¿Esta seguro de {currentStatus == 1 ? "descartar" : "activar"} el proyecto?</h1>
-
+      <div style={{display: "flex", flexDirection: "column", placeContent: "center", placeItems: "center", gap: "1em"}}>
+      
       <label htmlFor="">Añadir entrada para bitácora:</label>
       <textarea 
       placeholder='(Escriba para añadir una entrada si lo desea)' 
@@ -159,6 +160,8 @@ function DeleteProyectoModal({ onClose, router, idProyecto, currentStatus, nombr
       cols={60}
       rows={5}
       ></textarea>
+      </div>
+
       {
         inputData.data != "" &&
         <>
