@@ -46,12 +46,29 @@ export default function NextEtapa({idProyecto, nombreProyecto, etapaAnterior, su
 function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnterior, subetapaAnterior, emailData, userData }) {
 
 
+  const isAdminOrRoot = 
+  userData.role == 'Admin' 
+  || 
+  userData.role == 'Root' 
+  ||
+  userData.role == 'Analista Admin'
+  ||
+  userData.role == 'Ingeniero Admin'
+  ||
+  userData.role == 'Arquitecto Admin'
+  ? true : false;
+
+
+  const [etapaManual, setEtapaManual] = useState()
+  const [subetapaManual, setSubetapaManual] = useState()
 
   const [siguienteEtapa, setSiguienteEtapa] = useState()
   const [siguienteSubetapa, setSiguienteSubetapa] =useState()
   const [subetapasEtapa, setSubetapasEtapa] = useState()
   const [selectSubetapa, setSelectSubetapa] = useState({
-    subetapa: ""
+    etapa: "",
+    subetapa: "",
+    manual: false
   })
   const [forceUpdate, setForceUpdate] = useState(true)
 
@@ -92,6 +109,19 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
         .catch((error) => console.error('Error fetching admin data:', error));
   }, [forceUpdate]);
 
+
+  useEffect(() => {
+    if (isAdminOrRoot) {
+      useFetchBackend("getEtapas", "GET")
+      .then((fetchedData) => {
+        setEtapaManual(fetchedData[0])
+        setSubetapaManual(fetchedData[1])
+      })
+      .catch((error) => console.error('Error fetching admin data:', error));
+    }
+
+  }, []);
+
   const [inputData, setInputData] = useState({
     data: "",
     color: "#03579B",
@@ -100,13 +130,21 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
 
 
 
-  const sendEmails = async (etapaEdit) => {
+  const sendEmails = async () => {
+
+    const etapaEdit = {
+      id: idProyecto,
+      etapa: parseInt(selectSubetapa.etapa !== "" ? selectSubetapa.etapa : siguienteEtapa.id),
+      subetapa: parseInt(selectSubetapa.subetapa !== "" ? selectSubetapa.subetapa : siguienteSubetapa.id)
+    }
 
     let emailsToGetRole
     
     const Analista = "analista_asigna_ipsum_id"
     const Ingeniero = "ingeniero_id"
     const Arquitecto = "arquitecto_id"
+
+    console.log(etapaEdit.etapa, etapaEdit.subetapa)
 
     //DEFINIENDO EL ROL_ID PARA MANDAR LOS CORREOS
     switch (etapaEdit.etapa) {
@@ -132,6 +170,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
 
 
       case 4: // A Enviado al centro de negocios
+        console.log("ENTRO AQUI")
         emailsToGetRole = Analista
         break
 
@@ -149,11 +188,8 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
           case 14: // A Finalizacion de procesos de construccion
             emailsToGetRole = Analista
             break;
-          default:
-            break;
         }
-        emailsToGetRole = Analista
-        break
+        break;
 
       case 7: // A Procesos de formalizacion
         emailsToGetRole = Analista
@@ -177,6 +213,8 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
         break;
     }
 
+  
+
     let destinatarios = []
 
     const result = await useFetchBackend(`getEmails?emails=${emailsToGetRole}&id_proyecto=${idProyecto}`, "GET")
@@ -192,6 +230,32 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
 
     
     try {
+      let subetapaCorreo
+      let etapaCorreo
+  
+      if (selectSubetapa.subetapa != "") {
+        if (selectSubetapa.etapa != "") {
+          const subetapaNuevaSelect = subetapaManual.find(subetapa => subetapa.id == selectSubetapa.subetapa)
+          const subetapaNuevaSelectNombre = subetapaNuevaSelect.nombre
+          subetapaCorreo = subetapaNuevaSelectNombre
+  
+        }else {
+          const subetapaNuevaSelect = subetapasEtapa.find(subetapa => subetapa.id == selectSubetapa.subetapa)
+          const subetapaNuevaSelectNombre = subetapaNuevaSelect.nombre
+          subetapaCorreo = subetapaNuevaSelectNombre
+        }
+      } else {
+        subetapaCorreo = siguienteSubetapa && siguienteSubetapa.nombre
+      }
+  
+      if (selectSubetapa.etapa != "") {
+        const etapaNuevaSelect = etapaManual.find(etapa => etapa.id == selectSubetapa.etapa)
+        const etapaNuevaSelectNombre = etapaNuevaSelect.nombre
+        etapaCorreo = etapaNuevaSelectNombre
+      } else {
+        etapaCorreo = siguienteEtapa && siguienteEtapa.nombre
+      }
+
       console.log(destinatarios)
       const response = await fetch('/api/send-email', {
         method: 'POST',
@@ -201,7 +265,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
         body: JSON.stringify({
             recipients: destinatarios,
             subject: `Avance de etapa proyecto "${nombreProyecto}"`,
-            content: `<p>El proyecto ${nombreProyecto} ha pasado de ${etapaAnterior} ${subetapaAnterior != null ? ":" + " " + subetapaAnterior : ""} y se ha actualizado a ${siguienteEtapa && siguienteEtapa.nombre} ${siguienteSubetapa && siguienteSubetapa.nombre} . <br /> <p>Por favor corroborar la información en el sistema</p>`
+            content: `<p>El proyecto ${nombreProyecto} ha pasado de ETAPA: ${etapaAnterior}, SUBETAPA: ${subetapaAnterior != null ? ":" + " " + subetapaAnterior : ""} y se ha actualizado a ETAPA: ${etapaCorreo}, SUBETAPA: ${subetapaCorreo} . <br /> <p>Por favor corroborar la información en el sistema</p>`
         })
 
       });
@@ -210,7 +274,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
       console.log('Respuesta:', data);
 
       for(let i = 0; i < result.emails.length; i++) {
-        await useFetchBackend("insertNoti", "POST", {message: `El proyecto ${nombreProyecto} ha pasado de ${etapaAnterior} ${subetapaAnterior != null ? ":" + " " + subetapaAnterior : ""} y se ha actualizado a ${siguienteEtapa && siguienteEtapa.nombre} ${siguienteSubetapa && siguienteSubetapa.nombre}.`, user_id: result.ids[i]})
+        await useFetchBackend("insertNoti", "POST", {message: `El proyecto ${nombreProyecto} ha pasado de ${etapaAnterior} ${subetapaAnterior != null ? ":" + " " + subetapaAnterior : ""} y se ha actualizado a ${etapaCorreo} ${subetapaCorreo}.`, user_id: result.ids[i]})
       }
 
 
@@ -227,10 +291,35 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
 
     const etapaEdit = {
       id: idProyecto,
-      etapa: siguienteEtapa.id,
+      etapa: selectSubetapa.etapa !== "" ? selectSubetapa.etapa : siguienteEtapa.id,
       subetapa: selectSubetapa.subetapa !== "" ? selectSubetapa.subetapa : siguienteSubetapa.id
     }
 
+    let subetapaCorreo
+    let etapaCorreo
+
+    if (selectSubetapa.subetapa != "") {
+      if (selectSubetapa.etapa != "") {
+        const subetapaNuevaSelect = subetapaManual.find(subetapa => subetapa.id == selectSubetapa.subetapa)
+        const subetapaNuevaSelectNombre = subetapaNuevaSelect.nombre
+        subetapaCorreo = subetapaNuevaSelectNombre
+
+      }else {
+        const subetapaNuevaSelect = subetapasEtapa.find(subetapa => subetapa.id == selectSubetapa.subetapa)
+        const subetapaNuevaSelectNombre = subetapaNuevaSelect.nombre
+        subetapaCorreo = subetapaNuevaSelectNombre
+      }
+    } else {
+      subetapaCorreo = siguienteSubetapa && siguienteSubetapa.nombre
+    }
+
+    if (selectSubetapa.etapa != "") {
+      const etapaNuevaSelect = etapaManual.find(etapa => etapa.id == selectSubetapa.etapa)
+      const etapaNuevaSelectNombre = etapaNuevaSelect.nombre
+      subetapaCorreo = etapaNuevaSelectNombre
+    } else {
+      subetapaCorreo = siguienteEtapa && siguienteEtapa.nombre
+    }
 
     const newEntryData = {
       usuario: userData.id, 
@@ -238,7 +327,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
       time: new Date(),
       tipo: "Análisis",
       color: inputData.color,
-      descripcion: `Nueva etapa : ${siguienteEtapa && siguienteEtapa.nombre} y subetapa: ${siguienteSubetapa && siguienteSubetapa.nombre}. Descripción: ${inputData.data}`
+      descripcion: `Nueva etapa : ${etapaCorreo} y subetapa: ${subetapaCorreo}. Descripción: ${inputData.data}`
     }
 
     
@@ -275,7 +364,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
     
 
 
-    sendEmails(etapaEdit)
+    sendEmails()
     toast.success("Etapa exitosamente actualizada")
 
     onClose(); // Close the modal
@@ -288,6 +377,14 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
     <div className={styles.newUserModal}>
       <h1>Editar etapa de: {nombreProyecto}</h1>
 
+      {
+        isAdminOrRoot &&
+        <div style={{display: "flex", placeContent: "center", placeItems: "center", textAlign: "center", gap: "1em"}}>
+          <label htmlFor="">Pasar etapa manualmente</label>
+          <input type="checkbox" id="manual" name="manual" value={selectSubetapa.manual} onChange={e => handleChange(e, setSelectSubetapa)}/>
+        </div>
+      }
+
       <div className={styles.modalMain}>
           <div className={styles.modalOld}>
               <h2>Anterior</h2>
@@ -299,7 +396,42 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
               <h2>Nuevo</h2>
 
 
-              { siguienteEtapa && (siguienteEtapa.id == 4 || siguienteEtapa.id == 5) ?
+              { 
+              
+              selectSubetapa.manual == true ?
+
+              <div style={{display: "flex", flexDirection: "column"}}>
+              <label htmlFor="roles">Etapa:</label>
+                <select name="etapa" id="" value={selectSubetapa.etapa} onChange={e => handleChange(e, setSelectSubetapa)}>
+                  <option value="">Selecciona una etapa</option>
+                  {
+                    etapaManual && etapaManual.map(etapa => (
+                      <option value={etapa.id} key={etapa.id}>{etapa.nombre}</option>
+                    ))
+                  }
+                </select>
+
+                <label htmlFor="roles">Subetapas: </label>
+                <select disabled={!selectSubetapa.etapa} name="subetapa" id="" value={selectSubetapa.subetapa} onChange={e => handleChange(e, setSelectSubetapa)}>
+                  <option value="">Selecciona una subetapa</option>
+                  {
+                    subetapaManual && subetapaManual.map(subetapa => (
+                      subetapa.etapa_id == selectSubetapa.etapa &&
+                      <option value={subetapa.id} key={subetapa.id}>{subetapa.nombre}</option>
+                    ))
+                  }
+                </select>
+              </div>
+              
+              
+              
+              :
+              
+              
+              
+              siguienteEtapa && (siguienteEtapa.id == 4 || siguienteEtapa.id == 5) ?
+
+
               <>
                 <label htmlFor="roles">Etapa: {siguienteEtapa && siguienteEtapa.nombre} </label>
                 <p></p>
@@ -375,9 +507,13 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
         <button onClick={onClose} className={styles.modalCancel}>
           Cancelar
         </button>
-        <button className={styles.modalUpdate} onClick={updateChanges}>
+        {
+          etapaAnterior != "Facturado" &&
+          <button className={styles.modalUpdate} onClick={updateChanges}>
           Actualizar
-        </button>
+          </button>
+        }
+
 
       </div>
     </div>
