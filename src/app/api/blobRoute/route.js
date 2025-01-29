@@ -10,7 +10,7 @@ export async function POST(request) {
       request,
       onBeforeGenerateToken: async (pathname) => {
         return {
-          allowedContentTypes: ['image/jpeg', 'image/png', 'image/gif'],
+          allowedContentTypes: ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'],
           tokenPayload: JSON.stringify({
             timestamp: Date.now(),
           }),

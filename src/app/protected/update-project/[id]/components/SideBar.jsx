@@ -23,6 +23,7 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
   const userData = useProtectedContext();
   const [page, setPage] = useState(1)
   const [deletedMembers, setDeletedMembers] = useState([])
+  console.log("Subetapa anterior desde el sideBar", projectDataOld.subetapa_nombre)
 
   const [projectData, setProjectData] = useState({
     idProyecto: formDataAdminOld.proyecto_id,
@@ -76,12 +77,13 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
     cfia: formDataAdminOld.codigo_cfia,
     analistaEntidad: formDataAdminOld.analista_entidad_id,
     analistaIPSUM: formDataAdminOld.analista_ipsum_id,
-    promotorEntidad: formDataAdminOld.promotor_externo_id,
+    arquitecto: formDataAdminOld.arquitecto_id,
     Promotor_Ipsum: formDataAdminOld.promotor_interno_id,
     fiscalAsignado: formDataAdminOld.fiscal_id,
     presupuesto: formDataAdminOld.presupuesto,
     avaluo: formDataAdminOld.avaluo,
-    ingenieroAsignado: formDataAdminOld.ingeniero_id
+    ingenieroAsignado: formDataAdminOld.ingeniero_id,
+    constructor: formDataAdminOld.constructor_id
   });
 
   const getUpdatedData = () => {
@@ -163,7 +165,7 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
 
     {page === 1 && <Datosdelproyecto projectData={projectData} setProjectData={setProjectData}/>}
     {page === 2 && <Miembrosdelafamilia formData={formData} setFormData={setFormData} familyMembers={familyMembers} setFamilyMembers={setFamilyMembers} deletedMembers={deletedMembers} setDeletedMembers={setDeletedMembers}/>}
-    {page === 3 && <Direcciondelproyecto directionData={directionData} setDirectionData={setDirectionData} />}
+    {page === 3 && <Direcciondelproyecto directionData={directionData} setDirectionData={setDirectionData} nombreProyecto={projectDataOld.proyecto_nombre}/>}
     {page === 4 && <Datosadministrativos formData={formDataAdmin} setFormData={setFormDataAdmin} />}
 
     <div className={style.finishBtns}>
@@ -178,8 +180,9 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
         directionData={directionData}
         formDataAdmin={formDataAdmin}
         deletedMembers={deletedMembers}
+        idProyecto={formDataAdminOld.proyecto_id}
       />
-      <NextEtapa idProyecto={formDataAdminOld.proyecto_id} nombreProyecto={projectDataOld.proyecto_nombre} etapaAnterior={projectDataOld.etapa_nombre} subetapaAnterior={projectDataOld.subetapa_nombre} getUpdatedData={getUpdatedData}/>
+      <NextEtapa idProyecto={formDataAdminOld.proyecto_id} nombreProyecto={projectDataOld.proyecto_nombre} etapaAnterior={projectDataOld.etapa_nombre} subetapaAnterior={projectDataOld.subetapa_nombre} getUpdatedData={getUpdatedData} userData={userData}/>
 
     </div>
 

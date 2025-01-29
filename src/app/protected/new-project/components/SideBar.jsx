@@ -65,7 +65,7 @@ export default function AccordionMenu() {
     cfia: '',
     analistaEntidad: '',
     analistaIPSUM: '',
-    promotorEntidad: "",
+    arquitecto: "",
     Promotor_Ipsum: "",
     fiscalAsignado: '',
     presupuesto: '',

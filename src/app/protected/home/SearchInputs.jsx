@@ -14,8 +14,8 @@ export default function SearchInputs() {
     const router = useRouter()
     const [selectedValue, setSelectedValue] = useState('');
     const [tagData, setTagData] = useState([]);
-    const [etapasSelect, setEtapasSelect] = useState("")
-    const [bonosSelect, setBonosSelect] = useState("")
+    const [etapasSelect, setEtapasSelect] = useState([])
+    const [bonosSelect, setBonosSelect] = useState([])
 
     const [etapas, setEtapas] = useState()
     const [bonos, setBonos] = useState()
@@ -44,6 +44,7 @@ export default function SearchInputs() {
                 }
                 console.log(url)
                 const result = await useFetchBackend(url, "GET");
+                console.log(result)
                 setTagData(result);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -63,8 +64,18 @@ export default function SearchInputs() {
         let url = `filter?table=tipos_bono&nombre=nombre`;
         const result = await useFetchBackend(url, "GET");
         setBonos(result);
+        console.log(result)
         
     }
+
+    const handleEtapasChange = (value) => {
+        console.log(etapasSelect)
+        setEtapasSelect(value);
+    };
+
+    const handleBonosChange = (value) => {
+        setBonosSelect(value);
+    };
 
     const handleTagChange = (value) => {
         setPickerValue(value);
@@ -86,12 +97,13 @@ export default function SearchInputs() {
             }
         }
 
-        if (etapasSelect != "") {
-            url += `&etapa_id=${etapasSelect}`
+        if (etapasSelect.length > 0) {
+           url += `&etapa_id=${etapasSelect.join(",")}`
         }
 
-        if (bonosSelect != "") {
-            url += `&tipo_bono_id=${bonosSelect}`
+        if (bonosSelect.length > 0) {
+            console.log(bonosSelect.join(","))
+            url += `&tipo_bono_id=${bonosSelect.join(",")}`
         }
 
 
@@ -116,42 +128,29 @@ export default function SearchInputs() {
             <div className={style.tagPickers}>
 
                 <label htmlFor="etapa">Seleccionar Etapa</label>
-                <select 
-                    name='etapa' 
-                    id='etapa'
-                    className={style.inputText} 
+                <TagPicker
+                    disabled={!etapas}
+                    data={etapas}
+                    className={style.inputText}
+                    labelKey='nombre'
+                    valueKey='id'
                     value={etapasSelect}
-                    onChange={(e) => setEtapasSelect(e.target.value)}
-                >
-                    <option value="">Etapas</option>
-
-                    {
-                        etapas ?
-                        etapas.map((etapa) => (
-                            <option key={etapa.id} value={etapa.id}>{etapa.nombre}</option>
-                        )) :
-                        <option value="">Cargando Etapas</option>
-                    }
-                </select>
+                    onChange={handleEtapasChange}
+                    placeholder="Seleccionar Etapas"
+                />
 
 
                 <label htmlFor="bonos">Seleccionar Bonos</label>
-                <select 
-                    name='bonos' 
-                    className={style.inputText} 
+                <TagPicker
+                    disabled={!bonos}
+                    data={bonos}
+                    className={style.inputText}
+                    labelKey='nombre'
+                    valueKey='id'
                     value={bonosSelect}
-                    onChange={(e) => setBonosSelect(e.target.value)}
-                >
-                    <option value="">Tipos de Bono</option>
-
-                    {
-                        bonos ?
-                        bonos.map((etapa) => (
-                            <option key={etapa.id} value={etapa.id}>{etapa.nombre}</option>
-                        )):
-                        <option value="">Cargando Bonos</option>
-                    }
-                </select>
+                    onChange={handleBonosChange}
+                    placeholder="Seleccionar Bonos"
+                />
 
 
                 

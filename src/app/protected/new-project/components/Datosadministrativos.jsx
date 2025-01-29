@@ -21,21 +21,22 @@ export default function DatosAdministrativos({formData, setFormData}) {
         Entidad: [],
         Analista_Ipsum: [],
         Analista_de_Entidades: [],
-        Promotor_de_Entidades: [],
+        Arquitecto: [],
         Fiscal: [],
         Ingeniero: [],
         Promotor_Ipsum: [],
+        Constructor: [],
     });
     const [centrosNegocio, setCentrosNegocio] = useState([]);
     const [analistasEntidad, setAnalistasEntidad] = useState([]);
-    const [promotoresEntidad, setPromotoresEntidad] = useState([]);
+    const [arquitecto, setArquitecto] = useState([]);
 
 
     useEffect(() => {
        useFetchBackend("getAdminData", "GET")
             .then((fetchedData) => {
                 setData(fetchedData);
-                console.log(fetchedData)
+                setArquitecto(fetchedData.Arquitecto)
             })
             .catch((error) => console.error('Error fetching admin data:', error));
     }, [update]);
@@ -43,7 +44,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
     useEffect(() => {
         if (formData.entidad) {
             updateCentrosNegocio(formData.entidad);
-            updateAnalistasYPromotores(formData.entidad);
+            updateAnalistas(formData.entidad);
         }
     }, [formData.entidad, data]);
 
@@ -65,8 +66,8 @@ export default function DatosAdministrativos({formData, setFormData}) {
                 case "analistaEntidad":
                     addSomethingFunction("Analista")
                     break;
-                case "promotorEntidad":
-                    addSomethingFunction("Promotor")
+                case "arquitecto":
+                    addSomethingFunction("Arquitecto")
                     break;
                 default:
                     break;
@@ -97,7 +98,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
         }
     };
 
-    const updateAnalistasYPromotores = (entidadId) => {
+    const updateAnalistas = (entidadId) => {
         const entidadSeleccionada = data.Entidad.find(e => e.localId == entidadId);
 
         if (entidadSeleccionada != undefined) {
@@ -106,11 +107,6 @@ export default function DatosAdministrativos({formData, setFormData}) {
             );
 
             setAnalistasEntidad(analistasCoincidentes);
-
-            const promotoresCoincidentes = data.Promotor_de_Entidades.filter(
-                promotor => promotor.Entidad == entidadSeleccionada.Nombre
-            );
-            setPromotoresEntidad(promotoresCoincidentes);
         }
         
 
@@ -197,6 +193,24 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 />
                             </div>
                         </div>
+
+                        <div className={styles.formGroup}>
+                            <label className={styles.label}>Constructor</label>
+                            <select
+                                name="constructor"
+                                value={formData.constructor}
+                                onChange={handleInputChange}
+                                className={styles.select}
+                            >
+                                <option value="">Seleccione un constructor</option>
+                                {data.Constructor.map((item, key) => (
+                                    <option key={key} value={item.localId}>
+                                        {`${item.Nombre} ${item.Apellido_1} ${item.Apellido_2}`} {item.activated == 0 && "(Desactivado)"}
+                                    </option>
+                                ))}
+                                <option value="otro">+ Agregar Otro Constructor</option>
+                            </select>
+                        </div>
                     </div>
 
                     {/* Middle Column */}
@@ -222,22 +236,21 @@ export default function DatosAdministrativos({formData, setFormData}) {
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label className={styles.label}>Promotor Entidad</label>
+                            <label className={styles.label}>Arquitecto</label>
                             <select
-                                name="promotorEntidad"
-                                value={formData.promotorEntidad}
+                                name="arquitecto"
+                                value={formData.arquitecto}
                                 onChange={handleInputChange}
                                 className={styles.select}
-                                disabled={!formData.entidad}
                             >
-                                <option value="">Seleccione un promotor</option>
+                                <option value="">Seleccione un Arquitecto</option>
                                 <option value="pendiente">Pendiente</option>
-                                {promotoresEntidad.map((promotor, key) => (
-                                    <option key={key} value={promotor.localID}>
-                                        {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`} {promotor.activated == 0 && "(Desactivado)"}
+                                {arquitecto.map((arquitecto, key) => (
+                                    <option key={key} value={arquitecto.localID}>
+                                        {`${arquitecto.Nombre} ${arquitecto.Apellido_1} ${arquitecto.Apellido_2}`} {arquitecto.activated == 0 && "(Desactivado)"}
                                     </option>
                                 ))}
-                                <option value="otro">+ Agregar Otro Promotor</option>
+                                <option value="otro">+ Agregar Otro Arquitecto</option>
                             </select>
                         </div>
 

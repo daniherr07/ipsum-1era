@@ -7,17 +7,20 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import { useRouter } from 'next/navigation';
 import { useFetchBackend } from '@/hooks/useFetchApi';
+import { handleChange } from '@/utils/handleChange';
+
 
 
 export default function UserRow({ user }) {
     const router = useRouter();
     const [editable, isEditable] = useState(false)
-    const roles = ["Ingeniero", "Analista", "Admin", "Root", "Promotor"] 
+    const roles = ["Ingeniero", "Analista", "Admin", "Root", "Promotor", "Arquitecto"] 
     const [userEdit, setUser] = useState({
         id: user.id,
         lastName1: user.last_name1,
         lastName2: user.last_name2,
         userName: user.user_name,
+        email: user.email,
         roles: user.role_name
     })
 
@@ -116,7 +119,7 @@ export default function UserRow({ user }) {
     const updateChanges = async ()  => {
         isEditable(!editable)
         const response = await useFetchBackend(`updateUser`, 'POST', userEdit)
-        if (response.errno) {
+        if (response?.errno) {
             throw new Error('Error al guardar el proyecto');
         }
         toast.success("Usuario exitosamente editado!")
@@ -128,7 +131,7 @@ export default function UserRow({ user }) {
             activated: user.activated,
         }
         const response = await useFetchBackend(`changeStatus`, 'POST', data)
-        if (response.errno) {
+        if (response?.errno) {
             toast.error(`Hubo un error, intentalo más tarde...`)
         }
         toast.success(`Usuario exitosamente ${user.activated == 1 ? "Desactivado" : "Activado"}`)
@@ -157,6 +160,10 @@ export default function UserRow({ user }) {
                 </td>
 
                 <td className={styles.cell}>
+                    <input className={styles.input} type="email" name='email' value={userEdit.email} onChange={e => handleChange(e, setUser)} />
+                </td>
+
+                <td className={styles.cell}>
                     <select className={styles.input} name="roles" id="roles" onChange={e => handleChange(e, setUser)}>
                         <option value={user.role_name}>{user.role_name}</option>
                         {
@@ -169,10 +176,10 @@ export default function UserRow({ user }) {
                     </select>
                 </td>
                 <td className={`${styles.cell} ${styles.saveContainer}`}  >
-                    <p className={styles.updateBtn} onClick={submit} >💾</p>
-                    <button className={styles.cancelBtn} type='button' onClick={() => isEditable(!editable)}>Cancelar</button>    
+                    <p className={styles.updateBtn} onClick={submit} style={{cursor: "pointer"}} >💾</p>
+                    <button className={styles.cancelBtn} type='button' onClick={() => isEditable(!editable)} style={{cursor: "pointer"}}>Cancelar</button>    
                 </td>
-                <td className={`${styles.cell} ${styles.btn}`} onClick={changeStatus}>🚫</td>
+                <td className={`${styles.cell} ${styles.btn}`} onClick={changeStatus} style={{cursor: "pointer"}}>🚫</td>
             </>
 
 
@@ -182,16 +189,17 @@ export default function UserRow({ user }) {
                 <td className={styles.cell}>{userEdit.lastName1}</td>
                 <td className={styles.cell}>{userEdit.lastName2}</td>
                 <td className={styles.cell}>{userEdit.userName}</td>
+                <td className={styles.cell}>{userEdit.email}</td>
                 <td className={styles.cell}> {userEdit.roles} </td>
                 {user.activated == 1 &&
-                    <td className={styles.cell} onClick={() => isEditable(!editable)} ><p className={styles.btn}>✏️</p></td>
+                    <td className={styles.cell} onClick={() => isEditable(!editable)} ><p className={styles.btn} style={{cursor: "pointer"}}>✏️</p></td>
                 }
                 
                 {
                     user.activated == 1 ?
-                    <td className={styles.cell}><p className={styles.btn} onClick={changeStatus}>🚫</p></td>
+                    <td className={styles.cell}><p className={styles.btn} onClick={changeStatus} style={{cursor: "pointer"}}>🚫</p></td>
                     :
-                    <td className={styles.cell}><p className={styles.btn} onClick={changeStatus}>✅</p></td>
+                    <td className={styles.cell}><p className={styles.btn} onClick={changeStatus} style={{cursor: "pointer"}}>✅</p></td>
                 }
                 
                 

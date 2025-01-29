@@ -61,16 +61,16 @@ export const data = [
         id: 5,
     },
     {
-        label: "Promotor Externo",
-        value: "promotor_externo_id",
-        table: "promotores_entidades",
+        label: "Arquitecto",
+        value: "arquitecto_id",
+        table: "usuarios",
+        rol_id: 6,
         nombre: [
             "nombre",
             "apellido1",
             "apellido2"
         ],
         id: 6,
-
     },
     {
         label: "Promotor Interno",

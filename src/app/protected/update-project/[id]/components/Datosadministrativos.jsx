@@ -14,14 +14,15 @@ export default function DatosAdministrativos({formData, setFormData}) {
         Entidad: [],
         Analista_Ipsum: [],
         Analista_de_Entidades: [],
-        Promotor_de_Entidades: [],
+        Arquitecto: [],
         Fiscal: [],
         Ingeniero: [],
         Promotor_Ipsum: [],
+        Constructor: [],
     });
     const [centrosNegocio, setCentrosNegocio] = useState([]);
     const [analistasEntidad, setAnalistasEntidad] = useState([]);
-    const [promotoresEntidad, setPromotoresEntidad] = useState([]);
+    const [arquitecto, setArquitectos] = useState([]);
 
     const [update, setUpdate] = useState(false)
 
@@ -35,7 +36,9 @@ export default function DatosAdministrativos({formData, setFormData}) {
     useEffect(() => {
        useFetchBackend("getAdminData", "GET")
             .then((fetchedData) => {
+                console.log(fetchedData)
                 setData(fetchedData);
+                setArquitectos(fetchedData.Arquitecto);
             })
             .catch((error) => console.error('Error fetching admin data:', error));
     }, [update]);
@@ -43,7 +46,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
     useEffect(() => {
         if (formData.entidad) {
             updateCentrosNegocio(formData.entidad);
-            updateAnalistasYPromotores(formData.entidad);
+            updateAnalistas(formData.entidad);
         }
     }, [formData.entidad, data]);
 
@@ -65,8 +68,11 @@ export default function DatosAdministrativos({formData, setFormData}) {
                 case "analistaEntidad":
                     addSomethingFunction("Analista")
                     break;
-                case "promotorEntidad":
+                case "arquitecto":
                     addSomethingFunction("Promotor")
+                    break;
+                case "constructor":
+                    addSomethingFunction("Constructor")
                     break;
                 default:
                     break;
@@ -84,7 +90,6 @@ export default function DatosAdministrativos({formData, setFormData}) {
                 ...prevState,
                 entidadSecundaria: '',
                 analistaEntidad: '',
-                promotorEntidad: ''
             }));
         }
     };
@@ -98,7 +103,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
         }
     };
 
-    const updateAnalistasYPromotores = (entidadId) => {
+    const updateAnalistas = (entidadId) => {
         const entidadSeleccionada = data.Entidad.find(e => e.localId == entidadId);
         if (entidadSeleccionada != undefined) {
             const analistasCoincidentes = data.Analista_de_Entidades.filter(
@@ -107,10 +112,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
 
             setAnalistasEntidad(analistasCoincidentes);
 
-            const promotoresCoincidentes = data.Promotor_de_Entidades.filter(
-                promotor => promotor.Entidad == entidadSeleccionada.Nombre
-            );
-            setPromotoresEntidad(promotoresCoincidentes);
+            
         }
     };
 
@@ -192,6 +194,26 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                     placeholder='OC-123456'
                                 />
                             </div>
+
+
+                        </div>
+
+                        <div className={styles.formGroup}>
+                            <label className={styles.label}>Constructor</label>
+                            <select
+                                name="constructor"
+                                value={formData.constructor}
+                                onChange={handleInputChange}
+                                className={styles.select}
+                            >
+                                <option value="">Seleccione un constructor</option>
+                                {data.Constructor.map((item, key) => (
+                                    <option key={key} value={item.localId}>
+                                        {`${item.Nombre} ${item.Apellido_1} ${item.Apellido_2}`} {item.activated == 0 && "(Desactivado)"}
+                                    </option>
+                                ))}
+                                <option value="otro">+ Agregar Otro Constructor</option>
+                            </select>
                         </div>
                     </div>
 
@@ -218,22 +240,20 @@ export default function DatosAdministrativos({formData, setFormData}) {
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label className={styles.label}>Promotor Entidad</label>
+                            <label className={styles.label}>Arquitecto</label>
                             <select
-                                name="promotorEntidad"
-                                value={formData.promotorEntidad}
+                                name="arquitecto"
+                                value={formData.arquitecto}
                                 onChange={handleInputChange}
                                 className={styles.select}
-                                disabled={!formData.entidad}
                             >
-                                <option value="">Seleccione un promotor</option>
+                                <option value="">Seleccione un arquitecto</option>
                                 <option value="pendiente">Pendiente</option>
-                                {promotoresEntidad.map((promotor, key) => (
-                                    <option key={key} value={promotor.localID}>
-                                        {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`} {promotor.activated == 0 && "(Desactivado)"}
+                                {arquitecto && arquitecto.map((arquitecto, key) => (
+                                    <option key={key} value={arquitecto.localID}>
+                                        {`${arquitecto.Nombre} ${arquitecto.Apellido_1} ${arquitecto.Apellido_2}`} {arquitecto.activated == 0 && "(Desactivado)"}
                                     </option>
                                 ))}
-                                <option value="otro">+ Agregar Otro Promotor</option>
                             </select>
                         </div>
 

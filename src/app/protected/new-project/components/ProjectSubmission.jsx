@@ -95,22 +95,48 @@ export default function ProjectSubmissionForm({
 
     const headOfHousehold = familyMembers.find(member => member.tipoMiembro == 'Jefe/a de Familia');
     const projectName = headOfHousehold.nombre + ' ' + headOfHousehold.primerApellido + ' ' + headOfHousehold.segundoApellido;
-
-    console.log(userData)
     
 
     
 
-    familyMembers.forEach(async (member, index) => {
-      if (member.cedulaFile !== ""){
-        const memberCedula = member.cedulaFile;
-        const blobResponse = await uploadFile(memberCedula, member.nombre, projectName);
+    const responseBlob = await fetch(`/api/listBlobs?prefix=${projectName}`)
+    if (!responseBlob.ok) {
+      throw new Error('Failed to fetch blobs')
+    }
+    const data = await responseBlob.json()
+    const blobs = data.blobs
+
+    for (const blob of blobs) {
+      const responseDel = await fetch(`/api/deleteBlob`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({"url": blob.url})
+      })
         
-        if (blobResponse) {
-          member.cedulaFile = blobResponse.url;
+    }
+
+
+    // Use Promise.all to wait for all file uploads to complete
+    await Promise.all(familyMembers.map(async (member) => {
+      if (member.cedulaFile !== "") {
+        const memberCedula = member.cedulaFile;
+
+        if (memberCedula instanceof File) {
+          const blobResponse = await uploadFile(memberCedula, memberCedula.name, projectName);
+        
+          if (blobResponse) {
+            console.log("La blob respuesta supongo", blobResponse);
+            member.cedulaFile = blobResponse.url;
+          } else {
+            throw new Error(`Failed to upload file for ${member.nombre}`);
+          }
         }
+
+        
       }
-    });
+    }));
 
     
 

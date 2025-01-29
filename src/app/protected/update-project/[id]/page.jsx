@@ -6,6 +6,7 @@ import { useFetchBackend } from '@/hooks/useFetchApi';
 export default async function NewProject({params}) {
   const waitedParams = await params;
   const dataOld = await useFetchBackend(`getProjectDetails/${waitedParams.id}`, "GET")
+  console.log(dataOld)
   return (
     <>
       <NavBar />

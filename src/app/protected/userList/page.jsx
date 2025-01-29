@@ -8,6 +8,7 @@ import { useFetchBackend } from "@/hooks/useFetchApi";
 
   export default async function Page() {
     const users = await useFetchBackend("getUsers", "GET")
+    console.log(users)
 
     return (
         <>
@@ -24,6 +25,7 @@ import { useFetchBackend } from "@/hooks/useFetchApi";
                 <th className={styles.headerCell}>Primer apellido</th>
                 <th className={styles.headerCell}>Segundo apellido</th>
                 <th className={styles.headerCell}>Nombre</th>
+                <th className={styles.headerCell}>Email</th>
                 <th className={styles.headerCell}>Rol</th>
                 <th className={styles.headerCell}>Editar</th>
                 <th className={styles.headerCell}>Desactivar</th>
@@ -53,6 +55,7 @@ import { useFetchBackend } from "@/hooks/useFetchApi";
                 <th className={styles.headerCell}>Primer apellido</th>
                 <th className={styles.headerCell}>Segundo apellido</th>
                 <th className={styles.headerCell}>Nombre</th>
+                <th className={styles.headerCell}>Email</th>
                 <th className={styles.headerCell}>Rol</th>
                 <th className={styles.headerCell}>Activar</th>
               </tr>

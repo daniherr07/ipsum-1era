@@ -9,7 +9,6 @@ import { UseUploadBlob } from '@/hooks/useUploadBlob';
 
 import { useProtectedContext } from '@/app/context/ProtectedContext';
 import SendEmails from './SendEmails';
-import useFcmToken from '@/hooks/useFcmToken';
 
 
 export default function ProjectSubmissionForm({
@@ -18,31 +17,12 @@ export default function ProjectSubmissionForm({
   directionData,
   formDataAdmin,
   deletedMembers,
+  idProyecto,
 }) {
   const router = useRouter();
   const { uploadFile, isUploading, uploadError } = UseUploadBlob();
   const userData = useProtectedContext()
-  const { token, notificationPermissionStatus } = useFcmToken();
 
-  const handleTestNotification = async () => {
-    const response = await fetch("/api/send-notification", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        token: token,
-        title: "Test Notification",
-        message: "This is a test notification",
-        link: "/login",
-      }),
-    });
-
-    console.log("Entro acá a la notificacion")
-
-    const data = await response.json();
-    console.log(data);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -119,37 +99,33 @@ export default function ProjectSubmissionForm({
 
 
     try {
-        
+
+      const responseBlob = await fetch(`/api/listBlobs?prefix=${projectName}`)
+      if (!responseBlob.ok) {
+        throw new Error('Failed to fetch blobs')
+      }
+      const data = await responseBlob.json()
+      const blobs = data.blobs
+
+      for (const blob of blobs) {
+        const responseDel = await fetch(`/api/deleteBlob`, {
+          method: "DELETE",
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({"url": blob.url})
+        })
+          
+      }
+
+
       // Use Promise.all to wait for all file uploads to complete
       await Promise.all(familyMembers.map(async (member) => {
         if (member.cedulaFile !== "") {
           const memberCedula = member.cedulaFile;
 
           if (memberCedula instanceof File) {
-
-            const response = await fetch(`/api/listBlobs?prefix=${projectName}`)
-            if (!response.ok) {
-              throw new Error('Failed to fetch blobs')
-            }
-            const data = await response.json()
-            const blobs = data.blobs
-  
-            const memberUrl = blobs.find(object => object.pathname == `Proyecto ${projectName}/${member.nombre}`);
-  
-            if (memberUrl != undefined) {
-              const response = await fetch(`/api/deleteBlob`, {
-                method: "DELETE",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({"url": memberUrl.url})
-              })
-  
-              const result = await response.json()
-              console.log(result)
-            }
-
-            const blobResponse = await uploadFile(memberCedula, member.nombre, projectName);
+            const blobResponse = await uploadFile(memberCedula, memberCedula.name, projectName);
           
             if (blobResponse) {
               console.log("La blob respuesta supongo", blobResponse);
@@ -210,8 +186,7 @@ export default function ProjectSubmissionForm({
       }
 
       const result = await response.json();
-      await handleTestNotification()
-      SendEmails(formDataAdmin.analistaIPSUM, formDataAdmin.ingenieroAsignado, userData.userName, projectName)
+      SendEmails(idProyecto, userData.userName, projectName)
       toast.success("Proyecto actualizado exitosamente!");
       router.refresh(); // Refresh the page
       

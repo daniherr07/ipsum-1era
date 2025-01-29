@@ -11,6 +11,8 @@ import 'react-confirm-alert/src/react-confirm-alert.css'
 import { useProtectedContext } from '@/app/context/ProtectedContext'
 import { useFetchBackend } from '@/hooks/useFetchApi';
 import { UseUploadBlob } from '@/hooks/useUploadBlob';
+import jsPDF from "jspdf"
+import "jspdf-autotable"
 
 
 export default function Card({item, bitData, handleClick, handleColor}) {
@@ -193,12 +195,9 @@ function GeneralInfo({item, bitData, userData, handleClick, handleColor}){
           {item.cedula}
           </span>
         </div>
-        <button className={styles.copyButton}>
-          Copiar info
-          <svg className={styles.copyIcon} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 4V16C8 17.1 8.9 18 10 18H18C19.1 18 20 17.1 20 16V7.8C20 7.3 19.8 6.8 19.4 6.4L17.6 4.6C17.2 4.2 16.7 4 16.2 4H10C8.9 4 8 4.9 8 6ZM16 5.5L18.5 8H16V5.5ZM4 4H6V20H18V22H6C4.9 22 4 21.1 4 20V4Z" fill="currentColor"/>
-          </svg>
-        </button>
+
+      <PDFDownloadButton data={item}/>
+
       </header>
 
       {/* Main Content */}
@@ -275,8 +274,8 @@ function GeneralInfo({item, bitData, userData, handleClick, handleColor}){
                   Análisis
                 </option>
 
-                <option value="Técnico">
-                  Técnico
+                <option value="Arquitecto">
+                  Arquitecto
                 </option>
 
             </select>
@@ -538,6 +537,83 @@ function AddBitacoraEntry({ onClose, userData, proyecto_id, item, handleClick, h
     </div>
   )
 }
+
+function PDFDownloadButton({ data }) {
+  const formatText = (text) => {
+    return text
+      .split(/(?=[A-Z])/)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ")
+  }
+
+  const downloadPDF = () => {
+    const doc = new jsPDF()
+    const pageWidth = doc.internal.pageSize.width
+    const pageHeight = doc.internal.pageSize.height
+
+    // Set title
+    doc.setFont("helvetica", "bold")
+    doc.setFontSize(20)
+    doc.text(`Información de: ${data.nombreProyecto}`, pageWidth / 2, 15, { align: "center" })
+
+    // Prepare table data
+    const tableData = Object.entries(data)
+      .filter(([key]) => key !== "id")
+      .filter(([key]) => key !== "estadoColor")
+      .map(([key, value]) => [formatText(key), formatText(value.toString())])
+
+    // Calculate table width (80% of page width)
+    const tableWidth = pageWidth * 0.8
+
+    // Generate table
+    doc.autoTable({
+      startY: 25,
+      head: [["Campo", "Descripción"]],
+      body: tableData,
+      theme: "grid",
+      styles: {
+        fontSize: 10,
+        cellPadding: 2,
+        overflow: "linebreak",
+        halign: "left",
+      },
+      columnStyles: {
+        0: { fontStyle: "bold", cellWidth: tableWidth * 0.35 },
+        1: { cellWidth: tableWidth * 0.65 },
+      },
+      headStyles: {
+        fillColor: [0, 88, 177], // A nice blue color for the header
+        textColor: 255, // White text for better contrast
+        fontStyle: 'bold'
+      },
+      alternateRowStyles: { fillColor: [240, 240, 240] },
+      margin: { left: (pageWidth - tableWidth) / 2, right: (pageWidth - tableWidth) / 2 },
+      didDrawPage: (data) => {
+        // Ensure content fits on one page
+        if (data.cursor.y > pageHeight - 20) {
+          doc.deletePage(doc.internal.getNumberOfPages())
+          doc.addPage()
+          doc.setFontSize(16)
+          doc.text("Project Information", pageWidth / 2, 15, { align: "center" })
+          data.cursor.y = 25
+        }
+      },
+    })
+
+    doc.save(`${data.nombreProyecto}`)
+  }
+
+
+  return (
+    <button className={styles.copyButton} onClick={downloadPDF}>
+    Descargar Info
+    <svg className={styles.copyIcon} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 4V16C8 17.1 8.9 18 10 18H18C19.1 18 20 17.1 20 16V7.8C20 7.3 19.8 6.8 19.4 6.4L17.6 4.6C17.2 4.2 16.7 4 16.2 4H10C8.9 4 8 4.9 8 6ZM16 5.5L18.5 8H16V5.5ZM4 4H6V20H18V22H6C4.9 22 4 21.1 4 20V4Z" fill="currentColor"/>
+    </svg>
+  </button>
+  )
+}
+
 
 function dateConverter(date){
   const newDate = new Date(date).toLocaleString();

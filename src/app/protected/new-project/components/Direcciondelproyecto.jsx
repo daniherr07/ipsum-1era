@@ -184,11 +184,6 @@ export default function DireccionDelProyecto({directionData, setDirectionData}) 
 
 
                 <div className={styles.cadastralGroup}>
-                    <div className={styles.uploadSection}>
-                        <button className={styles.uploadButton}>
-                            Cargar Plano ↑
-                        </button>
-                    </div>
                     
                     <div className={styles.cadastralNumber}>
                         <label>Número de Plano Catastro</label>

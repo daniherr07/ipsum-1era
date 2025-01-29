@@ -7,10 +7,11 @@ import styles from '../styles/page.module.css'
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useFetchBackend } from '@/hooks/useFetchApi'
+import { handleChange } from '@/utils/handleChange'
 
 
 export default function AddUser() {
-  const roles = ["Ingeniero", "Analista", "Admin", "Root", "Promotor"]
+  const roles = ["Ingeniero", "Analista", "Admin", "Root", "Promotor", "Arquitecto"]
   const router = useRouter();
 
   const newUserSubmit = () => {
@@ -57,14 +58,11 @@ function AddUserModal({ onClose, roles, router }) {
     }
     const response = await useFetchBackend("addUser", "POST", userEdit)
 
-    if (!response.ok) {
-      const result = await response.json()
+    if (response?.errno) {
       
-      if (result.msj) {
-        return toast.error(result.msj)
-      }
+      return toast("Error al guardar usuarios")
 
-      throw new Error('Error al guardar el proyecto');
+      
     }
 
     // Reload page here
