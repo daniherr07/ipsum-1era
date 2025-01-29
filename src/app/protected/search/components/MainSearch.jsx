@@ -5,6 +5,7 @@ import style from './mainSearch.module.css'
 import Card from './Card'
 import { useEffect } from 'react'
 import { useFetchBackend } from '@/hooks/useFetchApi'
+import { useProtectedContext } from '@/app/context/ProtectedContext'
 
 
 
@@ -16,6 +17,34 @@ export default function MainSearch({label, value, isDisabled, etapa_id, tipo_bon
     const [id, setId] = useState(null)
     const [bitData, setBitData] = useState()
     const [order, setOrder] = useState("asc")
+    const userData = useProtectedContext();
+    const role = userData.role
+    let filterRole;
+    let needFilter = false;
+
+    switch (role) {
+        case "Analista":
+            needFilter = true
+            filterRole = "analista_asigna_ipsum_id"
+            break;
+
+        case "Promotor":
+            needFilter = true;
+            filterRole = "promotor_interno_id"
+            break;
+
+        case "Ingeniero":
+            needFilter = true;
+            filterRole = "ingeniero_id"
+            break;
+
+        case "Arquitecto":
+            needFilter = true;
+            filterRole = "arquitecto_id"
+            break;
+        default:
+            break;
+    }
 
 
     
@@ -31,10 +60,10 @@ export default function MainSearch({label, value, isDisabled, etapa_id, tipo_bon
                   
     }
 
-
     useEffect(() => {
-        useFetchBackend(`projectNames?label=${label}&value=${value}&order=${order}&isDisabled=${isDisabled}&etapa_id=${etapa_id}&tipo_bono_id=${tipo_bono_id}`, "GET")
+        useFetchBackend(`projectNames?label=${label}&value=${value}&order=${order}&isDisabled=${isDisabled}&etapa_id=${etapa_id}&tipo_bono_id=${tipo_bono_id}&filter_role=${filterRole}&user_id=${userData.id}`, "GET")
             .then((data) => {
+                console.log(data)
                 setPName(data)
                 setLoading(false)
             })

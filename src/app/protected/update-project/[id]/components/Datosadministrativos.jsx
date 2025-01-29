@@ -207,6 +207,9 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 className={styles.select}
                             >
                                 <option value="">Seleccione un constructor</option>
+                                <option value="pendiente">
+                                        Pendiente
+                                </option>
                                 {data.Constructor.map((item, key) => (
                                     <option key={key} value={item.localId}>
                                         {`${item.Nombre} ${item.Apellido_1} ${item.Apellido_2}`} {item.activated == 0 && "(Desactivado)"}
@@ -266,6 +269,9 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 className={styles.select}
                             >
                                 <option value="">Seleccione un promotor</option>
+                                <option value="pendiente">
+                                        Pendiente
+                                </option>
                                 {data.Promotor_Ipsum.map((promotor, key) => (
                                     <option key={key} value={promotor.localID}>
                                         {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`} {promotor.activated == 0 && "(Desactivado)"}
@@ -349,6 +355,9 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 className={styles.select}
                             >
                                 <option value="">Seleccione un Ingeniero</option>
+                                <option value="pendiente">
+                                        Pendiente
+                                </option>
                                 {data.Ingeniero.map((promotor, key) => (
                                     <option key={key} value={promotor.localID}>
                                         {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`} {promotor.activated == 0 && "(Desactivado)"}

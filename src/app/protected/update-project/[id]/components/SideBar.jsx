@@ -23,7 +23,19 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
   const userData = useProtectedContext();
   const [page, setPage] = useState(1)
   const [deletedMembers, setDeletedMembers] = useState([])
-  console.log("Subetapa anterior desde el sideBar", projectDataOld.subetapa_nombre)
+  
+  const isAdminOrRoot = 
+  userData.role == 'Admin' 
+  || 
+  userData.role == 'Root' 
+  ||
+  userData.role == 'Analista Admin'
+  ||
+  userData.role == 'Ingeniero Admin'
+  ||
+  userData.role == 'Arquitecto Admin'
+  ? true : false;
+
 
   const [projectData, setProjectData] = useState({
     idProyecto: formDataAdminOld.proyecto_id,
@@ -65,25 +77,25 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
     distrito: directionDataOld[0].distrito,
     otrasSenas: directionDataOld[0].senas_descripcion,
     numeroPlanoCatastro: directionDataOld[0].numero_plano_catastro,
-    loteTipoIdentificacion: directionDataOld[0].tipo_propietario_id ,
+    loteTipoIdentificacion: directionDataOld[0].tipo_propietario_id == null ? "pendiente" : directionDataOld[0].tipo_propietario_id,
     loteIdentificacion: directionDataOld[0].propietario_cedula,
     finca: directionDataOld[0].numero_finca,
   });
 
   const [formDataAdmin, setFormDataAdmin] = useState({
     entidad: formDataAdminOld.entidad_id,
-    entidadSecundaria: formDataAdminOld.centro_negocio_id,
+    entidadSecundaria: formDataAdminOld.centro_negocio_id == null ? "pendiente" : formDataAdminOld.centro_negocio_id,
     apc: formDataAdminOld.codigo_apc,
     cfia: formDataAdminOld.codigo_cfia,
-    analistaEntidad: formDataAdminOld.analista_entidad_id,
-    analistaIPSUM: formDataAdminOld.analista_ipsum_id,
-    arquitecto: formDataAdminOld.arquitecto_id,
-    Promotor_Ipsum: formDataAdminOld.promotor_interno_id,
-    fiscalAsignado: formDataAdminOld.fiscal_id,
-    presupuesto: formDataAdminOld.presupuesto,
-    avaluo: formDataAdminOld.avaluo,
-    ingenieroAsignado: formDataAdminOld.ingeniero_id,
-    constructor: formDataAdminOld.constructor_id
+    analistaEntidad: formDataAdminOld.analista_entidad_id == null ? "pendiente" : formDataAdminOld.analista_entidad_id,
+    analistaIPSUM: formDataAdminOld.analista_ipsum_id == null ? "pendiente" : formDataAdminOld.analista_ipsum_id,
+    arquitecto: formDataAdminOld.arquitecto_id == null ? "pendiente" : formDataAdminOld.arquitecto_id,
+    Promotor_Ipsum: formDataAdminOld.promotor_interno_id == null ? "pendiente" : formDataAdminOld.promotor_interno_id,
+    fiscalAsignado: formDataAdminOld.fiscal_id == null ? "pendiente" : formDataAdminOld.fiscal_id,
+    presupuesto: formDataAdminOld.presupuesto == null ? "" : formDataAdminOld.presupuesto, 
+    avaluo: formDataAdminOld.avaluo == null ? "" : formDataAdminOld.avaluo,
+    ingenieroAsignado: formDataAdminOld.ingeniero_id == null ? "pendiente" : formDataAdminOld.ingeniero_id,
+    constructor: formDataAdminOld.constructor_id == null ? "pendiente" : formDataAdminOld.constructor_id
   });
 
   const getUpdatedData = () => {
@@ -170,18 +182,23 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
 
     <div className={style.finishBtns}>
       {
-        userData.role == "Root" &&/* Añadir otros usuarios despues */
+        (isAdminOrRoot || userData.role == "Ingeniero") &&/* Añadir otros usuarios despues */
         <UpdateProyectoStatus idProyecto={formDataAdminOld.proyecto_id} currentStatus={projectDataOld.activated} nombreProyecto={projectDataOld.proyecto_nombre}/>
       }
-      
-      <ProjectSubmissionForm
+
+      {
+        isAdminOrRoot &&
+        <ProjectSubmissionForm
         projectData={projectData}
         familyMembers={familyMembers}
         directionData={directionData}
         formDataAdmin={formDataAdmin}
         deletedMembers={deletedMembers}
         idProyecto={formDataAdminOld.proyecto_id}
-      />
+        />
+      }
+      
+
       <NextEtapa idProyecto={formDataAdminOld.proyecto_id} nombreProyecto={projectDataOld.proyecto_nombre} etapaAnterior={projectDataOld.etapa_nombre} subetapaAnterior={projectDataOld.subetapa_nombre} getUpdatedData={getUpdatedData} userData={userData}/>
 
     </div>

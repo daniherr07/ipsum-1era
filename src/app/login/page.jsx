@@ -18,10 +18,11 @@ export default function Login() {
         user: '',
         psw: '',
     });
+    const [loading, setLoading] = useState(false)
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+        setLoading(true)
         try {
             const response = await fetch('/api/login', {
                 method: 'POST',
@@ -35,19 +36,25 @@ export default function Login() {
             console.log(result);
 
             if (result.deactivated) {
+                setLoading(false)
                 return toast.error("Usuario desactivado, por favor activarlo antes de iniciar sesión")
             }
 
             if (result.toChange) {
+                setLoading(false)
                 router.push('/newUser');
             } else if (result.toHome) {
+                setLoading(false)
                 router.push(`/protected/home`);
             } else if (result.toError) {
+                setLoading(false)
                 toast.error("Error: Usuario o contraseña incorrectos");
             } else {
+                setLoading(false)
                 toast.error("Ocurrió un error inesperado");
             }
         } catch (error) {
+            setLoading(false)
             console.error("Error during login:", error);
             toast.error("Error: Usuario o contraseña incorrectos");
         }
@@ -85,11 +92,18 @@ export default function Login() {
                     />
 
 
-                    <Link href={"/forgetPassword"}>
-                    <p className={style.forget}>¿Olvidó la contraseña?</p>
+                    <Link href={"/forgetPassword"} className={style.forget}>
+                        <p className={style.forget}>¿Olvidó la contraseña?</p>
                     </Link>
+
+                    {
+                        loading ?
+                            <button className={style.submit} type='submit' disabled>Iniciando Sesión...</button>
+                        :
+                            <button className={style.submit} type='submit'>Iniciar Sesión</button>
+                    }
                     
-                    <button className={style.submit} type='submit'>Iniciar Sesión</button>
+                    
                 </form>
             </main>
         </div>

@@ -451,9 +451,6 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
                   {member.cedulaFile ? <a href={URL.createObjectURL(member.cedulaFile)} target="_blank">Ver cédula</a> : "No hay cédula"}
                 </td>
                 <td className={styles.tableCell}>
-                  
-                </td>
-                <td className={styles.tableCell}>
                   <div className={styles.actionGroup}>
                     <button className={styles.actionButton} onClick={() => editConfirm(member)}>✏️</button>
                     <button

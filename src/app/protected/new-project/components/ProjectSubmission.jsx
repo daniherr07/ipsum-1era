@@ -26,7 +26,7 @@ export default function ProjectSubmissionForm({
 
     //Validacion de errores
 
-    
+  
     if (projectData.bonoSeleccionado == "") {
       return toast.error('Seccion 1: Selecciona un tipo de bono');
     }
@@ -42,10 +42,6 @@ export default function ProjectSubmissionForm({
       return toast.error('Seccion 1: Selecciona un grupo para el proyecto');
     }
 
-    if (projectData.desc == "") {
-      return toast.error('Seccion 1: Añada una descripcion al proyecto');
-    }
-
     // Validate that there's at least one family member who is the head of the household
     const hasHeadOfHousehold = familyMembers.some(member => member.tipoMiembro == 'Jefe/a de Familia');
 
@@ -54,7 +50,7 @@ export default function ProjectSubmissionForm({
     }
 
     if (directionData.loteTipoIdentificacion == "") {
-      return toast.error('Seccion 3: Seleccione un tipo de identificacion para el dueño del lote');
+      return toast.error('Seccion 3: Seleccione un tipo de identificacion para el dueño del lote o seleccione "Pendiente"');
     }
 
     if (directionData.provincia == "") {
@@ -69,14 +65,6 @@ export default function ProjectSubmissionForm({
       return toast.error('Seccion 3: Seleccione un distrito');
     }
 
-    if (directionData.otrasSenas == "") {
-      return toast.error('Seccion 3: Añada otras señas a la direccion');
-    }
-
-    if (directionData.numeroPlanoCatastro == "") {
-      return toast.error('Seccion 3: Añada un numero de plano de catastro');
-    }
-
     if (formDataAdmin.entidad == "") {
       return toast.error('Seccion 4: Añada una entidad');
     }
@@ -85,12 +73,20 @@ export default function ProjectSubmissionForm({
       return toast.error('Seccion 4: Seleccione un analista de IPSUM');
     }
 
-    if (formDataAdmin.Promotor_Ipsum == "") {
-      return toast.error('Seccion 4: Seleccione un promotor de Ipsum');
+    if (formDataAdmin.constructor == "") {
+      return toast.error('Seccion 4: Seleccione un constructor o seleccione "Pendiente"');
     }
 
     if (formDataAdmin.ingenieroAsignado == "") {
-      return toast.error('Seccion 4: Seleccione un ingeniero');
+      return toast.error('Seccion 4: Seleccione un ingeniero o seleccione "Pendiente"');
+    }
+
+    if (formDataAdmin.arquitecto == "") {
+      return toast.error('Seccion 4: Seleccione un arquitecto o seleccione "Pendiente"');
+    }
+
+    if (formDataAdmin.Promotor_Ipsum == "") {
+      return toast.error('Seccion 4: Seleccione un promotor o seleccione "Pendiente"');
     }
 
     const headOfHousehold = familyMembers.find(member => member.tipoMiembro == 'Jefe/a de Familia');
@@ -137,7 +133,7 @@ export default function ProjectSubmissionForm({
         
       }
     }));
-
+    
     
 
     const submissionData = {
@@ -151,12 +147,14 @@ export default function ProjectSubmissionForm({
 
     try {
       const response = await useFetchBackend('saveData', 'POST', submissionData);
+
+      console.log(response)
       if (!response.ok) {
         return toast.error("Hubo un error, verifica los datos e intentalo más tarde")
       }
-      SendEmails(formDataAdmin.analistaIPSUM, formDataAdmin.ingenieroAsignado, userData.userName, projectName )
-      toast.success("Proyecto añadido exitosamente!")
-      router.refresh(); // Redirect to a success page
+      SendEmails(response.results.id, userData.userName, response.results.nombre )
+      toast.success("Proyecto añadido exitosamente! Redirigiendo a Editar Proyecto...")
+      router.push(`/protected/update-project/${response.results.id}`); // Redirect to a success page
     } catch (error) {
       console.error('Error:', error);
       toast.error("Hubo un error, verifica los datos e intentalo más tarde" + error) // Redirect to a success page

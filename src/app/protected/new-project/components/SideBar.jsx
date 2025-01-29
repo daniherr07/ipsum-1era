@@ -70,7 +70,8 @@ export default function AccordionMenu() {
     fiscalAsignado: '',
     presupuesto: '',
     avaluo: '',
-    ingenieroAsignado: ''
+    ingenieroAsignado: '',
+    constructor: ''
   });
 
   return (  

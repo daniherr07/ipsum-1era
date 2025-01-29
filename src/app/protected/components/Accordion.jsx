@@ -25,7 +25,17 @@ export default function Accordion({userData = {}}){
     const [windowBool, setWindowBool] = useState(false)
     const router = useRouter();
 
-    const isAdminOrRoot = userData.role == 'Admin' || userData.role == 'Root' ? true : false;
+    const isAdminOrRoot = 
+    userData.role == 'Admin' 
+    || 
+    userData.role == 'Root' 
+    ||
+    userData.role == 'Analista Admin'
+    ||
+    userData.role == 'Ingeniero Admin'
+    ||
+    userData.role == 'Arquitecto Admin'
+    ? true : false;
 
         const addSomethingFunction = () => {
           confirmAlert({

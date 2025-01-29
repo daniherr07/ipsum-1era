@@ -11,9 +11,6 @@ export default async function Search({searchParams}){
     const etapa_id = await searchWaited.etapa_id;
     const tipo_bono_id = await searchWaited.tipo_bono_id;
 
-    console.log(etapa_id)
-    console.log(tipo_bono_id)
-
     return(
         <>
             <NavBar></NavBar>

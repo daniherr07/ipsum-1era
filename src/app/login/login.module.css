@@ -46,6 +46,7 @@
         }
 
         & .forget{
+            width: fit-content;
             color: #03579B;
             place-self: end;
         }

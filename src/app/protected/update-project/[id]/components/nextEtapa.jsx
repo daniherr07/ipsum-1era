@@ -329,19 +329,29 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
           </div>
       </div>
 
-      <label htmlFor="">Descripción para bitacora</label>
-      <input type="text" style={{width: "80%"}} name='data' value={inputData.data} onChange={e => handleChange(e, setInputData)}/>
+      <label htmlFor="">Añadir entrada para bitácora:</label>
+
+      <textarea 
+      placeholder='(Escriba para añadir una entrada si lo desea)' 
+      name="data" 
+      id="data" 
+      value={inputData.data} 
+      onChange={e => handleChange(e, setInputData)} 
+      className={styles.bitacoraStyle}
+      cols={60}
+      rows={5}
+      ></textarea>
       {
         inputData.data != "" &&
         <>
-        <label htmlFor="color">Color </label>
+        <label htmlFor="color">Color: </label>
           <select
             name="color"
             id="color"
             value={inputData.color}
             className={styles.newModalInput}
             onChange={e => handleChange(e, setInputData)}
-            style={{width: "80%"}}
+            style={{width: "50%"}}
           >
               <option value="#03579B">
                 Azul:  Todo correcto
