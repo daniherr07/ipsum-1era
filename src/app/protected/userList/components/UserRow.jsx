@@ -14,7 +14,7 @@ import { handleChange } from '@/utils/handleChange';
 export default function UserRow({ user }) {
     const router = useRouter();
     const [editable, isEditable] = useState(false)
-    const roles = ["Ingeniero", "Analista", "Admin", "Root", "Promotor", "Arquitecto"] 
+    const roles = ["Ingeniero", "Analista", "Admin", "Root", "Promotor", "Arquitecto", "Analista Admin", "Ingeniero Admin", "Arquitecto Admin"]
     const [userEdit, setUser] = useState({
         id: user.id,
         lastName1: user.last_name1,

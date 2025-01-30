@@ -11,7 +11,7 @@ import { handleChange } from '@/utils/handleChange'
 
 
 export default function AddUser() {
-  const roles = ["Ingeniero", "Analista", "Admin", "Root", "Promotor", "Arquitecto"]
+  const roles = ["Ingeniero", "Analista", "Admin", "Root", "Promotor", "Arquitecto", "Analista Admin", "Ingeniero Admin", "Arquitecto Admin"]
   const router = useRouter();
 
   const newUserSubmit = () => {
