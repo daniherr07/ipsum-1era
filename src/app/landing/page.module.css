@@ -760,8 +760,11 @@
   
   .contactGrid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
     gap: 4rem;
+    justify-items: center;
+  }
+  .contacts{
+    justify-items: center;
   }
   
   .contactFormTitle,

@@ -79,7 +79,7 @@ export default function NavBar({logo = true}){
                                 
                                 <div className={style.footerNotification}>
                                     <p className={style.notisButton} onClick={setAllReaded}>Leer todos</p>
-                                    <p className={style.notisButton} onClick={deleteReaded}>Borrar leidos</p>
+                                    <p className={style.notisButton} onClick={deleteReaded}>Borrar leídos</p>
                                 </div>
                                 {
                                     (allNotis && allNotis.length > 0)

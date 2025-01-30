@@ -21,7 +21,8 @@ export default function IpsumConstruction() {
     {
       titulo: 'Otros proyectos',
       icono: <img src="/landing/Grua.svg" alt="Light blue building with wooden door" className={styles.icono} loading="lazy" decoding="async"/>,
-      alineacion: 'derecha'
+      alineacion: 'derecha',
+      href: "/otrosProyectos"
     }
   ]
   const scrollToServices = (e) => {
@@ -176,9 +177,9 @@ export default function IpsumConstruction() {
             <div className={`${styles.contenedorIcono} `} >
               {servicio.icono}
             </div>
-            <div className={`${styles.textoServicio}`}>
+            <div className={`${styles.textoServicio}`} onClick={() => window.location.href = servicio.href} style={{ cursor: 'pointer' }}>
               
-              <a href={servicio.href}>{servicio.titulo}</a>
+              {servicio.titulo}
               
             </div>
             
