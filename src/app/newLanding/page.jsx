@@ -21,7 +21,8 @@ export default function IpsumConstruction() {
     {
       titulo: 'Otros proyectos',
       icono: <img src="/landing/Grua.svg" alt="Light blue building with wooden door" className={styles.icono} loading="lazy" decoding="async"/>,
-      alineacion: 'derecha'
+      alineacion: 'derecha',
+      href: "/otrosProyectos"
     }
   ]
   const scrollToServices = (e) => {

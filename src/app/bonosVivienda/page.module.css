@@ -472,8 +472,11 @@
   
   .contactGrid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
     gap: 4rem;
+    justify-items: center;
+  }
+  .contacts{
+    justify-items: center;
   }
   
   .contactFormTitle,
@@ -551,6 +554,48 @@
     margin-bottom: 1.5rem;
     color: white;
     font-family: PT Sans;
+  }
+
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .contactGrid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  
+    .contactForm {
+      grid-template-columns: 1fr;
+    }
+  
+    .formInput {
+      grid-column: 1 / -1;
+    }
+  
+    .contactTitle {
+      font-size: 2rem;
+    }
+    .contactInfo{
+      justify-items: center;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .contactSection {
+      padding: 3rem 1rem;
+    }
+  
+    .contactTitle {
+      font-size: 1.75rem;
+    }
+  
+    .contactFormTitle,
+    .contactInfoTitle {
+      font-size: 1.25rem;
+    }
+    .contactInfo{
+      justify-items: center;
+    }
   }
 
   
