@@ -345,11 +345,19 @@
         padding: 10px;
         height: auto;
         max-height: 60vh;
+        
+        display: flex;
+        flex-direction: column;
+    }
+
+    .notisContent{
+        max-height: 60vh;
         overflow: auto;
         display: flex;
         flex-direction: column;
         gap: 10px;
     }
+
 
     .noti{
         display: flex;
@@ -371,6 +379,32 @@
         border-radius: 50%;
         width: 15px;
         height: 15px;
+    }
+
+    .footerNotification{
+        position: relative;
+        color: #fff;
+        place-self: center;
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        flex-direction: row;
+        place-content: center;
+        place-items: center;
+        gap: 1em;
+        padding-bottom: 10px;
+    }
+
+
+    .notisButton{
+        font-size: 1.1em;
+        text-align: center;
+        padding: 5px;
+        background-color: #fffffff1;
+        color: #0058b1;
+        border-radius: 8px;
+        box-shadow: 0 3px 4px 2px #00000025;
+        width: 80%;
     }
 
 
@@ -414,6 +448,10 @@
 
     .logo{
         display: none;
+    }
+
+    .floatingBox{
+        width: 70vw;
     }
   }
 

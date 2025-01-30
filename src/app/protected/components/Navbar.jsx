@@ -25,12 +25,23 @@ export default function NavBar({logo = true}){
         await useFetchBackend(`getAllNotis?user_id=${userData.id}`, "GET")
         .then(notisData => {setAllNotis(notisData)})
         .catch(error => console.log(error))
-
-        
     }
 
     const setReaded = async (id) => {
-        await useFetchBackend(`setReaded`, "POST", {id: id})
+        await useFetchBackend(`setReaded`, "POST", {id})
+        .then(() => {getAllNotis(); setUpdate(!update)})
+        .catch(error => console.log(error))
+    }
+
+    
+    const setAllReaded = async () => {
+        await useFetchBackend(`setAllReaded`, "POST", {id: userData.id})
+        .then(() => {getAllNotis(); setUpdate(!update)})
+        .catch(error => console.log(error))
+    }
+
+    const deleteReaded = async (id) => {
+        await useFetchBackend(`deleteReaded`, "POST", {id: userData.id})
         .then(() => {getAllNotis(); setUpdate(!update)})
         .catch(error => console.log(error))
     }
@@ -51,7 +62,7 @@ export default function NavBar({logo = true}){
 
             <nav className={style.nav}>
                 <div className={style.col1}>
-                    <p onClick={handleReturn} className={style.atrasButton}> &#129104; Atrás </p>
+                    <p onClick={handleReturn} className={style.atrasButton}> &lt; Atrás </p>
                 </div>
 
                 <div className={style.col2}>
@@ -65,27 +76,45 @@ export default function NavBar({logo = true}){
                         {
                             open ?
                             <div className={style.floatingBox}>
-
+                                
+                                <div className={style.footerNotification}>
+                                    <p className={style.notisButton} onClick={setAllReaded}>Leer todos</p>
+                                    <p className={style.notisButton} onClick={deleteReaded}>Borrar leidos</p>
+                                </div>
                                 {
-                                    notisSinLeer &&
-                                    notisSinLeer.map(noti => (
-                                        <div className={style.noti} key={noti.id} onClick={() => setReaded(noti.id)} style={{cursor: "pointer"}}>
-                                            <p className={style.notiText}>{noti.message}</p>
-                                            <div className={style.redCircle}></div>
+                                    (allNotis && allNotis.length > 0)
+                                    ?
+                                        <div className={style.notisContent}>
+                                        {
+                                            notisSinLeer &&
+                                            notisSinLeer.map(noti => (
+                                                <div className={style.noti} key={noti.id} onClick={() => setReaded(noti.id)} style={{cursor: "pointer"}}>
+                                                    <p className={style.notiText}>{noti.message}</p>
+                                                    <div className={style.redCircle}></div>
+                                                </div>
+                                            ))
+                                        }
+        
+                                        
+                                        {
+                                            allNotis &&
+                                            allNotis.map(noti => (
+                                                noti.leido == 1 &&
+                                                <div className={style.noti} key={noti.id}>
+                                                    <p className={style.notiText}>{noti.message}</p>
+                                                </div>
+                                            ))
+                                        }
                                         </div>
-                                    ))
+                                    :
+                                    <p style={{textAlign: "center"}}>Sin notificaciones </p>
+
                                 }
+
+
 
                                 
-                                {
-                                    allNotis &&
-                                    allNotis.map(noti => (
-                                        noti.leido == 1 &&
-                                        <div className={style.noti} key={noti.id}>
-                                            <p className={style.notiText}>{noti.message}</p>
-                                        </div>
-                                    ))
-                                }
+
                             </div>
                             :
                             null
