@@ -43,7 +43,7 @@ export default function AddFiscal({ onClose, router }) {
   
     return (
       <div className={style.newUserModal}>
-        <h1>Añadir Nuevo Fiscal</h1>
+        <h1 className={style.insertTitle}>Nuevo Fiscal</h1>
   
         <label htmlFor="nombre">Nombre: </label>
         <input

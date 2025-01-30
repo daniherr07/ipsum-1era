@@ -5,7 +5,7 @@ import Accordion from './Accordion';
 import { useProtectedContext } from '@/app/context/ProtectedContext';
 import { useEffect, useState } from 'react';
 import { useFetchBackend } from '@/hooks/useFetchApi';
-
+import { useRouter } from 'next/navigation';
 
 
 
@@ -15,6 +15,11 @@ export default function NavBar({logo = true}){
     const [allNotis, setAllNotis] = useState([])
     const [open, setOpen] = useState(false)
     const [update, setUpdate] = useState(true)
+    const router = useRouter()
+
+    const handleReturn = () => {
+        router.back()
+    }
 
     const getAllNotis = async () => {
         await useFetchBackend(`getAllNotis?user_id=${userData.id}`, "GET")
@@ -46,11 +51,7 @@ export default function NavBar({logo = true}){
 
             <nav className={style.nav}>
                 <div className={style.col1}>
-                    <form action="/api/home" method='POST' className={style.searchBar} style={logo == true ? null : {display: "none"}}>  
-                        <button type="submit" style={{background: "none", border: "none"}} className={style.logoContainer}>
-                                <Image src={'/logo.svg'} width={90} height={40} className={style.logo} alt='logo' />
-                        </button>
-                    </form>
+                    <p onClick={handleReturn} className={style.atrasButton}> &#129104; Atrás </p>
                 </div>
 
                 <div className={style.col2}>

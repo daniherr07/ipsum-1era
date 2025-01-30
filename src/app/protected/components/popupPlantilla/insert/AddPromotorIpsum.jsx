@@ -43,7 +43,7 @@ export default function AddPromotor({ onClose, router }) {
   
     return (
       <div className={style.newUserModal}>
-        <h1>Añadir Nuevo Promotor de Ipsum</h1>
+        <h1 className={style.insertTitle}>Nuevo Promotor de Ipsum</h1>
 
         <label htmlFor="nombre">Nombre: </label>
         <input

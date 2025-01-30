@@ -43,7 +43,7 @@ export default function AddSubBono({ onClose, router }) {
   
     return (
       <div className={style.newUserModal}>
-        <h1>Añadir Nuevo Bono</h1>
+        <h1 className={style.insertTitle}>Nuevo Bono</h1>
 
         <label htmlFor="tipo_bono_id">Elija una tipo de bono</label>
         <select 

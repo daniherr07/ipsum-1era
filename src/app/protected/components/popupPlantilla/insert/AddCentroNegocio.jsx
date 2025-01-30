@@ -59,7 +59,7 @@ export default function AddCentroNegocio({ onClose, router }) {
   
     return (
       <div className={style.newUserModal}>
-        <h1>Añadir Nuevo Centro de Negocio</h1>
+        <h1 className={style.insertTitle}>Nuevo Centro de Negocio</h1>
 
         <label htmlFor="entidad_id">Elija una entidad</label>
         <select 

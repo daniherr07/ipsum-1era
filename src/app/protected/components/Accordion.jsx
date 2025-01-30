@@ -183,7 +183,7 @@ export function AddSomething({ onClose, router, enterTo="Analista"}) {
   
     return (
       <div className={style.newUserModal}>
-        <h1 style={{marginBottom: "1em"}}>Ajustes</h1>
+        <h1 style={{marginBottom: "1em"}} className={style.ajustesTitle}>Ajustes</h1>
   
         <div className={style.filterSelectContainer}>
 

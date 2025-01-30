@@ -50,7 +50,7 @@ export default function AddConstructor({ onClose, router }) {
   
     return (
       <div className={style.newUserModal}>
-        <h1>Añadir Nuevo Constructor</h1>
+        <h1 className={style.insertTitle}>Nuevo Constructor</h1>
   
         <label htmlFor="nombre">Nombre: </label>
         <input

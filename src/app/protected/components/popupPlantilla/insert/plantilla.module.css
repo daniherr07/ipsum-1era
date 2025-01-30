@@ -53,13 +53,35 @@
   }
 
   @media (max-width: 900px){
-    .modal{
-      width: 90vw;
-      padding: 4em;
-    }
 
     .newUserModal{
-      width: 90vw;
-      padding: 4em;
+      width: 100%;
     }
+
+    .newModalInput{
+      width: 100%;
+    }
+    
+
+    .insertTitle{
+      font-size: 30px;
+      text-align: center;
+    }
+
+    .modalBtns{
+      width: 100%;
+      text-align: center;
+      place-content: center;
+      margin-top: 3em;
+    }
+
+    .modalUpdate{
+      width: 50%;
+    }
+    
+    .modalCancel{
+      width: 50%;
+    }
+
+    
   }

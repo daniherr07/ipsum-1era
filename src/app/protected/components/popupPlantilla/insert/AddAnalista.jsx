@@ -64,7 +64,7 @@ export default function AddAnalista({ onClose, router }) {
   
     return (
       <div className={style.newUserModal}>
-        <h1>Añadir Nuevo Analista de Entidad</h1>
+        <h1 className={style.insertTitle}>Analista de Entidad</h1>
 
 
         <label htmlFor="entidad_id">Elija una entidad</label>

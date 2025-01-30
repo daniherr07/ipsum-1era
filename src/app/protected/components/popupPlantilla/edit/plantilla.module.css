@@ -142,9 +142,8 @@
 
   .modalBtns{
     display: flex;
-    gap: 1em;
+    width: 100%;
     place-content: center;
-    margin-top: 1em;
   }
 
   .modalUpdate{
@@ -202,19 +201,18 @@
   }
 
   @media (max-width: 900px){
-    .modal{
-      width: 90vw;
-      padding: 4em;
+    .tableContainer{
+      width: 90%;
     }
 
-    .newUserModal{
-      width: 90vw;
-      padding: 4em;
+    .modalCancel{
+      width: 100%;
+    }
+
+    .cell{
+      text-align: center;
+    }
+    .btn{
+      place-self: center;
     }
   }
-
-@media (max-width: 768px){
-  .container{
-    padding: 0;
-  }
-}

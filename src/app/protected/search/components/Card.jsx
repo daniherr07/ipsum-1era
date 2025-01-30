@@ -556,11 +556,16 @@ function PDFDownloadButton({ data }) {
     doc.setFontSize(20)
     doc.text(`Información de: ${data.nombreProyecto}`, pageWidth / 2, 15, { align: "center" })
 
+    console.log(data)
+
     // Prepare table data
     const tableData = Object.entries(data)
       .filter(([key]) => key !== "id")
       .filter(([key]) => key !== "estadoColor")
-      .map(([key, value]) => [formatText(key), (value == null || value == "" || value == " " || value == undefined) ?  formatText("Sin asignar") : formatText(value.toString())])
+      .map(([key, value]) => [formatText(key), 
+      (value == null || value == "" || value == " " || value == undefined) ?  formatText("Sin asignar") : 
+      (key == "fechaIngreso") ? formatText(value.toString().split("T")[0]) :
+      formatText(value.toString())])
 
     // Calculate table width (80% of page width)
     const tableWidth = pageWidth * 0.8
