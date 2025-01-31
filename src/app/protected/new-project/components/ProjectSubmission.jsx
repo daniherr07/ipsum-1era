@@ -143,6 +143,8 @@ export default function ProjectSubmissionForm({
       formDataAdmin
     };
 
+    console.log(submissionData)
+
     
 
     try {

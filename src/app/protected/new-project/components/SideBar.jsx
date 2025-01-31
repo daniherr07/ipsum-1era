@@ -76,8 +76,6 @@ export default function AccordionMenu() {
 
   return (  
     <>
-    <h1 className={style.sectionTitle}>Nuevo Proyecto</h1>
-
     <aside className={style.accordioncontainer}>
       
       <ul>

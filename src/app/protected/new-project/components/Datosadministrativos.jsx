@@ -31,6 +31,8 @@ export default function DatosAdministrativos({formData, setFormData}) {
     const [analistasEntidad, setAnalistasEntidad] = useState([]);
     const [arquitecto, setArquitecto] = useState([]);
 
+    console.log(data.Constructor)
+
 
     useEffect(() => {
        useFetchBackend("getAdminData", "GET")
@@ -50,7 +52,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        console.log(name)
+        console.log(name, value)
 
         if (value == "" || value == "otro") {
             switch (name) {
@@ -211,7 +213,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 <option value="">Seleccione un constructor</option>
                                 <option value="pendiente">Pendiente</option>
                                 {data.Constructor.map((item, key) => (
-                                    <option key={key} value={item.localId}>
+                                    <option key={key} value={item.localID}>
                                         {`${item.Nombre} ${item.Apellido_1} ${item.Apellido_2}`} {item.activated == 0 && "(Desactivado)"}
                                     </option>
                                 ))}

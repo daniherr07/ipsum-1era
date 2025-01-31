@@ -38,9 +38,13 @@ export default function Accordion({userData = {}}){
     ? true : false;
 
         const addSomethingFunction = () => {
-          confirmAlert({
+          confirmAlert(
+            
+            {
+            closeOnClickOutside: true,
             customUI: ({ onClose }) => <AddSomething onClose={onClose} router={router}/>,
-          })
+            },
+            )
         }
  
     useEffect(() => {

@@ -16,6 +16,7 @@ export default function AddUser() {
 
   const newUserSubmit = () => {
     confirmAlert({
+      closeOnClickOutside: true,
       customUI: ({ onClose }) => <AddUserModal onClose={onClose} roles={roles} router={router}/>,
     })
   }
