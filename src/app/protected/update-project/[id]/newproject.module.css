@@ -18,7 +18,9 @@
 
 .sectionTitle{
     position: absolute;
-    top: 10vh;
+    bottom: 1em;
+    left: 1em;
+    font-size: 1.15em;
 }
 .sectionTitle2{
     position: absolute;
@@ -291,6 +293,8 @@
     border-radius: 0.25rem;
     border: none;
     cursor: pointer;
+    width: 20%;
+    text-align: center;
   }
   
   .button:hover {
@@ -327,6 +331,7 @@
   
   .deleteButton {
     color: #ef4444;
+
   }
   
   .uploadGroup {
@@ -368,6 +373,9 @@
     width: 20vw;
     height: 5vh;
     font-size: 1rem;
+    display: flex;
+    place-content: center;
+    place-items: center;
   }
 
   .saveButton:hover{
@@ -384,6 +392,9 @@
     width: 20vw;
     height: 5vh;
     font-size: 1rem;
+    display: flex;
+    place-content: center;
+    place-items: center;
   }
 
   .deleteProyectoBtn{
@@ -395,6 +406,9 @@
     width: 20vw;
     height: 5vh;
     font-size: 1rem;
+    display: flex;
+    place-content: center;
+    place-items: center;
 
     &:hover{
       cursor: pointer;
@@ -459,14 +473,15 @@
   }
 
   .newUserModal{
-    border: 1px solid #0068bd83;
+    box-shadow: 0 2px 3px 1px #00000049;
     padding: 1vw;
     border-radius: 11px;
     background-color: #fff;
     display: flex;
     flex-direction: column;
     gap: 1em;
-    width: 50vw;
+    width: 70vw;
+    height: 70vh;
     place-content: center;
     place-items: center;
   }
@@ -481,10 +496,35 @@
     gap: 1em;
   }
 
+  .bitacoraStyle{
+    width: 80%;
+  }
+
 
   @media (max-width: 800px) {
+
+    .button {
+      display: flex;
+      flex-direction: column;
+      place-content: center;
+      place-items: center
+    }
+
+    .itemleft{
+      width: 5.2em !important;
+      height: 5.5em !important;
+    }
+
+    .accordioncontainer{
+      & ul{
+        gap: 10px !important;
+        margin-left: -2px;
+      }
+    }
     .sectionTitle{
       position: static;
+      margin-top: 2em;
+      margin-bottom: -1.6em;
     }
 
     .sectionTitle2{
@@ -540,13 +580,11 @@
     }
 
     .saveButton{
-      display: flex;
-      place-content: center;
-      place-items: center;
       position: relative;
       flex: 1;
       width: 100%;
       height: 100%;
+      text-align: center;
     }
 
     .deleteProyectoBtn{
@@ -565,7 +603,7 @@
 
     .newUserModal{
       width: 90vw;
-      height: 50vh;
+      height: 90vh;
       display: flex;
       flex-direction: column;
       place-content: space-around;
@@ -574,9 +612,6 @@
   
 
     .nextEtapaBtn{
-      display: flex;
-      place-content: center;
-      place-items: center;
       flex: 1;
       position: relative;
       width: 100%;
@@ -618,6 +653,15 @@
   
     .formGrid2Col {
       grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+
+  @media (max-height: 730px) {
+    .accordioncontainer{
+      & ul{
+        gap: 1em;
+      }
     }
   }
 

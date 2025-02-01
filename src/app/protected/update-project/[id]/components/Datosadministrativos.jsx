@@ -61,12 +61,15 @@ export default function DatosAdministrativos({formData, setFormData}) {
                     break;
                 case "entidad":
                     addSomethingFunction("Entidad")
+
                     break;
                 case "entidadSecundaria":
                     addSomethingFunction("CentroNegocio")
+
                     break;
                 case "constructor":
                     addSomethingFunction("Constructor")
+
                     break;
                 case "Promotor_Ipsum":
                     addSomethingFunction("Promotor")
@@ -75,25 +78,24 @@ export default function DatosAdministrativos({formData, setFormData}) {
                 case "analistaEntidad":
                     addSomethingFunction("Analista")
                     break;
-                default:
-                    
-                    break;
             }
             
-        }
-
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-
-        if (name === 'entidad') {
+        } else {
             setFormData(prevState => ({
                 ...prevState,
-                entidadSecundaria: '',
-                analistaEntidad: '',
+                [name]: value
             }));
+    
+            if (name === 'entidad') {
+                setFormData(prevState => ({
+                    ...prevState,
+                    entidadSecundaria: '',
+                    analistaEntidad: '',
+                }));
+            }
         }
+
+
     };
 
     const updateCentrosNegocio = (entidadId) => {

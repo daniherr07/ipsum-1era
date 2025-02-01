@@ -8,17 +8,15 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import { useFetchBackend } from '@/hooks/useFetchApi';
 import { handleChange } from '@/utils/handleChange';
-import SendEmails from './SendEmails';
 
 export default function NextEtapa({idProyecto, nombreProyecto, etapaAnterior, subetapaAnterior, getUpdatedData, userData}) {
   const router = useRouter();
   const emailData = getUpdatedData()
 
-  console.log("Subetapa anterior desde la raiz", subetapaAnterior)
-
   const etapaPopup = (e) => {
     e.preventDefault()
     confirmAlert({
+      closeOnClickOutside: false,
       customUI: ({ onClose }) => 
       <AddUserModal 
         onClose={onClose} 
@@ -321,6 +319,14 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
       subetapaCorreo = siguienteEtapa && siguienteEtapa.nombre
     }
 
+    if (selectSubetapa.manual && selectSubetapa.etapa == "") {
+      return toast.error("Por favor elija una etapa")
+    }
+
+    if (selectSubetapa.manual && selectSubetapa.subetapa == "") {
+      return toast.error("Por favor elija una subetapa")
+    }
+
     const newEntryData = {
       usuario: userData.id, 
       proyecto: idProyecto,
@@ -368,14 +374,14 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
     toast.success("Etapa exitosamente actualizada")
 
     onClose(); // Close the modal
-    router.refresh(); // Refresh the page
+    router.push("/protected/home"); // Refresh the page
   }
 
 
 
   return (
     <div className={styles.newUserModal}>
-      <h1>Editar etapa de: {nombreProyecto}</h1>
+      <h1 style={{textAlign: "center"}}>Editar etapa de: {nombreProyecto}</h1>
 
       {
         isAdminOrRoot &&

@@ -112,7 +112,7 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
 
   return (  
     <>
-    <h1 className={style.sectionTitle}>Editando proyecto: {projectDataOld.proyecto_nombre}</h1>
+    <h1 className={style.sectionTitle}>Proyecto: {projectDataOld.proyecto_nombre}</h1>
 
     <aside className={style.accordioncontainer}>
       

@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import styles from "./location-form.module.css";
 import { handleChange } from "@/utils/handleChange";
 
-export default function DireccionDelProyecto({directionData, setDirectionData}) {
-    const [provincias, setProvincias] = useState("")
-    const [cantones, setCantones] = useState("")
-    const [distritos, setDistritos] = useState("")
+export default function DireccionDelProyecto({directionData, setDirectionData, provincias, setProvincias, cantones, setCantones, distritos, setDistritos}) {
+
+
+
+    console.log(directionData)
     
 
     useEffect(() => {
@@ -17,7 +18,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData}) 
             setProvincias(data.data)
         })
     
-    })
+    }, [])
 
     const handleProvinciaChange = (e) => {
         let provinciaId = provincias.find(prov => prov.descripcion == e.target.value).idProvincia;
@@ -90,7 +91,9 @@ export default function DireccionDelProyecto({directionData, setDirectionData}) 
                             required
                         >
                             <option value="">Seleccione una provincia</option>
-                            {provincias.length > 0 && provincias.map((prov) => (
+                            {
+                            
+                            provincias.length > 0 && provincias.map((prov) => (
                                 <option key={prov.idProvincia} value={prov.descripcion}>
                                     {prov.descripcion}
                                 </option>
@@ -105,7 +108,6 @@ export default function DireccionDelProyecto({directionData, setDirectionData}) 
                             name="canton"
                             value={directionData.canton}
                             onChange={handleInputChange}
-                            disabled={!directionData.provincia}
                             required
                         >
                             <option value="">Seleccione un cantón</option>
@@ -126,7 +128,6 @@ export default function DireccionDelProyecto({directionData, setDirectionData}) 
                             name="distrito"
                             value={directionData.distrito}
                             onChange={handleInputChange}
-                            disabled={!directionData.canton}
                             required
                         >
                             <option value="">Seleccione un distrito</option>

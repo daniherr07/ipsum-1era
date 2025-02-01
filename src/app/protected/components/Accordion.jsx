@@ -1,6 +1,6 @@
 'use client'
 import style from './navbar.module.css'
-import { useState, useEffect, useReducer } from 'react'
+import { useState, useReducer } from 'react'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import AddAnalista from './popupPlantilla/insert/AddAnalista'
@@ -14,16 +14,37 @@ import AddPromotor from './popupPlantilla/insert/AddPromotorIpsum'
 import AddBono from './popupPlantilla/insert/AddBono'
 import AddSubBono from './popupPlantilla/insert/AddSubBono'
 import EditGeneric from './popupPlantilla/edit/EditGeneric'
+import { useProtectedContext } from '@/app/context/ProtectedContext'
+import Image from 'next/image'
+import { useDetectClickOutside } from 'react-detect-click-outside';
 
 
 
 
 
 
-export default function Accordion({userData = {}}){
-    const [opened, setOpened] = useState(false)
-    const [windowBool, setWindowBool] = useState(false)
+export default function Accordion() {
+    const userData = useProtectedContext()
     const router = useRouter();
+    const [open, setOpen] = useState(false)
+    const ref = useDetectClickOutside({ onTriggered: () => setOpen(false) });
+
+    const logout = async () => {
+        await fetch(`/api/logoff`, {
+            method: "POST",
+        });
+
+        router.push("/login")
+    }
+
+    const addSomethingFunction = () => {
+    confirmAlert(
+        {
+        closeOnClickOutside: false,
+        customUI: ({ onClose }) => <AddSomething onClose={onClose} router={router}/>,
+        },
+        )
+    }
 
     const isAdminOrRoot = 
     userData.role == 'Admin' 
@@ -37,146 +58,33 @@ export default function Accordion({userData = {}}){
     userData.role == 'Arquitecto Admin'
     ? true : false;
 
-        const addSomethingFunction = () => {
-          confirmAlert(
-            
-            {
-            closeOnClickOutside: true,
-            customUI: ({ onClose }) => <AddSomething onClose={onClose} router={router}/>,
-            },
-            )
-        }
- 
-    useEffect(() => {
-        setOpened(false)
-        
-        function handleResize() { 
-
-            if (window.innerWidth >= 768) {
-                setWindowBool(false)
-            } else{
-                setWindowBool(true)
-            }
-
-        }
-        
-        window.addEventListener("resize", handleResize)
-        
-        handleResize()
-
-        return () => window.removeEventListener("resize", handleResize)
-    }, [])
 
     return(
-    <>
-    <div className={style.accordion} 
-    style=
-    { opened ?
-    
-    windowBool ? 
-    //Abierto y en Celular
-    {right: "-19.6vw", width: "30vw", zIndex: "20", height: "100dvh"} 
-    :  
-    //Abierto y en Compu
-    {right: "-19.6vw", width: "19vw", zIndex: "20", height: "100dvh"} 
-    
-    : 
-    
-    windowBool ?  
-    //Cerrado y en Celular
-    {right: "-50vw", width: "30vw", zIndex: "20", height: "100dvh"} 
-    : 
+            <div className={style.settingsIcon} ref={ref} onClick={() => setOpen(!open)}>
+                <Image src={'/gear-solid.svg'} width={30} height={30} className={style.person} alt='person' style={{cursor: "pointer"}}/>
 
-    //Cerrado y en Compu
-    {right: "-50vw", width: "19vw", zIndex: "20", height: "100dvh"} 
-    
-    }>
-
-        
-
-        <ul className={style.options}>
-            <li className={style.option}>
-                <form action="/api/home" method='POST' >
-                    
-                    <button type="submit" style={{background: "none", border: "none"}}>
-                        <p className={style.option}>Inicio</p>
-                    </button>
-                </form>
-            </li>
-            {
-                isAdminOrRoot ? 
-                <li className={style.option}>
-                    <form action="/api/users" method='POST' >
-                    
-                        <button type="submit" style={{background: "none", border: "none"}}>
-                            <p className={style.option}>Usuarios</p>
-                        </button>
-                    </form>
-                </li>
-                :
-                null
-            }
-                
-
-            
-            <li className={style.option}>
-                <form action="/api/search" method='POST' >
-                
-                    <button type="submit" style={{background: "none", border: "none"}}>
-                        <p className={style.option}>Proyectos</p>
-                    </button>
-                </form>
-            </li>
-
-            <li className={style.option}>
-                <form action="/api/new-project" method='POST' >
-                
-                    <button type="submit" style={{background: "none", border: "none"}}>
-                        <p className={style.option}>Nuevo proyecto</p>
-                    </button>
-                </form>
-            </li>
-
-            <li className={style.option}>
-                <button type="submit" style={{background: "none", border: "none"}} onClick={addSomethingFunction}>
-                    <p className={style.option}>Ajustes</p>
-                </button>
-            </li>
-
-            <li className={style.option}>
-                <form action="/api/logoff" method='POST' >
-                
-                    <button type="submit" style={{background: "none", border: "none"}}>
-                        <p className={style.option}>Cerrar Sesión</p>
-                    </button>
-                </form>
-            </li>
-        </ul>
-
-
-    </div>
-        <img 
-                src={`${opened ? '/hamburger.svg' :'/hamburger.svg'}`} 
-                className={style.ham}
-                style={
-                    opened ?
-                    
-
-                    windowBool ?  
-                    {top: "1em", right: "-3.2em", zIndex: "100"} : 
-                    {top: "1em", right: "-3.2em", zIndex: "100"}
+                {
+                    open ?
+                    <div className={style.floatingBoxSettings}> 
+                        <div className={style.settings}>
+                            <p className={style.settingText} onClick={() => router.push("/protected/home")}>Buscar</p>
+                            <p className={style.settingText} onClick={() => router.push("/protected/search")}>Todos los proyectos</p>
+                            <p className={style.settingText} onClick={() => router.push("/protected/new-project")}>Nuevo proyecto</p>
+                            {
+                                isAdminOrRoot && <p className={style.settingText} onClick={() => router.push("/protected/userList")}>Usuarios</p>
+                            }
+                            <p className={style.settingText} onClick={addSomethingFunction}>Ajustes</p>
+                            <p className={style.settingText} onClick={logout}>Cerrar Sesión</p>
+                        </div>
+                    </div>
                     :
-                    windowBool ? 
-                    {top: "1em", right: "-3.2em", zIndex: "100"} : 
-                    {top: "1em", right: "-3.2em", zIndex: "100"}
+                    null
                 }
-                onClick={() => setOpened(!opened)} 
-                alt='hamburger'
-                />
-        
-    </>
+
+
+            </div>
+
     )
-    
 }
 
 export function AddSomething({ onClose, router, enterTo="Analista"}) {
@@ -349,4 +257,4 @@ export function AddSomething({ onClose, router, enterTo="Analista"}) {
 
     </div>
     )
-  }
+}

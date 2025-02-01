@@ -40,7 +40,7 @@ export default function Card({item, bitData, handleClick, handleColor}) {
           </button>
         </div>
 
-        {page == true && <GeneralInfo item={item} bitData={bitData} userData={userData} handleClick={handleClick} handleColor={handleColor} />}
+        {page == true && <GeneralInfo item={item} bitData={bitData} userData={userData} handleClick={handleClick} handleColor={handleColor}/>}
         {page == false && <PhotosCard item={item}/>}
       </>
     

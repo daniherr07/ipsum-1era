@@ -20,26 +20,21 @@ export default function MainSearch({label, value, isDisabled, etapa_id, tipo_bon
     const userData = useProtectedContext();
     const role = userData.role
     let filterRole;
-    let needFilter = false;
 
     switch (role) {
         case "Analista":
-            needFilter = true
             filterRole = "analista_asigna_ipsum_id"
             break;
 
         case "Promotor":
-            needFilter = true;
             filterRole = "promotor_interno_id"
             break;
 
         case "Ingeniero":
-            needFilter = true;
             filterRole = "ingeniero_id"
             break;
 
         case "Arquitecto":
-            needFilter = true;
             filterRole = "arquitecto_id"
             break;
         default:
@@ -54,7 +49,6 @@ export default function MainSearch({label, value, isDisabled, etapa_id, tipo_bon
             .then((data) => {
                 setData(data[0][0])
                 setBitData(data[1])
-                console.log(data)
                 setId(item.id)
         })
                   
@@ -67,7 +61,7 @@ export default function MainSearch({label, value, isDisabled, etapa_id, tipo_bon
                 setPName(data)
                 setLoading(false)
             })
-    }, [order])
+    }, [order, bitData])
 
     const handleColor = () => {
         setLoading(true)
@@ -78,8 +72,6 @@ export default function MainSearch({label, value, isDisabled, etapa_id, tipo_bon
             })
     } 
 
-    console.log(pName)
-
     return(
         <>
             { 
@@ -87,7 +79,15 @@ export default function MainSearch({label, value, isDisabled, etapa_id, tipo_bon
                     <div className={style.cardsContainerAll}>
                         {
                             isLoading ? <p>Loading...</p> :
+                            pName && 
+                            
+                            <>
                             <p>Encontrados: {Object.keys(pName).length}</p>
+
+                            <p>Etapa: </p>
+                            
+                            </>
+                            
                         }
 
                         <div className={style.filterSelectContainer}>

@@ -21,6 +21,7 @@ export default function UpdateProyectoStatus({idProyecto, currentStatus,nombrePr
   const etapaPopup = (e) => {
     e.preventDefault()
     confirmAlert({
+      closeOnClickOutside: false,
       customUI: ({ onClose }) => 
       <DeleteProyectoModal 
         onClose={onClose} 

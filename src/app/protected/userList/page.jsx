@@ -61,7 +61,7 @@ import { useFetchBackend } from "@/hooks/useFetchApi";
               </tr>
             </thead>
             <tbody>
-              <Suspense fallback={<p>Loading...</p>}>
+              <Suspense fallback={<tr><p>Loading...</p></tr> }>
                   {users && users.map(user => (
                     user.activated == 0 &&
                       <UserRow key={user.id} user={user} />

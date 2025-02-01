@@ -289,7 +289,7 @@
   }
 
   .newUserModal{
-    border: 1px solid #0068bd83;
+    box-shadow: 0 2px 3px 1px #00000049;
     padding: 1vw;
     border-radius: 11px;
     background-color: #fff;
@@ -297,6 +297,8 @@
     flex-direction: column;
     gap: 1em;
     width: fit-content;
+    width: 70vw;
+    height: 80vh;
     place-content: center;
     place-items: center;
     overflow: auto;
@@ -408,8 +410,54 @@
         cursor: pointer;
     }
 
+    .settingsIcon{
+        position: absolute;
+        right: -4em;
+        top: 0.57em;
+        border-radius: 8px;
+        box-shadow: 0 2px 3px 1px #00000049;
+        padding: 7px 10px ;
+    }
 
-  @media (max-width: 900px){
+    .floatingBoxSettings{
+        position: absolute;
+        z-index: 100000;
+        top: 130%;
+        right: -60% ;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 0 2px 3px 1px #00000049;
+        width: 14em;
+        padding: 10px;
+        height: auto;
+        max-height: 60vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .settings{
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+    }
+
+    .settingText{
+        font-size: 1.1em;
+        text-align: center;
+        padding: 5px;
+        background-color: #fffffff1;
+        color: #0058b1;
+        border-radius: 8px;
+        box-shadow: 0 3px 4px 2px #00000025;
+        width: 100%;
+        cursor: pointer;
+
+        &:hover{
+            background-color: #0058b10a;
+        }
+    }
+
+
+  @media (max-width: 900px ) or (max-height: 710px){
     .modal{
       width: 90vw;
       padding: 4em;
@@ -417,8 +465,8 @@
     }
 
     .newUserModal{
-      width: 90vw;
-      height: 90vh;
+      width: 90vw !important;
+      height: 90vh !important;
       display: flex;
       flex-direction: column;
       place-content: space-around;
@@ -454,6 +502,7 @@
     .floatingBox{
         width: 70vw;
     }
+
   }
 
 

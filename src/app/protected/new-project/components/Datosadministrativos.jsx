@@ -52,7 +52,6 @@ export default function DatosAdministrativos({formData, setFormData}) {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        console.log(name, value)
 
         if (value == "" || value == "otro") {
             switch (name) {
@@ -81,20 +80,22 @@ export default function DatosAdministrativos({formData, setFormData}) {
                     break;
             }
             
-        }
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-
-        if (name === 'entidad') {
+        } else{
             setFormData(prevState => ({
                 ...prevState,
-                entidadSecundaria: '',
-                analistaEntidad: '',
-                promotorEntidad: ''
+                [name]: value
             }));
+    
+            if (name === 'entidad') {
+                setFormData(prevState => ({
+                    ...prevState,
+                    entidadSecundaria: '',
+                    analistaEntidad: '',
+                    promotorEntidad: ''
+                }));
+            }
         }
+
     };
 
     const updateCentrosNegocio = (entidadId) => {
@@ -331,7 +332,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                     value={formData.presupuesto}
                                     onChange={handleInputChange}
                                     className={styles.input}
-                                    placeholder='9 200 0000'
+                                    placeholder='Ej: 9 200 0000'
                                 />
                             </div>
 
@@ -343,7 +344,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                     value={formData.avaluo}
                                     onChange={handleInputChange}
                                     className={styles.input}
-                                    placeholder='7 200 0000'
+                                    placeholder='Ej: 7 200 0000'
                                 />
                             </div>
                         </div>

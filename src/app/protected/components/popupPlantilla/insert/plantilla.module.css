@@ -40,6 +40,7 @@
     flex-direction: column;
     gap: 1em;
     width: 50vw;
+    height: 90vh;
     place-content: center;
     place-items: center;
   }
@@ -52,7 +53,7 @@
 
   }
 
-  @media (max-width: 900px){
+  @media (max-width: 900px ) or (max-height: 710px){
 
     .newUserModal{
       width: 100%;

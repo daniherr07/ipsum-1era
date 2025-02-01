@@ -133,3 +133,14 @@
         width: 100% !important;
     }
 }
+
+@media (max-height: 730px) {
+
+    .logo{
+        display: none;
+    }
+
+    .main{
+        bottom: -2em;
+    }
+}

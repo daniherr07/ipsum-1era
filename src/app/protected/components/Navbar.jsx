@@ -6,7 +6,7 @@ import { useProtectedContext } from '@/app/context/ProtectedContext';
 import { useEffect, useState } from 'react';
 import { useFetchBackend } from '@/hooks/useFetchApi';
 import { useRouter } from 'next/navigation';
-
+import { useDetectClickOutside } from 'react-detect-click-outside';
 
 
 export default function NavBar({logo = true}){
@@ -16,6 +16,7 @@ export default function NavBar({logo = true}){
     const [open, setOpen] = useState(false)
     const [update, setUpdate] = useState(true)
     const router = useRouter()
+    const ref = useDetectClickOutside({ onTriggered: () => setOpen(false) });
 
     const handleReturn = () => {
         router.back()
@@ -58,7 +59,7 @@ export default function NavBar({logo = true}){
 
     return(
         <div className={style.navContainer}>
-            <Accordion userData={userData}/>
+            <Accordion></Accordion>
 
             <nav className={style.nav}>
                 <div className={style.col1}>
@@ -69,7 +70,7 @@ export default function NavBar({logo = true}){
                     <p className={style.username}>{userData.userName}</p>
                     <Image src={'/person.svg'} width={20} height={20} className={style.person} alt='person'/>
 
-                    <div className={style.bellContainer} onClick={getAllNotis}>
+                    <div className={style.bellContainer} onClick={getAllNotis} ref={ref}>
                         <Image src={'/bell-solid.svg'} width={35} height={30} className={style.bellIcon} alt='person' onClick={() => setOpen(!open)} />
                         <p className={style.notificationsNumber}>{notisSinLeer && notisSinLeer.length}</p>
 

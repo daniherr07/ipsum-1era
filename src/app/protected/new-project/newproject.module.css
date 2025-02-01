@@ -362,6 +362,9 @@
     width: 20vw;
     height: 5vh;
     font-size: 1rem;
+    display: flex;
+    place-content: center;
+    place-items: center;
   }
 
   .saveButton:hover{
@@ -500,6 +503,12 @@
   }
 
 
-
+  @media (max-height: 730px) {
+    .accordioncontainer{
+      & ul{
+        gap: 1em;
+      }
+    }
+  }
 
 /* #endregion */

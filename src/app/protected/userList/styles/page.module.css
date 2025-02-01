@@ -122,7 +122,7 @@
   }
 
   .modal{
-    border: 1px solid #0068bd83;
+    box-shadow: 0 2px 3px 1px #00000049;
     padding: 1vw;
     border-radius: 11px;
     background-color: #fff;
@@ -175,7 +175,7 @@
   }
 
   .newUserModal{
-    border: 1px solid #0068bd83;
+    box-shadow: 0 2px 3px 1px #00000049;
     padding: 1vw;
     border-radius: 11px;
     background-color: #fff;
@@ -212,5 +212,13 @@
 @media (max-width: 768px){
   .container{
     padding: 0;
+  }
+}
+
+@media (max-height: 730px) {
+  .accordioncontainer{
+    & ul{
+      gap: 1em !important;
+    }
   }
 }

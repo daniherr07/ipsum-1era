@@ -14,6 +14,9 @@ import ProjectSubmissionForm from './ProjectSubmission';
 
 
 export default function AccordionMenu() {
+  const [provincias, setProvincias] = useState("")
+  const [cantones, setCantones] = useState("")
+  const [distritos, setDistritos] = useState("")
 
   const [page, setPage] = useState(1)
 
@@ -139,7 +142,16 @@ export default function AccordionMenu() {
 
     {page === 1 && <Datosdelproyecto projectData={projectData} setProjectData={setProjectData}/>}
     {page === 2 && <Miembrosdelafamilia formData={formData} setFormData={setFormData} familyMembers={familyMembers} setFamilyMembers={setFamilyMembers}/>}
-    {page === 3 && <Direcciondelproyecto directionData={directionData} setDirectionData={setDirectionData} />}
+    {page === 3 && <Direcciondelproyecto 
+                      directionData={directionData} 
+                      setDirectionData={setDirectionData} 
+                      provincias={provincias} 
+                      setProvincias={setProvincias} 
+                      cantones={cantones}
+                      setCantones={setCantones}
+                      distritos={distritos}
+                      setDistritos={setDistritos}
+                      />}
     {page === 4 && <Datosadministrativos formData={formDataAdmin} setFormData={setFormDataAdmin} />}
 
     <ProjectSubmissionForm
