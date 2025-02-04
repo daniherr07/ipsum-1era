@@ -28,7 +28,7 @@ export default function UserRow({ user }) {
 
     const submit = () => {
         confirmAlert({
-            closeOnClickOutside: true,
+            closeOnClickOutside: false,
             customUI: ({ onClose }) => {
                 return (
                     <div className={styles.modal}>

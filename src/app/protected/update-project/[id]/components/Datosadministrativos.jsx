@@ -183,7 +183,6 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                     value={formData.apc}
                                     onChange={handleInputChange}
                                     className={styles.input}
-                                    placeholder='123456'
                                 />
                             </div>
 
@@ -195,7 +194,6 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                     value={formData.cfia}
                                     onChange={handleInputChange}
                                     className={styles.input}
-                                    placeholder='OC-123456'
                                 />
                             </div>
 
@@ -334,7 +332,6 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                     value={formData.presupuesto}
                                     onChange={handleInputChange}
                                     className={styles.input}
-                                    placeholder='9 200 0000'
                                 />
                             </div>
 
@@ -346,7 +343,6 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                     value={formData.avaluo}
                                     onChange={handleInputChange}
                                     className={styles.input}
-                                    placeholder='7 200 0000'
                                 />
                             </div>
                         </div>

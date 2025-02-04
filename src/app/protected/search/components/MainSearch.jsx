@@ -6,6 +6,8 @@ import Card from './Card'
 import { useEffect } from 'react'
 import { useFetchBackend } from '@/hooks/useFetchApi'
 import { useProtectedContext } from '@/app/context/ProtectedContext'
+import { etapas } from './dataEtapas'
+import { dataOtros } from './data'
 
 
 
@@ -17,9 +19,32 @@ export default function MainSearch({label, value, isDisabled, etapa_id, tipo_bon
     const [id, setId] = useState(null)
     const [bitData, setBitData] = useState()
     const [order, setOrder] = useState("asc")
+    const [bonos, setBonos] = useState()
     const userData = useProtectedContext();
     const role = userData.role
     let filterRole;
+
+    let nombresEtapas = []
+    let nombresBonos = []
+    let nombreOtro = "N/A";
+    let valoresOtro = [];
+
+    if (etapa_id) {
+        etapa_id.split(",").forEach(element => {
+            nombresEtapas.push(etapas.find(etapa => etapa.id == element).nombre)
+        });
+    }
+
+    if (tipo_bono_id && bonos) {
+        tipo_bono_id.split(",").forEach(element => {
+            nombresBonos.push(bonos.find(bono => bono.id == element).nombre)
+        });
+    }
+
+    if (label) {
+        nombreOtro = dataOtros.find(elemento => elemento.value == label).label
+    }
+
 
     switch (role) {
         case "Analista":
@@ -63,6 +88,14 @@ export default function MainSearch({label, value, isDisabled, etapa_id, tipo_bon
             })
     }, [order, bitData])
 
+
+    useEffect(() => {
+        useFetchBackend(`getBonosSimple`, "GET")
+            .then((data) => {
+                setBonos(data)
+            })
+    }, [])
+
     const handleColor = () => {
         setLoading(true)
         useFetchBackend(`projectNames?label=${label}&value=${value}&order=${order}&isDisabled=${isDisabled}`, "GET")
@@ -84,7 +117,9 @@ export default function MainSearch({label, value, isDisabled, etapa_id, tipo_bon
                             <>
                             <p>Encontrados: {Object.keys(pName).length}</p>
 
-                            <p>Etapa: </p>
+                            <p>Etapa: {nombresEtapas.length > 1 ? nombresEtapas.join(", ") : "N/A"}</p>
+                            <p>Tipo de Bono: {nombresBonos.length > 1 ? nombresBonos.join(", ") : "N/A"}</p>
+                            <p>Otro: {nombreOtro}</p>
                             
                             </>
                             

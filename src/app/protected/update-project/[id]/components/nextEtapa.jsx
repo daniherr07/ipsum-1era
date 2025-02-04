@@ -289,8 +289,8 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
 
     const etapaEdit = {
       id: idProyecto,
-      etapa: selectSubetapa.etapa !== "" ? selectSubetapa.etapa : siguienteEtapa.id,
-      subetapa: selectSubetapa.subetapa !== "" ? selectSubetapa.subetapa : siguienteSubetapa.id
+      etapa: parseInt(selectSubetapa.etapa !== "" ? selectSubetapa.etapa : siguienteEtapa.id),
+      subetapa: parseInt(selectSubetapa.subetapa !== "" ? selectSubetapa.subetapa : siguienteSubetapa.id)
     }
 
     let subetapaCorreo
@@ -314,9 +314,9 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
     if (selectSubetapa.etapa != "") {
       const etapaNuevaSelect = etapaManual.find(etapa => etapa.id == selectSubetapa.etapa)
       const etapaNuevaSelectNombre = etapaNuevaSelect.nombre
-      subetapaCorreo = etapaNuevaSelectNombre
+      etapaCorreo = etapaNuevaSelectNombre
     } else {
-      subetapaCorreo = siguienteEtapa && siguienteEtapa.nombre
+      etapaCorreo = siguienteEtapa && siguienteEtapa.nombre
     }
 
     if (selectSubetapa.manual && selectSubetapa.etapa == "") {
