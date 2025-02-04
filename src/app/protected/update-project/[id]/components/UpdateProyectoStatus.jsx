@@ -194,12 +194,13 @@ function DeleteProyectoModal({ onClose, router, idProyecto, currentStatus, nombr
       
 
       <div className={styles.modalBtns}>
+      <button className={styles.modalUpdate} onClick={updateChanges}>
+          {currentStatus == 1 ? "Descartar" : "Activar"}
+        </button>
         <button onClick={onClose} className={styles.modalCancel}>
           Cancelar
         </button>
-        <button className={styles.modalUpdate} onClick={updateChanges}>
-          {currentStatus == 1 ? "Descartar" : "Activar"}
-        </button>
+
 
       </div>
     </div>
