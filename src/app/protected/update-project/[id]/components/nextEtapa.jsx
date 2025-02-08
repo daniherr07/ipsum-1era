@@ -510,13 +510,14 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
 
       
 
-        {
-          etapaAnterior != "Facturado" &&
-          <button className={styles.modalUpdate} onClick={updateChanges}>
-          Actualizar
-          </button>
-        }
+
         <div className={styles.modalBtns}>
+          {
+            etapaAnterior != "Facturado" &&
+            <button className={styles.modalUpdate} onClick={updateChanges}>
+            Actualizar
+            </button>
+          }
           <button onClick={onClose} className={styles.modalCancel}>
             Cancelar
           </button>

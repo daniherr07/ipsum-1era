@@ -67,7 +67,6 @@ import { useFetchBackend } from "@/hooks/useFetchApi";
                       <UserRow key={user.id} user={user} />
                   ))}
               </Suspense>
-
             </tbody>
           </table>
         </div>

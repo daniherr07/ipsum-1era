@@ -55,8 +55,8 @@ function PhotosCard({item}) {
   const [loading, setLoading] = useState(true);
   const [update, setUpdate] = useState(false)
 
-
   const deletePopup = (blob) => {
+    
     confirmAlert({
       customUI: ({ onClose, }) => {
         return (
@@ -67,7 +67,7 @@ function PhotosCard({item}) {
                     <button
                         className={styles.modalUpdate}
                         onClick={() => {
-                        deleteImage(blob.url);
+                        deleteImage(blob.pathname);
                         onClose();
                         }}
                     >
@@ -85,7 +85,7 @@ function PhotosCard({item}) {
                     onClick={onClose}
                     className={styles.modalDownload}
                     >
-                      <Link href={blob.downloadUrl} className={styles.linkText}>Descargar</Link>
+                      <Link href={blob.url} target='_blank' className={styles.linkText}>Abrir</Link>
                     </button>
 
                 </div>
@@ -101,13 +101,20 @@ function PhotosCard({item}) {
 
     const fetchBlobs = async () => {
       try {
-        const response = await fetch(`/api/listBlobs?prefix=${directoryName.replace(/Proyecto\s+/g, '')}`)
+        const response = await fetch(`/api/getFiles?prefix=${directoryName.replace(/Proyecto\s+/g, '')}`)
+
         if (!response.ok) {
-          throw new Error('Failed to fetch blobs')
+          if (response.route_not_found) {
+            return
+          } else{
+            console.log(response)
+            throw new Error('Failed to fetch blobs', response)
+          }
         }
+
         const data = await response.json()
         console.log(data)
-        setBlobs(data.blobs)
+        setBlobs(data.files)
       } catch (error) {
         console.error('Error fetching blobs:', error)
       } finally {
@@ -126,9 +133,9 @@ function PhotosCard({item}) {
       setFile(file);
     }
     
-    const blobResponse = await uploadFile(file, file.name, directoryName.replace(/Proyecto\s+/g, ''));
-      
-    if (blobResponse) {
+    const response = await uploadFile(file, file.name, directoryName.replace(/Proyecto\s+/g, ''));
+
+    if (response) {
       toast.success("Imagen subida correctamente!")
     } else {
       throw new Error(`Failed to upload file`, uploadError);
@@ -137,13 +144,13 @@ function PhotosCard({item}) {
     setUpdate(!update)
   };
 
-  const deleteImage = async (url) => {
+  const deleteImage = async (pathname) => {
     const response = await fetch(`/api/deleteBlob`, {
       method: "DELETE",
       headers: {
           'Content-Type': 'application/json',
       },
-      body: JSON.stringify({"url": url})
+      body: JSON.stringify({pathname})
     })
 
     const result = await response.json()
@@ -165,7 +172,7 @@ function PhotosCard({item}) {
         ) : (
           <>
             {blobs && blobs.map((blob, index) => (
-              <div key={index} className={styles.photo} style={{backgroundImage: `url(${blob.url})`}} onClick={() => deletePopup(blob)}></div>
+              <div key={index} className={styles.photo} style={{backgroundImage: `url(${blob.url})`, textAlign: "center"}} onClick={() => deletePopup(blob)}>{blob.name.toLowerCase().endsWith('.pdf') && "Vista previa no disponible de PDF"}</div>
             ))}
             <label className={styles.fileInput} style={file ? {} : null}>
               <input type="file" onChange={handleFileChange} />

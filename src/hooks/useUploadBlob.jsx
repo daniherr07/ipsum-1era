@@ -3,7 +3,6 @@
 'use client';
 
 import { useState } from 'react';
-import { upload } from '@vercel/blob/client';
 
 export function UseUploadBlob() {
   const [isUploading, setIsUploading] = useState(false);
@@ -11,18 +10,33 @@ export function UseUploadBlob() {
 
   const uploadFile = async (file, name, directory = "") => {
     if (!file) return null;
+    console.log(file)
 
     setIsUploading(true);
     setUploadError(null);
 
     try {
-      
-      const newBlob = await upload(`Proyecto ${directory}/${name}`, file, {
-        access: 'public',
-        handleUploadUrl: '/api/blobRoute',
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append("name", name)
+      formData.append("directory", directory)
 
-      });
-      return newBlob;
+      const response = await fetch(`/api/uploadFile`, {
+        method: "POST",
+        body: formData
+      })
+
+
+      const result = await response.json()
+
+      
+
+      if (!result.ok) {
+        throw new Error("No se pudo subir el archivo", result)
+      }
+
+
+      return JSON.stringify({result, ok: true});
     } catch (error) {
       console.log(error)
       setUploadError(error.message);

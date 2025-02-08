@@ -127,6 +127,8 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
     member.segundoApellido = member.segundoApellido == null ? "" : member.segundoApellido
     member.ingresos = member.ingresos == null ? "" : member.ingresos
     member.tipoIngresos = member.tipoIngresos == null ? "" : member.tipoIngresos
+    member.email = member.email == null ? "" : member.email
+    member.tipoTelefono = member.tipoTelefono == null ? "" : member.tipoTelefono
     setFormData(prev => (member));
     if (member.cedulaFile) {
       console.log("Antes de empezar el data transfer", member.cedulaFile)

@@ -95,44 +95,38 @@ export default function ProjectSubmissionForm({
 
     
 
-    const responseBlob = await fetch(`/api/listBlobs?prefix=${projectName}`)
-    if (!responseBlob.ok) {
-      throw new Error('Failed to fetch blobs')
-    }
-    const data = await responseBlob.json()
-    const blobs = data.blobs
-
-    for (const blob of blobs) {
-      const responseDel = await fetch(`/api/deleteBlob`, {
+      //Eliminar todos los blobs de una carpeta
+      const responseBlob = await fetch(`/api/deleteBlob`, {
         method: "DELETE",
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({"url": blob.url})
+        body: JSON.stringify({projectName})
       })
-        
-    }
-
-
-    // Use Promise.all to wait for all file uploads to complete
-    await Promise.all(familyMembers.map(async (member) => {
-      if (member.cedulaFile !== "") {
-        const memberCedula = member.cedulaFile;
-
-        if (memberCedula instanceof File) {
-          const blobResponse = await uploadFile(memberCedula, memberCedula.name, projectName);
-        
-          if (blobResponse) {
-            console.log("La blob respuesta supongo", blobResponse);
-            member.cedulaFile = blobResponse.url;
-          } else {
-            throw new Error(`Failed to upload file for ${member.nombre}`);
-          }
-        }
-
-        
+      if (!responseBlob.ok) {
+        throw new Error('Failed to fetch blobs')
       }
-    }));
+
+      // Sube todos los blobs a la carpeta
+      await Promise.all(familyMembers.map(async (member) => {
+        if (member.cedulaFile !== "") {
+          const memberCedula = member.cedulaFile;
+
+          if (memberCedula instanceof File) {
+            const blobResponse = await uploadFile(memberCedula, memberCedula.name, projectName);
+            
+          
+            if (blobResponse) {
+              const parsedResponse = JSON.parse(blobResponse)
+              console.log("La blob respuesta supongo", parsedResponse);
+
+              
+              member.cedulaFile = parsedResponse.result.url;
+            } else {
+              throw new Error(`Failed to upload file for ${member.nombre}`);
+            }
+          }
+
+          
+        }
+      }));
     
     
 

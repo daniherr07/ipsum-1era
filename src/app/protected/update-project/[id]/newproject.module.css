@@ -439,7 +439,10 @@
 
   .modalBtns{
     display: flex;
+    place-content: center;
+    place-items: center;
     gap: 1em;
+    width: 100%;
   }
 
   .modalUpdate{
@@ -449,7 +452,7 @@
     color: #fff;
     border-radius: 11px;
     font-size: 1rem;
-    width: 100%;
+    width: 30%;
 
     &:hover{
       background-color: #0058b1;
@@ -464,7 +467,7 @@
     background-color: rgb(252, 91, 91);
     padding: 1em;
     font-size: 1rem;
-    width: 100%;
+    width: 30%;
 
     &:hover{
       cursor: pointer;

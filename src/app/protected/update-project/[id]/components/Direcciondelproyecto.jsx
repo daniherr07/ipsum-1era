@@ -235,63 +235,70 @@ function PhotosCard({nombreProyecto}) {
   
   
     const deletePopup = (blob) => {
-      confirmAlert({
-        customUI: ({ onClose, }) => {
-          return (
-              <div className={styles.modal}>
-                  <h1>¿Que deseas hacer?</h1>
-  
-                  <div className={styles.modalBtns}>
-                      <button
-                          className={styles.modalUpdate}
-                          onClick={() => {
-                          deleteImage(blob.url);
-                          onClose();
-                          }}
-                      >
-                          Eliminar
-                      </button>
-  
-                      <button 
-                      onClick={onClose}
-                      className={styles.modalCancel}
-                      >
-                        Cancelar
-                      </button>
-  
-                      <button 
-                      onClick={onClose}
-                      className={styles.modalDownload}
-                      >
-                        <Link href={blob.downloadUrl} className={styles.linkText}>Descargar</Link>
-                      </button>
-  
-                  </div>
-  
-  
-            </div>
-          );
-        }
-      })
-    }
+    
+        confirmAlert({
+          customUI: ({ onClose, }) => {
+            return (
+                <div className={styles.modal}>
+                    <h1>¿Que deseas hacer?</h1>
+    
+                    <div className={styles.modalBtns}>
+                        <button
+                            className={styles.modalUpdate}
+                            onClick={() => {
+                            deleteImage(blob.pathname);
+                            onClose();
+                            }}
+                        >
+                            Eliminar
+                        </button>
+    
+                        <button 
+                        onClick={onClose}
+                        className={styles.modalCancel}
+                        >
+                          Cancelar
+                        </button>
+    
+                        <button 
+                        onClick={onClose}
+                        className={styles.modalDownload}
+                        >
+                          <Link href={blob.url} target='_blank' className={styles.linkText}>Abrir</Link>
+                        </button>
+    
+                    </div>
+    
+    
+              </div>
+            );
+          }
+        })
+      }
   
     useEffect(() => {
   
-      const fetchBlobs = async () => {
-        try {
-          const response = await fetch(`/api/listBlobs?prefix=${directoryName.replace(/Proyecto\s+/g, '')}`)
-          if (!response.ok) {
-            throw new Error('Failed to fetch blobs')
+        const fetchBlobs = async () => {
+            try {
+              const response = await fetch(`/api/getFiles?prefix=${directoryName.replace(/Proyecto\s+/g, '')}`)
+      
+              if (!response.ok) {
+                if (response.route_not_found) {
+                  return
+                } else{
+                  console.log(response)
+                  throw new Error('Failed to fetch blobs', response)
+                }
+              }
+      
+              const data = await response.json()
+              setBlobs(data.files)
+            } catch (error) {
+              console.error('Error fetching blobs:', error)
+            } finally {
+              setLoading(false)
+            }
           }
-          const data = await response.json()
-          console.log(data)
-          setBlobs(data.blobs)
-        } catch (error) {
-          console.error('Error fetching blobs:', error)
-        } finally {
-          setLoading(false)
-        }
-      }
   
       fetchBlobs()
       
@@ -315,20 +322,20 @@ function PhotosCard({nombreProyecto}) {
       setUpdate(!update)
     };
   
-    const deleteImage = async (url) => {
-      const response = await fetch(`/api/deleteBlob`, {
-        method: "DELETE",
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({"url": url})
-      })
-  
-      const result = await response.json()
-  
-      toast.success("Imagen eliminada existosamente!")
-      setUpdate(!update)
-    }
+    const deleteImage = async (pathname) => {
+        const response = await fetch(`/api/deleteBlob`, {
+          method: "DELETE",
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({pathname})
+        })
+    
+        const result = await response.json()
+    
+        toast.success("Imagen eliminada existosamente!")
+        setUpdate(!update)
+      }
     
   
   
