@@ -39,6 +39,7 @@ export default function MainSearch({label, value, isDisabled, etapa_id, tipo_bon
         tipo_bono_id.split(",").forEach(element => {
             nombresBonos.push(bonos.find(bono => bono.id == element).nombre)
         });
+
     }
 
     if (label) {
@@ -86,7 +87,7 @@ export default function MainSearch({label, value, isDisabled, etapa_id, tipo_bon
                 setPName(data)
                 setLoading(false)
             })
-    }, [order, bitData])
+    }, [order, bitData, label, value, isDisabled, etapa_id, tipo_bono_id])
 
 
     useEffect(() => {
@@ -117,8 +118,8 @@ export default function MainSearch({label, value, isDisabled, etapa_id, tipo_bon
                             <>
                             <p>Encontrados: {Object.keys(pName).length}</p>
 
-                            <p>Etapa: {nombresEtapas.length > 1 ? nombresEtapas.join(", ") : "N/A"}</p>
-                            <p>Tipo de Bono: {nombresBonos.length > 1 ? nombresBonos.join(", ") : "N/A"}</p>
+                            <p>Etapa: {nombresEtapas.length >= 1 ? nombresEtapas.join(", ") : "N/A"}</p>
+                            <p>Tipo de Bono: {nombresBonos.length >= 1 ? nombresBonos.join(", ") : "N/A"}</p>
                             <p>Otro: {nombreOtro}</p>
                             
                             </>
