@@ -152,7 +152,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData, n
                             name="otrasSenas"
                             value={directionData.otrasSenas}
                             onChange={handleInputChange}
-                            placeholder="Del higuerón antiguo, 200 metros norte, en la esquina"
+                            
                         />
                     </div>
 
@@ -179,7 +179,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData, n
                             <input className={styles.select} 
                             type="number" value={directionData.loteIdentificacion} 
                             name="loteIdentificacion" onChange={handleInputChange} 
-                            placeholder="000000000000000"
+                            
                             />
                         </div>
 
@@ -195,7 +195,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData, n
                                 name="numeroPlanoCatastro"
                                 value={directionData.numeroPlanoCatastro}
                                 onChange={handleInputChange}
-                                placeholder="PC-2024-303033"
+                                
                             />
                         </div>
 
@@ -207,7 +207,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData, n
                                 name="finca"
                                 value={directionData.finca}
                                 onChange={handleInputChange}
-                                placeholder="F002"
+                                
                             />
                         </div>
                     </div>

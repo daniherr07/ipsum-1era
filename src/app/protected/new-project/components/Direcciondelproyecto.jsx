@@ -215,7 +215,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData, p
                         name="otrasSenas"
                         value={directionData.otrasSenas}
                         onChange={handleInputChange}
-                        placeholder="Del higuerón antiguo, 200 metros norte, en la esquina (Opcional)"
+                    
                         required
                     />
                 </div>

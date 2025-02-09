@@ -101,9 +101,11 @@ function PhotosCard({item}) {
 
     const fetchBlobs = async () => {
       try {
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         const response = await fetch(`/api/getFiles?prefix=${directoryName.replace(/Proyecto\s+/g, '')}`)
 
         if (!response.ok) {
+          console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB", response)
           if (response.route_not_found) {
             return
           } else{
