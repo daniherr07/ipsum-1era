@@ -7,8 +7,6 @@ import { useEffect, useState } from 'react';
 import { useFetchBackend } from '@/hooks/useFetchApi';
 import { useRouter } from 'next/navigation';
 import { useDetectClickOutside } from 'react-detect-click-outside';
-import { confirmAlert } from 'react-confirm-alert';
-
 
 
 export default function NavBar({logo = true}){

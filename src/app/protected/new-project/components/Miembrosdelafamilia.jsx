@@ -80,7 +80,6 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
 
     let newMember = {
       id: familyMembers.length,
@@ -107,6 +106,18 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
     setFormData(Object.fromEntries(Object.entries(formData).map(([key, value]) => [key, typeof value === 'boolean' ? false : (typeof value === 'number' ? 0 : "")])));
     inputFileRef.current.value = null;
   };
+
+    const confirmModal = (e) => {
+          e.preventDefault()
+          confirmAlert({
+            closeOnClickOutside: false,
+            customUI: ({ onClose }) => 
+            <GenericModal 
+              onClose={onClose} 
+              afterFunction={handleSubmit}
+            />,
+          })
+    }
 
   const handleDelete = (id) => {
     setFamilyMembers(prev => prev.filter(member => member.id !== id));
@@ -145,7 +156,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
         <h1 className={styles.headerTitle}>Nuevo Caso - Miembros del núcleo familiar</h1>
       </div>
 
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={confirmModal} className={styles.form}>
         <div className={styles.formGrid}>
           <div>
             <input
@@ -469,4 +480,26 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
     </div>
   );
 }
+
+function GenericModal({ onClose, afterFunction}) {
+
+  return (
+    <div className={styles.newUserModal}>
+      <h1>¿Esta seguro de agregar al miembro familiar?</h1>
+      <div className={styles.modalBtns}>
+
+        <button className={styles.modalUpdate} onClick={() =>  {afterFunction(); onClose()}}>
+          Agregar
+        </button>
+
+        <button onClick={onClose} className={styles.modalCancel}>
+          Cancelar
+        </button>
+
+
+      </div>
+    </div>
+  )
+}
+
 

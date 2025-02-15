@@ -278,14 +278,16 @@ function GenericModal({ onClose, afterFunction}) {
       <div className={style.newUserModal}>
         <h1>¿Esta seguro de cerrar sesión?</h1>
         <div className={style.modalBtns}>
-  
+
+
+          <button className={style.modalUpdate} onClick={() =>  {afterFunction(); onClose()}}>
+            Cerrar Sesión
+          </button>
   
           <button onClick={onClose} className={style.modalCancel}>
             Cancelar
           </button>
-          <button className={style.modalUpdate} onClick={() =>  {afterFunction(); onClose()}}>
-            Cerrar Sesión
-          </button>
+
   
         </div>
       </div>

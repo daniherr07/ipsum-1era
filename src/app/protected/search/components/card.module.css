@@ -324,8 +324,61 @@
     text-decoration: none !important;
   }
 
+  .modal{
+    box-shadow: 0 2px 3px 1px #00000049;
+    padding: 1vw;
+    border-radius: 11px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    place-items: center;
+    gap: 1em;
+    width: 50vw;
+  }
+
+  .modalMain{
+    display: flex;
+    gap: 5em;
+  }
+
+  .modalBtns{
+    display: flex;
+    gap: 1em;
+  }
+
+  .modalUpdate{
+    border: none;
+    background-color: #0066cc;
+    padding: 1em;
+    color: #fff;
+    border-radius: 11px;
+    font-size: 1rem;
+    width: 100%;
+
+    &:hover{
+      background-color: #0058b1;
+      cursor: pointer;
+    }
+  }
+
+  .modalCancel{
+    color: #fff;
+    border-radius: 11px;
+    border: none;
+    background-color: rgb(252, 91, 91);
+    padding: 1em;
+    font-size: 1rem;
+    width: 100%;
+
+    &:hover{
+      cursor: pointer;
+      background-color: rgb(255, 62, 62)
+    }
+  }
+
   .newUserModal{
-    border: 1px solid #0068bd83;
+    box-shadow: 0 2px 3px 1px #00000049;
     padding: 1vw;
     border-radius: 11px;
     background-color: #fff;
@@ -339,6 +392,16 @@
 
   .newModalInput{
     width: 100%;
+  }
+
+  .newUserForm{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  .newModalInput{
+    width: 90%;
   }
 
 
@@ -514,5 +577,21 @@
       place-content: center;
       place-items: center;
       font-size: 1em;
+    }
+  }
+
+  @media (max-width: 900px ) or (max-height: 710px){
+    .modal{
+      width: 90vw;
+      padding: 4em;
+      text-align: center;
+    }
+
+    .newUserModal{
+      width: 90vw !important;
+      height: 90vh !important;
+      display: flex;
+      flex-direction: column;
+      padding: 1em;
     }
   }

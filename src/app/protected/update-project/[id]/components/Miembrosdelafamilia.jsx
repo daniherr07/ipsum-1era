@@ -531,13 +531,14 @@ function GenericModal({ onClose, afterFunction}) {
       <h1>¿Esta seguro de agregar al miembro familiar?</h1>
       <div className={styles.modalBtns}>
 
+        <button className={styles.modalUpdate} onClick={() =>  {afterFunction(); onClose()}}>
+          Agregar
+        </button>
 
         <button onClick={onClose} className={styles.modalCancel}>
           Cancelar
         </button>
-        <button className={styles.modalUpdate} onClick={() =>  {afterFunction(); onClose()}}>
-          Agregar
-        </button>
+
 
       </div>
     </div>

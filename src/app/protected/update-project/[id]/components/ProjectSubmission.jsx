@@ -219,12 +219,12 @@ function GenericModal({ onClose, afterFunction}) {
       <h1>¿Esta seguro de actualizar el proyecto?</h1>
       <div className={styles.modalBtns}>
 
+      <button className={styles.modalUpdate} onClick={() =>  {afterFunction(); onClose()}}>
+          Actualizar
+        </button>
 
         <button onClick={onClose} className={styles.modalCancel}>
           Cancelar
-        </button>
-        <button className={styles.modalUpdate} onClick={() =>  {afterFunction(); onClose()}}>
-          Actualizar
         </button>
 
       </div>

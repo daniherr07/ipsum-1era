@@ -548,6 +548,7 @@ function AddBitacoraEntry({ onClose, userData, proyecto_id, item, handleClick, h
         <button onClick={onClose} className={styles.modalCancel}>
           Cancelar
         </button>
+
       </div>
     </div>
   )
