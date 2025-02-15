@@ -37,7 +37,7 @@ export default function SendEmails(idProyecto, usuario, nombre_proyecto){
           console.log('Respuesta:', data);
 
           for(let i = 0; i < result.emails.length; i++) {
-            await useFetchBackend("insertNoti", "POST", {message: `${usuario} ha actualizado el proyecto: "${nombre_proyecto}"`, user_id: result.ids[i]})
+            await useFetchBackend("insertNoti", "POST", {message: `${usuario} ha actualizado el proyecto: "${nombre_proyecto}"`, user_id: result.ids[i], time: new Date()})
           }
         } catch (error) {
           console.error('Error:', error);

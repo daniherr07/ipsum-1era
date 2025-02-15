@@ -272,7 +272,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
       console.log('Respuesta:', data);
 
       for(let i = 0; i < result.emails.length; i++) {
-        await useFetchBackend("insertNoti", "POST", {message: `El proyecto ${nombreProyecto} ha pasado de ${etapaAnterior} ${subetapaAnterior != null ? ":" + " " + subetapaAnterior : ""} y se ha actualizado a ${etapaCorreo} ${subetapaCorreo}.`, user_id: result.ids[i]})
+        await useFetchBackend("insertNoti", "POST", {message: `El proyecto ${nombreProyecto} ha pasado de ${etapaAnterior} ${subetapaAnterior != null ? ":" + " " + subetapaAnterior : ""} y se ha actualizado a ${etapaCorreo} ${subetapaCorreo}.`, user_id: result.ids[i], time: new Date()})
       }
 
 

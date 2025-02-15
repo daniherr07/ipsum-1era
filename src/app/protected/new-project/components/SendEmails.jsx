@@ -27,7 +27,7 @@ export default function SendEmails(idProyecto, usuario, nombre_proyecto){
             },
             body: JSON.stringify({
                 recipients: destinatarios,
-                subject: `Proyecto actualizado`,
+                subject: `Proyecto Creado`,
                 content: `<p>${usuario} ha creado el proyecto: "${nombre_proyecto}" y se encuentra en la etapa de preanálisis. <br /> <p>Por favor corroborar la información en el sistema</p>`
             })
     
@@ -37,7 +37,7 @@ export default function SendEmails(idProyecto, usuario, nombre_proyecto){
           console.log('Respuesta:', data);
 
           for(let i = 0; i < result.emails.length; i++) {
-            await useFetchBackend("insertNoti", "POST", {message: `${usuario} ha creado el proyecto: "${nombre_proyecto}" y se encuentra en la etapa de preanálisis.`, user_id: result.ids[i]})
+            await useFetchBackend("insertNoti", "POST", {message: `${usuario} ha creado el proyecto: "${nombre_proyecto}" y se encuentra en la etapa de preanálisis.`, user_id: result.ids[i], time: new Date()})
           }
         } catch (error) {
           console.error('Error:', error);
