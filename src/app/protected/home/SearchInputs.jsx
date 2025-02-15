@@ -82,7 +82,6 @@ export default function SearchInputs() {
     };
 
     const handleSubmit = () => {
-        const label = "label=${selectedValue}&value=${pickerValue.join(',')"
 
         let url = `/protected/search?`
         if (pickerValue.length != 0) {
