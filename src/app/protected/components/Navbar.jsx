@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 import { useFetchBackend } from '@/hooks/useFetchApi';
 import { useRouter } from 'next/navigation';
 import { useDetectClickOutside } from 'react-detect-click-outside';
+import { confirmAlert } from 'react-confirm-alert';
+
 
 
 export default function NavBar({logo = true}){
@@ -18,7 +20,17 @@ export default function NavBar({logo = true}){
     const router = useRouter()
     const ref = useDetectClickOutside({ onTriggered: () => setOpen(false) });
 
-
+    const confirmModal = (e) => {
+        e.preventDefault()
+        confirmAlert({
+        closeOnClickOutside: false,
+        customUI: ({ onClose }) => 
+        <GenericModal 
+            onClose={onClose} 
+            afterFunction={deleteReaded}
+        />,
+        })
+    }
 
     const handleReturn = () => {
         router.back()
@@ -43,7 +55,7 @@ export default function NavBar({logo = true}){
         .catch(error => console.log(error))
     }
 
-    const deleteReaded = async (id) => {
+    const deleteReaded = async () => {
         await useFetchBackend(`deleteReaded`, "POST", {id: userData.id})
         .then(() => {getAllNotis(); setUpdate(!update)})
         .catch(error => console.log(error))
@@ -87,7 +99,7 @@ export default function NavBar({logo = true}){
                                 
                                 <div className={style.footerNotification}>
                                     <p className={style.notisButton} onClick={setAllReaded}>Leer todos</p>
-                                    <p className={style.notisButton} onClick={deleteReaded}>Borrar leídos</p>
+                                    <p className={style.notisButton} onClick={confirmModal}>Borrar leídos</p>
                                 </div>
                                 {
                                     (allNotis && allNotis.length > 0)
@@ -141,3 +153,26 @@ export default function NavBar({logo = true}){
     );
 }
 
+
+function GenericModal({ onClose, afterFunction}) {
+
+
+    return (
+      <div className={style.newUserModal}>
+        <h1>¿Esta seguro de eliminar los leídos?</h1>
+        <div className={style.modalBtns}>
+
+
+          <button className={style.modalUpdate} onClick={() =>  {afterFunction(); onClose()}}>
+            Eliminar
+          </button>
+  
+          <button onClick={onClose} className={style.modalCancel}>
+            Cancelar
+          </button>
+
+  
+        </div>
+      </div>
+    )
+  }
