@@ -39,6 +39,15 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
 
     }
 
+    function handleChangeBono (event) {
+        const { name, value, type, checked } = event.target;
+        setProjectData(prev => ({
+          ...prev,
+          [name]: type === 'checkbox' ? checked : value,
+          subtipoSeleccionado: "",
+        }));
+    };
+
 
     const handleSubtipoClick = (id) => {
         setProjectData(prevData => ({
@@ -90,7 +99,7 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
                         className={style.selecttipo1}
                         name="bonoSeleccionado"
                         value={projectData.bonoSeleccionado}
-                        onChange={e => {handleChange(e, setProjectData);  handleChangeNew(e)}}
+                        onChange={e => {handleChangeBono(e);  handleChangeNew(e)}}
                     >
                         <option value="">Tipo de bono</option>
                         {tipos_bonos.map((item, key) => (

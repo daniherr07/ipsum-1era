@@ -10,21 +10,59 @@ import 'react-confirm-alert/src/react-confirm-alert.css'
 import Link from "next/link";
 
 
-export default function DireccionDelProyecto({directionData, setDirectionData, nombreProyecto}) {
+export default function DireccionDelProyecto({directionData, setDirectionData, nombreProyecto, provincias, setProvincias, cantones, setCantones, distritos, setDistritos}) {
 
-    const [provincias, setProvincias] = useState("")
-    const [cantones, setCantones] = useState("")
-    const [distritos, setDistritos] = useState("")
-    
 
-    useEffect(() => {
-      fetch('https://api-geo-cr.vercel.app/provincias')
-        .then(response => response.json())
-        .then(data => {
-            setProvincias(data.data)
-        })
-    
+    const [manual, setManual] = useState({
+        manual: false,
     })
+
+    console.log(directionData)
+    
+    useEffect(() => {
+
+        const fetchAll = async () => {
+            let localProvincias
+            let localCantones
+
+            await fetch('https://api-geo-cr.vercel.app/provincias?limit=100&page=1')
+            .then(response => response.json())
+            .then(data => {
+                localProvincias = data.data
+                setProvincias(data.data)
+            })
+
+            let provinciaId = localProvincias.find(prov => prov.descripcion == directionData.provincia).idProvincia;
+
+            switch (provinciaId) {
+                case 3:
+                    provinciaId = 4
+                    break;
+                case 4:
+                    provinciaId = 3
+                    break;
+            }
+
+            await fetch(`https://api-geo-cr.vercel.app/provincias/${provinciaId}/cantones?limit=100&page=1`)
+            .then(response => response.json())
+            .then(data => {
+                localCantones = data.data
+                setCantones(data.data)
+            })
+
+            const cantonId = localCantones.find(can => can.descripcion == directionData.provincia).idCanton;
+
+            await fetch(`https://api-geo-cr.vercel.app/cantones/${cantonId}/distritos?limit=100&page=1`)
+            .then(response => response.json())
+            .then(data => {
+                setDistritos(data.data)
+            })
+        }
+
+        fetchAll()
+
+      }, [])
+  
 
     const handleProvinciaChange = (e) => {
         let provinciaId = provincias.find(prov => prov.descripcion == e.target.value).idProvincia;
@@ -38,8 +76,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData, n
                 break;
         }
 
-
-        fetch(`https://api-geo-cr.vercel.app/provincias/${provinciaId}/cantones`)
+        fetch(`https://api-geo-cr.vercel.app/provincias/${provinciaId}/cantones?limit=100&page=1`)
         .then(response => response.json())
         .then(data => {
             console.log(data)
@@ -50,12 +87,13 @@ export default function DireccionDelProyecto({directionData, setDirectionData, n
     const handleCantonChange = (e) => {
         const cantonId = cantones.find(can => can.descripcion == e.target.value).idCanton;
 
-        fetch(`https://api-geo-cr.vercel.app/cantones/${cantonId}/distritos`)
+        fetch(`https://api-geo-cr.vercel.app/cantones/${cantonId}/distritos?limit=100&page=1`)
         .then(response => response.json())
         .then(data => {
             setDistritos(data.data)
         })
     }
+    
 
     const handleInputChange = (e) => {
         const { name } = e.target;
@@ -78,6 +116,25 @@ export default function DireccionDelProyecto({directionData, setDirectionData, n
         }
     };
 
+    const handleInputChangeManual = (e) => {
+        const { name } = e.target;
+        handleChange(e, setDirectionData);
+
+        // Reset dependent fields
+        if (name === "provincia") {
+            setDirectionData(prevState => ({
+                ...prevState,
+                canton: "",
+                distrito: ""
+            }));
+        } else if (name === "canton") {
+            setDirectionData(prevState => ({
+                ...prevState,
+                distrito: ""
+            }));
+        }
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -85,65 +142,116 @@ export default function DireccionDelProyecto({directionData, setDirectionData, n
             </div>
 
             <div className={styles.formContent}>
+
+
                 <div className={styles.column1}>
-                    <div className={styles.locationSelects}>
-                        <div className={styles.selectGroup}>
-                            <label>Provincia</label>
-                            <select
-                                className={styles.select}
-                                name="provincia"
-                                value={directionData.provincia}
-                                onChange={handleInputChange}
-                            >
-                                <option value={directionData.provincia}>{directionData.provincia}</option>
-                                {provincias.length > 0 && provincias.map((prov) => (
-                                    <option key={prov.idProvincia} value={prov.descripcion}>
-                                        {prov.descripcion}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        <div className={styles.selectGroup}>
-                            <label>Cantón</label>
-                            <select
-                                className={styles.select}
-                                name="canton"
-                                value={directionData.canton}
-                                onChange={handleInputChange}
-                                disabled={!directionData.provincia}
-                            >
-                                <option value={directionData.canton}>{directionData.canton}</option>
-                                {(directionData.provincia && cantones.length > 0) &&
-                                    cantones.map((canton) => (
-                                        <option key={canton.idCanton} value={canton.descripcion}>
-                                            {canton.descripcion}
-                                        </option>
-                                    ))
-                                }
-                            </select>
-                        </div>
-
-                        <div className={styles.selectGroup}>
-                            <label>Distrito</label>
-                            <select
-                                className={styles.select}
-                                name="distrito"
-                                value={directionData.distrito}
-                                onChange={handleInputChange}
-                                disabled={!directionData.canton}
-                            >
-                                <option value={directionData.distrito}>{directionData.distrito}</option>
-                                {(directionData.canton && distritos.length > 0) &&
-                                    distritos.map((distrito) => (
-                                        <option key={distrito.idDistrito} value={distrito.descripcion}>
-                                            {distrito.descripcion}
-                                        </option>
-                                    ))
-                                }
-                            </select>
-                        </div>
+                    <div className={styles.manualCheck} style={{display: "flex", gap: "1em", placeContent: "start", placeItems: "center", marginBottom: "1em"}}>
+                        <label htmlFor="manual">Escribir manualmente</label>
+                        <input type="checkbox" name="manual" id="manual" value={manual.manual} onClick={e => handleChange(e, setManual)}/>
                     </div>
+                    <div className={styles.locationSelects}>
+
+                    {
+                        manual.manual ?
+                        <>
+                            <div className={styles.selectGroup}>
+                                <label>Provincia</label>
+                                <input 
+                                type="text" 
+                                name="provincia" 
+                                value={directionData.provincia}
+                                onChange={handleInputChangeManual}
+                                />
+                            </div>
+
+                            <div className={styles.selectGroup}>
+                                <label>Cantón</label>
+                                <input 
+                                type="text" 
+                                name="canton" 
+                                value={directionData.canton}
+                                onChange={handleInputChangeManual}
+                                />
+                            </div>
+
+                            <div className={styles.selectGroup}>
+                                <label>Distrito</label>
+                                <input 
+                                type="text" 
+                                name="distrito" 
+                                value={directionData.distrito}
+                                onChange={handleInputChangeManual}
+                                />
+                            </div>
+                        </>
+
+                        :
+
+                        <>
+                            <div className={styles.selectGroup}>
+                                <label>Provincia</label>
+                                <select
+                                    className={styles.select}
+                                    name="provincia"
+                                    value={directionData.provincia}
+                                    onChange={handleInputChange}
+                                    required
+                                >
+                                    <option value="">Seleccione una provincia</option>
+                                    {
+                                    
+                                    provincias.length > 0 && provincias.map((prov) => (
+                                        <option key={prov.idProvincia} value={prov.descripcion}>
+                                            {prov.descripcion}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className={styles.selectGroup}>
+                                <label>Cantón</label>
+                                <select
+                                    className={styles.select}
+                                    name="canton"
+                                    value={directionData.canton}
+                                    onChange={handleInputChange}
+                                    required
+                                >
+                                    <option value="">Seleccione un cantón</option>
+                                    {(directionData.provincia && cantones.length > 0) &&
+                                        cantones.map((canton) => (
+                                            <option key={canton.idCanton} value={canton.descripcion}>
+                                                {canton.descripcion}
+                                            </option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+
+                            <div className={styles.selectGroup}>
+                                <label>Distrito</label>
+                                <select
+                                    className={styles.select}
+                                    name="distrito"
+                                    value={directionData.distrito}
+                                    onChange={handleInputChange}
+                                    required
+                                >
+                                    <option value="">Seleccione un distrito</option>
+                                    {(directionData.canton && distritos.length > 0) &&
+                                        distritos.map((distrito) => (
+                                            <option key={distrito.idDistrito} value={distrito.descripcion}>
+                                                {distrito.descripcion}
+                                            </option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                        
+                        </>
+                    }
+                    
+                </div>
 
                     <div className={styles.addressGroup}>
                         <label>Otras señas:</label>

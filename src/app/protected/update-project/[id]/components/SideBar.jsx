@@ -23,6 +23,10 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
   const userData = useProtectedContext();
   const [page, setPage] = useState(1)
   const [deletedMembers, setDeletedMembers] = useState([])
+
+  const [provincias, setProvincias] = useState("")
+  const [cantones, setCantones] = useState("")
+  const [distritos, setDistritos] = useState("")
   
   const isAdminOrRoot = 
   userData.role == 'Admin' 
@@ -177,7 +181,19 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
 
     {page === 1 && <Datosdelproyecto projectData={projectData} setProjectData={setProjectData}/>}
     {page === 2 && <Miembrosdelafamilia formData={formData} setFormData={setFormData} familyMembers={familyMembers} setFamilyMembers={setFamilyMembers} deletedMembers={deletedMembers} setDeletedMembers={setDeletedMembers}/>}
-    {page === 3 && <Direcciondelproyecto directionData={directionData} setDirectionData={setDirectionData} nombreProyecto={projectDataOld.proyecto_nombre}/>}
+    {page === 3 && <Direcciondelproyecto 
+    directionData={directionData} 
+    setDirectionData={setDirectionData} 
+    nombreProyecto={projectDataOld.proyecto_nombre}
+    provincias={provincias} 
+    setProvincias={setProvincias} 
+    cantones={cantones}
+    setCantones={setCantones}
+    distritos={distritos}
+    setDistritos={setDistritos}
+    
+    
+    />}
     {page === 4 && <Datosadministrativos formData={formDataAdmin} setFormData={setFormDataAdmin} />}
 
     <div className={style.finishBtns}>

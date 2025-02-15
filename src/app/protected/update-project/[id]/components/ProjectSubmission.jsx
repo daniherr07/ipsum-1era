@@ -26,24 +26,21 @@ export default function ProjectSubmissionForm({
 
 
     const confirmModal = (e) => {
-
+      e.preventDefault()
       // Validacion de errores 
 
       if (projectData.bonoSeleccionado == "") {
-        setUploading(false)
         return toast.error('Seccion 1: Selecciona un tipo de bono');
       }
   
       if (projectData.bonoSeleccionado == "1" || projectData.bonoSeleccionado == "2" || projectData.bonoSeleccionado == "4") {
         if (projectData.subtipoSeleccionado === "" ) {
           console.log(projectData.subtipoSeleccionado)
-          setUploading(false)
           return toast.error('Seccion 1: Selecciona una variante de bono');
         }
       }
   
       if (projectData.grupoSeleccionado == "") {
-        setUploading(false)
         return toast.error('Seccion 1: Selecciona un grupo para el proyecto');
       }
   
