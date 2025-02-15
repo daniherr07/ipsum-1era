@@ -153,6 +153,7 @@
     align-items: center;
     cursor: pointer;
     font-weight: bold;
+    gap: 1em;
   }
   
   .copyIcon {

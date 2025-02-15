@@ -627,11 +627,9 @@ function PDFDownloadButton({ data }) {
 
   return (
     <button className={styles.copyButton} onClick={downloadPDF}>
-    Descargar Info
-    <svg className={styles.copyIcon} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M8 4V16C8 17.1 8.9 18 10 18H18C19.1 18 20 17.1 20 16V7.8C20 7.3 19.8 6.8 19.4 6.4L17.6 4.6C17.2 4.2 16.7 4 16.2 4H10C8.9 4 8 4.9 8 6ZM16 5.5L18.5 8H16V5.5ZM4 4H6V20H18V22H6C4.9 22 4 21.1 4 20V4Z" fill="currentColor"/>
-    </svg>
-  </button>
+    Info
+    <Image src={"/download.svg"}  width={20} height={20} alt='download'/>
+    </button>
   )
 }
 
