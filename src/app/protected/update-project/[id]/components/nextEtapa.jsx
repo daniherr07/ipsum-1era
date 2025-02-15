@@ -263,7 +263,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
         body: JSON.stringify({
             recipients: destinatarios,
             subject: `Avance de etapa proyecto "${nombreProyecto}"`,
-            content: `<p>El proyecto ${nombreProyecto} ha pasado de ETAPA: ${etapaAnterior}, SUBETAPA: ${subetapaAnterior != null ? ":" + " " + subetapaAnterior : ""} y se ha actualizado a ETAPA: ${etapaCorreo}, SUBETAPA: ${subetapaCorreo} . <br /> <p>Por favor corroborar la información en el sistema</p>`
+            content: `<p>El proyecto ${nombreProyecto} ha pasado de ETAPA: ${etapaAnterior}, SUBETAPA: ${subetapaAnterior != null ? subetapaAnterior : ""} y se ha actualizado a ETAPA: ${etapaCorreo}, SUBETAPA: ${subetapaCorreo} . <br /> <p>Por favor corroborar la información en el sistema</p>`
         })
 
       });
