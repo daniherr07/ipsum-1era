@@ -513,7 +513,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
 
         <div className={styles.modalBtns}>
           {
-            etapaAnterior != "Facturado" &&
+            (etapaAnterior != "Facturado" || selectSubetapa.manual == true) &&
             <button className={styles.modalUpdate} onClick={updateChanges}>
             Actualizar
             </button>
