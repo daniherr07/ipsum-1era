@@ -25,6 +25,71 @@ export default function ProjectSubmissionForm({
   const [saving, setSaving] = useState(false)
 
       const confirmModal = (e) => {
+          //Validacion de errores
+
+
+          if (projectData.bonoSeleccionado == "") {
+            return toast.error('Seccion 1: Selecciona un tipo de bono');
+          }
+
+          if (projectData.bonoSeleccionado == "1" || projectData.bonoSeleccionado == "2" || projectData.bonoSeleccionado == "4") {
+            if (projectData.subtipoSeleccionado === "" ) {
+              console.log(projectData.subtipoSeleccionado)
+              return toast.error('Seccion 1: Selecciona una variante de bono');
+            }
+          }
+
+          if (projectData.grupoSeleccionado == "") {
+            return toast.error('Seccion 1: Selecciona un grupo para el proyecto');
+          }
+
+          // Validate that there's at least one family member who is the head of the household
+          const hasHeadOfHousehold = familyMembers.some(member => member.tipoMiembro == 'Jefe/a de Familia');
+
+          if (!hasHeadOfHousehold) {
+            return toast.error('Seccion 2: Debe haber al menos un miembro de familia que sea jefe/a de hogar');
+          }
+
+          if (directionData.loteTipoIdentificacion == "") {
+            return toast.error('Seccion 3: Seleccione un tipo de identificacion para el dueño del lote o seleccione "Pendiente"');
+          }
+
+          if (directionData.provincia == "") {
+            return toast.error('Seccion 3: Seleccione una provincia');
+          }
+
+          if (directionData.canton == "") {
+            return toast.error('Seccion 3: Seleccione una canton');
+          }
+
+          if (directionData.distrito == "") {
+            return toast.error('Seccion 3: Seleccione un distrito');
+          }
+
+          if (formDataAdmin.entidad == "") {
+            return toast.error('Seccion 4: Añada una entidad');
+          }
+
+          if (formDataAdmin.analistaIPSUM == "") {
+            return toast.error('Seccion 4: Seleccione un analista de IPSUM');
+          }
+
+          if (formDataAdmin.constructor == "") {
+            return toast.error('Seccion 4: Seleccione un constructor o seleccione "Pendiente"');
+          }
+
+          if (formDataAdmin.ingenieroAsignado == "") {
+            return toast.error('Seccion 4: Seleccione un ingeniero o seleccione "Pendiente"');
+          }
+
+          if (formDataAdmin.arquitecto == "") {
+            return toast.error('Seccion 4: Seleccione un arquitecto o seleccione "Pendiente"');
+          }
+
+          if (formDataAdmin.Promotor_Ipsum == "") {
+            return toast.error('Seccion 4: Seleccione un promotor o seleccione "Pendiente"');
+          }
+
         e.preventDefault()
         confirmAlert({
           closeOnClickOutside: false,
@@ -39,70 +104,6 @@ export default function ProjectSubmissionForm({
   const handleSubmit = async () => {
     setSaving(true)
 
-    //Validacion de errores
-
-  
-    if (projectData.bonoSeleccionado == "") {
-      return toast.error('Seccion 1: Selecciona un tipo de bono');
-    }
-
-    if (projectData.bonoSeleccionado == "1" || projectData.bonoSeleccionado == "2" || projectData.bonoSeleccionado == "4") {
-      if (projectData.subtipoSeleccionado === "" ) {
-        console.log(projectData.subtipoSeleccionado)
-        return toast.error('Seccion 1: Selecciona una variante de bono');
-      }
-    }
-
-    if (projectData.grupoSeleccionado == "") {
-      return toast.error('Seccion 1: Selecciona un grupo para el proyecto');
-    }
-
-    // Validate that there's at least one family member who is the head of the household
-    const hasHeadOfHousehold = familyMembers.some(member => member.tipoMiembro == 'Jefe/a de Familia');
-
-    if (!hasHeadOfHousehold) {
-      return toast.error('Seccion 2: Debe haber al menos un miembro de familia que sea jefe/a de hogar');
-    }
-
-    if (directionData.loteTipoIdentificacion == "") {
-      return toast.error('Seccion 3: Seleccione un tipo de identificacion para el dueño del lote o seleccione "Pendiente"');
-    }
-
-    if (directionData.provincia == "") {
-      return toast.error('Seccion 3: Seleccione una provincia');
-    }
-
-    if (directionData.canton == "") {
-      return toast.error('Seccion 3: Seleccione una canton');
-    }
-
-    if (directionData.distrito == "") {
-      return toast.error('Seccion 3: Seleccione un distrito');
-    }
-
-    if (formDataAdmin.entidad == "") {
-      return toast.error('Seccion 4: Añada una entidad');
-    }
-
-    if (formDataAdmin.analistaIPSUM == "") {
-      return toast.error('Seccion 4: Seleccione un analista de IPSUM');
-    }
-
-    if (formDataAdmin.constructor == "") {
-      return toast.error('Seccion 4: Seleccione un constructor o seleccione "Pendiente"');
-    }
-
-    if (formDataAdmin.ingenieroAsignado == "") {
-      return toast.error('Seccion 4: Seleccione un ingeniero o seleccione "Pendiente"');
-    }
-
-    if (formDataAdmin.arquitecto == "") {
-      return toast.error('Seccion 4: Seleccione un arquitecto o seleccione "Pendiente"');
-    }
-
-    if (formDataAdmin.Promotor_Ipsum == "") {
-      return toast.error('Seccion 4: Seleccione un promotor o seleccione "Pendiente"');
-    }
 
     const headOfHousehold = familyMembers.find(member => member.tipoMiembro == 'Jefe/a de Familia');
     const projectName = headOfHousehold.nombre + ' ' + headOfHousehold.primerApellido + ' ' + headOfHousehold.segundoApellido;
