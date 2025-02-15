@@ -28,7 +28,7 @@ export default function ProjectSubmissionForm({
     const confirmModal = (e) => {
 
       // Validacion de errores 
-      
+
       if (projectData.bonoSeleccionado == "") {
         setUploading(false)
         return toast.error('Seccion 1: Selecciona un tipo de bono');
@@ -51,57 +51,46 @@ export default function ProjectSubmissionForm({
       const hasHeadOfHousehold = familyMembers.some(member => member.tipoMiembro == 'Jefe/a de Familia');
   
       if (!hasHeadOfHousehold) {
-        setUploading(false)
         return toast.error('Seccion 2: Debe haber al menos un miembro de familia que sea jefe/a de hogar');
       }
   
       if (directionData.loteTipoIdentificacion == "") {
-        setUploading(false)
         return toast.error('Seccion 3: Seleccione un tipo de identificacion para el dueño del lote o seleccione "Pendiente"');
       }
   
       if (directionData.provincia == "") {
-        setUploading(false)
         return toast.error('Seccion 3: Seleccione una provincia');
       }
   
       if (directionData.canton == "") {
-        setUploading(false)
         return toast.error('Seccion 3: Seleccione una canton');
       }
   
       if (directionData.distrito == "") {
-        setUploading(false)
         return toast.error('Seccion 3: Seleccione un distrito');
       }
   
       if (formDataAdmin.entidad == "") {
-        setUploading(false)
         return toast.error('Seccion 4: Añada una entidad');
       }
   
       if (formDataAdmin.analistaIPSUM == "") {
-        setUploading(false)
         return toast.error('Seccion 4: Seleccione un analista de IPSUM');
       }
   
       if (formDataAdmin.constructor == "") {
-        setUploading(false)
         return toast.error('Seccion 4: Seleccione un constructor o seleccione "Pendiente"');
       }
   
       if (formDataAdmin.ingenieroAsignado == "") {
-        setUploading(false)
         return toast.error('Seccion 4: Seleccione un ingeniero o seleccione "Pendiente"');
       }
   
       if (formDataAdmin.arquitecto == "") {
-        setUploading(false)
         return toast.error('Seccion 4: Seleccione un arquitecto o seleccione "Pendiente"');
       }
   
       if (formDataAdmin.Promotor_Ipsum == "") {
-        setUploading(false)
         return toast.error('Seccion 4: Seleccione un promotor o seleccione "Pendiente"');
       }
 
