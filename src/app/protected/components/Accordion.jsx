@@ -37,6 +37,18 @@ export default function Accordion() {
         router.push("/login")
     }
 
+    const confirmModal = (e) => {
+        e.preventDefault()
+        confirmAlert({
+        closeOnClickOutside: false,
+        customUI: ({ onClose }) => 
+        <GenericModal 
+            onClose={onClose} 
+            afterFunction={logout}
+        />,
+        })
+    }
+
     const addSomethingFunction = () => {
     confirmAlert(
         {
@@ -74,7 +86,7 @@ export default function Accordion() {
                                 isAdminOrRoot && <p className={style.settingText} onClick={() => router.push("/protected/userList")}>Usuarios</p>
                             }
                             <p className={style.settingText} onClick={addSomethingFunction}>Ajustes</p>
-                            <p className={style.settingText} onClick={logout}>Cerrar Sesión</p>
+                            <p className={style.settingText} onClick={confirmModal}>Cerrar Sesión</p>
                         </div>
                     </div>
                     :
@@ -258,3 +270,24 @@ export function AddSomething({ onClose, router, enterTo="Analista"}) {
     </div>
     )
 }
+
+function GenericModal({ onClose, afterFunction}) {
+
+
+    return (
+      <div className={style.newUserModal}>
+        <h1>¿Esta seguro de cerrar sesión?</h1>
+        <div className={style.modalBtns}>
+  
+  
+          <button onClick={onClose} className={style.modalCancel}>
+            Cancelar
+          </button>
+          <button className={style.modalUpdate} onClick={() =>  {afterFunction(); onClose()}}>
+            Cerrar Sesión
+          </button>
+  
+        </div>
+      </div>
+    )
+  }

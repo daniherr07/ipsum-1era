@@ -253,7 +253,25 @@
 
 }
 
-.modalBtns{
+    .modal{
+    box-shadow: 0 2px 3px 1px #00000049;
+    padding: 1vw;
+    border-radius: 11px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    place-items: center;
+    gap: 1em;
+    width: 50vw;
+  }
+
+  .modalMain{
+    display: flex;
+    gap: 5em;
+  }
+
+  .modalBtns{
     display: flex;
     gap: 1em;
   }
@@ -296,12 +314,19 @@
     display: flex;
     flex-direction: column;
     gap: 1em;
-    width: fit-content;
-    width: 70vw;
-    height: 80vh;
+    width: 50vw;
     place-content: center;
     place-items: center;
-    overflow: auto;
+  }
+
+  .newModalInput{
+    width: 100%;
+  }
+
+  .newUserForm{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
   }
 
   .newModalInput{
@@ -469,7 +494,6 @@
       height: 90vh !important;
       display: flex;
       flex-direction: column;
-      place-content: space-around;
       padding: 1em;
     }
 

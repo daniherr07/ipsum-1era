@@ -189,12 +189,12 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
       {
         isAdminOrRoot &&
         <ProjectSubmissionForm
-        projectData={projectData}
-        familyMembers={familyMembers}
-        directionData={directionData}
-        formDataAdmin={formDataAdmin}
-        deletedMembers={deletedMembers}
-        idProyecto={formDataAdminOld.proyecto_id}
+          projectData={projectData}
+          familyMembers={familyMembers}
+          directionData={directionData}
+          formDataAdmin={formDataAdmin}
+          deletedMembers={deletedMembers}
+          idProyecto={formDataAdminOld.proyecto_id}
         />
       }
       

@@ -5,7 +5,7 @@ import { address } from '@/app/const';
 import { toast} from 'react-toastify';
 import styles from '../newproject.module.css'
 import { UseUploadBlob } from '@/hooks/useUploadBlob';
-
+import { confirmAlert } from 'react-confirm-alert';
 import { useProtectedContext } from '@/app/context/ProtectedContext';
 import SendEmails from './SendEmails';
 import { useState } from 'react';
@@ -25,8 +25,20 @@ export default function ProjectSubmissionForm({
   const userData = useProtectedContext()
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    const confirmModal = (e) => {
+      e.preventDefault()
+      confirmAlert({
+        closeOnClickOutside: false,
+        customUI: ({ onClose }) => 
+        <GenericModal 
+          onClose={onClose} 
+          afterFunction={handleSubmit}
+        />,
+      })
+    }
+
+
+  const handleSubmit = async () => {
     setUploading(true)
 
     if (projectData.bonoSeleccionado == "") {
@@ -188,7 +200,7 @@ export default function ProjectSubmissionForm({
   return (
     <>
 
-      <form onSubmit={handleSubmit} style={{width: "100%", display: "flex", placeContent: "center", placeItems: "center"}}>
+      <form onSubmit={confirmModal} style={{width: "100%", display: "flex", placeContent: "center", placeItems: "center"}}>
         <button type="submit" className={styles.saveButton}>
           {
             uploading ?
@@ -202,4 +214,26 @@ export default function ProjectSubmissionForm({
     
     </>
   );
+}
+
+
+function GenericModal({ onClose, afterFunction}) {
+
+
+  return (
+    <div className={styles.newUserModal}>
+      <h1>¿Esta seguro de actualizar el proyecto?</h1>
+      <div className={styles.modalBtns}>
+
+
+        <button onClick={onClose} className={styles.modalCancel}>
+          Cancelar
+        </button>
+        <button className={styles.modalUpdate} onClick={() =>  {afterFunction(); onClose()}}>
+          Actualizar
+        </button>
+
+      </div>
+    </div>
+  )
 }

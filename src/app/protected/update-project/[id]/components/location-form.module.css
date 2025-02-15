@@ -291,6 +291,11 @@
   
     .cadastralGroup {
       flex-direction: column;
+      width: 100%;
+    }
+
+    .cadastralNumber{
+      width: 100%;
     }
 
     .formContent{

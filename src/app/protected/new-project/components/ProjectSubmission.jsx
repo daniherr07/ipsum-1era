@@ -8,6 +8,7 @@ import { useFetchBackend } from '@/hooks/useFetchApi';
 import { UseUploadBlob } from '@/hooks/useUploadBlob';
 import SendEmails from './SendEmails';
 import { useProtectedContext } from '@/app/context/ProtectedContext';
+import { confirmAlert } from 'react-confirm-alert';
 
 
 
@@ -21,8 +22,20 @@ export default function ProjectSubmissionForm({
   const { uploadFile, isUploading, uploadError } = UseUploadBlob();
   const userData = useProtectedContext();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+      const confirmModal = (e) => {
+        e.preventDefault()
+        confirmAlert({
+          closeOnClickOutside: false,
+          customUI: ({ onClose }) => 
+          <GenericModal 
+            onClose={onClose} 
+            afterFunction={handleSubmit}
+          />,
+        })
+      }
+
+  const handleSubmit = async () => {
+
 
     //Validacion de errores
 
@@ -159,11 +172,32 @@ export default function ProjectSubmissionForm({
 
   return (
     <div>
-      <form onSubmit={handleSubmit} >
+      <form onSubmit={confirmModal} >
         <button type="submit" className={styles.saveButton}>
           Guardar Proyecto
         </button>
       </form>
     </div>
   );
+}
+
+function GenericModal({ onClose, afterFunction}) {
+
+
+  return (
+    <div className={styles.newUserModal}>
+      <h1>¿Esta seguro de guardar el proyecto?</h1>
+      <div className={styles.modalBtns}>
+
+
+        <button onClick={onClose} className={styles.modalCancel}>
+          Cancelar
+        </button>
+        <button className={styles.modalUpdate} onClick={() =>  {afterFunction(); onClose()}}>
+          Guardar
+        </button>
+
+      </div>
+    </div>
+  )
 }

@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 import { useFetchBackend } from '@/hooks/useFetchApi';
 import { useRouter } from 'next/navigation';
 import { useDetectClickOutside } from 'react-detect-click-outside';
+import { confirmAlert } from 'react-confirm-alert';
+
 
 
 export default function NavBar({logo = true}){
@@ -17,6 +19,8 @@ export default function NavBar({logo = true}){
     const [update, setUpdate] = useState(true)
     const router = useRouter()
     const ref = useDetectClickOutside({ onTriggered: () => setOpen(false) });
+
+
 
     const handleReturn = () => {
         router.back()
@@ -72,7 +76,12 @@ export default function NavBar({logo = true}){
 
                     <div className={style.bellContainer} onClick={getAllNotis} ref={ref}>
                         <Image src={'/bell-solid.svg'} width={35} height={30} className={style.bellIcon} alt='person' onClick={() => setOpen(!open)} />
-                        <p className={style.notificationsNumber}>{notisSinLeer && notisSinLeer.length}</p>
+
+                        {
+                            (notisSinLeer && notisSinLeer.length > 0) &&
+                            <p className={style.notificationsNumber}>{notisSinLeer.length}</p>
+                        }
+                        
 
                         {
                             open ?
@@ -133,3 +142,4 @@ export default function NavBar({logo = true}){
         </div>
     );
 }
+

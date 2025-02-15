@@ -79,8 +79,20 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
     })
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const confirmModal = (e) => {
+        e.preventDefault()
+        confirmAlert({
+          closeOnClickOutside: false,
+          customUI: ({ onClose }) => 
+          <GenericModal 
+            onClose={onClose} 
+            afterFunction={handleSubmit}
+          />,
+        })
+  }
+
+
+  const handleSubmit = () => {
     const newMember = {
       id: formData.id,
       nombre: formData.nombre ,
@@ -177,7 +189,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
         <h1 className={styles.headerTitle}>Editar - Miembros del núcleo familiar</h1>
       </div>
 
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={confirmModal} className={styles.form}>
         <div className={styles.formGrid}>
           <div>
             <input
@@ -511,3 +523,23 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
   );
 }
 
+
+function GenericModal({ onClose, afterFunction}) {
+
+  return (
+    <div className={styles.newUserModal}>
+      <h1>¿Esta seguro de agregar al miembro familiar?</h1>
+      <div className={styles.modalBtns}>
+
+
+        <button onClick={onClose} className={styles.modalCancel}>
+          Cancelar
+        </button>
+        <button className={styles.modalUpdate} onClick={() =>  {afterFunction(); onClose()}}>
+          Agregar
+        </button>
+
+      </div>
+    </div>
+  )
+}

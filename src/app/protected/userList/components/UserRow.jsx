@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import styles from '../styles/page.module.css'
 import { toast } from 'react-toastify';
-import { confirmAlert } from 'react-confirm-alert'; // Import
+import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import { useRouter } from 'next/navigation';
 import { useFetchBackend } from '@/hooks/useFetchApi';

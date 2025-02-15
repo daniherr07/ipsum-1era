@@ -45,31 +45,42 @@ import { useFetchBackend } from "@/hooks/useFetchApi";
           </table>
         </div>
 
-        <h1 className={styles.title}>Usuarios Desactivados</h1>
+        <Suspense fallback={<tr><td><p>Loading...</p></td></tr> }>
+
+        {
+          users && users.filter(user =>  user.activated == 0).length >= 1 &&
+
+          <>
+            <h1 className={styles.title}>Usuarios Desactivados</h1>
 
 
-        <div className={styles.tableContainer}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th className={styles.headerCell}>Primer apellido</th>
-                <th className={styles.headerCell}>Segundo apellido</th>
-                <th className={styles.headerCell}>Nombre</th>
-                <th className={styles.headerCell}>Email</th>
-                <th className={styles.headerCell}>Rol</th>
-                <th className={styles.headerCell}>Activar</th>
-              </tr>
-            </thead>
-            <tbody>
-              <Suspense fallback={<tr><td><p>Loading...</p></td></tr> }>
-                  {users && users.map(user => (
-                    user.activated == 0 &&
-                      <UserRow key={user.id} user={user} />
-                  ))}
-              </Suspense>
-            </tbody>
-          </table>
-        </div>
+            <div className={styles.tableContainer}>
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th className={styles.headerCell}>Primer apellido</th>
+                    <th className={styles.headerCell}>Segundo apellido</th>
+                    <th className={styles.headerCell}>Nombre</th>
+                    <th className={styles.headerCell}>Email</th>
+                    <th className={styles.headerCell}>Rol</th>
+                    <th className={styles.headerCell}>Activar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                    {users.map(user => (
+                      user.activated == 0 &&
+                        <UserRow key={user.id} user={user} />
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+
+        }
+
+        
+        </Suspense>
 
         <AddUser />
         
