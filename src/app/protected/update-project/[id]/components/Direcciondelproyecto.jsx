@@ -306,20 +306,28 @@ function PhotosCard({nombreProyecto}) {
   
   
      const handleFileChange = async (event) => {
-      const file = event.target.files[0];
-      if (file) {
-        setFile(file);
-      }
+        toast.info("Subiendo imagen...")
+
+        try {
+          const file = event.target.files[0];
+          if (file) {
+            setFile(file);
+          }
+          
+          const response = await uploadFile(file, file.name, directoryName.replace(/Proyecto\s+/g, ''));
       
-      const blobResponse = await uploadFile(file, file.name, directoryName.replace(/Proyecto\s+/g, ''));
-        
-      if (blobResponse) {
-        toast.success("Imagen subida correctamente!")
-      } else {
-        throw new Error(`Failed to upload file`, uploadError);
-      }
-  
-      setUpdate(!update)
+          if (response) {
+            toast.success("Imagen subida correctamente!")
+          } else {
+            throw new Error(`Failed to upload file`, uploadError);
+          }
+      
+          setUpdate(!update)
+        } catch (error) {
+          toast.error("Error al subir la imagen. Recarga la página e intentalo de nuevo")
+          console.log(error)
+        }
+    
     };
   
     const deleteImage = async (pathname) => {
