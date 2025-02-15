@@ -9,6 +9,7 @@ import { UseUploadBlob } from '@/hooks/useUploadBlob';
 import SendEmails from './SendEmails';
 import { useProtectedContext } from '@/app/context/ProtectedContext';
 import { confirmAlert } from 'react-confirm-alert';
+import { useState } from 'react';
 
 
 
@@ -21,6 +22,7 @@ export default function ProjectSubmissionForm({
   const router = useRouter();
   const { uploadFile, isUploading, uploadError } = UseUploadBlob();
   const userData = useProtectedContext();
+  const [saving, setSaving] = useState(false)
 
       const confirmModal = (e) => {
         e.preventDefault()
@@ -35,7 +37,7 @@ export default function ProjectSubmissionForm({
       }
 
   const handleSubmit = async () => {
-
+    setSaving(true)
 
     //Validacion de errores
 
@@ -162,10 +164,12 @@ export default function ProjectSubmissionForm({
         return toast.error("Hubo un error, verifica los datos e intentalo más tarde")
       }
       SendEmails(response.results.id, userData.userName, response.results.nombre )
+      setSaving(false)
       toast.success("Proyecto añadido exitosamente! Redirigiendo a Editar Proyecto...")
       router.push(`/protected/update-project/${response.results.id}`); // Redirect to a success page
     } catch (error) {
       console.error('Error:', error);
+      setSaving(false)
       toast.error("Hubo un error, verifica los datos e intentalo más tarde" + error) // Redirect to a success page
     }
   };
@@ -174,7 +178,7 @@ export default function ProjectSubmissionForm({
     <div>
       <form onSubmit={confirmModal} >
         <button type="submit" className={styles.saveButton}>
-          Guardar Proyecto
+          {saving == true ? "Guardando Proyecto..." : "Guardar Proyecto"}
         </button>
       </form>
     </div>
@@ -194,7 +198,7 @@ function GenericModal({ onClose, afterFunction}) {
           Cancelar
         </button>
         <button className={styles.modalUpdate} onClick={() =>  {afterFunction(); onClose()}}>
-          Guardar
+           Guardar
         </button>
 
       </div>
