@@ -26,7 +26,7 @@ export default function ProjectSubmissionForm({
 
       const confirmModal = (e) => {
           //Validacion de errores
-
+          e.preventDefault()
 
           if (projectData.bonoSeleccionado == "") {
             return toast.error('Seccion 1: Selecciona un tipo de bono');

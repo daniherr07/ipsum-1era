@@ -110,7 +110,7 @@
     /* #region Header*/
     .headerBonos {
       width: 100%;
-      height: 100vh;
+      height: 50vh;
       background: linear-gradient(180deg, #03579B 0%, #ffffff 100%);
       display: flex;
       justify-content: center;
@@ -448,14 +448,13 @@
     background: linear-gradient(180deg, #ffffff 0%, #005293 100%);
     padding: 4rem 2rem;
     color: white;
-    min-height: 100vh;
+    min-height: 40vh;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   
   .containerFooter {
-    padding-top: 18em;
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;

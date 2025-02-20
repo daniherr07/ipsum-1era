@@ -50,7 +50,7 @@ export default function Nav() {
           <form action="/api/toLogin" method="POST">
             <button type="submit" className={styles.logoButton}>
               <Image
-                src="/landing/ipsumBlanco.svg"
+                src="/landing/ipsumBlanco.png"
                 alt="Logo"
                 width={36}
                 height={36}
