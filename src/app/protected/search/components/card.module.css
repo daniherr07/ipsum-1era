@@ -282,7 +282,8 @@
     background-color: #0066cc;
     padding: 1em;
     font-size: 1rem;
-    width: 100%;
+    width: 8em;
+    text-align: center;
     text-decoration: none !important;
 
     &:hover{

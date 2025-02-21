@@ -81,12 +81,9 @@ function PhotosCard({item}) {
                       Cancelar
                     </button>
 
-                    <button 
-                    onClick={onClose}
-                    className={styles.modalDownload}
-                    >
-                      <Link href={blob.url} target='_blank' className={styles.linkText}>Abrir</Link>
-                    </button>
+
+                    <Link href={blob.url} target='_blank' className={styles.modalDownload} onClick={onClose}>Abrir</Link>
+
 
                 </div>
 
