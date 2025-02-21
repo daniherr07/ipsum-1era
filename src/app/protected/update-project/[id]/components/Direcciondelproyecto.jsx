@@ -197,7 +197,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData, n
                                     onChange={handleInputChange}
                                     required
                                 >
-                                    <option value="">Seleccione una provincia</option>
+                                    <option value="">{directionData.provincia}</option>
                                     {
                                     
                                     provincias.length > 0 && provincias.map((prov) => (
@@ -217,7 +217,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData, n
                                     onChange={handleInputChange}
                                     required
                                 >
-                                    <option value="">Seleccione un cantón</option>
+                                    <option value="">{directionData.canton}</option>
                                     {(directionData.provincia && cantones.length > 0) &&
                                         cantones.map((canton) => (
                                             <option key={canton.idCanton} value={canton.descripcion}>
@@ -237,7 +237,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData, n
                                     onChange={handleInputChange}
                                     required
                                 >
-                                    <option value="">Seleccione un distrito</option>
+                                    <option value="">{directionData.distrito}</option>
                                     {(directionData.canton && distritos.length > 0) &&
                                         distritos.map((distrito) => (
                                             <option key={distrito.idDistrito} value={distrito.descripcion}>
