@@ -1,125 +1,319 @@
 .container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-  }
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.header {
+  background-color: #03579B;
+  padding: 1rem;
+}
+
+.title {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.formContent {
+  padding: 1rem;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 10px;
+}
+
+.column1{
+  display: flex;
+  flex-direction: column;
+  place-content: space-between;
+}
+
+.column2{
+  margin: 5px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  place-items: center;
+}
+
+.locationSelects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.selectGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.select {
+  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background-color: white;
+  width: 100%;
+}
+
+.addressGroup {
+  margin-bottom: 1.5rem;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  resize: vertical;
+}
+
+.cadastralGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.uploadSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.uploadButton {
+  background-color: #03579B;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.uploadButton:hover {
+  background-color: #005292;
+}
+
+.cadastralNumber {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input {
+  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  overflow: hidden scroll;
+  font-family: Arial, sans-serif;
+  max-height: 500px;
+  overflow: auto;
+
+}
+
+.card *{
+  font-family: "Inter", sans-serif;
+}
+
+.responsiveCardContainer{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  padding: 1em;
+}
+
+.photo{
+  flex: 1 1 calc(33.333% - 1rem);
+  min-width: 250px;
+  height: 200px;
+  background-color: #f0f0f0;
+  display: flex;
+  place-content: center;
+  text-align: center;
+  place-items: center;
+  padding: 1em;
+  font-size: 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center
   
-  .header {
-    background-color: #03579B;
-    padding: 1rem;
-  }
-  
-  .title {
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 0;
-  }
-  
-  .formContent {
-    padding: 1rem;
-    background-color: white;
-    border: 1px solid #e5e7eb;
-  }
-  
-  .locationSelects {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .selectGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .select {
-    padding: 0.5rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 4px;
-    background-color: white;
-    width: 100%;
-  }
-  
-  .addressGroup {
-    margin-bottom: 1.5rem;
-  }
-  
-  .textarea {
-    width: 100%;
-    min-height: 100px;
-    padding: 0.5rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 4px;
-    margin-top: 0.5rem;
-    resize: vertical;
-  }
-  
-  .cadastralGroup {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-  }
-  
-  .uploadSection {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .uploadButton {
-    background-color: #03579B;
-    color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
+}
+
+.fileInput {
+  flex: 1 1 calc(33.333% - 1rem);
+  min-width: 250px;
+  height: 200px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.fileInput input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.fileInput:hover {
+  background-color: #e0e0e0;
+}
+
+.fileInput::after {
+  content: '+';
+  font-size: 3rem;
+}
+
+.modal{
+  border: 1px solid #0068bd83;
+  padding: 1vw;
+  border-radius: 11px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  place-items: center;
+  gap: 1em;
+  width: 50vw;
+}
+
+.modalBtns{
+  display: flex;
+  gap: 1em;
+}
+
+.modalUpdate{
+  border: none;
+  background-color: #0066cc;
+  padding: 1em;
+  color: #fff;
+  border-radius: 11px;
+  font-size: 1rem;
+  width: 5em;
+  text-align: center;
+  display: flex;
+  place-content: center;
+  place-items: center;
+
+  &:hover{
+    background-color: #0058b1;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
   }
-  
-  .uploadButton:hover {
-    background-color: #005292;
+}
+
+.modalCancel{
+  color: #fff;
+  border-radius: 11px;
+  border: none;
+  background-color: rgb(252, 91, 91);
+  padding: 1em;
+  font-size: 1rem;
+
+  &:hover{
+    cursor: pointer;
+    background-color: rgb(255, 62, 62)
   }
-  
-  .cadastralNumber {
-    flex: 1;
-    display: flex;
+}
+
+.modalDownload{
+  color: #fff !important;
+  border-radius: 11px;
+  border: none;
+  background-color: #0066cc;
+  padding: 1em;
+  font-size: 1rem;
+  width: 5em;
+  text-align: center;
+  display: flex;
+  place-content: center;
+  place-items: center;
+  text-decoration: none !important;
+
+  &:hover{
+    cursor: pointer;
+    background-color: #0058b1
+  }
+}
+
+.linkText{
+  color: #fff !important;
+  text-decoration: none !important;
+}
+
+.newUserModal{
+  border: 1px solid #0068bd83;
+  padding: 1vw;
+  border-radius: 11px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  width: 50vw;
+  place-content: center;
+  place-items: center;
+}
+
+.newModalInput{
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .locationSelects {
+    grid-template-columns: 1fr;
+  }
+
+  .cadastralGroup {
     flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .input {
-    padding: 0.5rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 4px;
     width: 100%;
   }
-  
-  @media (max-width: 768px) {
-    .locationSelects {
-      grid-template-columns: 1fr;
-    }
-  
-    .cadastralGroup {
-      flex-direction: column;
-      width: 100%;
-    }
 
-    .cadastralNumber{
-      width: 100%;
-    }
+  .cadastralNumber{
+    width: 100%;
   }
 
-  @media (max-width: 800px) {
-    .container{
-        width: 90vw;
-    }
+  .formContent{
+    display: flex;
+    flex-direction: column;
   }
-  
-  
+}
+
+@media (max-width: 800px) {
+  .container{
+      width: 90vw;
+  }
+}
+

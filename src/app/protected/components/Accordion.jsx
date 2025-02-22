@@ -17,6 +17,8 @@ import EditGeneric from './popupPlantilla/edit/EditGeneric'
 import { useProtectedContext } from '@/app/context/ProtectedContext'
 import Image from 'next/image'
 import { useDetectClickOutside } from 'react-detect-click-outside';
+import { toast } from 'react-toastify'
+
 
 
 
@@ -30,10 +32,10 @@ export default function Accordion() {
     const ref = useDetectClickOutside({ onTriggered: () => setOpen(false) });
 
     const logout = async () => {
+        toast.info("Sesión cerrada exitosamente, saliendo del sistema...")
         await fetch(`/api/logoff`, {
             method: "POST",
         });
-
         router.push("/login")
     }
 

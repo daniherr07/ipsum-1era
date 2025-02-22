@@ -8,7 +8,7 @@ export function UseUploadBlob() {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
 
-  const uploadFile = async (file, name, directory = "") => {
+  const uploadFile = async (file, name, directory = "", rootName) => {
     if (!file) return null;
     console.log(file)
 
@@ -20,6 +20,7 @@ export function UseUploadBlob() {
       formData.append('file', file);
       formData.append("name", name)
       formData.append("directory", directory)
+      formData.append("rootName", rootName)
 
       const response = await fetch(`/api/uploadFile`, {
         method: "POST",

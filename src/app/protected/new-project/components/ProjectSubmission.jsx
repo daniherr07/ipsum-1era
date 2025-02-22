@@ -18,6 +18,7 @@ export default function ProjectSubmissionForm({
   familyMembers,
   directionData,
   formDataAdmin,
+  photosFiles,
 }) {
   const router = useRouter();
   const { uploadFile, isUploading, uploadError } = UseUploadBlob();
@@ -126,7 +127,7 @@ export default function ProjectSubmissionForm({
           const memberCedula = member.cedulaFile;
 
           if (memberCedula instanceof File) {
-            const blobResponse = await uploadFile(memberCedula, memberCedula.name, projectName);
+            const blobResponse = await uploadFile(memberCedula, memberCedula.name,"Cédulas",projectName);
             
           
             if (blobResponse) {
@@ -143,6 +144,18 @@ export default function ProjectSubmissionForm({
           
         }
       }));
+
+      await Promise.all(photosFiles.map(async (file) => {
+          const blobResponse = await uploadFile(file.file, file.file.name,"Catastros", projectName);
+          if (blobResponse) {
+            const parsedResponse = JSON.parse(blobResponse)
+            console.log("La blob respuesta supongo de catastros", parsedResponse);
+          } else {
+            throw new Error(`Failed to upload file for ${member.nombre}`);
+          }
+
+      }));
+
     
     
 
@@ -166,8 +179,8 @@ export default function ProjectSubmissionForm({
       }
       SendEmails(response.results.id, userData.userName, response.results.nombre )
       setSaving(false)
-      toast.success("Proyecto añadido exitosamente! Redirigiendo a Editar Proyecto...")
-      router.push(`/protected/update-project/${response.results.id}`); // Redirect to a success page
+      toast.info("Proyecto añadido exitosamente! Redirigiendo al inicio...")
+      router.push(`/protected/home`); // Redirect to a success page
     } catch (error) {
       console.error('Error:', error);
       setSaving(false)

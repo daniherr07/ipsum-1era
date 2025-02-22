@@ -23,6 +23,7 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true)
+        toast.info("Iniciando Sesión...")
         try {
             const response = await fetch('/api/login', {
                 method: 'POST',
@@ -42,9 +43,11 @@ export default function Login() {
 
             if (result.toChange) {
                 setLoading(false)
+                toast.info("Redirigiento a Cambiar Contraseña...")
                 router.push('/newUser');
             } else if (result.toHome) {
                 setLoading(false)
+                toast.success("Redirigiento a Inicio")
                 router.push(`/protected/home`);
             } else if (result.toError) {
                 setLoading(false)

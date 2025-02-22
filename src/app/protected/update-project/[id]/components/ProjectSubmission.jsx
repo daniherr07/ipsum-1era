@@ -91,7 +91,6 @@ export default function ProjectSubmissionForm({
         return toast.error('Seccion 4: Seleccione un promotor o seleccione "Pendiente"');
       }
 
-      e.preventDefault()
       confirmAlert({
         closeOnClickOutside: false,
         customUI: ({ onClose }) => 
@@ -130,7 +129,7 @@ export default function ProjectSubmissionForm({
           const memberCedula = member.cedulaFile;
 
           if (memberCedula instanceof File) {
-            const blobResponse = await uploadFile(memberCedula, memberCedula.name, projectName);
+            const blobResponse = await uploadFile(memberCedula, memberCedula.name,"Cédulas",projectName);
             
           
             if (blobResponse) {

@@ -31,8 +31,6 @@ export default function DatosAdministrativos({formData, setFormData}) {
     const [analistasEntidad, setAnalistasEntidad] = useState([]);
     const [arquitecto, setArquitecto] = useState([]);
 
-    console.log(data.Constructor)
-
 
     useEffect(() => {
        useFetchBackend("getAdminData", "GET")

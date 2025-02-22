@@ -213,7 +213,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                         Pendiente
                                 </option>
                                 {data.Constructor.map((item, key) => (
-                                    <option key={key} value={item.localId}>
+                                    <option key={key} value={item.localID}>
                                         {`${item.Nombre} ${item.Apellido_1} ${item.Apellido_2}`} {item.activated == 0 && "(Desactivado)"}
                                     </option>
                                 ))}

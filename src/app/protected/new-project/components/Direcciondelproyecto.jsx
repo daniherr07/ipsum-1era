@@ -3,8 +3,23 @@
 import { useEffect, useState } from "react";
 import styles from "./location-form.module.css";
 import { handleChange } from "@/utils/handleChange";
+import { toast } from "react-toastify";
+import { confirmAlert } from "react-confirm-alert";
+import Link from "next/link";
 
-export default function DireccionDelProyecto({directionData, setDirectionData, provincias, setProvincias, cantones, setCantones, distritos, setDistritos}) {
+
+
+export default function DireccionDelProyecto({
+    directionData, 
+    setDirectionData, 
+    provincias, 
+    setProvincias, 
+    cantones, 
+    setCantones, 
+    distritos, 
+    setDistritos, 
+    files, 
+    setFiles}) {
     
     const [manual, setManual] = useState({
         manual: false,
@@ -95,16 +110,18 @@ export default function DireccionDelProyecto({directionData, setDirectionData, p
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <h1 className={styles.title}>Nuevo Caso - Dirección del Proyecto</h1>
+                <h1 className={styles.title}>Editar - Dirección del Proyecto</h1>
             </div>
 
             <div className={styles.formContent}>
-                <div className={styles.manualCheck} style={{display: "flex", gap: "1em", placeContent: "start", placeItems: "center", marginBottom: "1em"}}>
-                    <label htmlFor="manual">Escribir manualmente</label>
-                    <input type="checkbox" name="manual" id="manual" value={manual.manual} onClick={e => handleChange(e, setManual)}/>
-                </div>
 
-                <div className={styles.locationSelects}>
+
+                <div className={styles.column1}>
+                    <div className={styles.manualCheck} style={{display: "flex", gap: "1em", placeContent: "start", placeItems: "center", marginBottom: "1em"}}>
+                        <label htmlFor="manual">Escribir manualmente</label>
+                        <input type="checkbox" name="manual" id="manual" value={manual.manual} onClick={e => handleChange(e, setManual)}/>
+                    </div>
+                    <div className={styles.locationSelects}>
 
                     {
                         manual.manual ?
@@ -152,7 +169,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData, p
                                     onChange={handleInputChange}
                                     required
                                 >
-                                    <option value="">Seleccione una provincia</option>
+                                    <option value="">{directionData.provincia}</option>
                                     {
                                     
                                     provincias.length > 0 && provincias.map((prov) => (
@@ -172,7 +189,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData, p
                                     onChange={handleInputChange}
                                     required
                                 >
-                                    <option value="">Seleccione un cantón</option>
+                                    <option value="">{directionData.canton}</option>
                                     {(directionData.provincia && cantones.length > 0) &&
                                         cantones.map((canton) => (
                                             <option key={canton.idCanton} value={canton.descripcion}>
@@ -192,7 +209,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData, p
                                     onChange={handleInputChange}
                                     required
                                 >
-                                    <option value="">Seleccione un distrito</option>
+                                    <option value="">{directionData.distrito}</option>
                                     {(directionData.canton && distritos.length > 0) &&
                                         distritos.map((distrito) => (
                                             <option key={distrito.idDistrito} value={distrito.descripcion}>
@@ -208,74 +225,182 @@ export default function DireccionDelProyecto({directionData, setDirectionData, p
                     
                 </div>
 
-                <div className={styles.addressGroup}>
-                    <label>Otras señas:</label>
-                    <textarea
-                        className={styles.textarea}
-                        name="otrasSenas"
-                        value={directionData.otrasSenas}
-                        onChange={handleInputChange}
-                    
-                        required
-                    />
-                </div>
-
-                <div className={styles.locationSelects}>
-                    <div className={styles.selectGroup}>
-                        <label>Tipo de identificacion</label>
-                        <select
-                            className={styles.select}
-                            name="loteTipoIdentificacion"
-                            value={directionData.loteTipoIdentificacion}
+                    <div className={styles.addressGroup}>
+                        <label>Otras señas:</label>
+                        <textarea
+                            className={styles.textarea}
+                            name="otrasSenas"
+                            value={directionData.otrasSenas}
                             onChange={handleInputChange}
-                            required
-                        >
-                            <option value="">Seleccione un Tipo</option>
-                            <option value="3">Pendiente</option>
-                            <option value="1">Persona Fisica</option>
-                            <option value="2">Persona Juridica</option>
-                        </select>
-                    </div>
-
-                    <div className={styles.selectGroup}>
-                        <label>Numero de Identifiacion</label>
-
-                        <input className={styles.select} 
-                        type="number" value={directionData.loteIdentificacion} 
-                        name="loteIdentificacion" onChange={handleInputChange} 
+                            
                         />
                     </div>
 
-                </div>
+                    <div className={styles.locationSelects}>
+                        <div className={styles.selectGroup}>
+                            <label>Id. del propietario</label>
+                            <select
+                                className={styles.select}
+                                name="loteTipoIdentificacion"
+                                value={directionData.loteTipoIdentificacion}
+                                onChange={handleInputChange}
+                                required
+                            >
+                                <option value="">Seleccione un Tipo</option>
+                                <option value="3">Pendiente</option>
+                                <option value="1">Persona Fisica</option>
+                                <option value="2">Persona Juridica</option>
+                            </select>
+                        </div>
 
+                        <div className={styles.selectGroup}>
+                            <label>Numero de Identifiacion</label>
 
-                <div className={styles.cadastralGroup}>
-                    
-                    <div className={styles.cadastralNumber}>
-                        <label>Número de Plano Catastro</label>
-                        <input
-                            type="text"
-                            className={styles.input}
-                            name="numeroPlanoCatastro"
-                            value={directionData.numeroPlanoCatastro}
-                            onChange={handleInputChange}
-                            required
-                        />
+                            <input className={styles.select} 
+                            type="number" value={directionData.loteIdentificacion} 
+                            name="loteIdentificacion" onChange={handleInputChange} 
+                            
+                            />
+                        </div>
+
                     </div>
 
-                    <div className={styles.cadastralNumber}>
-                        <label>Número de Finca</label>
-                        <input
-                            type="text"
-                            className={styles.input}
-                            name="finca"
-                            value={directionData.finca}
-                            onChange={handleInputChange}
-                        />
+
+                    <div className={styles.cadastralGroup}>
+                        <div className={styles.cadastralNumber}>
+                            <label>Número de Plano Catastro</label>
+                            <input
+                                type="text"
+                                className={styles.input}
+                                name="numeroPlanoCatastro"
+                                value={directionData.numeroPlanoCatastro}
+                                onChange={handleInputChange}
+                                
+                            />
+                        </div>
+
+                        <div className={styles.cadastralNumber}>
+                            <label>Número de Finca</label>
+                            <input
+                                type="text"
+                                className={styles.input}
+                                name="finca"
+                                value={directionData.finca}
+                                onChange={handleInputChange}
+                                
+                            />
+                        </div>
                     </div>
+
                 </div>
+
+                <div className={styles.column2}>
+                    <p>Subir imágenes</p>
+                    <PhotosCard files={files} setFiles={setFiles}/>
+                </div>
+
+                
             </div>
         </div>
     );
 }
 
+function PhotosCard({files, setFiles}) {
+    const [file, setFile] = useState('');
+    
+    console.log(files)
+  
+  
+    const deletePopup = (fileToRemove) => {
+    
+        confirmAlert({
+          customUI: ({ onClose, }) => {
+            return (
+                <div className={styles.modal}>
+                    <h1>¿Que deseas hacer?</h1>
+    
+                    <div className={styles.modalBtns}>
+                        <button
+                            className={styles.modalUpdate}
+                            onClick={() => {
+                            deleteImage(fileToRemove);
+                            onClose();
+                            }}
+                        >
+                            Eliminar
+                        </button>
+    
+                        <button 
+                        onClick={onClose}
+                        className={styles.modalCancel}
+                        >
+                          Cancelar
+                        </button>
+    
+                        <button 
+                        onClick={onClose}
+                        className={styles.modalDownload}
+                        >
+                          <Link href={URL.createObjectURL(fileToRemove.file)} target='_blank' className={styles.linkText}>Abrir</Link>
+                        </button>
+    
+                    </div>
+    
+    
+              </div>
+            );
+          }
+        })
+      }
+  
+  
+  
+     const handleFileChange = async (event) => {
+        toast.info("Subiendo imagen...")
+
+        try {
+
+          const file = event.target.files[0];
+          let newFile = {
+            file
+          }
+
+          if (file) {
+            setFile(file);
+          }
+
+          setFiles(prev => [...prev, newFile]);
+      
+        } catch (error) {
+          toast.error("Error al subir la imagen. Recarga la página e intentalo de nuevo")
+          console.log(error)
+        }
+    
+    };
+  
+    const deleteImage = async (fileToRemove) => {
+        setFiles(prevFiles => prevFiles.filter(file => file !== fileToRemove));
+      }
+    
+  
+  
+  
+    return(
+      <div className={styles.card}>
+        <div className={styles.responsiveCardContainer}>
+            <>
+                {
+                    files && files.map((file, index) => (
+                        <div key={index} onClick={() => deletePopup(file)} style={{backgroundImage: `url(${URL.createObjectURL(file.file)})`}} className={styles.photo}>{file.file.name.toLowerCase().endsWith('.pdf') && "Vista previa no disponible de PDF"}</div>
+                    ))
+                }
+
+              <label className={styles.fileInput} style={file ? {} : null}>
+                <input type="file" onChange={handleFileChange} />
+              </label>
+            </>
+  
+        </div>
+      </div>
+    )
+}

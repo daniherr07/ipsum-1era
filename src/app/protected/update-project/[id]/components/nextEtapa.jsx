@@ -146,6 +146,9 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
 
     //DEFINIENDO EL ROL_ID PARA MANDAR LOS CORREOS
     switch (etapaEdit.etapa) {
+      case 1: //A Preanálisis
+        emailsToGetRole = [Analista]
+        break;
       case 2: //A visita
       emailsToGetRole = Ingeniero
         break;
@@ -153,12 +156,8 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
       case 3: // A confeccion expediente
 
         switch (etapaEdit.subetapa) {
-          case 17: // A Inicio de Confeccion Expediente
-          emailsToGetRole =  Analista
-            break;
-        
           case 12: // A Documentacion Técnica
-            emailsToGetRole =  Arquitecto
+            emailsToGetRole =  [Arquitecto, Analista]
             break;
           case 13: // A Revision
             emailsToGetRole = Analista
@@ -180,7 +179,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
 
         switch (etapaEdit.subetapa) {
           case 18: // A Inicio de permisos de construccion
-            emailsToGetRole = Arquitecto
+            emailsToGetRole = [Arquitecto, Ingeniero]
             break;
         
           case 14: // A Finalizacion de procesos de construccion
@@ -263,7 +262,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
         body: JSON.stringify({
             recipients: destinatarios,
             subject: `Avance de etapa proyecto "${nombreProyecto}"`,
-            content: `<p>El proyecto ${nombreProyecto} ha pasado de ETAPA: ${etapaAnterior}, SUBETAPA: ${subetapaAnterior != null ? subetapaAnterior : ""} y se ha actualizado a ETAPA: ${etapaCorreo}, SUBETAPA: ${subetapaCorreo} . <br /> <p>Por favor corroborar la información en el sistema</p>`
+            content: `<h1>${userData.userName} ha avanzado de etapa el proyecto ${nombreProyecto}.</h1> <br /> <p>El proyecto <ins>${nombreProyecto}</ins> ha pasado de <br /> ETAPA: <b>${etapaAnterior}</b>, SUBETAPA: <mark>${subetapaAnterior != null ? subetapaAnterior : ""}</mark> <br /> Fue actualizado a <br /> ETAPA: <b>${etapaCorreo}</b>, SUBETAPA: <mark>${subetapaCorreo}</mark> . <br /> <p>Por favor corroborar la información en el sistema</p>`
         })
 
       });
@@ -272,7 +271,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
       console.log('Respuesta:', data);
 
       for(let i = 0; i < result.emails.length; i++) {
-        await useFetchBackend("insertNoti", "POST", {message: `El proyecto ${nombreProyecto} ha pasado de ${etapaAnterior} ${subetapaAnterior != null ? ":" + " " + subetapaAnterior : ""} y se ha actualizado a ${etapaCorreo} ${subetapaCorreo}.`, user_id: result.ids[i], time: new Date()})
+        await useFetchBackend("insertNoti", "POST", {message: `${userData.userName} ha modificado el proyecto ${nombreProyecto}. El proyecto ha pasado de ${etapaAnterior} ${subetapaAnterior != null ? ":" + " " + subetapaAnterior : ""} y se ha actualizado a ${etapaCorreo} ${subetapaCorreo}.`, user_id: result.ids[i], time: new Date()})
       }
 
 

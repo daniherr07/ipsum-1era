@@ -62,6 +62,7 @@ export async function POST(req) {
   const file = formData.get('file');
   const name = formData.get('name');
   const directory = formData.get('directory');
+  const rootName = formData.get('rootName');
   
 
   try {
@@ -73,13 +74,12 @@ export async function POST(req) {
     const stream = Readable.from(Buffer.from(buffer));
 
     // Get folder name
-    const folderName = directory;
-    const folderPath = `/${folderName}`;
+    const folderPath = `/${rootName}/${directory}`;
 
     await dropbox({
       resource: 'files/list_folder',
       parameters: {
-        path: `/${directory}`,
+        path: folderPath,
       },
     }, async (err, result) => {
       if (err && err.code == 409){
@@ -165,7 +165,7 @@ export async function POST(req) {
       size: file.size,
       type: file.type,
       url: fileUrl,
-      folder: folderName,
+      folder: folderPath,
       ok: true
     });
   } catch (error) {

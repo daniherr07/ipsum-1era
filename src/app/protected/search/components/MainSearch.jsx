@@ -116,11 +116,11 @@ export default function MainSearch({label, value, isDisabled, etapa_id, tipo_bon
                             pName && 
                             
                             <>
-                            <p>Encontrados: {Object.keys(pName).length}</p>
+                            <p><b>Encontrados: </b>{Object.keys(pName).length}</p>
 
-                            <p>Etapa: {nombresEtapas.length >= 1 ? nombresEtapas.join(", ") : "N/A"}</p>
-                            <p>Tipo de Bono: {nombresBonos.length >= 1 ? nombresBonos.join(", ") : "N/A"}</p>
-                            <p>Otro: {nombreOtro}</p>
+                            <p><b>Etapa:</b> {nombresEtapas.length >= 1 ? nombresEtapas.join(", ") : "N/A"}</p>
+                            <p><b>Tipo de Bono: </b>{nombresBonos.length >= 1 ? nombresBonos.join(", ") : "N/A"}</p>
+                            <p><b>Otro: </b>{nombreOtro}</p>
                             
                             </>
                             

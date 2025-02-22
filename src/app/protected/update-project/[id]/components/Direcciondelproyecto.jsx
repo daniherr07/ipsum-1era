@@ -266,7 +266,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData, n
 
                     <div className={styles.locationSelects}>
                         <div className={styles.selectGroup}>
-                            <label>Tipo de identificacion</label>
+                            <label>Id. del propietario</label>
                             <select
                                 className={styles.select}
                                 name="loteTipoIdentificacion"
@@ -336,7 +336,7 @@ export default function DireccionDelProyecto({directionData, setDirectionData, n
 function PhotosCard({nombreProyecto}) {
     const { uploadFile, isUploading, uploadError } = UseUploadBlob();
     const [file, setFile] = useState('');
-    const directoryName = (nombreProyecto + " " + "Catastros")
+    const directoryName = (nombreProyecto)
     const [blobs, setBlobs] = useState()
     const [loading, setLoading] = useState(true);
     const [update, setUpdate] = useState(false)
@@ -388,7 +388,7 @@ function PhotosCard({nombreProyecto}) {
   
         const fetchBlobs = async () => {
             try {
-              const response = await fetch(`/api/getFiles?prefix=${directoryName.replace(/Proyecto\s+/g, '')}`)
+              const response = await fetch(`/api/getFiles?prefix=${directoryName.replace(/Proyecto\s+/g, '') + "/Catastros"}`)
       
               if (!response.ok) {
                 if (response.route_not_found) {
@@ -422,7 +422,7 @@ function PhotosCard({nombreProyecto}) {
             setFile(file);
           }
           
-          const response = await uploadFile(file, file.name, directoryName.replace(/Proyecto\s+/g, ''));
+          const response = await uploadFile(file, file.name, "Catastros" ,directoryName.replace(/Proyecto\s+/g, ''));
       
           if (response) {
             toast.success("Imagen subida correctamente!")
@@ -477,4 +477,4 @@ function PhotosCard({nombreProyecto}) {
         </div>
       </div>
     )
-  }
+}

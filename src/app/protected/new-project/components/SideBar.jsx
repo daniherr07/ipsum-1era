@@ -17,6 +17,7 @@ export default function AccordionMenu() {
   const [provincias, setProvincias] = useState("")
   const [cantones, setCantones] = useState("")
   const [distritos, setDistritos] = useState("")
+  const [files, setFiles] = useState([])
 
   const [page, setPage] = useState(1)
 
@@ -151,6 +152,8 @@ export default function AccordionMenu() {
                       setCantones={setCantones}
                       distritos={distritos}
                       setDistritos={setDistritos}
+                      files={files}
+                      setFiles={setFiles}
                       />}
     {page === 4 && <Datosadministrativos formData={formDataAdmin} setFormData={setFormDataAdmin} />}
 
@@ -159,6 +162,7 @@ export default function AccordionMenu() {
       familyMembers={familyMembers}
       directionData={directionData}
       formDataAdmin={formDataAdmin}
+      photosFiles={files}
     />
     </>
   )}

@@ -50,7 +50,7 @@ export default function Card({item, bitData, handleClick, handleColor}) {
 function PhotosCard({item}) {
   const { uploadFile, isUploading, uploadError } = UseUploadBlob();
   const [file, setFile] = useState('');
-  const directoryName = (item.nombreProyecto + " " + "Fotos")
+  const directoryName = (item.nombreProyecto)
   const [blobs, setBlobs] = useState()
   const [loading, setLoading] = useState(true);
   const [update, setUpdate] = useState(false)
@@ -98,7 +98,7 @@ function PhotosCard({item}) {
 
     const fetchBlobs = async () => {
       try {
-        const response = await fetch(`/api/getFiles?prefix=${directoryName.replace(/Proyecto\s+/g, '')}`)
+        const response = await fetch(`/api/getFiles?prefix=${directoryName.replace(/Proyecto\s+/g, '') + "/Fotos Proyecto"}`)
 
         if (!response.ok) {
           if (response.route_not_found) {
@@ -133,7 +133,7 @@ function PhotosCard({item}) {
         setFile(file);
       }
       
-      const response = await uploadFile(file, file.name, directoryName.replace(/Proyecto\s+/g, ''));
+      const response = await uploadFile(file, file.name, "Fotos Proyecto",directoryName.replace(/Proyecto\s+/g, ''));
   
       if (response) {
         toast.success("Imagen subida correctamente!")
@@ -197,6 +197,8 @@ function GeneralInfo({item, bitData, userData, handleClick, handleColor}){
       customUI: ({ onClose }) => <AddBitacoraEntry onClose={onClose} userData={userData} proyecto_id={item.id} item={item} handleClick={handleClick} handleColor={handleColor}/>,
     })
   }
+
+  console.log(item)
   return (
   <div className={styles.card}>
       {/* Header */}
@@ -249,20 +251,19 @@ function GeneralInfo({item, bitData, userData, handleClick, handleColor}){
           {/* Address */}
           <div className={styles.address}>
             <span className={styles.label}>Otras señas:</span>
-            <p className={styles.value}>{item.senasDescripcion}</p>
+            <p className={styles.value}>{item.senasDescripcion == "" ? "Sin Asignar" : item.senasDescripcion}</p>
           </div>
 
           {/* Historical Data */}
           <div className={styles.historical}>
-            <span className={styles.label}>Historial</span>
             <div className={styles.historicalGrid}>
               <div>
                 <span className={styles.label}>APC</span>
-                <span className={styles.value}>{item.codigoApc}</span>
+                <span className={styles.value}>{item.codigoApc == "" ? "Sin Asignar" : item.codigoApc}</span>
               </div>
               <div>
                 <span className={styles.label}>CFIA</span>
-                <span className={styles.value}>{item.codigoCfia}</span>
+                <span className={styles.value}>{item.codigoCfia == "" ? "Sin Asignar" : item.codigoCfia}</span>
               </div>
             </div>
           </div>
@@ -348,7 +349,7 @@ function GeneralInfo({item, bitData, userData, handleClick, handleColor}){
           {/* Cadastral Plan */}
           <div>
             <span className={styles.label}>Plano de Catastro</span>
-            <span className={styles.value}>{item.planoCatastro}</span>
+            <span className={styles.value}>{item.planoCatastro == "" ? "Sin Asignar" : item.planoCatastro}</span>
           </div>
 
           {/* Edit Button */}
@@ -390,19 +391,30 @@ function GeneralInfo({item, bitData, userData, handleClick, handleColor}){
 
           {/* Referral Information */}
           <div>
-            <span className={styles.label}>Promotor Ipsum</span>
-            <span className={styles.value}>{item.promotorInterno} (Interno)</span>
+            <span className={styles.label}>Promotor</span>
+            <span className={styles.value}>{item.promotorInterno == null ? "Sin Asignar" : item.promotorInterno}</span>
           </div>
+
+          <br />
           <div>
-            <span className={styles.label}>Promotor Entidad</span>
-            <span className={styles.value}>{item.promotorExterno} </span>
+            <span className={styles.label}>Constructor</span>
+            <span className={styles.value}>{item.constructor == null ? "Sin Asignar" : item.constructor}</span>
           </div>
 
           <button className={styles.editButton} onClick={newBitacora}>
             
             <p style={{color: "#fff", textDecoration: "none"}}>Agregar a bitacora</p> 
 
-        </button>
+          </button>
+
+          <div>
+            <span className={styles.label}>Presupuesto</span>
+            <span className={styles.value}>{item.presupuesto == null ? "Sin Asignar" : "₡" + item.presupuesto}</span>
+          </div>
+          <div>
+            <span className={styles.label}>Avalúo</span>
+            <span className={styles.value}>{item.avaluo == null ? "Sin Asignar" : "₡" + item.avaluo}</span>
+          </div>
         </div>
       </div>
 
@@ -411,23 +423,23 @@ function GeneralInfo({item, bitData, userData, handleClick, handleColor}){
         <div className={styles.footerGrid}>
           <div>
             <span className={styles.label}>Entidad:</span>
-            <span className={styles.value}>{item.entidad}</span>
+            <span className={styles.value}>{item.entidad == "" ? "Sin Asignar" : item.entidad}</span>
           </div>
           <div>
-            <span className={styles.label}>Tipo proyecto</span>
-            <span className={styles.value}>{item.grupoProyecto}</span>
+            <span className={styles.label}>Grupo proyecto</span>
+            <span className={styles.value}>{item.grupoProyecto == "" ? "Sin Asignar" : item.grupoProyecto}</span>
           </div>
           <div>
-            <span className={styles.label}>Analista</span>
-            <span className={styles.value}>{item.analistaEntidad}</span>
+            <span className={styles.label}>Analista Entidad:</span>
+            <span className={styles.value}>{item.analistaEntidad == null ? "Sin Asignar" : item.analistaEntidad}</span>
           </div>
           <div>
             <span className={styles.label}>Fiscal Asignado:</span>
-            <span className={styles.value}>{item.fiscalAsignado}</span>
+            <span className={styles.value}>{item.fiscalAsignado == null ? "Sin Asignar" : item.fiscalAsignado}</span>
           </div>
           <div>
-            <span className={styles.label}>Formaliza</span>
-            <span className={styles.value}>{item.centroNegocios}</span>
+            <span className={styles.label}>Centro de Negocios:</span>
+            <span className={styles.value}>{item.centroNegocios == null ? "Sin Asignar" : item.centroNegocios}</span>
           </div>
           <div>
             <span className={styles.label}>Analista IPSUM:</span>
