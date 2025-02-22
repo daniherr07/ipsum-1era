@@ -75,22 +75,16 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
         .then((fetchedData) => {
           const etapaAnteriorID = fetchedData[0].find(etapa => etapa.nombre == etapaAnterior).id
           const subetapasDeEtapa = fetchedData[1].filter(subetapa => subetapa.etapa_id == etapaAnteriorID)
-          console.log(subetapasDeEtapa)
-          
 
           if (subetapasDeEtapa[subetapasDeEtapa.length - 1].nombre == subetapaAnterior) {
-            console.log("Entro a ultima subetapa")
             setSiguienteEtapa(fetchedData[0][etapaAnteriorID])
             const newSubetapas = fetchedData[1].filter(subetapas => subetapas.etapa_id == etapaAnteriorID + 1 )
             setSubetapasEtapa(newSubetapas)
             setSiguienteSubetapa(newSubetapas[0])
           } else {
-            console.log("Entro a una subetapa")
             setSiguienteEtapa(fetchedData[0][etapaAnteriorID - 1])
 
             for (let i = 0; i < subetapasDeEtapa.length; i++) {
-              console.log("Subetapa Actual", subetapasDeEtapa)
-              console.log("Subetapa Anterior", subetapaAnterior)
               if (subetapasDeEtapa[i].nombre == subetapaAnterior) {
                 setSiguienteSubetapa(subetapasDeEtapa[i + 1])
                 setSubetapasEtapa(subetapasDeEtapa)
@@ -141,9 +135,6 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
     const Analista = "analista_asigna_ipsum_id"
     const Ingeniero = "ingeniero_id"
     const Arquitecto = "arquitecto_id"
-
-    console.log(etapaEdit.etapa, etapaEdit.subetapa)
-
     //DEFINIENDO EL ROL_ID PARA MANDAR LOS CORREOS
     switch (etapaEdit.etapa) {
       case 1: //A Preanálisis
@@ -167,7 +158,6 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
 
 
       case 4: // A Enviado al centro de negocios
-        console.log("ENTRO AQUI")
         emailsToGetRole = Analista
         break
 
@@ -215,7 +205,6 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
     let destinatarios = []
 
     const result = await useFetchBackend(`getEmails?emails=${emailsToGetRole}&id_proyecto=${idProyecto}`, "GET")
-    console.log(result)
 
     
     for (let i = 0; i < result.emails.length; i++) {
@@ -253,7 +242,6 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
         etapaCorreo = siguienteEtapa && siguienteEtapa.nombre
       }
 
-      console.log(destinatarios)
       const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
@@ -268,7 +256,6 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
       });
   
       const data = await response.json();
-      console.log('Respuesta:', data);
 
       for(let i = 0; i < result.emails.length; i++) {
         await useFetchBackend("insertNoti", "POST", {message: `${userData.userName} ha modificado el proyecto ${nombreProyecto}. El proyecto ha pasado de ${etapaAnterior} ${subetapaAnterior != null ? ":" + " " + subetapaAnterior : ""} y se ha actualizado a ${etapaCorreo} ${subetapaCorreo}.`, user_id: result.ids[i], time: new Date()})

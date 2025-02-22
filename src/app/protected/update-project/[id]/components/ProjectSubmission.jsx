@@ -35,7 +35,6 @@ export default function ProjectSubmissionForm({
   
       if (projectData.bonoSeleccionado == "1" || projectData.bonoSeleccionado == "2" || projectData.bonoSeleccionado == "4") {
         if (projectData.subtipoSeleccionado === "" ) {
-          console.log(projectData.subtipoSeleccionado)
           return toast.error('Seccion 1: Selecciona una variante de bono');
         }
       }
@@ -134,7 +133,7 @@ export default function ProjectSubmissionForm({
           
             if (blobResponse) {
               const parsedResponse = JSON.parse(blobResponse)
-              console.log("La blob respuesta supongo", parsedResponse);
+
 
               
               member.cedulaFile = parsedResponse.result.url;

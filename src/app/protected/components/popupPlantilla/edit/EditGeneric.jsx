@@ -21,7 +21,6 @@ export default function EditGeneric({onClose, table}){
         try {
             useFetchBackend(`getGenerics?table=${table}`, "GET")
             .then((data) => {
-                console.log(data)
                 setClaves(Object.keys(data[0]))
                 setData(data)
             }).catch(error => {

@@ -34,7 +34,6 @@ export default function Login() {
             });
     
             const result = await response.json();
-            console.log(result);
 
             if (result.deactivated) {
                 setLoading(false)

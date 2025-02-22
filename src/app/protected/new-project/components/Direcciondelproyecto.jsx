@@ -51,7 +51,6 @@ export default function DireccionDelProyecto({
         fetch(`https://api-geo-cr.vercel.app/provincias/${provinciaId}/cantones?limit=100&page=1`)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             setCantones(data.data)
         })
     }
@@ -308,7 +307,6 @@ export default function DireccionDelProyecto({
 function PhotosCard({files, setFiles}) {
     const [file, setFile] = useState('');
     
-    console.log(files)
   
   
     const deletePopup = (fileToRemove) => {

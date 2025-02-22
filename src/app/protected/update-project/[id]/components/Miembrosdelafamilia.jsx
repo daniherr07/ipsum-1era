@@ -121,7 +121,6 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
   const handleEdit = (member) =>{
     member.adultoMayor = member.adultoMayor == 1 ? true : false
     member.discapacidad = member.discapacidad == 1 ? true : false
-    console.log(member)
 
     if (!member.especifique) {
       member.especifique = ""
@@ -143,7 +142,6 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
     member.tipoTelefono = member.tipoTelefono == null ? "" : member.tipoTelefono
     setFormData(prev => (member));
     if (member.cedulaFile) {
-      console.log("Antes de empezar el data transfer", member.cedulaFile)
       const dataTransfer = new DataTransfer();
 
       let file;
@@ -164,7 +162,6 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
       // Set the files property of the input element
       if (inputFileRef.current) {
         inputFileRef.current.files = dataTransfer.files;
-        console.log("Despues del data transfer", dataTransfer.files)
       }
     }
   }

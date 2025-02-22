@@ -10,8 +10,6 @@ export default function SendEmails(idProyecto, usuario, nombre_proyecto){
         try {
           const result = await useFetchBackend(`getEmails?emails=${["analista_asigna_ipsum_id"]}&id_proyecto=${idProyecto}`, "GET")
 
-          console.log(result)
-
           for (let i = 0; i < result.emails.length; i++) {
             for (const [clave, valor] of Object.entries(result.emails[i])) {
               destinatarios.push(valor);
@@ -34,7 +32,6 @@ export default function SendEmails(idProyecto, usuario, nombre_proyecto){
           });
       
           const data = await response.json();
-          console.log('Respuesta:', data);
 
           for(let i = 0; i < result.emails.length; i++) {
             await useFetchBackend("insertNoti", "POST", {message: `${usuario} ha creado el proyecto: "${nombre_proyecto}" y se encuentra en la etapa de preanálisis.`, user_id: result.ids[i], time: new Date()})

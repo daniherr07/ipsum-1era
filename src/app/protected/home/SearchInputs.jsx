@@ -42,9 +42,7 @@ export default function SearchInputs() {
                 if (hasRoleId) {
                     url += `&rol_id=${selectedItem.rol_id}`;
                 }
-                console.log(url)
                 const result = await useFetchBackend(url, "GET");
-                console.log(result)
                 setTagData(result);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -56,20 +54,16 @@ export default function SearchInputs() {
         let url = `filter?table=etapas&nombre=nombre`;
         const result = await useFetchBackend(url, "GET");
         setEtapas(result);
-        console.log(result)
-        
     }
 
     const loadBonos = async () => {
         let url = `filter?table=tipos_bono&nombre=nombre`;
         const result = await useFetchBackend(url, "GET");
         setBonos(result);
-        console.log(result)
         
     }
 
     const handleEtapasChange = (value) => {
-        console.log(etapasSelect)
         setEtapasSelect(value);
     };
 

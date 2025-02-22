@@ -35,7 +35,6 @@ export default function ProjectSubmissionForm({
 
           if (projectData.bonoSeleccionado == "1" || projectData.bonoSeleccionado == "2" || projectData.bonoSeleccionado == "4") {
             if (projectData.subtipoSeleccionado === "" ) {
-              console.log(projectData.subtipoSeleccionado)
               return toast.error('Seccion 1: Selecciona una variante de bono');
             }
           }
@@ -132,7 +131,6 @@ export default function ProjectSubmissionForm({
           
             if (blobResponse) {
               const parsedResponse = JSON.parse(blobResponse)
-              console.log("La blob respuesta supongo", parsedResponse);
 
               
               member.cedulaFile = parsedResponse.result.url;
@@ -149,7 +147,6 @@ export default function ProjectSubmissionForm({
           const blobResponse = await uploadFile(file.file, file.file.name,"Catastros", projectName);
           if (blobResponse) {
             const parsedResponse = JSON.parse(blobResponse)
-            console.log("La blob respuesta supongo de catastros", parsedResponse);
           } else {
             throw new Error(`Failed to upload file for ${member.nombre}`);
           }
@@ -166,14 +163,12 @@ export default function ProjectSubmissionForm({
       formDataAdmin
     };
 
-    console.log(submissionData)
 
     
 
     try {
       const response = await useFetchBackend('saveData', 'POST', submissionData);
 
-      console.log(response)
       if (!response.ok) {
         return toast.error("Hubo un error, verifica los datos e intentalo más tarde")
       }

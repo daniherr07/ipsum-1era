@@ -10,9 +10,6 @@ export default async function Search({searchParams}){
     let isDisabled = await searchWaited.isDisabled;
     const etapa_id = await searchWaited.etapa_id;
     const tipo_bono_id = await searchWaited.tipo_bono_id;
-
-    console.log(isDisabled)
-
     if (isDisabled == undefined) {
         isDisabled = 1
     }

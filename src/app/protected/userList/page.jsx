@@ -8,7 +8,6 @@ import { useFetchBackend } from "@/hooks/useFetchApi";
 
   export default async function Page() {
     const users = await useFetchBackend("getUsers", "GET")
-    console.log(users)
 
     return (
         <>

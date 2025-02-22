@@ -17,7 +17,6 @@ export default function DireccionDelProyecto({directionData, setDirectionData, n
         manual: false,
     })
 
-    console.log(directionData)
     
     useEffect(() => {
 
@@ -79,7 +78,6 @@ export default function DireccionDelProyecto({directionData, setDirectionData, n
         fetch(`https://api-geo-cr.vercel.app/provincias/${provinciaId}/cantones?limit=100&page=1`)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             setCantones(data.data)
         })
     }
@@ -394,7 +392,6 @@ function PhotosCard({nombreProyecto}) {
                 if (response.route_not_found) {
                   return
                 } else{
-                  console.log(response)
                   throw new Error('Failed to fetch blobs', response)
                 }
               }

@@ -104,13 +104,11 @@ function PhotosCard({item}) {
           if (response.route_not_found) {
             return
           } else{
-            console.log(response)
             throw new Error('Failed to fetch blobs', response)
           }
         }
 
         const data = await response.json()
-        console.log(data)
         setBlobs(data.files)
       } catch (error) {
         console.error('Error fetching blobs:', error)
@@ -198,7 +196,6 @@ function GeneralInfo({item, bitData, userData, handleClick, handleColor}){
     })
   }
 
-  console.log(item)
   return (
   <div className={styles.card}>
       {/* Header */}
@@ -580,8 +577,6 @@ function PDFDownloadButton({ data }) {
     doc.setFont("helvetica", "bold")
     doc.setFontSize(20)
     doc.text(`Información de: ${data.nombreProyecto}`, pageWidth / 2, 15, { align: "center" })
-
-    console.log(data)
 
     // Prepare table data
     const tableData = Object.entries(data)

@@ -10,7 +10,6 @@ export function UseUploadBlob() {
 
   const uploadFile = async (file, name, directory = "", rootName) => {
     if (!file) return null;
-    console.log(file)
 
     setIsUploading(true);
     setUploadError(null);

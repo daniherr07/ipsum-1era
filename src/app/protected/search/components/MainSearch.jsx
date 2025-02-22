@@ -83,7 +83,6 @@ export default function MainSearch({label, value, isDisabled, etapa_id, tipo_bon
     useEffect(() => {
         useFetchBackend(`projectNames?label=${label}&value=${value}&order=${order}&isDisabled=${isDisabled}&etapa_id=${etapa_id}&tipo_bono_id=${tipo_bono_id}&filter_role=${filterRole}&user_id=${userData.id}`, "GET")
             .then((data) => {
-                console.log(data)
                 setPName(data)
                 setLoading(false)
             })

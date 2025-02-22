@@ -23,7 +23,6 @@ export default function AddAnalista({ onClose, router }) {
     useEffect(()=> {
         useFetchBackend(`getEntidades`, "GET")
             .then((data) => {
-                console.log(data)
                 setEntidades(data)
         })
     }, [])
@@ -50,7 +49,6 @@ export default function AddAnalista({ onClose, router }) {
         }
       const response = await useFetchBackend("insertData", "POST", formData)
 
-      console.log(response)
   
       if (response.errno) {
         toast.error('Error al insertar datos');

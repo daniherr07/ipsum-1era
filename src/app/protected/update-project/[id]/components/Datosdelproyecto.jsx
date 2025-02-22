@@ -68,7 +68,6 @@ export default function Datosdelproyecto({ projectData, setProjectData }) {
         useFetchBackend("getGrupos", "GET")
             .then((fetchedData) => {
                 setGrupos(fetchedData);
-                console.log(fetchedData)
             })
             .catch((error) => console.error('Error fetching admin data:', error));
     }, [update]);

@@ -81,7 +81,6 @@ function DeleteProyectoModal({ onClose, router, idProyecto, currentStatus, nombr
       });
   
       const data = await response.json();
-      console.log('Respuesta:', data);
 
       for(let i = 0; i < result.emails.length; i++) {
         await useFetchBackend("insertNoti", "POST", {message: `El proyecto "${nombreProyecto}" ha sido ${currentStatus == 1 ? "eliminado" : "reactivado"} por el usuario ${userData.userName}`, user_id: result.ids[i], time: new Date()})

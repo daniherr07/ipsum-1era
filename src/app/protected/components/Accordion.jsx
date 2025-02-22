@@ -105,7 +105,6 @@ export function AddSomething({ onClose, router, enterTo="Analista"}) {
     const [_, forceUpdate] = useReducer(x => x + 1, 0);
     const [type, setType] = useState(enterTo)
     const [accion, setAccion] = useState(true)
-    console.log("accionEstado", accion)
   
     return (
       <div className={style.newUserModal}>

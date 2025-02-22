@@ -36,7 +36,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
     useEffect(() => {
        useFetchBackend("getAdminData", "GET")
             .then((fetchedData) => {
-                console.log(fetchedData)
+
                 setData(fetchedData);
                 setArquitectos(fetchedData.Arquitecto);
             })

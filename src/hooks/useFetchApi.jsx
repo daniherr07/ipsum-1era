@@ -22,8 +22,7 @@ export async function useFetchBackend(url, method, formData = {}){
                 },
                 body: JSON.stringify(formData),
             });
-    
-            console.log(response)
+
             const result = await response.json();
     
             return result
