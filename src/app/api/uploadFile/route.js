@@ -17,8 +17,6 @@ async function getAccessToken() {
         }).toString(), {
             headers: { "Content-Type": "application/x-www-form-urlencoded" }
         });
-
-        console.log("Nuevo Access Token:", response.data.access_token);
         return response.data.access_token;
     } catch (error) {
         console.error("Error obteniendo el access token en api/uploadFile:", error.response.data);
@@ -36,18 +34,24 @@ const dropbox = dropboxV2Api.authenticate({
 
 // Function to create a new folder
 async function createFolder(folderName) {
-  return new Promise((resolve, reject) => {
-    dropbox({
-      resource: 'files/create_folder_v2',
-      parameters: {
-        path: folderName,
-        autorename: true
-      },
-    }, (err, result) => {
-      if (err) return reject(err);
-      resolve(result);
+
+  try {
+    return new Promise((resolve, reject) => {
+      dropbox({
+        resource: 'files/create_folder_v2',
+        parameters: {
+          path: folderName,
+          autorename: true
+        },
+      }, (err, result) => {
+        if (err) return reject(err);
+        resolve(result);
+      });
     });
-  });
+  } catch (error) {
+    console.error("Error creando el folder en createFolder", folderName, error)
+  }
+
 }
 
 export async function POST(req) {
@@ -57,15 +61,16 @@ export async function POST(req) {
     return NextResponse.json({ message: 'Method not allowed' }, { status: 405 });
   }
 
-  const formData = await req.formData();
 
-  const file = formData.get('file');
-  const name = formData.get('name');
-  const directory = formData.get('directory');
-  const rootName = formData.get('rootName');
   
 
   try {
+    const formData = await req.formData();
+
+    const file = formData.get('file');
+    const name = formData.get('name');
+    const directory = formData.get('directory');
+    const rootName = formData.get('rootName');
     if (!file) {
       return NextResponse.json({ message: 'No file uploaded' }, { status: 400 });
     }
@@ -73,8 +78,11 @@ export async function POST(req) {
     const buffer = await file.arrayBuffer();
     const stream = Readable.from(Buffer.from(buffer));
 
+    const rootNameFormatted = formatString(rootName)
+    const directoryFormatted = formatString(directory)
+
     // Get folder name
-    const folderPath = `/${rootName}/${directory}`;
+    const folderPath = `${rootNameFormatted}/${directoryFormatted}`;
 
     await dropbox({
       resource: 'files/list_folder',
@@ -89,7 +97,7 @@ export async function POST(req) {
     });
 
 
-    const fileName = `${folderPath}/${name}`;
+    const fileName = `/${folderPath}/${name}`;
 
     const uploadResult = await new Promise((resolve, reject) => {
       dropbox({
@@ -108,6 +116,8 @@ export async function POST(req) {
         resolve(result);
       });
     });
+
+    console.log(uploadResult)
 
 
     let sharedLinkResponse;
@@ -169,7 +179,18 @@ export async function POST(req) {
       ok: true
     });
   } catch (error) {
-    console.error('Error in upload route en api/uploadFile:', error);
+    console.error('Error in upload route en api/uploadFile/Post:', error);
     return NextResponse.json({ message: 'Error uploading file', error: error.message }, { status: 500 });
   }
+}
+
+
+function formatString(str) {
+  // First trim the string to remove trailing spaces
+  const trimmed = str.trim();
+  
+  // Then replace all spaces with underscores
+  const formatted = trimmed.replace(/ /g, '_');
+  
+  return formatted;
 }

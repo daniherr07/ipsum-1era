@@ -77,12 +77,13 @@ async function getOrCreateSharedLink(path) {
 export async function GET(request) {
 const { searchParams } = new URL(request.url);
 const prefix = searchParams.get("prefix")
+const formattedPrefix = convertStringFormat(prefix)
   try {
     const result = await new Promise((resolve, reject) => {
       dropbox({
         resource: 'files/list_folder',
         parameters: {
-          path: `/${prefix}`,
+          path: `/${formattedPrefix}`,
         },
       }, (err, result) => {
         if (err) return reject(err);
@@ -128,4 +129,18 @@ const prefix = searchParams.get("prefix")
 
 
   }
+}
+
+function convertStringFormat(inputString) {
+  // First, handle the special case of spaces around forward slashes
+  // by temporarily replacing "space + slash" with a unique marker
+  let processed = inputString.replace(/ \//g, "SLASHMARKER");
+  
+  // Replace all spaces with underscores
+  processed = processed.replace(/ /g, '_');
+  
+  // Restore the forward slashes without spaces
+  processed = processed.replace(/SLASHMARKER/g, "/");
+  
+  return processed;
 }

@@ -38,22 +38,38 @@ export async function DELETE(request) {
     const body = await request.json();
     const pathname = body.pathname
 
+    const formattedPathname = convertStringFormat(pathname)
+
     try {
         await dropbox({
             resource: 'files/delete',
             parameters: {
-                'path': `${pathname}`
+                'path': `${formattedPathname}`
             }
         }, (err, result, response) => {
         });
 
     return NextResponse.json({ "Succesful Delete": true });
     } catch (error) {
-        console.log("Error en api/deleteBlob/DELETE:" + error)
+        console.log("Error en api/deleteBlob/DELETE:", error + "Pathname: " + pathname)
         return NextResponse.json({ "Error": true, err });
     }
     
     
 
 }
+
+function convertStringFormat(inputString) {
+    // First, handle the special case of spaces around forward slashes
+    // by temporarily replacing "space + slash" with a unique marker
+    let processed = inputString.replace(/ \//g, "SLASHMARKER");
+    
+    // Replace all spaces with underscores
+    processed = processed.replace(/ /g, '_');
+    
+    // Restore the forward slashes without spaces
+    processed = processed.replace(/SLASHMARKER/g, "/");
+    
+    return processed;
+  }
 
