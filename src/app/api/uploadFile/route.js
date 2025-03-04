@@ -21,7 +21,7 @@ async function getAccessToken() {
         console.log("Nuevo Access Token:", response.data.access_token);
         return response.data.access_token;
     } catch (error) {
-        console.error("Error obteniendo el access token:", error.response.data);
+        console.error("Error obteniendo el access token en api/uploadFile:", error.response.data);
         return null;
     }
 }
@@ -169,8 +169,7 @@ export async function POST(req) {
       ok: true
     });
   } catch (error) {
-    console.log(error)
-    console.error('Error in upload route:', error);
+    console.error('Error in upload route en api/uploadFile:', error);
     return NextResponse.json({ message: 'Error uploading file', error: error.message }, { status: 500 });
   }
 }

@@ -19,17 +19,20 @@ async function getAccessToken() {
         console.log("Nuevo Access Token:", response.data.access_token);
         return response.data.access_token;
     } catch (error) {
-        console.error("Error obteniendo el access token:", error.response.data);
+        console.error("Error obteniendo el access token en api/deleteBlob/getAccessToken:", error.response.data);
         return null;
     }
 }
 
 // Ejecutar para obtener un nuevo token
+
 const token = await getAccessToken();
 
 const dropbox = dropboxV2Api.authenticate({
-  token: token,
+token: token,
 });
+
+
 
 export async function DELETE(request) {
     const body = await request.json();
@@ -46,7 +49,7 @@ export async function DELETE(request) {
 
     return NextResponse.json({ "Succesful Delete": true });
     } catch (error) {
-        console.log(error)
+        console.log("Error en api/deleteBlob/DELETE:" + error)
         return NextResponse.json({ "Error": true, err });
     }
     

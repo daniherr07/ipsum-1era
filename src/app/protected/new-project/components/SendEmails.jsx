@@ -39,7 +39,12 @@ export default function SendEmails(idProyecto, usuario, nombre_proyecto){
         } catch (error) {
           console.error('Error:', error);
         }
-      }; 
+    }; 
 
-    sendEmails()
+    try {
+      sendEmails()
+    } catch (error) {
+      console.error("Error al enviar los emails", error)
+    }
+
 }

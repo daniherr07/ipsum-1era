@@ -32,7 +32,7 @@ export async function POST(request) {
     });
 
   } catch (error) {
-    console.error('Error sending emails:', error);
+    console.error('Error sending emails en api/send-email:', error);
     return NextResponse.json({ 
       message: 'Error sending emails',
       error: error.message 

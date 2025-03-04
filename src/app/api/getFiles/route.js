@@ -17,7 +17,6 @@ async function getAccessToken() {
             headers: { "Content-Type": "application/x-www-form-urlencoded" }
         });
 
-        console.log("Nuevo Access Token:", response.data.access_token);
         return response.data.access_token;
     } catch (error) {
         console.error("Error obteniendo el access token:", error.response.data);
@@ -25,12 +24,14 @@ async function getAccessToken() {
     }
 }
 
-// Ejecutar para obtener un nuevo token
 const token = await getAccessToken();
 
 const dropbox = dropboxV2Api.authenticate({
   token: token,
 });
+
+// Ejecutar para obtener un nuevo token
+
 
 async function getOrCreateSharedLink(path) {
 
@@ -68,7 +69,7 @@ async function getOrCreateSharedLink(path) {
       });
     });
   } catch (error) {
-    console.error('Error in getOrCreateSharedLink:', error);
+    console.error('Error in api/getFiles/getOrCreateSharedLink:', error);
     throw error;
   }
 }
@@ -115,10 +116,10 @@ const prefix = searchParams.get("prefix")
 
     return NextResponse.json({ files: validFiles });
   } catch (error) {
-    console.log("Entro al catch")
+
 
     if (error.code == 409) {
-      console.log("Entro al error 1")
+      console.log('No es un error: La ruta no existe', error);
       return NextResponse.json({ msg: "La ruta no existe", route_not_found : true });
     } else {
       console.error('Error in GET route:', error);
