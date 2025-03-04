@@ -60,16 +60,21 @@ export async function DELETE(request) {
 }
 
 function convertStringFormat(inputString) {
-    // First, handle the special case of spaces around forward slashes
-    // by temporarily replacing "space + slash" with a unique marker
-    let processed = inputString.replace(/ \//g, "SLASHMARKER");
-    
-    // Replace all spaces with underscores
-    processed = processed.replace(/ /g, '_');
-    
-    // Restore the forward slashes without spaces
-    processed = processed.replace(/SLASHMARKER/g, "/");
-    
-    return processed;
+    try {
+        // First, handle the special case of spaces around forward slashes
+        // by temporarily replacing "space + slash" with a unique marker
+        let processed = inputString.replace(/ \//g, "SLASHMARKER");
+        
+        // Replace all spaces with underscores
+        processed = processed.replace(/ /g, '_');
+        
+        // Restore the forward slashes without spaces
+        processed = processed.replace(/SLASHMARKER/g, "/");
+        
+        return processed;
+    } catch (error) {
+        console.error("Error al formatear nombres", error, inputString)
+    }
+
   }
 
