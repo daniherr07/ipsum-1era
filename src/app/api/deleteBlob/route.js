@@ -47,6 +47,10 @@ export async function DELETE(request) {
                 'path': `${formattedPathname}`
             }
         }, (err, result, response) => {
+            if (err) {
+                console.err(err)
+            }
+
         });
 
     return NextResponse.json({ "Succesful Delete": true });

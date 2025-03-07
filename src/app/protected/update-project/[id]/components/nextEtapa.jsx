@@ -109,7 +109,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
         setEtapaManual(fetchedData[0])
         setSubetapaManual(fetchedData[1])
       })
-      .catch((error) => console.error('Error fetching admin data:', error));
+      .catch((error) => {console.error('Error fetching admin data:', error); toast.error("Error: Por favor tomar screenshot de esto para investigar el error: " + error)});
     }
 
   }, []);
@@ -124,98 +124,99 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
 
   const sendEmails = async () => {
 
-    const etapaEdit = {
-      id: idProyecto,
-      etapa: parseInt(selectSubetapa.etapa !== "" ? selectSubetapa.etapa : siguienteEtapa.id),
-      subetapa: parseInt(selectSubetapa.subetapa !== "" ? selectSubetapa.subetapa : siguienteSubetapa.id)
-    }
-
-    let emailsToGetRole
-    
-    const Analista = "analista_asigna_ipsum_id"
-    const Ingeniero = "ingeniero_id"
-    const Arquitecto = "arquitecto_id"
-    //DEFINIENDO EL ROL_ID PARA MANDAR LOS CORREOS
-    switch (etapaEdit.etapa) {
-      case 1: //A Preanálisis
-        emailsToGetRole = [Analista]
-        break;
-      case 2: //A visita
-      emailsToGetRole = Ingeniero
-        break;
-
-      case 3: // A confeccion expediente
-
-        switch (etapaEdit.subetapa) {
-          case 12: // A Documentacion Técnica
-            emailsToGetRole =  [Arquitecto, Analista]
-            break;
-          case 13: // A Revision
-            emailsToGetRole = Analista
-            break;
-        }
-        break
-
-
-      case 4: // A Enviado al centro de negocios
-        emailsToGetRole = Analista
-        break
-
-      case 5: // A Ingresó al Banvhi
-        emailsToGetRole =  Analista
-        break
-
-      case 6: // A permisos de construcción
-
-        switch (etapaEdit.subetapa) {
-          case 18: // A Inicio de permisos de construccion
-            emailsToGetRole = [Arquitecto, Ingeniero]
-            break;
-        
-          case 14: // A Finalizacion de procesos de construccion
-            emailsToGetRole = Analista
-            break;
-        }
-        break;
-
-      case 7: // A Procesos de formalizacion
-        emailsToGetRole = Analista
-        break
-
-      case 8: // A Solicitud de servicio publico
-        emailsToGetRole =Analista
-        break
-
-      case 9: // A Construccion
-        emailsToGetRole = [Analista, Ingeniero, Arquitecto]
-        break
-      case 10: // A Entregado
-        emailsToGetRole = Analista
-        break
-      case 11: // Facturado
-        emailsToGetRole =  Analista
-        break
-
-      default:
-        break;
-    }
-
-  
-
-    let destinatarios = []
-
-    const result = await useFetchBackend(`getEmails?emails=${emailsToGetRole}&id_proyecto=${idProyecto}`, "GET")
-
-    
-    for (let i = 0; i < result.emails.length; i++) {
-      for (const [clave, valor] of Object.entries(result.emails[i])) {
-        destinatarios.push(valor);
-  
-      }
-    }
 
     
     try {
+      const etapaEdit = {
+        id: idProyecto,
+        etapa: parseInt(selectSubetapa.etapa !== "" ? selectSubetapa.etapa : siguienteEtapa.id),
+        subetapa: parseInt(selectSubetapa.subetapa !== "" ? selectSubetapa.subetapa : siguienteSubetapa.id)
+      }
+  
+      let emailsToGetRole
+      
+      const Analista = "analista_asigna_ipsum_id"
+      const Ingeniero = "ingeniero_id"
+      const Arquitecto = "arquitecto_id"
+      //DEFINIENDO EL ROL_ID PARA MANDAR LOS CORREOS
+      switch (etapaEdit.etapa) {
+        case 1: //A Preanálisis
+          emailsToGetRole = [Analista]
+          break;
+        case 2: //A visita
+        emailsToGetRole = Ingeniero
+          break;
+  
+        case 3: // A confeccion expediente
+  
+          switch (etapaEdit.subetapa) {
+            case 12: // A Documentacion Técnica
+              emailsToGetRole =  [Arquitecto, Analista]
+              break;
+            case 13: // A Revision
+              emailsToGetRole = Analista
+              break;
+          }
+          break
+  
+  
+        case 4: // A Enviado al centro de negocios
+          emailsToGetRole = Analista
+          break
+  
+        case 5: // A Ingresó al Banvhi
+          emailsToGetRole =  Analista
+          break
+  
+        case 6: // A permisos de construcción
+  
+          switch (etapaEdit.subetapa) {
+            case 18: // A Inicio de permisos de construccion
+              emailsToGetRole = [Arquitecto, Ingeniero]
+              break;
+          
+            case 14: // A Finalizacion de procesos de construccion
+              emailsToGetRole = Analista
+              break;
+          }
+          break;
+  
+        case 7: // A Procesos de formalizacion
+          emailsToGetRole = Analista
+          break
+  
+        case 8: // A Solicitud de servicio publico
+          emailsToGetRole =Analista
+          break
+  
+        case 9: // A Construccion
+          emailsToGetRole = [Analista, Ingeniero, Arquitecto]
+          break
+        case 10: // A Entregado
+          emailsToGetRole = Analista
+          break
+        case 11: // Facturado
+          emailsToGetRole =  Analista
+          break
+  
+        default:
+          break;
+      }
+  
+    
+  
+      let destinatarios = []
+  
+      const result = await useFetchBackend(`getEmails?emails=${emailsToGetRole}&id_proyecto=${idProyecto}`, "GET")
+  
+      
+      for (let i = 0; i < result.emails.length; i++) {
+        for (const [clave, valor] of Object.entries(result.emails[i])) {
+          destinatarios.push(valor);
+    
+        }
+      }
+  
       let subetapaCorreo
       let etapaCorreo
   
@@ -265,6 +266,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
       
       
     } catch (error) {
+      toast.error("Error: Por favor tomar screenshot de esto para investigar el error: " + error)
       console.error('Error:', error);
     }
   }; 

@@ -57,25 +57,25 @@ export default function AccordionMenu() {
     distrito: "",
     otrasSenas: "",
     numeroPlanoCatastro: "",
-    loteTipoIdentificacion: "",
+    loteTipoIdentificacion: "3",
     loteIdentificacion: "",
     finca: "",
   });
 
   const [formDataAdmin, setFormDataAdmin] = useState({
     entidad: '',
-    entidadSecundaria: '',
+    entidadSecundaria: 'pendiente',
     apc: '',
     cfia: '',
     analistaEntidad: '',
     analistaIPSUM: '',
-    arquitecto: "",
-    Promotor_Ipsum: "",
-    fiscalAsignado: '',
+    arquitecto: "pendiente",
+    Promotor_Ipsum: "pendiente",
+    fiscalAsignado: 'pendiente',
     presupuesto: '',
     avaluo: '',
-    ingenieroAsignado: '',
-    constructor: ''
+    ingenieroAsignado: 'pendiente',
+    constructor: 'pendiente'
   });
 
   return (  

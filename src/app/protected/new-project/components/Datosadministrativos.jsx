@@ -175,28 +175,24 @@ export default function DatosAdministrativos({formData, setFormData}) {
                             </select>
                         </div>
 
-                        <div className={styles.formRow}>
-                            <div className={styles.formGroup}>
-                                <label className={styles.label}>APC</label>
-                                <input
-                                    type="text"
-                                    name="apc"
-                                    value={formData.apc}
-                                    onChange={handleInputChange}
-                                    className={styles.input}
-                                />
-                            </div>
-
-                            <div className={styles.formGroup}>
-                                <label className={styles.label}>CFIA</label>
-                                <input
-                                    type="text"
-                                    name="cfia"
-                                    value={formData.cfia}
-                                    onChange={handleInputChange}
-                                    className={styles.input}
-                                />
-                            </div>
+                        <div className={styles.formGroup}>
+                            <label className={styles.label}>Analista Entidad</label>
+                            <select
+                                name="analistaEntidad"
+                                value={formData.analistaEntidad}
+                                onChange={handleInputChange}
+                                className={styles.select}
+                                disabled={!formData.entidad}
+                            >
+                                <option value="">Seleccione un analista</option>
+                                <option value="pendiente">Pendiente</option>
+                                {analistasEntidad.map((analista, key) => (
+                                    <option key={key} value={analista.localID}>
+                                        {`${analista.Nombre} ${analista.Apellido_1} ${analista.Apellido_2}`} {analista.activated == 0 && "(Desactivado)"}
+                                    </option>
+                                ))}
+                                <option value="otro">+ Agregar Otro Analista</option>
+                            </select>
                         </div>
 
                         <div className={styles.formGroup}>
@@ -217,29 +213,15 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 <option value="otro">+ Agregar Otro Constructor</option>
                             </select>
                         </div>
+
+
+
+
                     </div>
 
                     {/* Middle Column */}
                     <div className={styles.column}>
-                        <div className={styles.formGroup}>
-                            <label className={styles.label}>Analista Entidad</label>
-                            <select
-                                name="analistaEntidad"
-                                value={formData.analistaEntidad}
-                                onChange={handleInputChange}
-                                className={styles.select}
-                                disabled={!formData.entidad}
-                            >
-                                <option value="">Seleccione un analista</option>
-                                <option value="pendiente">Pendiente</option>
-                                {analistasEntidad.map((analista, key) => (
-                                    <option key={key} value={analista.localID}>
-                                        {`${analista.Nombre} ${analista.Apellido_1} ${analista.Apellido_2}`} {analista.activated == 0 && "(Desactivado)"}
-                                    </option>
-                                ))}
-                                <option value="otro">+ Agregar Otro Analista</option>
-                            </select>
-                        </div>
+
 
                         <div className={styles.formGroup}>
                             <label className={styles.label}>Arquitecto</label>
@@ -297,6 +279,36 @@ export default function DatosAdministrativos({formData, setFormData}) {
                         </div>
 
                         <div className={styles.formGroup}>
+                            <label className={styles.label}>Ingeniero asignado</label>
+                            <select
+                                name="ingenieroAsignado"
+                                value={formData.ingenieroAsignado}
+                                onChange={handleInputChange}
+                                className={styles.select}
+                            >
+                                <option value="">Seleccione un Ingeniero</option>
+                                <option value="pendiente">Pendiente</option>
+                                {data.Ingeniero.map((promotor, key) => (
+                                    <option key={key} value={promotor.localID}>
+                                        {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`} {promotor.activated == 0 && "(Desactivado)"}
+                                    </option>
+                                ))}
+                                <option value="0">+ Añadir un Ingeniero</option>
+                            </select>
+                        </div>
+
+
+                    </div>
+
+                    {/* Right Column */}
+                    <div className={styles.column}>
+
+
+
+
+
+
+                        <div className={styles.formGroup}>
                             <label className={styles.label}>Fiscal Asignado</label>
                             <select
                                 name="fiscalAsignado"
@@ -315,10 +327,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 <option value="" >+ Añadir uno nuevo</option>
                             </select>
                         </div>
-                    </div>
 
-                    {/* Right Column */}
-                    <div className={styles.column}>
                         <div className={styles.formRow}>
                             <div className={styles.formGroup}>
                                 <label className={styles.label}>Presupuesto</label>
@@ -343,24 +352,31 @@ export default function DatosAdministrativos({formData, setFormData}) {
                             </div>
                         </div>
 
-                        <div className={styles.formGroup}>
-                            <label className={styles.label}>Ingeniero asignado</label>
-                            <select
-                                name="ingenieroAsignado"
-                                value={formData.ingenieroAsignado}
-                                onChange={handleInputChange}
-                                className={styles.select}
-                            >
-                                <option value="">Seleccione un Ingeniero</option>
-                                <option value="pendiente">Pendiente</option>
-                                {data.Ingeniero.map((promotor, key) => (
-                                    <option key={key} value={promotor.localID}>
-                                        {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`} {promotor.activated == 0 && "(Desactivado)"}
-                                    </option>
-                                ))}
-                                <option value="0">+ Añadir un Ingeniero</option>
-                            </select>
+                        <div className={styles.formRow}>
+                            <div className={styles.formGroup}>
+                                <label className={styles.label}>APC</label>
+                                <input
+                                    type="text"
+                                    name="apc"
+                                    value={formData.apc}
+                                    onChange={handleInputChange}
+                                    className={styles.input}
+                                />
+                            </div>
+
+                            <div className={styles.formGroup}>
+                                <label className={styles.label}>CFIA</label>
+                                <input
+                                    type="text"
+                                    name="cfia"
+                                    value={formData.cfia}
+                                    onChange={handleInputChange}
+                                    className={styles.input}
+                                />
+                            </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>

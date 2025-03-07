@@ -1,7 +1,7 @@
 'use client'
 
 import { useFetchBackend } from "@/hooks/useFetchApi";
-
+import { toast } from "react-toastify";
 
 export default function SendEmails(idProyecto, usuario, nombre_proyecto){
 
@@ -36,6 +36,7 @@ export default function SendEmails(idProyecto, usuario, nombre_proyecto){
             await useFetchBackend("insertNoti", "POST", {message: `${usuario} ha actualizado el proyecto: "${nombre_proyecto}"`, user_id: result.ids[i], time: new Date()})
           }
         } catch (error) {
+          toast.error("Error: Por favor tomar screenshot de esto para investigar el error: " + error)
           console.error('Error:', error);
         }
       }; 

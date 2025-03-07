@@ -111,12 +111,13 @@ export default function ProjectSubmissionForm({
     setSaving(true)
 
 
-    const headOfHousehold = familyMembers.find(member => member.tipoMiembro == 'Jefe/a de Familia');
-    const projectName = headOfHousehold.nombre + ' ' + headOfHousehold.primerApellido + ' ' + headOfHousehold.segundoApellido;
+
     
 
     
     try {
+    const headOfHousehold = familyMembers.find(member => member.tipoMiembro == 'Jefe/a de Familia');
+    const projectName = headOfHousehold.nombre + ' ' + headOfHousehold.primerApellido + ' ' + headOfHousehold.segundoApellido;
             //Eliminar todos los blobs de una carpeta
     const responseBlob = await fetch(`/api/deleteBlob`, {
       method: "DELETE",
@@ -159,7 +160,9 @@ export default function ProjectSubmissionForm({
 
     }));
     } catch (error) {
+      
       console.error("Error subiendo los archivos en nuevo proyecto", error)
+      toast.error("Error: Por favor tomar screenshot de esto para investigar el error: " + error)
     }
     const submissionData = {
       projectData,
@@ -184,7 +187,7 @@ export default function ProjectSubmissionForm({
     } catch (error) {
       console.error('Error:', error);
       setSaving(false)
-      toast.error("Hubo un error, verifica los datos e intentalo más tarde" + error) // Redirect to a success page
+      toast.error("Error: Por favor tomar screenshot de esto para investigar el error: " + error)
     }
   };
 

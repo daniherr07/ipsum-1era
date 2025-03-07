@@ -110,6 +110,7 @@ function PhotosCard({item}) {
 
         const data = await response.json()
         setBlobs(data.files)
+        console.log(data)
       } catch (error) {
         console.error('Error fetching blobs:', error)
       } finally {
@@ -461,25 +462,31 @@ function AddBitacoraEntry({ onClose, userData, proyecto_id, item, handleClick, h
   })
 
   const updateChanges = async () => {
-    if (newEntryData.descripcion == '') {
-      return toast.error("Descripcion sin completar!")
+
+    try {
+      if (newEntryData.descripcion == '') {
+        return toast.error("Descripcion sin completar!")
+      }
+  
+      if (newEntryData.color == '') {
+        return toast.error("Por favor elije un color")
+      }
+  
+      if (newEntryData.tipo == '') {
+        return toast.error("Por favor elija un tipo")
+      }
+  
+      const response = await useFetchBackend("insertBitacora", "POST", newEntryData)
+  
+      // Reload page here
+      toast.success("Incidencia añadida exitosamente!");
+      onClose(); // Close the modal
+      handleClick(item)
+      handleColor()
+    } catch (error) {
+      toast.error("Error: Por favor tomar screenshot de esto para investigar el error: " + error)
     }
 
-    if (newEntryData.color == '') {
-      return toast.error("Por favor elije un color")
-    }
-
-    if (newEntryData.tipo == '') {
-      return toast.error("Por favor elija un tipo")
-    }
-
-    const response = await useFetchBackend("insertBitacora", "POST", newEntryData)
-
-    // Reload page here
-    toast.success("Incidencia añadida exitosamente!");
-    onClose(); // Close the modal
-    handleClick(item)
-    handleColor()
   }
 
   return (
