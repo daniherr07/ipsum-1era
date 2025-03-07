@@ -67,7 +67,7 @@ export default function AccordionMenu() {
     entidadSecundaria: 'pendiente',
     apc: '',
     cfia: '',
-    analistaEntidad: '',
+    analistaEntidad: 'pendiente',
     analistaIPSUM: '',
     arquitecto: "pendiente",
     Promotor_Ipsum: "pendiente",
