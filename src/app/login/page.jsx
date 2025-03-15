@@ -71,7 +71,7 @@ export default function Login() {
             <main className={style.main}>
                 <Image src={'/logo.svg'} width={200} height={100} className={style.logo} alt='logo'/>
                 <form className={style.form} onSubmit={handleSubmit}>
-                    <label htmlFor="user" className={style.label}>ID</label>
+                    <label htmlFor="user" className={style.label}>ID o Email</label>
                     <input 
                         type="text" 
                         name="user" 
