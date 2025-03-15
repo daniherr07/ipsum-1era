@@ -203,7 +203,7 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
       }
 
       {
-        isAdminOrRoot &&
+        (isAdminOrRoot || userData.role == "Analista") &&
         <ProjectSubmissionForm
           projectData={projectData}
           familyMembers={familyMembers}

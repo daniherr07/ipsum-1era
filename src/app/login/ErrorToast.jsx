@@ -21,17 +21,28 @@ export function ErrorToast(){
             toastId: 'loginError', // Unique ID for this toast
         });
     }, []);
+
+    const showCookieError = useCallback(() => {
+        toast.success("La sesión ha expirado, por favor vuelve a iniciar sesión", {
+            toastId: 'cookieExpired', // Unique ID for this toast
+        });
+    }, []);
     
 
     useEffect(() => {
         const error = searchParams.get('error')
         const newUser = searchParams.get('newUser')
+        const cookie_expired = searchParams.get('cookie_expired')
         if (error) {
             showErrorToast();
         }
 
         if (newUser){
             showNewToast();
+        }
+
+        if (cookie_expired) {
+            showCookieError();
         }
     }, [searchParams, showErrorToast, showNewToast]);
 

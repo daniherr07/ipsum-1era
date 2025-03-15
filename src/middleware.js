@@ -6,7 +6,8 @@ export function middleware(request) {
     
     // Si la cookie no existe, redirige a la página de login
     if (!authCookie) {
-        return NextResponse.redirect(new URL('/login', request.url));
+        console.error("Se ha salido del sistema porque la cookie expiró")
+        return NextResponse.redirect(new URL('/login?cookie_expired=true', request.url));
     }
 }
 

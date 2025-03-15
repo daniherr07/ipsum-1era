@@ -190,6 +190,7 @@ function PhotosCard({item}) {
 }
 
 function GeneralInfo({item, bitData, userData, handleClick, handleColor}){
+
   const [filter, setFilter] = useState("Todos")
   const newBitacora = () => {
     confirmAlert({
@@ -251,6 +252,7 @@ function GeneralInfo({item, bitData, userData, handleClick, handleColor}){
             <span className={styles.label}>Otras señas:</span>
             <p className={styles.value}>{item.senasDescripcion == "" ? "Sin Asignar" : item.senasDescripcion}</p>
           </div>
+
 
           {/* Historical Data */}
           <div className={styles.historical}>
@@ -438,6 +440,10 @@ function GeneralInfo({item, bitData, userData, handleClick, handleColor}){
           <div>
             <span className={styles.label}>Centro de Negocios:</span>
             <span className={styles.value}>{item.centroNegocios == null ? "Sin Asignar" : item.centroNegocios}</span>
+          </div>
+          <div>
+            <span className={styles.label}>Ingeniero</span>
+            <span className={styles.value}>{item.ingenieroAsignado == null ? "Sin Asignar" : item.ingenieroAsignado}</span>
           </div>
           <div>
             <span className={styles.label}>Analista IPSUM:</span>

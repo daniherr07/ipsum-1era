@@ -31,7 +31,7 @@ export async function POST(request) {
             role: backendData.rol,
             // Add any other custom fields you need
           };
-          response.cookies.set('auth', JSON.stringify(userData), { httpOnly: true, secure: false, maxAge: 60 * 60 * 24 });
+          response.cookies.set('auth', JSON.stringify(userData), { httpOnly: true, secure: process.env.IS_SECURE, sameSite: "strict", maxAge: 60 * 60 * 24 });
           return response;
         }
       } else{

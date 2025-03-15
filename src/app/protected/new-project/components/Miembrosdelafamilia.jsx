@@ -434,7 +434,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
             {familyMembers.map((member, key) => (
               <tr key={key}>
                 <td className={styles.tableCell}>
-                  {member.nombre}
+                  {member.nombre} {member.primerApellido} {member.segundoApellido}
                   <div className={styles.subText}>{member.tipoMiembro}</div>
                 </td>
                 <td className={styles.tableCell}>
