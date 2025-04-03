@@ -48,7 +48,7 @@ export async function DELETE(request) {
             }
         }, (err, result, response) => {
             if (err) {
-                console.err(err)
+                console.error(err)
             }
 
         });

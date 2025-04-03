@@ -250,6 +250,14 @@
     min-height: fit-content;
     border-bottom: 1px solid #757575;
   }
+
+  .bitInfo{
+    width: 100%;
+    overflow-wrap: break-word; /* Break long words */
+    word-wrap: break-word; /* For older browsers */
+    word-break: break-word; /* More natural word breaking */
+    white-space: normal; /* Allow text to wrap */
+  }
   
   .colorBit{
     width: 3%;
