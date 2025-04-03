@@ -81,22 +81,30 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
 
   const handleSubmit = async (e) => {
 
+    const trimmedFormData = Object.fromEntries(
+      Object.entries(formData).map(([key, value]) => 
+        [key, typeof value === 'string' ? value.trim() : value]
+      )
+    );
+
+    
+
     let newMember = {
       id: familyMembers.length,
-      nombre: formData.nombre ,
-      primerApellido: formData.primerApellido, 
-      segundoApellido: formData.segundoApellido,
-      identificacion: formData.identificacion,
-      ingresos: formData.ingresos,
-      telefono: formData.telefono,
-      email: formData.email,
-      tipoMiembro: formData.tipoMiembro,
-      especifique: formData.especifique,
-      tipoIdentificacion: formData.tipoIdentificacion,
-      tipoIngresos: formData.tipoIngresos,
-      tipoTelefono: formData.tipoTelefono,
-      adultoMayor: formData.adultoMayor,
-      discapacidad: formData.discapacidad,
+      nombre: trimmedFormData.nombre ,
+      primerApellido: trimmedFormData.primerApellido, 
+      segundoApellido: trimmedFormData.segundoApellido,
+      identificacion: trimmedFormData.identificacion,
+      ingresos: trimmedFormData.ingresos,
+      telefono: trimmedFormData.telefono,
+      email: trimmedFormData.email,
+      tipoMiembro: trimmedFormData.tipoMiembro,
+      especifique: trimmedFormData.especifique,
+      tipoIdentificacion: trimmedFormData.tipoIdentificacion,
+      tipoIngresos: trimmedFormData.tipoIngresos,
+      tipoTelefono: trimmedFormData.tipoTelefono,
+      adultoMayor: trimmedFormData.adultoMayor,
+      discapacidad: trimmedFormData.discapacidad,
       cedulaFile: inputFileRef.current.files[0] ? inputFileRef.current.files[0] : "",
     };
 

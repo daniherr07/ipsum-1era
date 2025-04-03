@@ -38,7 +38,12 @@ export async function DELETE(request) {
     const body = await request.json();
     const pathname = body.pathname
 
+    console.log("body", body)
+    console.log("pathname", pathname)
+
     const formattedPathname = convertStringFormat(pathname)
+
+    console.log("formattedPathname", formattedPathname)
 
     try {
         await dropbox({

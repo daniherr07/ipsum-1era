@@ -26,6 +26,11 @@ export default function AddCentroNegocio({ onClose, router }) {
     }, [])
 
     const updateChanges = async () => {
+
+      if (formData.entidad_id == '') {
+        return toast.error("Entidad sin seleccionar!")
+      }
+
       if (formData.nombre == '') {
         return toast.error("Nombre sin completar!")
       }
