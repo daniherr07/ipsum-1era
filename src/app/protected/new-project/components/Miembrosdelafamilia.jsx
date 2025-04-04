@@ -83,7 +83,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
 
     const trimmedFormData = Object.fromEntries(
       Object.entries(formData).map(([key, value]) => 
-        [key, typeof value === 'string' ? value.trim() : value]
+        [key, typeof value === 'string' ? value.trim().replace(/\s+/g, ' ') : value]
       )
     );
 

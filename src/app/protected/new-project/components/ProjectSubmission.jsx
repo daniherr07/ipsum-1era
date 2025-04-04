@@ -160,7 +160,6 @@ export default function ProjectSubmissionForm({
 
     }));
     } catch (error) {
-      
       console.error("Error subiendo los archivos en nuevo proyecto", error)
       toast.error("Error: Por favor tomar screenshot de esto para investigar el error: " + error)
     }
@@ -180,6 +179,7 @@ export default function ProjectSubmissionForm({
       if (!response.ok) {
         return toast.error("Hubo un error, verifica los datos e intentalo más tarde")
       }
+
       SendEmails(response.results.id, userData.userName, response.results.nombre )
       setSaving(false)
       toast.info("Proyecto añadido exitosamente! Redirigiendo al inicio...")
