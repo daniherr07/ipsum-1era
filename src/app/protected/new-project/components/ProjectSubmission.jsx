@@ -121,7 +121,7 @@ export default function ProjectSubmissionForm({
             //Eliminar todos los blobs de una carpeta
     const responseBlob = await fetch(`/api/deleteBlob`, {
       method: "DELETE",
-      body: JSON.stringify({pathname: projectName})
+      body: JSON.stringify({pathname: "/" + projectName})
     })
     if (!responseBlob.ok) {
       throw new Error('Failed to fetch blobs')
