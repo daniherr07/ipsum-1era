@@ -167,8 +167,8 @@ export default function ProjectSubmissionForm({
       const result = await response.json();
       SendEmails(idProyecto, userData.userName, projectName)
       setUploading(false)
-      toast.success("Proyecto actualizado exitosamente!");
-      router.refresh(); // Refresh the page
+      toast.info("Proyecto actualizado exitosamente! Redirigiendo al inicio...")
+      router.push(`/protected/home`);
       
     } catch (error) {
       setUploading(false)
