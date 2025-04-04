@@ -70,8 +70,16 @@ export default function ProjectSubmissionForm({
         return toast.error('Seccion 4: Añada una entidad');
       }
   
+      if (formDataAdmin.arquitecto == "") {
+        return toast.error('Seccion 4: Seleccione un arquitecto');
+      }
+
       if (formDataAdmin.analistaIPSUM == "") {
         return toast.error('Seccion 4: Seleccione un analista de IPSUM');
+      }
+
+      if (formDataAdmin.ingenieroAsignado == "") {
+        return toast.error('Seccion 4: Seleccione un ingeniero');
       }
   
       if (formDataAdmin.constructor == "") {

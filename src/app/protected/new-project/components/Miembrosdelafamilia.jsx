@@ -102,7 +102,6 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
       especifique: trimmedFormData.especifique,
       tipoIdentificacion: trimmedFormData.tipoIdentificacion,
       tipoIngresos: trimmedFormData.tipoIngresos,
-      tipoTelefono: trimmedFormData.tipoTelefono,
       adultoMayor: trimmedFormData.adultoMayor,
       discapacidad: trimmedFormData.discapacidad,
       cedulaFile: inputFileRef.current.files[0] ? inputFileRef.current.files[0] : "",
@@ -341,17 +340,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
                 className={styles.input}
                 required
               />
-              <select
-                name="tipoTelefono"
-                value={formData.tipoTelefono}
-                onChange={e => handleChange(e, setFormData)}
-                className={styles.select}
-                required
-              >
-                <option value="">Tipo</option>
-                <option value="Celular">Celular</option>
-                <option value="Casa">Casa</option>
-              </select>
+
             </div>
             <div>
               <input
@@ -380,17 +369,6 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
                 className={styles.input}
                 
               />
-              <select
-                name="tipoTelefono"
-                value={formData.tipoTelefono}
-                onChange={e => handleChange(e, setFormData)}
-                className={styles.select}
-                
-              >
-                <option value="">Tipo</option>
-                <option value="Celular">Celular</option>
-                <option value="Casa">Casa</option>
-              </select>
             </div>
             <div>
               <input
@@ -455,7 +433,6 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
                 </td>
                 <td className={styles.tableCell}>
                   {member.telefono}
-                  <div className={styles.subText}>{member.tipoTelefono}</div>
                 </td>
                 <td className={styles.tableCell}>
                   {member.email}

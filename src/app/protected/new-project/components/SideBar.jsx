@@ -41,7 +41,6 @@ export default function AccordionMenu() {
     tipoIdentificacion: '',
     tipoIngresos: '',
     telefono: '',
-    tipoTelefono: '',
     email: '',
     tipoMiembro: '',
     cedulaFile: '',
@@ -69,12 +68,12 @@ export default function AccordionMenu() {
     cfia: '',
     analistaEntidad: 'pendiente',
     analistaIPSUM: '',
-    arquitecto: "pendiente",
+    arquitecto: "",
     Promotor_Ipsum: "pendiente",
     fiscalAsignado: 'pendiente',
     presupuesto: '',
     avaluo: '',
-    ingenieroAsignado: 'pendiente',
+    ingenieroAsignado: '',
     constructor: 'pendiente'
   });
 

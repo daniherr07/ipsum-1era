@@ -145,8 +145,9 @@ export default function DatosAdministrativos({formData, setFormData}) {
                             >
                                 <option value="">Seleccione una entidad</option>
                                 {data.Entidad.map((item, key) => (
+                                    (item && item.activated == 1)  && 
                                     <option key={key} value={item.localId}>
-                                        {item.Nombre} {item.activated == 0 && "(Desactivado)"}
+                                        {item.Nombre}
                                     </option>
                                 ))}
                                 <option value="otro">+ Agregar Otra Entidad</option>
@@ -167,8 +168,9 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                         Pendiente
                                 </option>
                                 {centrosNegocio.map((centro, key) => (
+                                    (centro && centro.activated == 1)  && 
                                     <option key={key} value={centro.localId}>
-                                        {centro.nombre} {centro.activated == 0 && "(Desactivado)"}
+                                        {centro.nombre}
                                     </option>
                                 ))}
                                 <option value="otro">+ Agregar Otro Centro de Negocio</option>
@@ -187,8 +189,9 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 <option value="">Seleccione un analista</option>
                                 <option value="pendiente">Pendiente</option>
                                 {analistasEntidad.map((analista, key) => (
+                                    (analista && analista.activated == 1) &&
                                     <option key={key} value={analista.localID}>
-                                        {`${analista.Nombre} ${analista.Apellido_1} ${analista.Apellido_2}`} {analista.activated == 0 && "(Desactivado)"}
+                                        {`${analista.Nombre} ${analista.Apellido_1} ${analista.Apellido_2}`}
                                     </option>
                                 ))}
                                 <option value="otro">+ Agregar Otro Analista</option>
@@ -206,8 +209,9 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 <option value="">Seleccione un constructor</option>
                                 <option value="pendiente">Pendiente</option>
                                 {data.Constructor.map((item, key) => (
+                                    (item && item.activated == 1) &&
                                     <option key={key} value={item.localID}>
-                                        {`${item.Nombre} ${item.Apellido_1} ${item.Apellido_2}`} {item.activated == 0 && "(Desactivado)"}
+                                        {`${item.Nombre} ${item.Apellido_1} ${item.Apellido_2}`}
                                     </option>
                                 ))}
                                 <option value="otro">+ Agregar Otro Constructor</option>
@@ -232,10 +236,10 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 className={styles.select}
                             >
                                 <option value="">Seleccione un Arquitecto</option>
-                                <option value="pendiente">Pendiente</option>
                                 {arquitecto.map((arquitecto, key) => (
+                                    (arquitecto && arquitecto.activated == 1) &&
                                     <option key={key} value={arquitecto.localID}>
-                                        {`${arquitecto.Nombre} ${arquitecto.Apellido_1} ${arquitecto.Apellido_2}`} {arquitecto.activated == 0 && "(Desactivado)"}
+                                        {`${arquitecto.Nombre} ${arquitecto.Apellido_1} ${arquitecto.Apellido_2}`}
                                     </option>
                                 ))}
                                 <option value="otro">+ Agregar Otro Arquitecto</option>
@@ -253,8 +257,9 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 <option value="">Seleccione un promotor</option>
                                 <option value="pendiente">Pendiente</option>
                                 {data.Promotor_Ipsum.map((promotor, key) => (
+                                    (promotor && promotor.activated == 1) &&
                                     <option key={key} value={promotor.localID}>
-                                        {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`} {promotor.activated == 0 && "(Desactivado)"}
+                                        {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`}
                                     </option>
                                 ))}
                                 <option value="otro">+ Agregar Otro Promotor</option>
@@ -270,9 +275,10 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 className={styles.select}
                             >
                                 <option value="">Seleccione un Analista Ipsum</option>
-                                {data.Analista_Ipsum.map((promotor, key) => (
-                                    <option key={key} value={promotor.localID}>
-                                        {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`} {promotor.activated == 0 && "(Desactivado)"}
+                                {data.Analista_Ipsum.map((analista, key) => (
+                                    (analista && analista.activated == 1) &&
+                                    <option key={key} value={analista.localID}>
+                                        {`${analista.Nombre} ${analista.Apellido_1} ${analista.Apellido_2}`}
                                     </option>
                                 ))}
                             </select>
@@ -287,10 +293,10 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                 className={styles.select}
                             >
                                 <option value="">Seleccione un Ingeniero</option>
-                                <option value="pendiente">Pendiente</option>
-                                {data.Ingeniero.map((promotor, key) => (
-                                    <option key={key} value={promotor.localID}>
-                                        {`${promotor.Nombre} ${promotor.Apellido_1} ${promotor.Apellido_2}`} {promotor.activated == 0 && "(Desactivado)"}
+                                {data.Ingeniero.map((ingeniero, key) => (
+                                    (ingeniero && ingeniero.activated == 1) &&
+                                    <option key={key} value={ingeniero.localID}>
+                                        {`${ingeniero.Nombre} ${ingeniero.Apellido_1} ${ingeniero.Apellido_2}`}
                                     </option>
                                 ))}
                                 <option value="0">+ Añadir un Ingeniero</option>

@@ -65,7 +65,6 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
     tipoIdentificacion: '',
     tipoIngresos: '',
     telefono: '',
-    tipoTelefono: '',
     email: '',
     tipoMiembro: '',
     cedulaFile: '',

@@ -39,7 +39,7 @@ export default function ProjectSubmissionForm({
         return toast.error('Seccion 1: Selecciona un tipo de bono');
       }
 
-      if (projectData.bonoSeleccionado == "1" || projectData.bonoSeleccionado == "2" || projectData.bonoSeleccionado == "4") {
+      if (projectData.bonoSeleccionado == "1" || projectData.bonoSeleccionado == "2" || projectData.bonoSeleccionado == "4" || projectData.bonoSeleccionado == "10") {
         if (projectData.subtipoSeleccionado === "" ) {
           return toast.error('Seccion 1: Selecciona una variante de bono');
         }
@@ -76,8 +76,16 @@ export default function ProjectSubmissionForm({
         return toast.error('Seccion 4: Añada una entidad');
       }
 
+      if (formDataAdmin.arquitecto == "") {
+        return toast.error('Seccion 4: Seleccione un arquitecto');
+      }
+
       if (formDataAdmin.analistaIPSUM == "") {
         return toast.error('Seccion 4: Seleccione un analista de IPSUM');
+      }
+
+      if (formDataAdmin.ingenieroAsignado == "") {
+        return toast.error('Seccion 4: Seleccione un ingeniero');
       }
 
       if (formDataAdmin.constructor == "") {
@@ -180,7 +188,7 @@ export default function ProjectSubmissionForm({
         return toast.error("Hubo un error, verifica los datos e intentalo más tarde")
       }
 
-      SendEmails(response.results.id, userData.userName, response.results.nombre )
+      //SendEmails(response.results.id, userData.userName, response.results.nombre )
       setSaving(false)
       toast.info("Proyecto añadido exitosamente! Redirigiendo al inicio...")
       router.push(`/protected/home`); // Redirect to a success page
