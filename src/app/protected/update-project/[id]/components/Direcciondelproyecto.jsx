@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import Link from "next/link";
+import heic2any from "heic2any";
 
 
 export default function DireccionDelProyecto({directionData, setDirectionData, nombreProyecto, provincias, setProvincias, cantones, setCantones, distritos, setDistritos}) {
@@ -408,32 +409,47 @@ function PhotosCard({nombreProyecto}) {
       fetchBlobs()
       
     }, [directoryName, update])
-  
-  
-     const handleFileChange = async (event) => {
-        toast.info("Subiendo imagen...")
 
+    const handleFileChange = async (event) => {
+        toast.info("Subiendo imagen...");
+        
         try {
-          const file = event.target.files[0];
-          if (file) {
+            let file = event.target.files[0];
+        
+            if (!file) return;
+        
+            // Convert HEIC to JPEG
+            if (file.type === "image/heic" || file.name.endsWith(".heic")) {
+            const convertedBlob = await heic2any({
+                blob: file,
+                toType: "image/jpeg",
+                quality: 0.9, // optional
+            });
+        
+            // Convert Blob to File so it retains a name
+            file = new File([convertedBlob], file.name.replace(/\.heic$/i, ".jpg"), {
+                type: "image/jpeg",
+            });
+            }
+        
             setFile(file);
-          }
-          
-          const response = await uploadFile(file, file.name, "Catastros" ,directoryName.replace(/Proyecto\s+/g, ''));
-      
-          if (response) {
-            toast.success("Imagen subida correctamente!")
-          } else {
-            throw new Error(`Failed to upload file`, uploadError);
-          }
-      
-          setUpdate(!update)
+        
+            const response = await uploadFile(file, file.name, "Catastros", directoryName.replace(/Proyecto\s+/g, ''));
+        
+            if (response) {
+            toast.success("Imagen subida correctamente!");
+            } else {
+            throw new Error("Failed to upload file");
+            }
+        
+            setUpdate(!update);
         } catch (error) {
-          toast.error("Error al subir la imagen. Recarga la página e intentalo de nuevo")
-          console.log(error)
+            toast.error("Error al subir la imagen. Recarga la página e intentalo de nuevo");
+            console.error(error);
         }
-    
     };
+  
+  
   
     const deleteImage = async (pathname) => {
         const response = await fetch(`/api/deleteBlob`, {

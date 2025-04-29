@@ -6,6 +6,7 @@ import { handleChange } from "@/utils/handleChange";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 import Link from "next/link";
+import heic2any from "heic2any";
 
 
 
@@ -352,28 +353,41 @@ function PhotosCard({files, setFiles}) {
       }
   
   
-  
-     const handleFileChange = async (event) => {
-        toast.info("Subiendo imagen...")
-
-        try {
-
-          const file = event.target.files[0];
-          let newFile = {
-            file
-          }
-
-          if (file) {
-            setFile(file);
-          }
-
-          setFiles(prev => [...prev, newFile]);
-      
-        } catch (error) {
-          toast.error("Error al subir la imagen. Recarga la página e intentalo de nuevo")
-          console.log(error)
-        }
+    const handleFileChange = async (event) => {
+        toast.info("Subiendo imagen...");
     
+        try {
+            let file = event.target.files[0];
+
+
+    
+            if (!file) return;
+    
+            // Convert HEIC to JPEG
+            if (file.type === "image/heic" || file.name.endsWith(".heic")) {
+            const convertedBlob = await heic2any({
+                blob: file,
+                toType: "image/jpeg",
+                quality: 0.9, // optional
+            });
+    
+            // Convert Blob to File so it retains a name
+            file = new File([convertedBlob], file.name.replace(/\.heic$/i, ".jpg"), {
+                type: "image/jpeg",
+            });
+            }
+
+            let newFile = {
+                file
+            }
+    
+            setFile(file);
+    
+            setFiles(prev => [...prev, newFile]);
+        } catch (error) {
+            toast.error("Error al subir la imagen. Recarga la página e intentalo de nuevo");
+            console.log(error);
+        }
     };
   
     const deleteImage = async (fileToRemove) => {

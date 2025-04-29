@@ -13,7 +13,7 @@ import { useFetchBackend } from '@/hooks/useFetchApi';
 import { UseUploadBlob } from '@/hooks/useUploadBlob';
 import jsPDF from "jspdf"
 import "jspdf-autotable"
-
+import heic2any from "heic2any";
 
 export default function Card({item, bitData, handleClick, handleColor}) {
     const userData = useProtectedContext();
@@ -123,29 +123,43 @@ function PhotosCard({item}) {
   }, [directoryName, update])
 
 
-   const handleFileChange = async (event) => {
-    toast.info("Subiendo imagen...")
-
+  const handleFileChange = async (event) => {
+    toast.info("Subiendo imagen...");
+  
     try {
-      const file = event.target.files[0];
-      if (file) {
-        setFile(file);
+      let file = event.target.files[0];
+  
+      if (!file) return;
+  
+      // Convert HEIC to JPEG
+      if (file.type === "image/heic" || file.name.endsWith(".heic")) {
+        const convertedBlob = await heic2any({
+          blob: file,
+          toType: "image/jpeg",
+          quality: 0.9, // optional
+        });
+  
+        // Convert Blob to File so it retains a name
+        file = new File([convertedBlob], file.name.replace(/\.heic$/i, ".jpg"), {
+          type: "image/jpeg",
+        });
       }
-      
-      const response = await uploadFile(file, file.name, "Fotos Proyecto",directoryName.replace(/Proyecto\s+/g, ''));
+  
+      setFile(file);
+  
+      const response = await uploadFile(file, file.name, "Fotos Proyecto", directoryName.replace(/Proyecto\s+/g, ''));
   
       if (response) {
-        toast.success("Imagen subida correctamente!")
+        toast.success("Imagen subida correctamente!");
       } else {
-        throw new Error(`Failed to upload file`, uploadError);
+        throw new Error("Failed to upload file");
       }
   
-      setUpdate(!update)
+      setUpdate(!update);
     } catch (error) {
-      toast.error("Error al subir la imagen. Recarga la página e intentalo de nuevo")
-      console.log(error)
+      toast.error("Error al subir la imagen. Recarga la página e intentalo de nuevo");
+      console.error(error);
     }
-
   };
 
   const deleteImage = async (pathname) => {
