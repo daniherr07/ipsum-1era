@@ -76,6 +76,10 @@ export default function ProjectSubmissionForm({
         return toast.error('Seccion 4: Añada una entidad');
       }
 
+      if (formDataAdmin.analistaEntidad == "") {
+        return toast.error('Seccion 4: Seleccione un analista de la Entidad o seleccione "Pendiente"');
+      }
+
       if (formDataAdmin.arquitecto == "") {
         return toast.error('Seccion 4: Seleccione un arquitecto');
       }
@@ -83,6 +87,7 @@ export default function ProjectSubmissionForm({
       if (formDataAdmin.analistaIPSUM == "") {
         return toast.error('Seccion 4: Seleccione un analista de IPSUM');
       }
+      
 
       if (formDataAdmin.ingenieroAsignado == "") {
         return toast.error('Seccion 4: Seleccione un ingeniero');
