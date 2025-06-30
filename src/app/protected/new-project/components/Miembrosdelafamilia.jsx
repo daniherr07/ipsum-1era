@@ -96,6 +96,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
       segundoApellido: trimmedFormData.segundoApellido,
       identificacion: trimmedFormData.identificacion,
       ingresos: trimmedFormData.ingresos,
+      otroIngreso: trimmedFormData.otroIngreso,
       telefono: trimmedFormData.telefono,
       email: trimmedFormData.email,
       tipoMiembro: trimmedFormData.tipoMiembro,
@@ -260,6 +261,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
               className={styles.input}
             />
           </div>
+
           <div>
             <select
               name="tipoIngresos"
@@ -269,11 +271,38 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
             >
               <option value="">Tipo de ingreso</option>
               <option value="Trabajo Formal">Trabajo Formal</option>
-              <option value="Trabajo Inormal">Trabajo Informal</option>
+              <option value="Trabajo Informal">Trabajo Informal</option>
               <option value="Beca IMAS">Beca IMAS</option>
               <option value="Sin Ingresos">Sin ingresos</option>
+              <option value="Otro">Otro</option>
             </select>
           </div>
+
+          {formData.tipoIngresos == "Otro" ?
+              <div>
+                  <input
+                  type="text"
+                  name="otroIngreso"
+                  value={formData.otroIngreso}
+                  onChange={e => handleChange(e, setFormData)}
+                  placeholder="Otro tipo de ingreso (Especifíque)"
+                  className={styles.input}
+                  />
+              </div>
+          :
+              <div>
+                  <input
+                  type="text"
+                  name="otroIngreso"
+                  value={formData.otroIngreso}
+                  onChange={e => handleChange(e, setFormData)}
+                  placeholder="Otro tipo de ingreso (Especifíque)"
+                  className={styles.input}
+                  disabled
+                  />
+              </div>
+          }
+
         </div>
 
         <div className={`${styles.formGrid} ${styles.formGrid2Col}`}>
@@ -428,7 +457,7 @@ export default function FamilyForm({formData, setFormData, familyMembers, setFam
                   <div className={styles.subText}>{member.tipoIdentificacion}</div>
                 </td>
                 <td className={styles.tableCell}>
-                    {member.ingresos == null ? "Sin ingresos" : `₵${member.ingresos}`}
+                  {member.otroIngreso != "N/A" ? member.otroIngreso : member.ingreso == null ? "Sin ingresos" : `₵${member.ingresos}`}
                   <div className={styles.subText}>{member.tipoIngresos}</div>
                 </td>
                 <td className={styles.tableCell}>
