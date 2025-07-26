@@ -95,7 +95,7 @@ function PhotosCard({item}) {
   }
 
   useEffect(() => {
-
+    console.log("entro al useEffect")
     const fetchBlobs = async () => {
       try {
         const response = await fetch(`/api/getFiles?prefix=${directoryName.replace(/Proyecto\s+/g, '') + "/Fotos Proyecto"}`)
@@ -119,47 +119,58 @@ function PhotosCard({item}) {
     }
 
     fetchBlobs()
+    return
     
   }, [directoryName, update])
 
 
   const handleFileChange = async (event) => {
-    toast.info("Subiendo imagen...");
+    toast.info("Subiendo imagenes...");
   
     try {
-      let file = event.target.files[0];
-  
-      if (!file) return;
-  
-      // Convert HEIC to JPEG
-      if (file.type === "image/heic" || file.name.endsWith(".heic")) {
-        const convertedBlob = await heic2any({
-          blob: file,
-          toType: "image/jpeg",
-          quality: 0.9, // optional
-        });
-  
-        // Convert Blob to File so it retains a name
-        file = new File([convertedBlob], file.name.replace(/\.heic$/i, ".jpg"), {
-          type: "image/jpeg",
-        });
+
+      let files = event.target.files;
+      if (!files[0]) return;
+      for (let fileLocal of files){
+          console.log(fileLocal)
+
+          // Convert HEIC to JPEG
+          if (fileLocal.type === "image/heic" || fileLocal.name.endsWith(".heic")) {
+            const convertedBlob = await heic2any({
+              blob: fileLocal,
+              toType: "image/jpeg",
+              quality: 0.9, // optional
+            });
+      
+            // Convert Blob to File so it retains a name
+            fileLocal = new File([convertedBlob], fileLocal.name.replace(/\.heic$/i, ".jpg"), {
+              type: "image/jpeg",
+            });
+          }
+      
+          const response = await uploadFile(fileLocal, fileLocal.name, "Fotos Proyecto", directoryName.replace(/Proyecto\s+/g, ''));
+          console.log(isUploading)
+
+          if (response) {
+            toast.success("Imagen " + fileLocal.name +" subida correctamente!");
+          } else {
+            console.log(response)
+            console.error(uploadError)
+          }
+      
+          setUpdate(!update);
       }
-  
-      setFile(file);
-  
-      const response = await uploadFile(file, file.name, "Fotos Proyecto", directoryName.replace(/Proyecto\s+/g, ''));
-  
-      if (response) {
-        toast.success("Imagen subida correctamente!");
-      } else {
-        throw new Error("Failed to upload file");
-      }
-  
       setUpdate(!update);
+
     } catch (error) {
       toast.error("Error al subir la imagen. Recarga la página e intentalo de nuevo");
       console.error(error);
     }
+    
+    console.log("antes de los 10s")
+    await new Promise(resolve => setTimeout(resolve, 10000));
+    setUpdate(!update);
+    console.log("despues de los 10s")
   };
 
   const deleteImage = async (pathname) => {
@@ -176,8 +187,6 @@ function PhotosCard({item}) {
     toast.success("Imagen eliminada existosamente!")
     setUpdate(!update)
   }
-  
-
 
 
   return(
@@ -193,7 +202,7 @@ function PhotosCard({item}) {
               <div key={index} className={styles.photo} style={{backgroundImage: `url(${blob.url})`, textAlign: "center"}} onClick={() => deletePopup(blob)}>{blob.name.toLowerCase().endsWith('.pdf') && "Vista previa no disponible de PDF"}</div>
             ))}
             <label className={styles.fileInput} style={file ? {} : null}>
-              <input type="file" onChange={handleFileChange} />
+              <input type="file" onChange={handleFileChange} multiple/>
             </label>
           </>
         )}

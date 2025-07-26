@@ -44,7 +44,10 @@ async function createFolder(folderName) {
           autorename: true
         },
       }, (err, result) => {
-        if (err) return reject(err);
+        if (err){
+          console.error("Error creando el folder en createFolder", folderName, err)
+          return reject(err);
+        } 
         resolve(result);
       });
     });
@@ -60,9 +63,6 @@ export async function POST(req) {
   if (req.method !== 'POST') {
     return NextResponse.json({ message: 'Method not allowed' }, { status: 405 });
   }
-
-
-  
 
   try {
     const formData = await req.formData();
@@ -133,7 +133,9 @@ export async function POST(req) {
             },
           },
         }, (err, result) => {
-          if (err) return reject(err);
+          if (err) {
+            return reject(err);
+          }
           resolve(result);
         });
       });
