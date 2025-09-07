@@ -19,47 +19,59 @@ export default function Login() {
         psw: '',
     });
     const [loading, setLoading] = useState(false)
+    const [tries, setTries] = useState(0)
     
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true)
         toast.info("Iniciando Sesión...")
-        try {
-            const response = await fetch('/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-    
-            const result = await response.json();
 
-            if (result.deactivated) {
-                setLoading(false)
-                return toast.error("Usuario desactivado, por favor activarlo antes de iniciar sesión")
-            }
-
-            if (result.toChange) {
-                setLoading(false)
-                toast.info("Redirigiento a Cambiar Contraseña...")
-                router.push('/newUser');
-            } else if (result.toHome) {
-                setLoading(false)
-                toast.success("Redirigiento a Inicio")
-                router.push(`/protected/home`);
-            } else if (result.toError) {
-                setLoading(false)
-                toast.error("Error: Usuario o contraseña incorrectos");
-            } else {
-                setLoading(false)
-                toast.error("Ocurrió un error inesperado");
-            }
-        } catch (error) {
+        if (tries >= 5) {
             setLoading(false)
-            console.error("Error during login:", error);
-            toast.error("Error: Usuario o contraseña incorrectos");
+            toast.error("Error: Demasiados intentos, reinicie la página");
+        } else{
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+        
+                const result = await response.json();
+
+                if (result.deactivated) {
+                    setLoading(false)
+                    return toast.error("Usuario desactivado, por favor activarlo antes de iniciar sesión")
+                }
+
+                if (result.toChange) {
+                    setLoading(false)
+                    toast.info("Redirigiento a Cambiar Contraseña...")
+                    router.push('/newUser');
+                } else if (result.toHome) {
+                    setLoading(false)
+                    toast.success("Redirigiento a Inicio")
+                    router.push(`/protected/home`);
+                } else if (result.toError) {
+                    
+                    setLoading(false)
+                    toast.error("Error: Usuario o contraseña incorrectos");
+                } else {
+                    setLoading(false)
+                    toast.error("Ocurrió un error inesperado");
+                }
+            } catch (error) {
+                setLoading(false)
+                console.error("Error during login:", error);
+                toast.error("Error: Usuario o contraseña incorrectos");
+            }
+
+            setTries(tries + 1)
         }
+
+
     };
 
     return (
