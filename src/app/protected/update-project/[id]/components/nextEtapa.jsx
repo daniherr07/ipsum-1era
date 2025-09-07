@@ -153,12 +153,8 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
             case 12: // A Documentacion Técnica
               emailsToGetRole =  [Arquitecto, Analista]
               break;
-            case 13: // A Revision
-              emailsToGetRole = Analista
-              break;
           }
           break
-  
   
         case 4: // A Enviado al centro de negocios
           emailsToGetRole = Analista
@@ -171,12 +167,8 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
         case 6: // A permisos de construcción
   
           switch (etapaEdit.subetapa) {
-            case 18: // A Inicio de permisos de construccion
-              emailsToGetRole = [Arquitecto, Ingeniero]
-              break;
-          
             case 14: // A Finalizacion de procesos de construccion
-              emailsToGetRole = Analista
+              emailsToGetRole = [Arquitecto, Ingeniero, Analista]
               break;
           }
           break;
