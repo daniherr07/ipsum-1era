@@ -1,13 +1,8 @@
 'use client'
 import styles from './page.module.css'
 import {Phone, Mail, MapPin } from 'lucide-react'
-import { CircularProgress } from '@mui/material'
-import { useState } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
 
 export default function Footer(){
-    const [loading, setLoading] = useState(false);
     return(
         <section className={styles.contactSection} id='contactos'>
         <div className={styles.containerFooter}>

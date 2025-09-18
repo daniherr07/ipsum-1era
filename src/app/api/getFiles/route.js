@@ -32,6 +32,8 @@ const dropbox = dropboxV2Api.authenticate({
 
 // Ejecutar para obtener un nuevo token
 
+console.log(token)
+
 
 async function getOrCreateSharedLink(path) {
 

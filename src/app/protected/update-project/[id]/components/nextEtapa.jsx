@@ -350,7 +350,7 @@ function AddUserModal({ onClose, router, idProyecto, nombreProyecto, etapaAnteri
     
 
 
-    sendEmails()
+    //sendEmails()
     toast.success("Etapa exitosamente actualizada")
 
     onClose(); // Close the modal

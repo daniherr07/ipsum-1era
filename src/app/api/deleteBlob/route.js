@@ -38,8 +38,6 @@ export async function DELETE(request) {
     const body = await request.json();
     const pathname = body.pathname
 
-    console.log("body", body)
-    console.log("pathname", pathname)
 
     const formattedPathname = convertStringFormat(pathname)
 
@@ -61,7 +59,7 @@ export async function DELETE(request) {
     return NextResponse.json({ "Succesful Delete": true });
     } catch (error) {
         console.log("Error en api/deleteBlob/DELETE:", error + "Pathname: " + pathname)
-        return NextResponse.json({ "Error": true, err });
+        return NextResponse.json({ "Error": true, error });
     }
     
     

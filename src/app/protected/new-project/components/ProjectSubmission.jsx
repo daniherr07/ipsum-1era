@@ -193,7 +193,7 @@ export default function ProjectSubmissionForm({
         return toast.error("Hubo un error, verifica los datos e intentalo más tarde")
       }
 
-      SendEmails(response.results.id, userData.userName, response.results.nombre )
+      //SendEmails(response.results.id, userData.userName, response.results.nombre )
       setSaving(false)
       toast.info("Proyecto añadido exitosamente! Redirigiendo al inicio...")
       router.push(`/protected/home`); // Redirect to a success page

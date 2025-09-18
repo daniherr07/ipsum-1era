@@ -299,7 +299,6 @@ export default function DatosAdministrativos({formData, setFormData}) {
                                         {`${ingeniero.Nombre} ${ingeniero.Apellido_1} ${ingeniero.Apellido_2}`}
                                     </option>
                                 ))}
-                                <option value="0">+ Añadir un Ingeniero</option>
                             </select>
                         </div>
 
