@@ -72,9 +72,10 @@
     display: flex;
     flex-direction: column;
     height: fit-content;
-    min-width: fit-content;
+    width: 100%;
     position: relative;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
 
     & .maincontainer1{
         padding: 1em;
@@ -83,6 +84,7 @@
         grid-template-columns: repeat(2, 1fr);
         place-items: center;
         position: relative;
+        width: 100%;
 
         & .containerderecha1{
             padding: 1em;
@@ -108,6 +110,7 @@
             display: flex;
             flex-direction: column;
             gap: 1em;
+            width: 100%;
         }
     } 
 
@@ -120,8 +123,6 @@
         flex-direction: row !important;
         gap: 10em;
         width: 100%;
-        padding: 10px;
-      
     }
 
     & .input1{
@@ -182,6 +183,8 @@
 
 
 }
+
+
 .datoscontainer{
     background-color: lightblue;
     display: flex;
@@ -512,17 +515,21 @@
         font-size: 1rem;
       }
     
-      .container{
-        display: flex;
-        flex-direction: column;
-        place-content: center;
-        place-items: center;
-        overflow: visible;
+    .container{
         max-height: fit-content;
+        max-width: 100%;
     }
 
     .uploadGroup{
-        justify-content: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      gap: 20px;
+    }
+
+    .uploadGroup > *{
+      width: 100%;
     }
 
     .tableContainer{

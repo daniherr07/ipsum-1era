@@ -75,9 +75,10 @@
     display: flex;
     flex-direction: column;
     height: fit-content;
-    min-width: fit-content;
+    width: 100%;
     position: relative;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
 
     & .maincontainer1{
         padding: 1em;
@@ -86,6 +87,7 @@
         grid-template-columns: repeat(2, 1fr);
         place-items: center;
         position: relative;
+        width: 100%;
 
         & .containerderecha1{
             padding: 1em;
@@ -111,6 +113,7 @@
             display: flex;
             flex-direction: column;
             gap: 1em;
+            width: 100%;
         }
     } 
 
@@ -183,6 +186,8 @@
 
 
 }
+
+
 .datoscontainer{
     background-color: lightblue;
     display: flex;
@@ -611,12 +616,8 @@
     }
     
     .container{
-        display: flex;
-        flex-direction: column;
-        place-content: center;
-        place-items: center;
-        overflow: visible;
         max-height: fit-content;
+        max-width: 100%;
     }
 
      .header{
@@ -624,7 +625,15 @@
     }
 
     .uploadGroup{
-        justify-content: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      gap: 20px;
+    }
+
+    .uploadGroup > *{
+      width: 100%;
     }
 
     .tableContainer{
@@ -636,18 +645,6 @@
         font-size: 3vw;
     }
   }
-
-
-  @media (min-width: 768px) {
-    .formGrid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  
-    .formGrid2Col {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
 
   @media (max-height: 730px) {
     .accordioncontainer{
@@ -669,6 +666,17 @@
       padding: 4em;
     }
   }
+
+  @media (min-width: 768px) {
+    .formGrid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  
+    .formGrid2Col {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
 
 
 /* #endregion */

@@ -337,7 +337,7 @@ export default function DatosAdministrativos({formData, setFormData}) {
                             <div className={styles.formGroup}>
                                 <label className={styles.label}>Presupuesto</label>
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="presupuesto"
                                     value={formData.presupuesto}
                                     onChange={handleInputChange}

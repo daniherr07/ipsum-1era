@@ -196,13 +196,20 @@ export default function AccordionMenu({projectDataOld, familyMembersOld, directi
     {page === 4 && <Datosadministrativos formData={formDataAdmin} setFormData={setFormDataAdmin} />}
 
     <div className={style.finishBtns}>
+
+      
+      {
+        //Botón de Eliminar Proyecto
+      }
       {
         (isAdminOrRoot || userData.role == "Ingeniero") &&/* Añadir otros usuarios despues */
         <UpdateProyectoStatus idProyecto={formDataAdminOld.proyecto_id} currentStatus={projectDataOld.activated} nombreProyecto={projectDataOld.proyecto_nombre}/>
       }
 
       {
-        (isAdminOrRoot || userData.role == "Analista") &&
+        (isAdminOrRoot || userData.role == "Analista" 
+          // || userData.role == "Ingeniero"
+        ) &&
         <ProjectSubmissionForm
           projectData={projectData}
           familyMembers={familyMembers}
